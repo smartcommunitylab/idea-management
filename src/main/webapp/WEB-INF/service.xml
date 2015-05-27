@@ -41,7 +41,7 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="title" type="String"></column>
-		<column name="longDesc" type="String"></column>
+		<column name="longDesc" type="String" ></column>
         <column name="shortDesc" type="String"></column>
 
 		<order by="asc">

@@ -16,9 +16,7 @@
 <portlet:defineObjects />
 
 <%
-
 Locale locale = PortalUtil.getLocale(request); 
-
 %>
 
 

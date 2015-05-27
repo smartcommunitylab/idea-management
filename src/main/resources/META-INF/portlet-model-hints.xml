@@ -11,7 +11,11 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="title" type="String" />
-		<field name="longDesc" type="String" />
-		<field name="shortDesc" type="String" />
+		<field name="longDesc" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="shortDesc" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

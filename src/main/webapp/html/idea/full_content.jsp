@@ -4,9 +4,8 @@
 <%@ taglib prefix="c" 
            uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea" %>
-<portlet:defineObjects />
-
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@page import="com.liferay.portal.theme.ThemeDisplay"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
@@ -20,6 +19,8 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetTag" %>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+
+<portlet:defineObjects />
 
 <%
 Idea idea = (Idea)request.getAttribute("gb_idea");
@@ -54,10 +55,10 @@ idea = idea.toEscapedModel();
         <dd><%= idea.getTitle() %></dd>
         <c:if test="<%= idea.getShortDesc() != null || !idea.getShortDesc().isEmpty() %>">
         <dt>Summary</dt>
-        <dd><%= idea.getShortDesc() %></dd>
+        <dd><%= HtmlUtil.unescape(idea.getShortDesc()) %></dd>
         </c:if>
         <dt>Content</dt>
-        <dd><%= idea.getLongDesc() %></dd>
+        <dd><%= HtmlUtil.unescape(idea.getLongDesc()) %></dd>
 </dl>
 
 

@@ -8,6 +8,6 @@ create table IM_Idea (
 	createDate DATE null,
 	modifiedDate DATE null,
 	title VARCHAR(75) null,
-	longDesc VARCHAR(75) null,
-	shortDesc VARCHAR(75) null
+	longDesc TEXT null,
+	shortDesc TEXT null
 );
