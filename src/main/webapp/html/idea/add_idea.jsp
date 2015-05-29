@@ -19,6 +19,7 @@
         if (ideaId > 0) {
                 idea = IdeaLocalServiceUtil.getIdea(ideaId);
         }
+        
 %>
 
 <%
@@ -36,26 +37,32 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	var="addIdeaURL"></portlet:actionURL>
 
 <aui:form action="<%=addIdeaURL%>" name="<portlet:namespace />idea">
+<aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
+	
 	<aui:fieldset>
-		<aui:input name="name" label="lbl_title"></aui:input>
+		<aui:input name="title" label="lbl_title"></aui:input>
 	</aui:fieldset>
 
 	<aui:field-wrapper label="lbl_shortDesc">
 		<liferay-ui:input-editor name="shortDesc"
-			toolbarSet="liferay-article" initMethod="initEditor" width="200" />
+			toolbarSet="liferay-article" initMethod="initEditor1" width="200" />
 		<script type="text/javascript">
-        function <portlet:namespace />initEditor() { return ""; }
+        function <portlet:namespace />initEditor1() { return document.getElementById('_ideamanagement_WAR_ideamanagement_sdesc').value; }
     </script>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="lbl_longDesc">
 		<liferay-ui:input-editor name="longDesc"
-			toolbarSet="liferay-article" initMethod="initEditor" width="200" />
+			toolbarSet="liferay-article" initMethod="initEditor2" width="200" />
 		<script type="text/javascript">
-        function <portlet:namespace />initEditor() { return ""; }
+        function <portlet:namespace />initEditor2() { return document.getElementById('_ideamanagement_WAR_ideamanagement_ldesc').value; }
     </script>
 	</aui:field-wrapper>
 	
+	<aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
+	<aui:input name="sdesc" type="hidden" value='<%= idea != null ? idea.getShortDesc() : "" %>'></aui:input>
+	<aui:input name="ideaId" type="hidden"></aui:input>
+	<aui:input name="redirect" type="hidden" value="<%= viewURL.toString() %>"></aui:input>
 
 	<liferay-ui:asset-categories-error />
 	<liferay-ui:asset-tags-error />

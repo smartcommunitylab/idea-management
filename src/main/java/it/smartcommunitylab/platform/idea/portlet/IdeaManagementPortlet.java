@@ -55,7 +55,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Idea.class.getName(), req);
 
-		String name = ParamUtil.getString(req, "name");
+		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
 		IdeaBean ideaBean = new IdeaBean();
@@ -65,5 +65,33 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 		SessionMessages.add(req, "addedIdea");
+	}
+
+	public void deleteIdea(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException {
+
+		long ideaId = ParamUtil.getLong(req, "id");
+		IdeaLocalServiceUtil.deleteIdea(ideaId);
+		SessionMessages.add(req, "deleteIdea");
+	}
+
+	public void updateIdea(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException, IOException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Idea.class.getName(), req);
+
+		long id = ParamUtil.getLong(req, "ideaId");
+		String name = ParamUtil.getString(req, "title");
+		String shortDesc = ParamUtil.getString(req, "shortDesc");
+		String longDesc = ParamUtil.getString(req, "longDesc");
+		IdeaBean ideaBean = new IdeaBean();
+		ideaBean.setId(id);
+		ideaBean.setTitle(name);
+		ideaBean.setShortDesc(shortDesc);
+		ideaBean.setLongDesc(longDesc);
+		IdeaLocalServiceUtil.updateIdea(serviceContext.getUserId(), ideaBean,
+				serviceContext);
+		SessionMessages.add(req, "editedIdea");
 	}
 }

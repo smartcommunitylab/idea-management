@@ -53,6 +53,8 @@
 			</supports>
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>DELETE</action-key>
 			</site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>

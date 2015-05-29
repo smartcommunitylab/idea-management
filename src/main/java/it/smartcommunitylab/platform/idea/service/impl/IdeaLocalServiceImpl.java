@@ -130,8 +130,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					serviceContext.getAssetLinkEntryIds(),
 					AssetLinkConstants.TYPE_RELATED);
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class
-					.getClass());
+			Indexer indexer = IndexerRegistryUtil
+					.nullSafeGetIndexer(Idea.class);
 			indexer.reindex(idea);
 		} catch (NoSuchIdeaException e) {
 
