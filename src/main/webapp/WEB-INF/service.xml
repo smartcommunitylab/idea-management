@@ -1,7 +1,8 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="it.smartcommunitylab.platform.idea" auto-namespace-tables="true">
-    <author>mirko perillo</author>
+<service-builder package-path="it.smartcommunitylab.platform.idea"
+	auto-namespace-tables="true">
+	<author>mirko perillo</author>
 	<namespace>IM</namespace>
 	<entity name="Idea" uuid="true" local-service="true"
 		remote-service="false">
@@ -41,28 +42,60 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="title" type="String"></column>
-		<column name="longDesc" type="String" ></column>
-        <column name="shortDesc" type="String"></column>
+		<column name="longDesc" type="String"></column>
+		<column name="shortDesc" type="String"></column>
 
 		<order by="asc">
-            <order-column name="createDate" order-by="desc"></order-column>
-            <order-column name="title" order-by="asc"></order-column>
+			<order-column name="createDate" order-by="desc"></order-column>
+			<order-column name="title" order-by="asc"></order-column>
 		</order>
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId"></finder-column>
 		</finder>
-		
-		    <!-- References -->
 
-    <reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-    <reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 
 
-		
+
+	</entity>
+	<entity name="Call" local-service="true" remote-service="false"
+		uuid="true">
+		<column name="title" type="String"></column>
+
+
+		<!-- PK fields -->
+
+		<column name="callId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="description" type="String"></column>
+		<column name="deadline" type="Date"></column>
+		<order by="desc">
+			<order-column name="createDate" order-by="desc"></order-column>
+		</order>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId"></finder-column>
+		</finder>
+
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 	</entity>
 	<exceptions>
 		<exception>IdeaTitle</exception>
-        <exception>IdeaLongDesc</exception>
+		<exception>IdeaLongDesc</exception>
 	</exceptions>
 </service-builder>

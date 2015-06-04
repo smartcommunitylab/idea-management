@@ -15,6 +15,21 @@
 		<css-class-wrapper>idea management-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource> 
 	</portlet>
+	<portlet>
+		<portlet-name>call-management</portlet-name>
+		<icon>/icon.png</icon>
+		<indexer-class>it.smartcommunitylab.platform.idea.search.CallIndexer</indexer-class>
+		<control-panel-entry-category>
+			site_administration.content
+		</control-panel-entry-category>
+		<control-panel-entry-weight>1.5</control-panel-entry-weight>
+		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.CallAssetRendererFactory</asset-renderer-factory>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>call-management-portlet</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

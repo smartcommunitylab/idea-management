@@ -1,6 +1,6 @@
 package it.smartcommunitylab.platform.idea.service.base;
 
-import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
+import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author mirko perillo
  * @generated
  */
-public class IdeaLocalServiceClpInvoker {
+public class CallLocalServiceClpInvoker {
     private String _methodName0;
     private String[] _methodParameterTypes0;
     private String _methodName1;
@@ -61,28 +61,26 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes58;
     private String _methodName59;
     private String[] _methodParameterTypes59;
-    private String _methodName60;
-    private String[] _methodParameterTypes60;
 
-    public IdeaLocalServiceClpInvoker() {
-        _methodName0 = "addIdea";
+    public CallLocalServiceClpInvoker() {
+        _methodName0 = "addCall";
 
         _methodParameterTypes0 = new String[] {
-                "it.smartcommunitylab.platform.idea.model.Idea"
+                "it.smartcommunitylab.platform.idea.model.Call"
             };
 
-        _methodName1 = "createIdea";
+        _methodName1 = "createCall";
 
         _methodParameterTypes1 = new String[] { "long" };
 
-        _methodName2 = "deleteIdea";
+        _methodName2 = "deleteCall";
 
         _methodParameterTypes2 = new String[] { "long" };
 
-        _methodName3 = "deleteIdea";
+        _methodName3 = "deleteCall";
 
         _methodParameterTypes3 = new String[] {
-                "it.smartcommunitylab.platform.idea.model.Idea"
+                "it.smartcommunitylab.platform.idea.model.Call"
             };
 
         _methodName4 = "dynamicQuery";
@@ -121,19 +119,19 @@ public class IdeaLocalServiceClpInvoker {
                 "com.liferay.portal.kernel.dao.orm.Projection"
             };
 
-        _methodName10 = "fetchIdea";
+        _methodName10 = "fetchCall";
 
         _methodParameterTypes10 = new String[] { "long" };
 
-        _methodName11 = "fetchIdeaByUuidAndCompanyId";
+        _methodName11 = "fetchCallByUuidAndCompanyId";
 
         _methodParameterTypes11 = new String[] { "java.lang.String", "long" };
 
-        _methodName12 = "fetchIdeaByUuidAndGroupId";
+        _methodName12 = "fetchCallByUuidAndGroupId";
 
         _methodParameterTypes12 = new String[] { "java.lang.String", "long" };
 
-        _methodName13 = "getIdea";
+        _methodName13 = "getCall";
 
         _methodParameterTypes13 = new String[] { "long" };
 
@@ -141,26 +139,26 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodParameterTypes14 = new String[] { "java.io.Serializable" };
 
-        _methodName15 = "getIdeaByUuidAndCompanyId";
+        _methodName15 = "getCallByUuidAndCompanyId";
 
         _methodParameterTypes15 = new String[] { "java.lang.String", "long" };
 
-        _methodName16 = "getIdeaByUuidAndGroupId";
+        _methodName16 = "getCallByUuidAndGroupId";
 
         _methodParameterTypes16 = new String[] { "java.lang.String", "long" };
 
-        _methodName17 = "getIdeas";
+        _methodName17 = "getCalls";
 
         _methodParameterTypes17 = new String[] { "int", "int" };
 
-        _methodName18 = "getIdeasCount";
+        _methodName18 = "getCallsCount";
 
         _methodParameterTypes18 = new String[] {  };
 
-        _methodName19 = "updateIdea";
+        _methodName19 = "updateCall";
 
         _methodParameterTypes19 = new String[] {
-                "it.smartcommunitylab.platform.idea.model.Idea"
+                "it.smartcommunitylab.platform.idea.model.Call"
             };
 
         _methodName50 = "getBeanIdentifier";
@@ -171,78 +169,73 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodParameterTypes51 = new String[] { "java.lang.String" };
 
-        _methodName56 = "addIdea";
+        _methodName56 = "getCalls";
 
-        _methodParameterTypes56 = new String[] {
-                "long", "it.smartcommunitylab.platform.idea.beans.IdeaBean",
-                "com.liferay.portal.service.ServiceContext"
-            };
+        _methodParameterTypes56 = new String[] { "long" };
 
-        _methodName57 = "updateIdea";
+        _methodName57 = "createCall";
 
         _methodParameterTypes57 = new String[] {
-                "long", "it.smartcommunitylab.platform.idea.beans.IdeaBean",
+                "long", "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName58 = "deleteIdea";
+        _methodName58 = "updateCall";
 
         _methodParameterTypes58 = new String[] {
-                "long", "it.smartcommunitylab.platform.idea.beans.IdeaBean",
+                "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName59 = "getIdeas";
+        _methodName59 = "deleteCall";
 
-        _methodParameterTypes59 = new String[] { "long" };
-
-        _methodName60 = "getIdeas";
-
-        _methodParameterTypes60 = new String[] { "long", "int", "int" };
+        _methodParameterTypes59 = new String[] {
+                "long", "com.liferay.portal.service.ServiceContext"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
         Object[] arguments) throws Throwable {
         if (_methodName0.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-            return IdeaLocalServiceUtil.addIdea((it.smartcommunitylab.platform.idea.model.Idea) arguments[0]);
+            return CallLocalServiceUtil.addCall((it.smartcommunitylab.platform.idea.model.Call) arguments[0]);
         }
 
         if (_methodName1.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-            return IdeaLocalServiceUtil.createIdea(((Long) arguments[0]).longValue());
+            return CallLocalServiceUtil.createCall(((Long) arguments[0]).longValue());
         }
 
         if (_methodName2.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-            return IdeaLocalServiceUtil.deleteIdea(((Long) arguments[0]).longValue());
+            return CallLocalServiceUtil.deleteCall(((Long) arguments[0]).longValue());
         }
 
         if (_methodName3.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-            return IdeaLocalServiceUtil.deleteIdea((it.smartcommunitylab.platform.idea.model.Idea) arguments[0]);
+            return CallLocalServiceUtil.deleteCall((it.smartcommunitylab.platform.idea.model.Call) arguments[0]);
         }
 
         if (_methodName4.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-            return IdeaLocalServiceUtil.dynamicQuery();
+            return CallLocalServiceUtil.dynamicQuery();
         }
 
         if (_methodName5.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-            return IdeaLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
+            return CallLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
         }
 
         if (_methodName6.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-            return IdeaLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
+            return CallLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName7.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-            return IdeaLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
+            return CallLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue(),
                 (com.liferay.portal.kernel.util.OrderByComparator) arguments[3]);
@@ -250,117 +243,108 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName8.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-            return IdeaLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
+            return CallLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0]);
         }
 
         if (_methodName9.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-            return IdeaLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
+            return CallLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery) arguments[0],
                 (com.liferay.portal.kernel.dao.orm.Projection) arguments[1]);
         }
 
         if (_methodName10.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-            return IdeaLocalServiceUtil.fetchIdea(((Long) arguments[0]).longValue());
+            return CallLocalServiceUtil.fetchCall(((Long) arguments[0]).longValue());
         }
 
         if (_methodName11.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-            return IdeaLocalServiceUtil.fetchIdeaByUuidAndCompanyId((java.lang.String) arguments[0],
+            return CallLocalServiceUtil.fetchCallByUuidAndCompanyId((java.lang.String) arguments[0],
                 ((Long) arguments[1]).longValue());
         }
 
         if (_methodName12.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-            return IdeaLocalServiceUtil.fetchIdeaByUuidAndGroupId((java.lang.String) arguments[0],
+            return CallLocalServiceUtil.fetchCallByUuidAndGroupId((java.lang.String) arguments[0],
                 ((Long) arguments[1]).longValue());
         }
 
         if (_methodName13.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdea(((Long) arguments[0]).longValue());
+            return CallLocalServiceUtil.getCall(((Long) arguments[0]).longValue());
         }
 
         if (_methodName14.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-            return IdeaLocalServiceUtil.getPersistedModel((java.io.Serializable) arguments[0]);
+            return CallLocalServiceUtil.getPersistedModel((java.io.Serializable) arguments[0]);
         }
 
         if (_methodName15.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeaByUuidAndCompanyId((java.lang.String) arguments[0],
+            return CallLocalServiceUtil.getCallByUuidAndCompanyId((java.lang.String) arguments[0],
                 ((Long) arguments[1]).longValue());
         }
 
         if (_methodName16.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes16, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeaByUuidAndGroupId((java.lang.String) arguments[0],
+            return CallLocalServiceUtil.getCallByUuidAndGroupId((java.lang.String) arguments[0],
                 ((Long) arguments[1]).longValue());
         }
 
         if (_methodName17.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes17, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Integer) arguments[0]).intValue(),
+            return CallLocalServiceUtil.getCalls(((Integer) arguments[0]).intValue(),
                 ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName18.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes18, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasCount();
+            return CallLocalServiceUtil.getCallsCount();
         }
 
         if (_methodName19.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes19, parameterTypes)) {
-            return IdeaLocalServiceUtil.updateIdea((it.smartcommunitylab.platform.idea.model.Idea) arguments[0]);
+            return CallLocalServiceUtil.updateCall((it.smartcommunitylab.platform.idea.model.Call) arguments[0]);
         }
 
         if (_methodName50.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
-            return IdeaLocalServiceUtil.getBeanIdentifier();
+            return CallLocalServiceUtil.getBeanIdentifier();
         }
 
         if (_methodName51.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
-            IdeaLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
+            CallLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
         if (_methodName56.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-            return IdeaLocalServiceUtil.addIdea(((Long) arguments[0]).longValue(),
-                (it.smartcommunitylab.platform.idea.beans.IdeaBean) arguments[1],
-                (com.liferay.portal.service.ServiceContext) arguments[2]);
+            return CallLocalServiceUtil.getCalls(((Long) arguments[0]).longValue());
         }
 
         if (_methodName57.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-            IdeaLocalServiceUtil.updateIdea(((Long) arguments[0]).longValue(),
-                (it.smartcommunitylab.platform.idea.beans.IdeaBean) arguments[1],
+            return CallLocalServiceUtil.createCall(((Long) arguments[0]).longValue(),
+                (it.smartcommunitylab.platform.idea.beans.CallBean) arguments[1],
                 (com.liferay.portal.service.ServiceContext) arguments[2]);
-
-            return null;
         }
 
         if (_methodName58.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-            IdeaLocalServiceUtil.deleteIdea(((Long) arguments[0]).longValue(),
-                (it.smartcommunitylab.platform.idea.beans.IdeaBean) arguments[1],
-                (com.liferay.portal.service.ServiceContext) arguments[2]);
+            CallLocalServiceUtil.updateCall((it.smartcommunitylab.platform.idea.beans.CallBean) arguments[0],
+                (com.liferay.portal.service.ServiceContext) arguments[1]);
 
             return null;
         }
 
         if (_methodName59.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
-        }
+            CallLocalServiceUtil.deleteCall(((Long) arguments[0]).longValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[1]);
 
-        if (_methodName60.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
-                ((Integer) arguments[1]).intValue(),
-                ((Integer) arguments[2]).intValue());
+            return null;
         }
 
         throw new UnsupportedOperationException();

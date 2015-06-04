@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="it.smartcommunitylab.platform.idea.service.CallLocalService" class="it.smartcommunitylab.platform.idea.service.impl.CallLocalServiceImpl" />
+	<bean id="it.smartcommunitylab.platform.idea.service.persistence.CallPersistence" class="it.smartcommunitylab.platform.idea.service.persistence.CallPersistenceImpl" parent="basePersistence" />
 	<bean id="it.smartcommunitylab.platform.idea.service.IdeaLocalService" class="it.smartcommunitylab.platform.idea.service.impl.IdeaLocalServiceImpl" />
 	<bean id="it.smartcommunitylab.platform.idea.service.persistence.IdeaPersistence" class="it.smartcommunitylab.platform.idea.service.persistence.IdeaPersistenceImpl" parent="basePersistence" />
 </beans>

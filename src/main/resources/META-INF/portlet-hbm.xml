@@ -2,7 +2,24 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="it.smartcommunitylab.platform.idea.model.Call" />
 	<import class="it.smartcommunitylab.platform.idea.model.Idea" />
+	<class name="it.smartcommunitylab.platform.idea.model.impl.CallImpl" table="IM_Call">
+		<cache usage="read-write" />
+		<id name="callId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="deadline" type="org.hibernate.type.TimestampType" />
+	</class>
 	<class name="it.smartcommunitylab.platform.idea.model.impl.IdeaImpl" table="IM_Idea">
 		<cache usage="read-write" />
 		<id name="ideaId" type="long">

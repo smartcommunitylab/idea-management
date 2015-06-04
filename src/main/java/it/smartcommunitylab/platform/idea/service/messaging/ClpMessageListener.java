@@ -3,6 +3,7 @@ package it.smartcommunitylab.platform.idea.service.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
+import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.ClpSerializer;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
@@ -19,6 +20,8 @@ public class ClpMessageListener extends BaseMessageListener {
 
         if (command.equals("undeploy") &&
                 servletContextName.equals(getServletContextName())) {
+            CallLocalServiceUtil.clearService();
+
             IdeaLocalServiceUtil.clearService();
         }
     }

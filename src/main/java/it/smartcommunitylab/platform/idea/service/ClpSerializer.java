@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
+import it.smartcommunitylab.platform.idea.model.CallClp;
 import it.smartcommunitylab.platform.idea.model.IdeaClp;
 
 import java.io.ObjectInputStream;
@@ -88,6 +89,10 @@ public class ClpSerializer {
 
         String oldModelClassName = oldModelClass.getName();
 
+        if (oldModelClassName.equals(CallClp.class.getName())) {
+            return translateInputCall(oldModel);
+        }
+
         if (oldModelClassName.equals(IdeaClp.class.getName())) {
             return translateInputIdea(oldModel);
         }
@@ -105,6 +110,16 @@ public class ClpSerializer {
         }
 
         return newList;
+    }
+
+    public static Object translateInputCall(BaseModel<?> oldModel) {
+        CallClp oldClpModel = (CallClp) oldModel;
+
+        BaseModel<?> newModel = oldClpModel.getCallRemoteModel();
+
+        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+        return newModel;
     }
 
     public static Object translateInputIdea(BaseModel<?> oldModel) {
@@ -131,6 +146,41 @@ public class ClpSerializer {
         Class<?> oldModelClass = oldModel.getClass();
 
         String oldModelClassName = oldModelClass.getName();
+
+        if (oldModelClassName.equals(
+                    "it.smartcommunitylab.platform.idea.model.impl.CallImpl")) {
+            return translateOutputCall(oldModel);
+        } else if (oldModelClassName.endsWith("Clp")) {
+            try {
+                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+                Method getClpSerializerClassMethod = oldModelClass.getMethod(
+                        "getClpSerializerClass");
+
+                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+
+                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+                        BaseModel.class);
+
+                Class<?> oldModelModelClass = oldModel.getModelClass();
+
+                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+                        oldModelModelClass.getSimpleName() + "RemoteModel");
+
+                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
+                        oldRemoteModel);
+
+                return newModel;
+            } catch (Throwable t) {
+                if (_log.isInfoEnabled()) {
+                    _log.info("Unable to translate " + oldModelClassName, t);
+                }
+            }
+        }
 
         if (oldModelClassName.equals(
                     "it.smartcommunitylab.platform.idea.model.impl.IdeaImpl")) {
@@ -254,11 +304,26 @@ public class ClpSerializer {
         }
 
         if (className.equals(
+                    "it.smartcommunitylab.platform.idea.NoSuchCallException")) {
+            return new it.smartcommunitylab.platform.idea.NoSuchCallException();
+        }
+
+        if (className.equals(
                     "it.smartcommunitylab.platform.idea.NoSuchIdeaException")) {
             return new it.smartcommunitylab.platform.idea.NoSuchIdeaException();
         }
 
         return throwable;
+    }
+
+    public static Object translateOutputCall(BaseModel<?> oldModel) {
+        CallClp newModel = new CallClp();
+
+        newModel.setModelAttributes(oldModel.getModelAttributes());
+
+        newModel.setCallRemoteModel(oldModel);
+
+        return newModel;
     }
 
     public static Object translateOutputIdea(BaseModel<?> oldModel) {

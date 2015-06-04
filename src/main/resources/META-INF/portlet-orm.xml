@@ -7,6 +7,33 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<mapped-superclass class="it.smartcommunitylab.platform.idea.model.impl.CallModelImpl">
+		<attributes>
+			<id name="callId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="title" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="description" />
+			<basic name="deadline">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="it.smartcommunitylab.platform.idea.model.impl.IdeaModelImpl">
 		<attributes>
 			<id name="ideaId" />
@@ -32,6 +59,10 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<entity class="it.smartcommunitylab.platform.idea.model.impl.CallImpl" name="Call">
+		<table name="IM_Call" />
+		<attributes />
+	</entity>
 	<entity class="it.smartcommunitylab.platform.idea.model.impl.IdeaImpl" name="Idea">
 		<table name="IM_Idea" />
 		<attributes />
