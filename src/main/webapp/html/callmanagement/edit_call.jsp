@@ -54,15 +54,17 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	</aui:field-wrapper>
 
 	<%
-		Date now = new Date();
 		GregorianCalendar cal = new GregorianCalendar();
+		if(entry != null && entry.getDeadline() != null) {
+			cal.setTime(entry.getDeadline());
+		}
 		int initDay = cal.get(Calendar.DAY_OF_MONTH);
 		int initMonth = cal.get(Calendar.MONTH); 
 		int initYear  = cal.get(Calendar.YEAR);
 	%>
 	
 	<aui:fieldset label="lbl_deadline">
-		<liferay-ui:input-date name="deadline" dayParam="dday" monthParam="dmonth" yearParam="dyear"></liferay-ui:input-date>
+		<liferay-ui:input-date name="deadline" dayParam="dday" monthParam="dmonth" yearParam="dyear" dayValue="<%=initDay %>" monthValue="<%=initMonth %>" yearValue="<%=initYear %>"></liferay-ui:input-date>
 	</aui:fieldset>
 	
 	

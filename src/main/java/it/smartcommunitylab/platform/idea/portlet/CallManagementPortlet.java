@@ -4,7 +4,8 @@ import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 
-import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
@@ -30,13 +31,11 @@ public class CallManagementPortlet extends MVCPortlet {
 
 		String title = ParamUtil.getString(req, "title");
 		String desc = ParamUtil.getString(req, "desc");
-		Date deadline = ParamUtil.getDate(req, "deadline",
-				DateFormat.getDateInstance());
 
 		CallBean bean = new CallBean();
 		bean.setTitle(title);
 		bean.setDescription(desc);
-		bean.setDeadline(deadline);
+		bean.setDeadline(calculateDeadline(req));
 
 		CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
 				serviceContext);
@@ -51,14 +50,12 @@ public class CallManagementPortlet extends MVCPortlet {
 		long id = ParamUtil.getLong(req, "callId");
 		String title = ParamUtil.getString(req, "title");
 		String desc = ParamUtil.getString(req, "desc");
-		Date deadline = ParamUtil.getDate(req, "deadline",
-				DateFormat.getDateInstance());
 
 		CallBean bean = new CallBean();
 		bean.setId(id);
 		bean.setTitle(title);
 		bean.setDescription(desc);
-		bean.setDeadline(deadline);
+		bean.setDeadline(calculateDeadline(req));
 
 		CallLocalServiceUtil.updateCall(bean, serviceContext);
 	}
@@ -71,6 +68,24 @@ public class CallManagementPortlet extends MVCPortlet {
 		long id = ParamUtil.getLong(req, "entryId");
 		CallLocalServiceUtil.deleteCall(id, serviceContext);
 
+	}
+
+	private Date calculateDeadline(ActionRequest req) {
+		String day = ParamUtil.getString(req, "dday");
+		String month = ParamUtil.getString(req, "dmonth");
+		String year = ParamUtil.getString(req, "dyear");
+
+		month = String.valueOf(Integer.valueOf(month) + 1);
+
+		String datePattern = "ddMMyyyyHm";
+		String dateString = (day.length() == 1 ? "0" + day : day)
+				+ (month.length() == 1 ? "0" + month : month)
+				+ String.valueOf(year) + "00";
+		try {
+			return new SimpleDateFormat(datePattern).parse(dateString);
+		} catch (ParseException e) {
+			return new Date();
+		}
 	}
 
 }
