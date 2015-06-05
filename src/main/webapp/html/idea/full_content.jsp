@@ -66,13 +66,13 @@
 
 <c:if test="<%=themeDisplay.isSignedIn()%>">
 
-	<portlet:actionURL name="addComment" var="discussionURL" />
+	<%-- <portlet:actionURL name="addComment" var="discussionURL" />
 
 	<liferay-ui:discussion className="<%=Idea.class.getName()%>"
 		classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
 		formName="fm2" ratingsEnabled="<%=true%>"
 		redirect="<%=currentURL%>" subject="<%=idea.getTitle()%>"
-		userId="<%=idea.getUserId()%>" />
+		userId="<%=idea.getUserId()%>" /> --%>
 </c:if>
 
 <liferay-ui:asset-links

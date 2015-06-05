@@ -15,10 +15,13 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.persistence.PortletUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -39,6 +42,29 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 		}
 		super.render(req, res);
+	}
+
+	@Override
+	public void processAction(ActionRequest actionRequest,
+			ActionResponse actionResponse) throws IOException, PortletException {
+
+		ServiceContext serviceContext;
+		try {
+			serviceContext = ServiceContextFactory.getInstance(
+					Idea.class.getName(), actionRequest);
+			PortletContainerUtil.processAction(PortalUtil
+					.getHttpServletRequest(actionRequest), PortalUtil
+					.getHttpServletResponse(actionResponse), PortletUtil
+					.fetchByC_P(serviceContext.getCompanyId(),
+							"idea management"));
+		} catch (PortalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public void addComment(ActionRequest req, ActionResponse res) {
