@@ -55,7 +55,8 @@
 
 <dl>
 	<c:if
-		test="<%=idea.getShortDesc() != null || !idea.getShortDesc().isEmpty()%>">
+		test="<%=idea.getShortDesc() != null
+						|| !idea.getShortDesc().isEmpty()%>">
 		<dt>Summary</dt>
 		<dd><%=HtmlUtil.unescape(idea.getShortDesc())%></dd>
 	</c:if>
@@ -64,18 +65,20 @@
 </dl>
 
 
-<c:if test="<%=themeDisplay.isSignedIn()%>">
+<%-- <c:if test="<%=themeDisplay.isSignedIn()%>">
 
-	<%-- <portlet:actionURL name="addComment" var="discussionURL" />
+	<portlet:actionURL name="addComment" var="discussionURL">
+		<!-- workaround to invoke liferary class that manage comment/discussion -->
+		<portlet:param name="struts_action"
+			value="/asset_publisher/edit_entry_discussion" />
+	</portlet:actionURL>
 
-	<liferay-ui:discussion className="<%=Idea.class.getName()%>"
+	<liferay-ui:discussion className="<%=Idea.class.getName()%>" 
 		classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
-		formName="fm2" ratingsEnabled="<%=true%>"
-		redirect="<%=currentURL%>" subject="<%=idea.getTitle()%>"
-		userId="<%=idea.getUserId()%>" /> --%>
-</c:if>
+		formName="fm2" ratingsEnabled="<%=true%>" redirect="<%=currentURL%>"
+		subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />
+</c:if> --%>
 
 <liferay-ui:asset-links
 	assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
-	className="<%=Idea.class.getName()%>"
-	classPK="<%=idea.getIdeaId()%>" />
+	className="<%=Idea.class.getName()%>" classPK="<%=idea.getIdeaId()%>" />

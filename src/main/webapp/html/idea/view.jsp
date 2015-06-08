@@ -1,3 +1,4 @@
+<%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="com.liferay.portal.theme.ThemeDisplay"%>
 <%@page import="java.util.Locale"%>
@@ -37,7 +38,14 @@ Locale locale = PortalUtil.getLocale(request);
         className="it.smartcommunitylab.platform.idea.model.Idea"
         modelVar="entry"
     >
-        <liferay-ui:search-container-column-text property="title" />
+    <portlet:renderURL var="editIdea">
+		<portlet:param name="mvcPath" value="/html/idea/add_idea.jsp" />
+		<portlet:param name="ideaId" value="<%=String.valueOf(entry.getIdeaId()) %>" />
+	</portlet:renderURL>
+
+        <liferay-ui:search-container-column-text property="title" href="<%=editIdea.toString() %>">
+        
+        </liferay-ui:search-container-column-text>
 
         <liferay-ui:search-container-column-text property="longDesc" />
     </liferay-ui:search-container-row>
