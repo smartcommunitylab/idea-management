@@ -2,28 +2,18 @@
 <%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="com.liferay.portal.theme.ThemeDisplay"%>
 <%@page import="java.util.Locale"%>
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-
 <%@ page import="java.util.List" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
-
-<portlet:defineObjects />
-
-<%
-Locale locale = PortalUtil.getLocale(request); 
-%>
+<%@ include file="/html/common-init.jsp" %>
 
 
 <aui:button-row>
 	<portlet:renderURL var="addIdea">
-		<portlet:param name="mvcPath" value="/html/idea/add_idea.jsp" />
+		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
 	</portlet:renderURL>
 	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
@@ -39,7 +29,7 @@ Locale locale = PortalUtil.getLocale(request);
         modelVar="entry"
     >
     <portlet:renderURL var="editIdea">
-		<portlet:param name="mvcPath" value="/html/idea/add_idea.jsp" />
+		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
 		<portlet:param name="ideaId" value="<%=String.valueOf(entry.getIdeaId()) %>" />
 	</portlet:renderURL>
 

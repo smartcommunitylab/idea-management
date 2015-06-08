@@ -125,7 +125,7 @@ public class IdeaAssetRenderer extends BaseAssetRenderer {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			renderRequest.setAttribute("gb_idea", idea);
-			return "/html/idea/" + template + ".jsp";
+			return "/html/idea/asset/" + template + ".jsp";
 		} else {
 			return null;
 		}

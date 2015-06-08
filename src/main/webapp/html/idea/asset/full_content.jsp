@@ -1,8 +1,3 @@
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
@@ -21,8 +16,7 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetTag"%>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil"%>
-
-<portlet:defineObjects />
+<%@ include file="/html/common-init.jsp" %>
 
 <%
 	Idea idea = (Idea) request.getAttribute("gb_idea");
@@ -30,8 +24,6 @@
 %>
 
 <%
-	ThemeDisplay themeDisplay = (ThemeDisplay) request
-			.getAttribute(WebKeys.THEME_DISPLAY);
 	long ideaId = ParamUtil.getLong(renderRequest, "ideaId");
 	idea = idea.toEscapedModel();
 

@@ -1,15 +1,10 @@
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
-<%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui"%>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
-
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page
 	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@ page import="com.liferay.portal.theme.ThemeDisplay"%>
-
-<portlet:defineObjects />
+<%@ include file="/html/common-init.jsp" %>
 
 <%
 	Idea idea = null;
@@ -24,7 +19,6 @@
 
 <%
 	// workaround for assert-tag-selector nullpointerexception
-ThemeDisplay themeDisplay = (ThemeDisplay) renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
