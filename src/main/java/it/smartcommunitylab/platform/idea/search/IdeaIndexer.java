@@ -1,6 +1,7 @@
 package it.smartcommunitylab.platform.idea.search;
 
 import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.permission.IdeaPermission;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaActionableDynamicQuery;
 
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 public class IdeaIndexer extends BaseIndexer {
@@ -49,9 +51,8 @@ public class IdeaIndexer extends BaseIndexer {
 	public boolean hasPermission(PermissionChecker permissionChecker,
 			String entryClassName, long entryClassPK, String actionId)
 			throws Exception {
-		return true;
-		// return GuestbookPermission.contains(permissionChecker, entryClassPK,
-		// ActionKeys.VIEW);
+		return IdeaPermission.contains(permissionChecker, entryClassPK,
+				ActionKeys.VIEW);
 	}
 
 	@Override
