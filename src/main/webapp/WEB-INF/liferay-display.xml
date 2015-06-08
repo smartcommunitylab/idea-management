@@ -4,7 +4,7 @@
 <display>
 	
 	<category name="category.journal">
-		<portlet id="idea management"></portlet>
+		<portlet id="idea-management"></portlet>
 	</category>
 	<category name="category.hidden">
 		<portlet id="call-management"></portlet>

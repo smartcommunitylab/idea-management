@@ -4,7 +4,7 @@
 <liferay-portlet-app>
 	
 	<portlet>
-		<portlet-name>idea management</portlet-name>
+		<portlet-name>idea-management</portlet-name>
 		<icon>/icon.png</icon>
 		<indexer-class>it.smartcommunitylab.platform.idea.search.IdeaIndexer</indexer-class>
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.IdeaAssetRendererFactory</asset-renderer-factory>
