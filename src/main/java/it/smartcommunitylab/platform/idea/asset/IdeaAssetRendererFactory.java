@@ -9,18 +9,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
-public class AssetRendererFactory extends BaseAssetRendererFactory {
+public class IdeaAssetRendererFactory extends BaseAssetRendererFactory {
 	public static final String CLASS_NAME = Idea.class.getName();
 
 	public static final String TYPE = "idea";
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public IdeaAssetRenderer getAssetRenderer(long classPK, int type)
 			throws PortalException, SystemException {
 
 		Idea idea = IdeaLocalServiceUtil.getIdea(classPK);
 
-		return new AssetRenderer(idea);
+		return new IdeaAssetRenderer(idea);
 	}
 
 	@Override

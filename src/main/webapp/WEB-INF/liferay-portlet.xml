@@ -7,7 +7,7 @@
 		<portlet-name>idea management</portlet-name>
 		<icon>/icon.png</icon>
 		<indexer-class>it.smartcommunitylab.platform.idea.search.IdeaIndexer</indexer-class>
-		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.AssetRendererFactory</asset-renderer-factory>
+		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.IdeaAssetRendererFactory</asset-renderer-factory>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

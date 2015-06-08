@@ -23,11 +23,11 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 
-public class AssetRenderer extends BaseAssetRenderer {
+public class IdeaAssetRenderer extends BaseAssetRenderer {
 
 	private Idea idea;
 
-	public AssetRenderer(Idea idea) {
+	public IdeaAssetRenderer(Idea idea) {
 
 		this.idea = idea;
 	}
