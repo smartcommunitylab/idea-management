@@ -5,7 +5,6 @@ import it.smartcommunitylab.platform.idea.permission.IdeaPermission;
 
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -16,11 +15,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 
 public class IdeaAssetRenderer extends BaseAssetRenderer {
@@ -115,15 +111,7 @@ public class IdeaAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public PortletURL getURLEdit(LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay) liferayPortletRequest
-				.getAttribute(WebKeys.THEME_DISPLAY);
-
-		PortletURL url = PortletURLFactoryUtil.create(liferayPortletRequest,
-				"ideamanagement_WAR_ideamanagement", themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
-		url.setParameter("mvcPath", "/html/idea/add_idea.jsp");
-		url.setParameter("ideaId", String.valueOf(idea.getIdeaId()));
-		return url;
+		return null;
 	}
 
 	@Override
