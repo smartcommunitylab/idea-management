@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="Content" type="text_area" index-type="keyword" index="0">
+		<dynamic-content language-id="en_US"><![CDATA[Sport category!!!!]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="image" type="image" index-type="keyword" index="0">
+		<dynamic-content language-id="en_US"></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="color" type="text" index-type="" index="0">
+		<dynamic-content language-id="en_US"><![CDATA[#eeeeee]]></dynamic-content>
+	</dynamic-element>
+</root>

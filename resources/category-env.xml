@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="Content" type="text_area" index-type="keyword" index="0">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor&nbsp;</p>
+
+<p>incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis no-<br />
+strud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis&nbsp;</p>
+
+<p>aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat&nbsp;</p>
+
+<p>nulla pariatur. <strong>Excepteur</strong> sint occaecat cupidatat non proident, sunt in culpa qui&nbsp;</p>
+
+<p>officia deserunt mollit anim id est laborum</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="image" type="image" index-type="keyword" index="0">
+		<dynamic-content language-id="en_US"></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="color" type="text" index-type="" index="0">
+		<dynamic-content language-id="en_US"><![CDATA[#123456]]></dynamic-content>
+	</dynamic-element>
+</root>
