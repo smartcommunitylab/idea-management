@@ -3,8 +3,10 @@ package it.smartcommunitylab.platform.idea.service.impl;
 import it.smartcommunitylab.platform.idea.NoSuchIdeaException;
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 /**
  * The implementation of the idea local service.
@@ -159,6 +162,25 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		} catch (NoSuchIdeaException e) {
 		}
 
+	}
+
+	public List<Idea> getIdeasByCat(long catId) throws SystemException {
+		// TODO improve query with join
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil
+				.getAssetCategoryAssetEntries(catId);
+		List<Idea> ideas = new ArrayList<Idea>();
+		for (AssetEntry entry : entries) {
+			Idea i = IdeaLocalServiceUtil.fetchIdea(entry.getClassPK());
+			if (i != null) {
+				ideas.add(i);
+			}
+		}
+
+		return ideas;
+	}
+
+	public List<Idea> getIdeas() throws SystemException {
+		return ideaPersistence.findAll();
 	}
 
 	public List<Idea> getIdeas(long groupId) throws SystemException {

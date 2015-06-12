@@ -347,6 +347,16 @@ public class IdeaLocalServiceUtil {
         getService().deleteIdea(userId, ideaBean, serviceContext);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCat(
+        long catId) throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByCat(catId);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeas();
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas(
         long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {

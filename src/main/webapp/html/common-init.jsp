@@ -4,6 +4,7 @@
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="theme" %>
+ <%@ taglib prefix="liferay-portlet" uri="http://liferay.com/tld/portlet" %>
 
 <portlet:defineObjects />
 <theme:defineObjects/>

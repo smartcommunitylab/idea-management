@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
-	
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
+
 	<portlet>
 		<portlet-name>idea-management</portlet-name>
 		<display-name>Idea Management</display-name>
 		<portlet-class>
-			it.smartcommunitylab.platform.idea.portlet.IdeaManagementPortlet
-		</portlet-class>
+			it.smartcommunitylab.platform.idea.portlet.IdeaManagementPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/idea/view.jsp</value>
@@ -17,8 +19,8 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
-		<supported-locale>en</supported-locale>       
-        <supported-locale>it</supported-locale>
+		<supported-locale>en</supported-locale>
+		<supported-locale>it</supported-locale>
 		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Idea Management</title>
@@ -37,13 +39,15 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-public-render-parameter>
+		categoryId
+	</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>call-management</portlet-name>
 		<display-name>Call Management</display-name>
 		<portlet-class>
-			it.smartcommunitylab.platform.idea.portlet.CallManagementPortlet
-		</portlet-class>
+			it.smartcommunitylab.platform.idea.portlet.CallManagementPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/callmanagement/view.jsp</value>
@@ -76,4 +80,8 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	<public-render-parameter>
+		<identifier>categoryId</identifier>
+		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:categoryId</qname>
+	</public-render-parameter>
 </portlet-app>

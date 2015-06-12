@@ -63,6 +63,10 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes59;
     private String _methodName60;
     private String[] _methodParameterTypes60;
+    private String _methodName61;
+    private String[] _methodParameterTypes61;
+    private String _methodName62;
+    private String[] _methodParameterTypes62;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -192,13 +196,21 @@ public class IdeaLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName59 = "getIdeas";
+        _methodName59 = "getIdeasByCat";
 
         _methodParameterTypes59 = new String[] { "long" };
 
         _methodName60 = "getIdeas";
 
-        _methodParameterTypes60 = new String[] { "long", "int", "int" };
+        _methodParameterTypes60 = new String[] {  };
+
+        _methodName61 = "getIdeas";
+
+        _methodParameterTypes61 = new String[] { "long" };
+
+        _methodName62 = "getIdeas";
+
+        _methodParameterTypes62 = new String[] { "long", "int", "int" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -353,11 +365,21 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName59.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue());
         }
 
         if (_methodName60.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas();
+        }
+
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName62.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());

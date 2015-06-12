@@ -5,6 +5,7 @@ import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -30,15 +31,40 @@ public class IdeaManagementPortlet extends MVCPortlet {
 	public void render(RenderRequest req, RenderResponse res)
 			throws PortletException, IOException {
 
+		/*
+		 * Enumeration<String> f = req.getAttributeNames(); while
+		 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
+		 */
+
+		// search for category
+		String categoryId = req.getParameter("categoryId");
+		req.setAttribute("categoryId", categoryId);
+
+		// search for filter search
+
+		System.out.println("&&& " + ParamUtil.getString(req, "filterBy"));
+
 		try {
-			List<Idea> idea = IdeaLocalServiceUtil.getIdeas(0,
-					IdeaLocalServiceUtil.getIdeasCount()).subList(0,
-					IdeaLocalServiceUtil.getIdeasCount());
-			req.setAttribute("ideas", idea);
+			List<Idea> ideas = new ArrayList<Idea>();
+			if (categoryId == null) {
+				ideas = IdeaLocalServiceUtil.getIdeas();
+			} else {
+				ideas = IdeaLocalServiceUtil.getIdeasByCat(Long
+						.valueOf(categoryId));
+			}
+			req.setAttribute("ideas", ideas);
+			req.setAttribute("ideaCount", ideas.size());
 		} catch (SystemException e) {
 
 		}
 		super.render(req, res);
+	}
+
+	public void filter(ActionRequest req, ActionResponse res) {
+		// only to perform action
+		String fType = req.getParameter("filterBy");
+		res.setRenderParameter("filterBy", fType);
+
 	}
 
 	public void addComment(ActionRequest req, ActionResponse res) {
