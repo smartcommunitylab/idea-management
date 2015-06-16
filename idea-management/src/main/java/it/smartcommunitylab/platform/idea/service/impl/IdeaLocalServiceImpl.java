@@ -179,6 +179,10 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return ideas;
 	}
 
+	public List<Idea> getIdeasByRating() throws SystemException {
+		return IdeaFinderUtil.findByRating();
+	}
+
 	public List<Idea> getIdeasByRating(long catId) throws SystemException {
 		return IdeaFinderUtil.findByCatAndRating(catId);
 		// get assetEntry with category

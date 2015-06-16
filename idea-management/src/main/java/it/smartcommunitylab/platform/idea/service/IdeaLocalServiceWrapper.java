@@ -366,6 +366,12 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByRating();
+    }
+
+    @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
         long catId) throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeasByRating(catId);

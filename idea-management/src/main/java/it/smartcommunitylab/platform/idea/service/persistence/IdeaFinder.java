@@ -6,4 +6,9 @@ public interface IdeaFinder {
 
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCatAndRating(
         java.lang.Long categoryId, int begin, int end);
+
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByRating();
+
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByRating(
+        int begin, int end);
 }

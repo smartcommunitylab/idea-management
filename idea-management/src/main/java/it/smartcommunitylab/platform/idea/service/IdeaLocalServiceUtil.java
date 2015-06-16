@@ -352,6 +352,11 @@ public class IdeaLocalServiceUtil {
         return getService().getIdeasByCat(catId);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByRating();
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
         long catId) throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getIdeasByRating(catId);

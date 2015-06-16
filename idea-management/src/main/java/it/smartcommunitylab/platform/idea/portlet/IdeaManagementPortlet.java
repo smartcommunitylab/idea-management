@@ -54,7 +54,11 @@ public class IdeaManagementPortlet extends MVCPortlet {
 					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId);
 				}
 			} else if (filterBy.equals(Constants.FILTER_BY_POPOLARITY)) {
-				ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId);
+				if (categoryId <= 0) {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating();
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId);
+				}
 			}
 
 			req.setAttribute("ideas", ideas);
