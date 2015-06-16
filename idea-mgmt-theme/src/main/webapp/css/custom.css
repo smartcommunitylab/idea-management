@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+
+#wrapper {
+	padding: 0;
+}
+
+#navigation .navbar-inner {
+	padding: 0;
+}
+
+#content {
+	padding: 0 5em;
+}
+
+.portlet .portlet-title span:first-child {
+	display: none;
+}
+
+.portlet .portlet-title .portlet-title-text {
+	text-transform: uppercase;
+}
+
+.idea-slider .idea-slider-arrow {
+	font-size: 3em;
+	line-height: 130px;
+	text-decoration: none;
+}
