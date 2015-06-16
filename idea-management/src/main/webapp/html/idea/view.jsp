@@ -7,6 +7,7 @@
 <%
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 Long categoryId = (Long) request.getAttribute("categoryId");
+String filterBy = (String) request.getAttribute("filterBy");
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
@@ -32,10 +33,6 @@ Long categoryId = (Long) request.getAttribute("categoryId");
     	document.<portlet:namespace />filter.submit();
     }
 </script>
-
-<%
-String filterBy = (String) request.getAttribute("filterBy");
-%>
 
 <portlet:actionURL
 	name='filter'
