@@ -105,10 +105,10 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		SessionMessages.add(req, "addedIdea");
 	}
 
-	public void deleteIdea(ActionRequest req, ActionResponse res)
+	public void deleteEntry(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 
-		long ideaId = ParamUtil.getLong(req, "id");
+		long ideaId = ParamUtil.getLong(req, "entryId");
 		IdeaLocalServiceUtil.deleteIdea(ideaId);
 		SessionMessages.add(req, "deleteIdea");
 	}
