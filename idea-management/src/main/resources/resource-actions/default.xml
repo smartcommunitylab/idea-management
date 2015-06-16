@@ -14,7 +14,7 @@
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
-				<!-- <action-key>VIEW</action-key> -->
+				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported />
 		</permissions>
@@ -32,7 +32,7 @@
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>
-				<!-- <action-key>VIEW</action-key> -->
+				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported />
 		</permissions>
@@ -47,6 +47,7 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_IDEA</action-key>
+        <action-key>ADD_CALL</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>ADD_IDEA</action-key>
@@ -54,6 +55,7 @@
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_IDEA</action-key>
+        <action-key>ADD_CALL</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -72,33 +74,17 @@
 			</supports>
 			<site-member-defaults>
 				<action-key>VIEW</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>DELETE</action-key>
-			</site-member-defaults>
+        <action-key>UPDATE</action-key>
+        <action-key>DELETE</action-key>
+		  </site-member-defaults>
 			<guest-defaults>
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-
-	<model-resource>
-		<model-name>it.smartcommunitylab.platform.idea.model</model-name>
-		<portlet-ref>
-			<portlet-name>call-management</portlet-name>
-		</portlet-ref>
-		<permissions>
-			<supports>
-				<action-key>ADD_CALL</action-key>
-			</supports>
-			<site-member-defaults>
-			</site-member-defaults>
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_IDEA</action-key>
-			</guest-unsupported>
+        <action-key>PERMISSIONS</action-key>
+				<action-key>DELETE</action-key>
+		  </guest-unsupported>
 		</permissions>
 	</model-resource>
 
@@ -121,7 +107,10 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-			</guest-unsupported>
+        <action-key>UPDATE</action-key>
+        <action-key>PERMISSIONS</action-key>
+        <action-key>DELETE</action-key>
+      </guest-unsupported>
 		</permissions>
 	</model-resource>
 

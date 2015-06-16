@@ -1,16 +1,20 @@
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
+<%@ page import="it.smartcommunitylab.platform.idea.permission.IdeaModelPermission" %>
+<%@ page import="javax.portlet.WindowState" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
 <%
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 Long categoryId = (Long) request.getAttribute("categoryId");
-String filterBy = (String) request.getAttribute("filterBy");
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
+
+<c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") %>'>
+
 <aui:button-row>
 	<portlet:renderURL var="addIdea">
 		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
@@ -18,6 +22,8 @@ String filterBy = (String) request.getAttribute("filterBy");
 	</portlet:renderURL>
 	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
+
+</c:if>
 
 <%-- TEMP - USED FOR TEST 
 <c:if test='<%= request.getAttribute("categoryId") != null %>'>
@@ -33,6 +39,10 @@ String filterBy = (String) request.getAttribute("filterBy");
     	document.<portlet:namespace />filter.submit();
     }
 </script>
+
+<%
+String filterBy = (String) request.getAttribute("filterBy");
+%>
 
 <portlet:actionURL
 	name='filter'
@@ -55,12 +65,12 @@ String filterBy = (String) request.getAttribute("filterBy");
         className="it.smartcommunitylab.platform.idea.model.Idea"
         modelVar="entry"
     >
-    <portlet:renderURL var="editIdea">
-		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
+  <portlet:renderURL var="viewIdea" windowState="maximized">
+		<portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
 		<portlet:param name="ideaId" value="<%=String.valueOf(entry.getIdeaId()) %>" />
 	</portlet:renderURL>
 
-        <liferay-ui:search-container-column-text property="title" href="<%=editIdea.toString() %>">
+        <liferay-ui:search-container-column-text property="title" href="<%=viewIdea.toString() %>">
         
         </liferay-ui:search-container-column-text>
 
