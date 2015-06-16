@@ -185,37 +185,6 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	public List<Idea> getIdeasByRating(long catId) throws SystemException {
 		return IdeaFinderUtil.findByCatAndRating(catId);
-		// get assetEntry with category
-		// List<Long> ideaIds = null;
-		//
-		// if (catId > 0) {
-		// ideaIds = new ArrayList<Long>();
-		// List<AssetEntry> entries = AssetEntryLocalServiceUtil
-		// .getAssetCategoryAssetEntries(catId);
-		// for (AssetEntry ae : entries) {
-		// ideaIds.add(ae.getClassPK());
-		// }
-		// }
-		//
-		// ProjectionList projList = ProjectionFactoryUtil.projectionList();
-		// projList.add(ProjectionFactoryUtil.property("classPK"));
-		// // projList.add(ProjectionFactoryUtil.alias(
-		// // ProjectionFactoryUtil.avg("score"), "ascore"));
-		// // projList.add(ProjectionFactoryUtil.groupProperty("classPK"));
-		//
-		// // get id by entries
-		// DynamicQuery dq =
-		// DynamicQueryFactoryUtil.forClass(RatingsEntry.class,
-		// "rating").setProjection(projList);
-		// if (catId > 0) {
-		// dq.add(PropertyFactoryUtil.forName("classPK").in(ideaIds));
-		// }
-		// // dq.addOrder(OrderFactoryUtil.desc("ascore"));
-		//
-		// // get filtered ideas
-		// DynamicQuery query = DynamicQueryFactoryUtil.forClass(Idea.class);
-		// query.add(PropertyFactoryUtil.forName("ideaId").in(dq));
-		// return IdeaLocalServiceUtil.dynamicQuery(query);
 	}
 
 	public List<Idea> getIdeas() throws SystemException {

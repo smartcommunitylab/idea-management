@@ -33,13 +33,17 @@
     }
 </script>
 
+<%
+String filterBy = (String) request.getAttribute("filterBy");
+%>
+
 <portlet:actionURL
 	name='filter'
 	var="filterURL"></portlet:actionURL>
 
 <aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
 	<aui:fieldset label="lbl_filter_by">
-		<aui:input onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
+		<aui:input checked="<%= filterBy == null|| filterBy.equals(Constants.FILTER_BY_ALL) %>" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
 		<aui:input onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
 		<aui:input onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
 	</aui:fieldset>

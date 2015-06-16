@@ -43,6 +43,9 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		// search for filter search
 
 		String filterBy = ParamUtil.getString(req, "filterBy");
+		if (filterBy.isEmpty()) {
+			filterBy = Constants.FILTER_BY_ALL;
+		}
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
 			// result already ordered by creation date DESC for default
