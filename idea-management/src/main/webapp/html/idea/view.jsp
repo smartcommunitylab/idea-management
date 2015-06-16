@@ -16,13 +16,14 @@ boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hi
 	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
 
+<%-- TEMP - USED FOR TEST 
 <c:if test='<%= request.getAttribute("categoryId") != null %>'>
  <p><strong>CATEGORY SELECTED <%= request.getAttribute("categoryId") %></strong></p>
 </c:if>
 <c:if test='<%= request.getAttribute("categoryId") == null %>'>
  <p><strong>NO CATEGORY</strong></p>
 </c:if>
-
+--%>
 
 <script type="text/javascript">
     function <portlet:namespace/>doSearch() {
@@ -30,13 +31,17 @@ boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hi
     }
 </script>
 
+<%
+String filterBy = (String) request.getAttribute("filterBy");
+%>
+
 <portlet:actionURL
 	name='filter'
 	var="filterURL"></portlet:actionURL>
 
 <aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
 	<aui:fieldset label="lbl_filter_by">
-		<aui:input onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
+		<aui:input checked="<%= filterBy == null|| filterBy.equals(Constants.FILTER_BY_ALL) %>" onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
 		<aui:input onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
 		<aui:input onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
 	</aui:fieldset>

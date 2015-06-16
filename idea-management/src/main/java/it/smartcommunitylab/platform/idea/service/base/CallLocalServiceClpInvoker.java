@@ -49,18 +49,18 @@ public class CallLocalServiceClpInvoker {
     private String[] _methodParameterTypes18;
     private String _methodName19;
     private String[] _methodParameterTypes19;
-    private String _methodName50;
-    private String[] _methodParameterTypes50;
-    private String _methodName51;
-    private String[] _methodParameterTypes51;
-    private String _methodName56;
-    private String[] _methodParameterTypes56;
-    private String _methodName57;
-    private String[] _methodParameterTypes57;
+    private String _methodName52;
+    private String[] _methodParameterTypes52;
+    private String _methodName53;
+    private String[] _methodParameterTypes53;
     private String _methodName58;
     private String[] _methodParameterTypes58;
     private String _methodName59;
     private String[] _methodParameterTypes59;
+    private String _methodName60;
+    private String[] _methodParameterTypes60;
+    private String _methodName61;
+    private String[] _methodParameterTypes61;
 
     public CallLocalServiceClpInvoker() {
         _methodName0 = "addCall";
@@ -161,35 +161,35 @@ public class CallLocalServiceClpInvoker {
                 "it.smartcommunitylab.platform.idea.model.Call"
             };
 
-        _methodName50 = "getBeanIdentifier";
+        _methodName52 = "getBeanIdentifier";
 
-        _methodParameterTypes50 = new String[] {  };
+        _methodParameterTypes52 = new String[] {  };
 
-        _methodName51 = "setBeanIdentifier";
+        _methodName53 = "setBeanIdentifier";
 
-        _methodParameterTypes51 = new String[] { "java.lang.String" };
+        _methodParameterTypes53 = new String[] { "java.lang.String" };
 
-        _methodName56 = "getCalls";
+        _methodName58 = "getCalls";
 
-        _methodParameterTypes56 = new String[] { "long" };
+        _methodParameterTypes58 = new String[] { "long" };
 
-        _methodName57 = "createCall";
+        _methodName59 = "createCall";
 
-        _methodParameterTypes57 = new String[] {
+        _methodParameterTypes59 = new String[] {
                 "long", "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName58 = "updateCall";
+        _methodName60 = "updateCall";
 
-        _methodParameterTypes58 = new String[] {
+        _methodParameterTypes60 = new String[] {
                 "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName59 = "deleteCall";
+        _methodName61 = "deleteCall";
 
-        _methodParameterTypes59 = new String[] {
+        _methodParameterTypes61 = new String[] {
                 "long", "com.liferay.portal.service.ServiceContext"
             };
     }
@@ -307,40 +307,40 @@ public class CallLocalServiceClpInvoker {
             return CallLocalServiceUtil.updateCall((it.smartcommunitylab.platform.idea.model.Call) arguments[0]);
         }
 
-        if (_methodName50.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+        if (_methodName52.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
             return CallLocalServiceUtil.getBeanIdentifier();
         }
 
-        if (_methodName51.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
+        if (_methodName53.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
             CallLocalServiceUtil.setBeanIdentifier((java.lang.String) arguments[0]);
 
             return null;
         }
 
-        if (_methodName56.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+        if (_methodName58.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
             return CallLocalServiceUtil.getCalls(((Long) arguments[0]).longValue());
         }
 
-        if (_methodName57.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
+        if (_methodName59.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
             return CallLocalServiceUtil.createCall(((Long) arguments[0]).longValue(),
                 (it.smartcommunitylab.platform.idea.beans.CallBean) arguments[1],
                 (com.liferay.portal.service.ServiceContext) arguments[2]);
         }
 
-        if (_methodName58.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+        if (_methodName60.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
             CallLocalServiceUtil.updateCall((it.smartcommunitylab.platform.idea.beans.CallBean) arguments[0],
                 (com.liferay.portal.service.ServiceContext) arguments[1]);
 
             return null;
         }
 
-        if (_methodName59.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
             CallLocalServiceUtil.deleteCall(((Long) arguments[0]).longValue(),
                 (com.liferay.portal.service.ServiceContext) arguments[1]);
 

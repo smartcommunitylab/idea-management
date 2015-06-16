@@ -37,21 +37,33 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		 */
 
 		// search for category
-		String categoryId = req.getParameter("categoryId");
+		Long categoryId = ParamUtil.getLong(req, "categoryId");
 		req.setAttribute("categoryId", categoryId);
 
 		// search for filter search
 
-		System.out.println("&&& " + ParamUtil.getString(req, "filterBy"));
-
+		String filterBy = ParamUtil.getString(req, "filterBy");
+		if (filterBy.isEmpty()) {
+			filterBy = Constants.FILTER_BY_ALL;
+		}
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
-			if (categoryId == null) {
-				ideas = IdeaLocalServiceUtil.getIdeas();
-			} else {
-				ideas = IdeaLocalServiceUtil.getIdeasByCat(Long
-						.valueOf(categoryId));
+			// result already ordered by creation date DESC for default
+			if (filterBy.equals(Constants.FILTER_BY_ALL)
+					|| filterBy.equals(Constants.FILTER_BY_CREATION)) {
+				if (categoryId <= 0) {
+					ideas = IdeaLocalServiceUtil.getIdeas();
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId);
+				}
+			} else if (filterBy.equals(Constants.FILTER_BY_POPOLARITY)) {
+				if (categoryId <= 0) {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating();
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId);
+				}
 			}
+
 			req.setAttribute("ideas", ideas);
 			req.setAttribute("ideaCount", ideas.size());
 		} catch (SystemException e) {

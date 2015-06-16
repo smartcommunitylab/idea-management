@@ -5,6 +5,7 @@ import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
+import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -175,8 +176,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				ideas.add(i);
 			}
 		}
-
 		return ideas;
+	}
+
+	public List<Idea> getIdeasByRating() throws SystemException {
+		return IdeaFinderUtil.findByRating();
+	}
+
+	public List<Idea> getIdeasByRating(long catId) throws SystemException {
+		return IdeaFinderUtil.findByCatAndRating(catId);
 	}
 
 	public List<Idea> getIdeas() throws SystemException {
