@@ -8,6 +8,32 @@
 	padding: 0;
 }
 
+#navigation .navbar-inner #navmenu {
+	text-transform: uppercase;
+}
+
+#navigation .navbar-inner #navmenu li {
+	line-height: 40px;
+}
+
+#navigation .navbar-inner #navmenu li a {
+	padding: 10px 40px;
+}
+
+#sign-in {
+	float: right;
+	padding: 10px 15px;
+}
+
+#sign-in .user-avatar-image {
+	width: 40px;
+	height: 40px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border: 1px solid #DDD;
+}
+
 #content {
 	padding: 0 5em;
 }

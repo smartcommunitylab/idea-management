@@ -38,7 +38,24 @@
 					</#if>
 				</li>
 			</#list>
+			<#if is_signed_in>
+				
+			</#if>
 		</ul>
+		<#if !is_signed_in>
+			<a href="${sign_in_url}" data-redirect="${is_login_redirect_required?string}" id="sign-in" rel="nofollow">${sign_in_text}</a>
+		<#else>
+			<div id="sign-in" class="dropdown user-avatar ${themeDisplay.isImpersonated()?string("impersonating-user", "")}">
+				<a class="user-avatar-link dropdown-toggle">
+					<span class="nav-item-label">
+						<span class="user-full-name">
+							${user.getFullName()}
+        				</span>
+        				<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
+					</span>
+				</a>
+			</div>
+		</#if>
 	</div>
 </nav>
 
