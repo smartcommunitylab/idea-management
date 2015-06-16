@@ -117,7 +117,7 @@ public class CallAssetRenderer extends BaseAssetRenderer {
 			RenderResponse renderResponse, String template) throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			renderRequest.setAttribute("gb_call", call);
+			renderRequest.setAttribute("call", call);
 			return "/html/callmanagement/asset/" + template + ".jsp";
 		} else {
 			return null;

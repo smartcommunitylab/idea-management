@@ -16,17 +16,17 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetTag"%>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil"%>
+<%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@ include file="/html/common-init.jsp" %>
 
 <%
-	Idea idea = (Idea) request.getAttribute("gb_idea");
+	Idea idea = (Idea) request.getAttribute("idea");
+  long ideaId = ParamUtil.getLong(renderRequest, "ideaId");
+	if (idea == null) {
+		  idea = IdeaLocalServiceUtil.getIdea(ideaId);		
+	}
 	idea = idea.toEscapedModel();
-%>
-
-<%
-	long ideaId = ParamUtil.getLong(renderRequest, "ideaId");
-	idea = idea.toEscapedModel();
-
+	
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			Idea.class.getName(), idea.getIdeaId());
 

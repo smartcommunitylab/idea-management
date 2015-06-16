@@ -39,9 +39,9 @@
 
 <aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
 	<aui:fieldset label="lbl_filter_by">
-		<aui:input onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
-		<aui:input onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
-		<aui:input onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
+		<aui:input onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
+		<aui:input onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
+		<aui:input onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
 	</aui:fieldset>
 </aui:form>
 

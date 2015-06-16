@@ -29,8 +29,6 @@
 		<field name="longDesc" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="shortDesc" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="shortDesc" type="String" />
 	</model>
 </model-hints>
