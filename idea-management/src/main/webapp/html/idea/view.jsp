@@ -19,13 +19,14 @@
 	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
 
+<%-- TEMP - USED FOR TEST 
 <c:if test='<%= request.getAttribute("categoryId") != null %>'>
  <p><strong>CATEGORY SELECTED <%= request.getAttribute("categoryId") %></strong></p>
 </c:if>
 <c:if test='<%= request.getAttribute("categoryId") == null %>'>
  <p><strong>NO CATEGORY</strong></p>
 </c:if>
-
+--%>
 
 <script type="text/javascript">
     function <portlet:namespace/>doSearch() {
