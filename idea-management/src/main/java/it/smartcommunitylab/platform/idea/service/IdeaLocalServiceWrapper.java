@@ -397,6 +397,13 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
         return _ideaLocalService.getIdeas(groupId, start, end);
     }
 
+    @Override
+    public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
+        long[] categoryIds, long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getCategoryTags(categoryIds, groupId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

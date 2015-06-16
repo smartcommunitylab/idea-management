@@ -336,4 +336,9 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas(
         long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
+        long[] categoryIds, long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException;
 }

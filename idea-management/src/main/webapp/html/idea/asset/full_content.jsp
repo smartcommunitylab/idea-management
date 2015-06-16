@@ -25,6 +25,19 @@
 
 	List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
 			Idea.class.getName(), idea.getIdeaId());
+	
+	List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(assetEntry.getCategoryIds(), assetEntry.getGroupId());  
+	java.util.Set<String> categoryTagsSet = new java.util.HashSet<String>();
+	java.util.Set<String> parentTagSet = new java.util.HashSet<String>();
+	java.util.Set<String> ownTagSet = new java.util.HashSet<String>();
+	for (AssetTag tag : categoryTags) {
+		categoryTagsSet.add(tag.getName());
+	}
+  for (AssetTag tag : assetTags) {
+    if (categoryTagsSet.contains(tag.getName())) parentTagSet.add(tag.getName());
+    else ownTagSet.add(tag.getName());
+  }
+	
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"),
 			request);
 %>
@@ -54,6 +67,22 @@
 	<liferay-ui:panel collapsible="true" id="info" title='<%= LanguageUtil.get(locale, "lbl_info") %>'>
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
 
+    <c:if test="<%=parentTagSet.size() > 0 %>">
+    <div class="row-fluid">
+      <liferay-ui:message key="lbl_tags"/>
+        <% for (String tag: parentTagSet) {%>
+        <span class="badge"><%=tag %></span>
+        <%} %>
+    </div>
+    </c:if>
+    <c:if test="<%=ownTagSet.size() > 0 %>">
+    <div class="row-fluid">
+      <liferay-ui:message key="lbl_usertags"/>
+        <% for (String tag: ownTagSet) {%>
+        <span class="badge"><%=tag %></span>
+        <%} %>
+    </div>
+    </c:if>
 		<liferay-ui:asset-links
 		  assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
 		  className="<%=Idea.class.getName()%>" classPK="<%=idea.getIdeaId()%>" />
@@ -68,6 +97,7 @@
 	      />
       </div>
 
+      <hr/>
       <div class="row-fluid">
 	      <portlet:actionURL name="addComment" var="discussionURL">
 	        <!-- workaround to invoke liferary class that manage comment/discussion -->

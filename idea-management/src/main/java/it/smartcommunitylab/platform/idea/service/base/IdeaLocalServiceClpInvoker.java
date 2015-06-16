@@ -71,6 +71,8 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes65;
     private String _methodName66;
     private String[] _methodParameterTypes66;
+    private String _methodName67;
+    private String[] _methodParameterTypes67;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -223,6 +225,10 @@ public class IdeaLocalServiceClpInvoker {
         _methodName66 = "getIdeas";
 
         _methodParameterTypes66 = new String[] { "long", "int", "int" };
+
+        _methodName67 = "getCategoryTags";
+
+        _methodParameterTypes67 = new String[] { "long[][]", "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -405,6 +411,12 @@ public class IdeaLocalServiceClpInvoker {
             return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
+        }
+
+        if (_methodName67.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+            return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
+                ((Long) arguments[1]).longValue());
         }
 
         throw new UnsupportedOperationException();

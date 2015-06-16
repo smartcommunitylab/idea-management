@@ -8,9 +8,13 @@ import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
@@ -19,9 +23,15 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 
 /**
  * The implementation of the idea local service.
@@ -198,5 +208,29 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 	public List<Idea> getIdeas(long groupId, int start, int end)
 			throws SystemException {
 		return ideaPersistence.findByGroupId(groupId, start, end);
+	}
+
+	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId) throws SystemException {
+		
+		AssetEntryQuery entryQuery = new AssetEntryQuery();
+		entryQuery.setAllCategoryIds(categoryIds);
+		entryQuery.setClassNameIds(new long[]{PortalUtil.getClassNameId(JournalArticle.class)});
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, "Idea Category") });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(entryQuery);
+		if (entries != null && entries.size() > 0) {
+			AssetEntry entry = entries.get(0);
+			return entry.getTags();
+		}
+		return Collections.emptyList();
+	}
+	
+	private long getStructureIdByStructureName(long groupId, String structureName) throws SystemException {
+		List<JournalStructure> journalStructures = JournalStructureLocalServiceUtil.getStructures(groupId);
+		for (JournalStructure journalStructure : journalStructures) {
+			if (journalStructure.getNameCurrentValue().equalsIgnoreCase(structureName)) {
+				return journalStructure.getId();
+			}
+		}
+		return -1;
 	}
 }

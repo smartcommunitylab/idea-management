@@ -70,6 +70,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     private String[] _methodParameterTypes30;
     private String _methodName31;
     private String[] _methodParameterTypes31;
+    private String _methodName32;
+    private String[] _methodParameterTypes32;
 
     public IdeaLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -224,6 +226,10 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         _methodName31 = "getIdeas";
 
         _methodParameterTypes31 = new String[] { "long", "int", "int" };
+
+        _methodName32 = "getCategoryTags";
+
+        _methodParameterTypes32 = new String[] { "long[][]", "long" };
     }
 
     @Override
@@ -1127,5 +1133,37 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         }
 
         return (java.util.List<it.smartcommunitylab.platform.idea.model.Idea>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
+        long[] categoryIds, long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName32,
+                    _methodParameterTypes32,
+                    new Object[] {
+                        ClpSerializer.translateInput(categoryIds),
+                        
+                    groupId
+                    });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<com.liferay.portlet.asset.model.AssetTag>) ClpSerializer.translateOutput(returnObj);
     }
 }

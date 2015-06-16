@@ -379,6 +379,12 @@ public class IdeaLocalServiceUtil {
         return getService().getIdeas(groupId, start, end);
     }
 
+    public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
+        long[] categoryIds, long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getCategoryTags(categoryIds, groupId);
+    }
+
     public static void clearService() {
         _service = null;
     }
