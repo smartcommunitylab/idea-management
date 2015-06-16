@@ -5,10 +5,19 @@ public class IdeaBean {
 	private String title;
 	private String longDesc;
 	private String shortDesc;
+	private Long categoryId;
 	private long createTs;
 	private long modifiedTs;
 	private long creatorId;
 	private String creatorUsername;
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
 
 	public long getId() {
 		return id;

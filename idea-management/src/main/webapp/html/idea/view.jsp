@@ -6,12 +6,14 @@
 
 <%
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
+Long categoryId = (Long) request.getAttribute("categoryId");
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
 <aui:button-row>
 	<portlet:renderURL var="addIdea">
 		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
+		<portlet:param name="categoryId" value="<%=  String.valueOf(categoryId) %>" />
 	</portlet:renderURL>
 	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>

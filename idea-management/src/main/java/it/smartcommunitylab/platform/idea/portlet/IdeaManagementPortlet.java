@@ -93,6 +93,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Idea.class.getName(), req);
 
+		Long categoryId = ParamUtil.getLong(req, "categoryId");
+
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
@@ -100,6 +102,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
+		ideaBean.setCategoryId(categoryId);
 		IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 		SessionMessages.add(req, "addedIdea");

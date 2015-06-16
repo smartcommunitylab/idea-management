@@ -88,7 +88,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 				groupId, idea.getCreateDate(), idea.getModifiedDate(),
 				Idea.class.getName(), guestbookId, idea.getUuid(), 0,
-				serviceContext.getAssetCategoryIds(),
+				new long[] { ideaBean.getCategoryId() },
 				serviceContext.getAssetTagNames(), true, null, null, null,
 				ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
 				null, 0, 0, null, false);

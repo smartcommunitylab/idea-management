@@ -13,6 +13,7 @@
                 idea = IdeaLocalServiceUtil.getIdea(ideaId);
         }
         
+        String categoryId = ParamUtil.getString(request, "categoryId");
 %>
 
 <%
@@ -49,16 +50,10 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	
 	<aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
 	<aui:input name="ideaId" type="hidden"></aui:input>
+	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>"></aui:input>
 	<aui:input name="redirect" type="hidden" value="<%= viewURL.toString() %>"></aui:input>
 
-	<liferay-ui:asset-categories-error />
 	<liferay-ui:asset-tags-error />
-
-	<liferay-ui:asset-categories-selector
-		className="<%=Idea.class.getName()%>" classPK="<%=ideaId%>">
-
-	</liferay-ui:asset-categories-selector>
-
 
 	<label>Tags</label>
 	<liferay-ui:asset-tags-selector className="<%=Idea.class.getName()%>"
@@ -77,9 +72,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	</liferay-ui:panel>
 
 	<aui:button-row>
-
 		<aui:button type="submit"></aui:button>
 		<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-
 	</aui:button-row>
 </aui:form>
