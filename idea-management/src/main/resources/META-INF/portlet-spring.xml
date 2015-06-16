@@ -5,4 +5,5 @@
 	<bean id="it.smartcommunitylab.platform.idea.service.persistence.CallPersistence" class="it.smartcommunitylab.platform.idea.service.persistence.CallPersistenceImpl" parent="basePersistence" />
 	<bean id="it.smartcommunitylab.platform.idea.service.IdeaLocalService" class="it.smartcommunitylab.platform.idea.service.impl.IdeaLocalServiceImpl" />
 	<bean id="it.smartcommunitylab.platform.idea.service.persistence.IdeaPersistence" class="it.smartcommunitylab.platform.idea.service.persistence.IdeaPersistenceImpl" parent="basePersistence" />
+	<bean id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder" class="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderImpl" parent="basePersistence" />
 </beans>

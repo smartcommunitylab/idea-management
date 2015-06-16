@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-sql>
+    <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndRating">
+    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec, AssetEntry a, RatingsEntry r, IM_Idea i WHERE (ec.categoryId= ?) AND ec.entryId= a.entryId AND a.classPK=r.classPK AND i.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC ]]>
+    </sql>
+</custom-sql>

@@ -45,7 +45,7 @@
 		<column name="longDesc" type="String"></column>
 		<column name="shortDesc" type="String"></column>
 
-		<order by="asc">
+		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
 			<order-column name="title" order-by="asc"></order-column>
 		</order>

@@ -23,6 +23,7 @@ import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.service.CallLocalService;
 import it.smartcommunitylab.platform.idea.service.persistence.CallPersistence;
+import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaPersistence;
 
 import java.io.Serializable;
@@ -53,6 +54,8 @@ public abstract class CallLocalServiceBaseImpl extends BaseLocalServiceImpl
     protected it.smartcommunitylab.platform.idea.service.IdeaLocalService ideaLocalService;
     @BeanReference(type = IdeaPersistence.class)
     protected IdeaPersistence ideaPersistence;
+    @BeanReference(type = IdeaFinder.class)
+    protected IdeaFinder ideaFinder;
     @BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
     protected com.liferay.counter.service.CounterLocalService counterLocalService;
     @BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
@@ -422,6 +425,24 @@ public abstract class CallLocalServiceBaseImpl extends BaseLocalServiceImpl
      */
     public void setIdeaPersistence(IdeaPersistence ideaPersistence) {
         this.ideaPersistence = ideaPersistence;
+    }
+
+    /**
+     * Returns the idea finder.
+     *
+     * @return the idea finder
+     */
+    public IdeaFinder getIdeaFinder() {
+        return ideaFinder;
+    }
+
+    /**
+     * Sets the idea finder.
+     *
+     * @param ideaFinder the idea finder
+     */
+    public void setIdeaFinder(IdeaFinder ideaFinder) {
+        this.ideaFinder = ideaFinder;
     }
 
     /**
