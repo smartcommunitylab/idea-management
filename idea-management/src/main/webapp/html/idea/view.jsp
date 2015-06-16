@@ -1,17 +1,14 @@
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
-<%@page import="com.liferay.portal.util.PortalUtil"%>
-<%@page import="com.liferay.portal.theme.ThemeDisplay"%>
-<%@page import="java.util.Locale"%>
-<%@ page import="java.util.List" %>
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
+<%
+boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
+%>
 
+<c:if test='<%= !hidePortlet_view%>'>
 <aui:button-row>
 	<portlet:renderURL var="addIdea">
 		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
@@ -68,3 +65,4 @@
 
     <liferay-ui:search-iterator />
 </liferay-ui:search-container>
+</c:if>

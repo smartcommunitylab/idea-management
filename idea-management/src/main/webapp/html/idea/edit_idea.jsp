@@ -2,9 +2,6 @@
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page
 	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
-<%@ page import="com.liferay.portal.theme.ThemeDisplay"%>
-<%@ page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@ include file="/html/common-init.jsp" %>
 
 <%

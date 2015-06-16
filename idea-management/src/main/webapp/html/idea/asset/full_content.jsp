@@ -1,22 +1,7 @@
-<%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
-<%@page import="com.liferay.portal.kernel.util.WebKeys"%>
-<%@page import="com.liferay.portal.theme.ThemeDisplay"%>
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
-<%@ page
-	import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil"%>
-<%@ page
-	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
-<%@ page import="com.liferay.portlet.asset.model.AssetEntry"%>
-<%@ page import="com.liferay.portal.util.PortalUtil"%>
-<%@ page
-	import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.liferay.portlet.asset.model.AssetTag"%>
-<%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil"%>
-<%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
+<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
