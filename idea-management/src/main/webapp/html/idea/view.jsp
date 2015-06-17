@@ -8,6 +8,8 @@
 
 <%
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
+boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
+boolean hideFilters_view = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
 Long categoryId = (Long) request.getAttribute("categoryId");
 
 List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
@@ -16,7 +18,7 @@ List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{ca
 
 <c:if test='<%= !hidePortlet_view%>'>
 
-<c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") %>'>
+<c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && !hideAddIdea_view %>'>
 
 <aui:button-row>
 	<portlet:renderURL var="addIdea">
@@ -51,12 +53,13 @@ String filterBy = (String) request.getAttribute("filterBy");
 	name='filter'
 	var="filterURL"></portlet:actionURL>
 
+<c:if test='<%= !hideFilters_view %>'>
 <aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by"/>  
-		<aui:input inlineField="true" checked="<%= filterBy == null|| filterBy.equals(Constants.FILTER_BY_ALL) %>" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
-		<aui:input inlineField="true" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
-		<aui:input inlineField="true" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
+		<aui:input inlineField="true" checked="<%= filterBy == null|| filterBy.equals(Constants.FILTER_BY_ALL) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
+		<aui:input inlineField="true" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
+		<aui:input inlineField="true" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
 		</div>
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by_tags"/>  
@@ -65,6 +68,7 @@ String filterBy = (String) request.getAttribute("filterBy");
     <% } %>
     </div>
 </aui:form>
+</c:if>
 
 
 <liferay-ui:search-container>
