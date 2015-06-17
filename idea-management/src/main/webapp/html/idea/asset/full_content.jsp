@@ -16,6 +16,8 @@
 	}
 	idea = idea.toEscapedModel();
 	
+	User owner = UserLocalServiceUtil.getUser(idea.getUserId());
+	
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			Idea.class.getName(), idea.getIdeaId());
 
@@ -43,6 +45,11 @@
   }
 	
   List<User> users = UserLocalServiceUtil.getGroupUsers(idea.getUserGroupId());
+  boolean isOwner = owner.getUserId() == user.getUserId();
+  boolean participates = false;
+  for (User u : users) {
+	  if (u.getUserId() == user.getUserId()) participates = true;
+  }
   
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"),
 			request);
@@ -50,13 +57,18 @@
 <div class="row-fluid">
   <span class="span8 idea-view-title"><%=HtmlUtil.unescape(idea.getTitle())%></span>
   <span class="span4 idea-creator text-right">
-    <liferay-ui:message key="lbl_createdWhenWho" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.getCreateDate()),user.getScreenName()}%>" />  
+    <liferay-ui:message key="lbl_createdWhenWho" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.getCreateDate()),owner.getScreenName()}%>" />  
+	  
 	  <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
 	    <portlet:renderURL var="editIdea" windowState="maximized">
 	      <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
 	      <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
 	    </portlet:renderURL>
+      <portlet:actionURL var="deleteURL" name="deleteEntry">
+        <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+      </portlet:actionURL>
 	    <a href="<%=editIdea.toString()%>"><i class="icon-pencil"></i></a>
+      <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
 	  </c:if>
   </span>
 </div>
@@ -111,7 +123,13 @@
 		      />
         </div>
 	      <div class="span6">
-	       <a class="btn" href="#"><i class="icon-hand-up"></i></a>
+		      <portlet:actionURL var="toggleURL" name="toggleUserParticipation">
+            <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
+		        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+            <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
+		      </portlet:actionURL>
+  	      <a class="btn <%=participates ? "btn-primary" : "" %>" href="<%=toggleURL.toString() %>"><i class="icon-hand-up"></i></a>
+  	      <i class="icon-user"></i><%=users.size() %>
 	      </div>
 	      
       </div>
@@ -133,7 +151,8 @@
   </c:if>
   <liferay-ui:panel collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
         <% for (User participant: users) {%>
-        <liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getFullName() %>" displayStyle="0"></liferay-ui:user-display>
+        <liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getScreenName() %>" displayStyle="0"></liferay-ui:user-display>
+        <c:if test="<%=participant.getUserId() == owner.getUserId() %>"><liferay-ui:message key="lbl_author"/></c:if>
         <%} %>
   </liferay-ui:panel>
   <liferay-ui:panel collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>

@@ -116,6 +116,14 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		SessionMessages.add(req, "deleteIdea");
 	}
 
+	public void toggleUserParticipation(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException {
+
+		long ideaId = ParamUtil.getLong(req, "ideaId");
+		long userId = ParamUtil.getLong(req, "userId");
+		IdeaLocalServiceUtil.toggleUserParticipation(ideaId, userId);
+	}
+
 	public void updateIdea(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException, IOException {
 

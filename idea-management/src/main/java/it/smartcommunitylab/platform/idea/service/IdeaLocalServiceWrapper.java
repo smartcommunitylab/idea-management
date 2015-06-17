@@ -398,6 +398,13 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public void toggleUserParticipation(long ideaId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        _ideaLocalService.toggleUserParticipation(ideaId, userId);
+    }
+
+    @Override
     public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {

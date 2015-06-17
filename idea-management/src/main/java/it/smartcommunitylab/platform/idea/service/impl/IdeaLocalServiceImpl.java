@@ -23,6 +23,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -231,6 +232,23 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return ideaPersistence.findByGroupId(groupId, start, end);
 	}
 
+	public void toggleUserParticipation(long ideaId, long userId) throws SystemException, PortalException {
+		List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(userId);
+		Idea idea = getIdea(ideaId);
+		if (idea.getUserId() == userId) return;
+		
+		long groupId = idea.getUserGroupId();
+		if (userGroups != null) {
+			for (Group g : userGroups) {
+				if (g.getGroupId() == groupId) {
+					UserLocalServiceUtil.deleteGroupUser(groupId, userId);
+					return;
+				}
+			}
+		}
+		GroupLocalServiceUtil.addUserGroup(userId, groupId);
+	}
+	
 	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId) throws SystemException {
 		
 		AssetEntryQuery entryQuery = new AssetEntryQuery();

@@ -379,6 +379,12 @@ public class IdeaLocalServiceUtil {
         return getService().getIdeas(groupId, start, end);
     }
 
+    public static void toggleUserParticipation(long ideaId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        getService().toggleUserParticipation(ideaId, userId);
+    }
+
     public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {

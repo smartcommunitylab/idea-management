@@ -73,6 +73,8 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes66;
     private String _methodName67;
     private String[] _methodParameterTypes67;
+    private String _methodName68;
+    private String[] _methodParameterTypes68;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -226,9 +228,13 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodParameterTypes66 = new String[] { "long", "int", "int" };
 
-        _methodName67 = "getCategoryTags";
+        _methodName67 = "toggleUserParticipation";
 
-        _methodParameterTypes67 = new String[] { "long[][]", "long" };
+        _methodParameterTypes67 = new String[] { "long", "long" };
+
+        _methodName68 = "getCategoryTags";
+
+        _methodParameterTypes68 = new String[] { "long[][]", "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -415,6 +421,14 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName67.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+            IdeaLocalServiceUtil.toggleUserParticipation(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue());
+
+            return null;
+        }
+
+        if (_methodName68.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
                 ((Long) arguments[1]).longValue());
         }
