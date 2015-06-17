@@ -405,6 +405,14 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public java.util.Map<java.lang.String, java.lang.String> getCategoryColors(
+        long groupId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getCategoryColors(groupId);
+    }
+
+    @Override
     public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {

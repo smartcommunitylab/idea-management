@@ -3,6 +3,7 @@ package it.smartcommunitylab.platform.idea.service.impl;
 import it.smartcommunitylab.platform.idea.NoSuchIdeaException;
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.portlet.Constants;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
@@ -10,13 +11,18 @@ import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -32,6 +38,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 
 /**
@@ -249,12 +256,39 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		GroupLocalServiceUtil.addUserGroup(userId, groupId);
 	}
 	
+	public Map<String, String> getCategoryColors(long groupId) throws SystemException, PortalException {
+		Map<String, String> res = new HashMap<String, String>();
+		AssetEntryQuery entryQuery = new AssetEntryQuery();
+		XPath xpath = SAXReaderUtil.createXPath("dynamic-element[@name='color']");
+
+		entryQuery.setClassNameIds(new long[]{PortalUtil.getClassNameId(JournalArticle.class)});
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(entryQuery);
+		if (entries != null && entries.size() > 0) {
+			for (AssetEntry entry : entries) {
+				if (entry.getCategoryIds() != null && entry.getCategoryIds().length > 0) {
+					JournalArticle article = JournalArticleLocalServiceUtil.getLatestArticle(entry.getClassPK());
+					try {
+						Element el = SAXReaderUtil.read(article.getContent()).getRootElement();
+						String color = xpath.selectSingleNode(el).getStringValue();
+						res.put(""+entry.getCategoryIds()[0], color.trim());
+					} catch (Exception e) {
+						e.printStackTrace();
+						continue;
+					}
+				}
+			}
+		}
+		System.err.println(res);
+		return res;
+	}
+	
 	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId) throws SystemException {
 		
 		AssetEntryQuery entryQuery = new AssetEntryQuery();
 		entryQuery.setAllCategoryIds(categoryIds);
 		entryQuery.setClassNameIds(new long[]{PortalUtil.getClassNameId(JournalArticle.class)});
-		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, "Idea Category") });
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
 		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(entryQuery);
 		if (entries != null && entries.size() > 0) {
 			AssetEntry entry = entries.get(0);

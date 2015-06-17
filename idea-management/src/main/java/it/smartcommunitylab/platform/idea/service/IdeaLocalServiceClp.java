@@ -74,6 +74,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     private String[] _methodParameterTypes32;
     private String _methodName33;
     private String[] _methodParameterTypes33;
+    private String _methodName34;
+    private String[] _methodParameterTypes34;
 
     public IdeaLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -233,9 +235,13 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
 
         _methodParameterTypes32 = new String[] { "long", "long" };
 
-        _methodName33 = "getCategoryTags";
+        _methodName33 = "getCategoryColors";
 
-        _methodParameterTypes33 = new String[] { "long[][]", "long" };
+        _methodParameterTypes33 = new String[] { "long" };
+
+        _methodName34 = "getCategoryTags";
+
+        _methodParameterTypes34 = new String[] { "long[][]", "long" };
     }
 
     @Override
@@ -1169,14 +1175,46 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
+    public java.util.Map<java.lang.String, java.lang.String> getCategoryColors(
+        long groupId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName33,
+                    _methodParameterTypes33, new Object[] { groupId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.Map<java.lang.String, java.lang.String>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName33,
-                    _methodParameterTypes33,
+            returnObj = _invokableLocalService.invokeMethod(_methodName34,
+                    _methodParameterTypes34,
                     new Object[] {
                         ClpSerializer.translateInput(categoryIds),
                         
