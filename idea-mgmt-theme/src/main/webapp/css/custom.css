@@ -4,8 +4,59 @@
 	padding: 0;
 }
 
+
+header#banner {
+	height: 400px;
+	margin-bottom: 30px;
+	background-image: url('../images/cover.png');
+	background-size: cover;
+}
+
 #navigation .navbar-inner {
 	padding: 0;
+	border: 0;
+	/* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(255, 255, 255);
+	/* RGBa with 0.6 opacity */
+	background: rgba(255, 255, 255, 0.6);
+}
+
+#navigation .navbar-inner #navmenu {
+	text-transform: uppercase;
+}
+
+#navigation .navbar-inner #navmenu li {
+	line-height: 40px;
+}
+
+#navigation .navbar-inner #navmenu li a {
+	padding: 10px 40px;
+}
+
+#navigation .navbar-inner #navmenu li a span {
+	text-shadow: none;
+	color: black;
+}
+
+#sign-in {
+	float: right;
+	line-height: 40px;
+	padding: 10px 15px;
+}
+
+#sign-in .user-avatar-link {
+	color: black;
+	text-decoration: none !important;
+	cursor: pointer;
+}
+
+#sign-in .user-avatar-image {
+	width: 40px;
+	height: 40px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	border: 1px solid #DDD;
 }
 
 #content {
