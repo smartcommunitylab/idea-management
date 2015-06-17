@@ -1,9 +1,22 @@
 @CHARSET "UTF-8";
 
-#wrapper {
-	padding: 0;
+@import
+	url(http://fonts.googleapis.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400)
+	;
+
+.aui h1, .aui h2, .aui h3, .aui h4, .aui h5, .aui h6 {
+	font-weight: normal;
 }
 
+#wrapper {
+	padding: 0;
+	/* Helvetica Hell... https://css-tricks.com/snippets/css/better-helvetica/
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
+		"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	*/
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+}
 
 header#banner {
 	height: 400px;
@@ -18,7 +31,7 @@ header#banner {
 	/* Fallback for web browsers that doesn't support RGBa */
 	background: rgb(255, 255, 255);
 	/* RGBa with 0.6 opacity */
-	background: rgba(255, 255, 255, 0.6);
+	background: rgba(255, 255, 255, 0.7);
 }
 
 #navigation .navbar-inner #navmenu {
@@ -48,6 +61,7 @@ header#banner {
 	color: black;
 	text-decoration: none !important;
 	cursor: pointer;
+	text-decoration: none !important;
 }
 
 #sign-in .user-avatar-image {
@@ -67,12 +81,30 @@ header#banner {
 	display: none;
 }
 
-.portlet .portlet-title .portlet-title-text {
-	text-transform: uppercase;
-}
-
 .idea-slider .idea-slider-arrow {
 	font-size: 3em;
-	line-height: 130px;
 	text-decoration: none;
+	line-height: 150px;
+}
+
+.idea-slider .idea {
+	text-decoration: none !important;
+	color: black !important;
+}
+
+.idea-slider .idea .thumbnail {
+	border-left-width: 16px;
+	height: 150px;
+}
+
+/*
+.idea-slider .idea .thumbnail h4 {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+*/
+
+.idea-slider .idea .thumbnail .idea-cat {
+	text-transform: uppercase;
 }
