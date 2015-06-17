@@ -8,6 +8,8 @@
 
 <%
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
+boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
+boolean hideFilters_view = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
 Long categoryId = (Long) request.getAttribute("categoryId");
 
 List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
@@ -16,7 +18,7 @@ List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{ca
 
 <c:if test='<%= !hidePortlet_view%>'>
 
-<c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") %>'>
+<c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && !hideAddIdea_view %>'>
 
 <aui:button-row>
 	<portlet:renderURL var="addIdea">
@@ -51,6 +53,7 @@ String filterBy = (String) request.getAttribute("filterBy");
 	name='filter'
 	var="filterURL"></portlet:actionURL>
 
+<c:if test='<%= !hideFilters_view %>'>
 <aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by"/>  
@@ -65,6 +68,7 @@ String filterBy = (String) request.getAttribute("filterBy");
     <% } %>
     </div>
 </aui:form>
+</c:if>
 
 
 <liferay-ui:search-container>
