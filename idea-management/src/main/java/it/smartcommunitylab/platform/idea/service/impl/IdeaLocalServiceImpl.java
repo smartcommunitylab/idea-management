@@ -279,7 +279,6 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				}
 			}
 		}
-		System.err.println(res);
 		return res;
 	}
 	

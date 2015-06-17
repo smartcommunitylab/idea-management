@@ -9,6 +9,7 @@
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
     <indexer-class>it.smartcommunitylab.platform.idea.search.IdeaIndexer</indexer-class>
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.IdeaAssetRendererFactory</asset-renderer-factory>
+    <instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

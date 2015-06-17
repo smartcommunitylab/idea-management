@@ -14,4 +14,10 @@ public class Constants {
 
 	public static final String PREF_VIEWTYPE_SIMPLE = "simple";
 	public static final String PREF_VIEWTYPE_COMPLEX = "complex";
+	
+	public static final String PREF_LISTTYPE_POPULAR = "popular";
+	public static final String PREF_LISTTYPE_RECENT = "recent";
+	public static final String PREF_LISTTYPE_RELATED = "related";
+	public static final String PREF_LISTTYPE_SIMILAR = "similar";
+
 }

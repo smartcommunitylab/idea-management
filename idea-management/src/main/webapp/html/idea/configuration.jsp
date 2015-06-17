@@ -4,6 +4,7 @@
 
 <%
 String viewType_cfg = GetterUtil.getString(portletPreferences.getValue("viewType",Constants.PREF_VIEWTYPE_SIMPLE));
+String listType_cfg = GetterUtil.getString(portletPreferences.getValue("listType",Constants.PREF_LISTTYPE_POPULAR));
 boolean hidePortlet_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 boolean hideAddIdea_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
 boolean hideFilters_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
@@ -25,6 +26,13 @@ function <portlet:namespace />disableText() {
 		<aui:option value="<%=Constants.PREF_VIEWTYPE_SIMPLE %>" label="lbl_viewType_simple" selected="<%= viewType_cfg.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>"></aui:option>
 		<aui:option value="<%=Constants.PREF_VIEWTYPE_COMPLEX %>" label="lbl_viewType_complex" selected="<%= viewType_cfg.equals(Constants.PREF_VIEWTYPE_COMPLEX) %>"></aui:option>
 	</aui:select>
+
+  <aui:select name="preferences--listType--" label="lbl_listType">
+    <aui:option value="<%=Constants.PREF_LISTTYPE_POPULAR %>" label="lbl_listType_popular" selected="<%= listType_cfg.equals(Constants.PREF_LISTTYPE_POPULAR) %>"></aui:option>
+    <aui:option value="<%=Constants.PREF_LISTTYPE_RECENT %>" label="lbl_listType_recent" selected="<%= listType_cfg.equals(Constants.PREF_LISTTYPE_RECENT) %>"></aui:option>
+    <aui:option value="<%=Constants.PREF_LISTTYPE_RELATED %>" label="lbl_listType_related" selected="<%= listType_cfg.equals(Constants.PREF_LISTTYPE_RELATED) %>"></aui:option>
+    <aui:option value="<%=Constants.PREF_LISTTYPE_SIMILAR %>" label="lbl_listType_similar" selected="<%= listType_cfg.equals(Constants.PREF_LISTTYPE_SIMILAR) %>"></aui:option>
+  </aui:select>
 
     <aui:input name="preferences--hidePortlet--" type="checkbox" label="lbl_hidePortlet" value="<%= hidePortlet_cfg %>" />
     
