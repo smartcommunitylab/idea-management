@@ -10,6 +10,7 @@ public class IdeaBean {
 	private long modifiedTs;
 	private long creatorId;
 	private String creatorUsername;
+	private long userGroupId;
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -83,4 +84,18 @@ public class IdeaBean {
 		this.creatorUsername = creatorUsername;
 	}
 
+	/**
+	 * @return the userGroupId
+	 */
+	public long getUserGroupId() {
+		return userGroupId;
+	}
+
+	/**
+	 * @param userGroupId the userGroupId to set
+	 */
+	public void setUserGroupId(long userGroupId) {
+		this.userGroupId = userGroupId;
+	}
+	
 }

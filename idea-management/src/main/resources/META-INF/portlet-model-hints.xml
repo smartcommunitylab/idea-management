@@ -30,5 +30,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="shortDesc" type="String" />
+		<field name="userGroupId" type="long" />
 	</model>
 </model-hints>

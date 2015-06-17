@@ -12,16 +12,16 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -73,10 +73,27 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 		// validate(name);
 
-		long guestbookId = counterLocalService.increment();
+		long pkId = counterLocalService.increment();
 
-		Idea idea = ideaPersistence.create(guestbookId);
-
+		Idea idea = ideaPersistence.create(pkId);
+		
+		Group group = GroupLocalServiceUtil.addGroup(
+				userId, 
+				0L,
+				null, 
+				0L, 
+				0L,
+				ideaBean.getTitle(),
+				null, 
+				GroupConstants.TYPE_SITE_OPEN, 
+				false,
+				0,
+				null, 
+				true,
+				true,
+				serviceContext);
+		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
+		
 		idea.setUuid(serviceContext.getUuid());
 		idea.setUserId(userId);
 		idea.setGroupId(groupId);
@@ -85,6 +102,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setCreateDate(serviceContext.getCreateDate(now));
 		idea.setModifiedDate(serviceContext.getModifiedDate(now));
 		idea.setExpandoBridgeAttributes(serviceContext);
+		idea.setUserGroupId(group.getGroupId());
 
 		idea.setTitle(ideaBean.getTitle());
 		idea.setShortDesc(ideaBean.getShortDesc());
@@ -93,11 +111,11 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		ideaPersistence.update(idea);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-				Idea.class.getName(), guestbookId, false, true, true);
+				Idea.class.getName(), pkId, false, true, true);
 
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 				groupId, idea.getCreateDate(), idea.getModifiedDate(),
-				Idea.class.getName(), guestbookId, idea.getUuid(), 0,
+				Idea.class.getName(), pkId, idea.getUuid(), 0,
 				new long[] { ideaBean.getCategoryId() },
 				serviceContext.getAssetTagNames(), true, null, null, null,
 				ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
@@ -161,6 +179,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class
 					.getClass());
 			indexer.delete(idea);
+			
+			GroupLocalServiceUtil.deleteUserGroup(userId, idea.getGroupId());
+
 			resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 					Idea.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
 					idea.getIdeaId());

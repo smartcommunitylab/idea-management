@@ -32,10 +32,11 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
     public String title;
     public String longDesc;
     public String shortDesc;
+    public long userGroupId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -59,6 +60,8 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         sb.append(longDesc);
         sb.append(", shortDesc=");
         sb.append(shortDesc);
+        sb.append(", userGroupId=");
+        sb.append(userGroupId);
         sb.append("}");
 
         return sb.toString();
@@ -115,6 +118,8 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
             ideaImpl.setShortDesc(shortDesc);
         }
 
+        ideaImpl.setUserGroupId(userGroupId);
+
         ideaImpl.resetOriginalValues();
 
         return ideaImpl;
@@ -133,6 +138,7 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         title = objectInput.readUTF();
         longDesc = objectInput.readUTF();
         shortDesc = objectInput.readUTF();
+        userGroupId = objectInput.readLong();
     }
 
     @Override
@@ -175,5 +181,7 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         } else {
             objectOutput.writeUTF(shortDesc);
         }
+
+        objectOutput.writeLong(userGroupId);
     }
 }

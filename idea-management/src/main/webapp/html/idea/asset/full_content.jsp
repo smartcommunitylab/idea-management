@@ -1,7 +1,11 @@
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+
 <%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %>
+<%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.model.User" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -38,6 +42,8 @@
     else ownTagSet.add(tag.getName());
   }
 	
+  List<User> users = UserLocalServiceUtil.getGroupUsers(idea.getUserGroupId());
+  
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"),
 			request);
 %>
@@ -87,14 +93,27 @@
 		  assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
 		  className="<%=Idea.class.getName()%>" classPK="<%=idea.getIdeaId()%>" />
   </liferay-ui:panel>
+  <c:if test="<%=themeDisplay.isSignedIn()%>">
   <liferay-ui:panel collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
-		<c:if test="<%=themeDisplay.isSignedIn()%>">
-		
+      <div class="row-fluid text-center">
+        <div class="span6">
+          <liferay-ui:message key="lbl_rate"/>
+        </div>
+        <div class="span6">
+          <liferay-ui:message key="lbl_participate"/>
+        </div>
+      </div>
 		  <div class="row-fluid">
-			  <liferay-ui:ratings
-			    className="<%= Idea.class.getName() %>"
-			    classPK="<%= idea.getIdeaId() %>"
-	      />
+		    <div class="span6">
+				  <liferay-ui:ratings
+				    className="<%= Idea.class.getName() %>"
+				    classPK="<%= idea.getIdeaId() %>"
+		      />
+        </div>
+	      <div class="span6">
+	       <a class="btn" href="#"><i class="icon-hand-up"></i></a>
+	      </div>
+	      
       </div>
 
       <hr/>
@@ -110,9 +129,12 @@
 		    classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
 		    formName="fm2" ratingsEnabled="<%=true%>" redirect="<%=currentURL%>"
 		    subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />
-		</c:if>
   </liferay-ui:panel>
+  </c:if>
   <liferay-ui:panel collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
+        <% for (User participant: users) {%>
+        <liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getFullName() %>" displayStyle="0"></liferay-ui:user-display>
+        <%} %>
   </liferay-ui:panel>
   <liferay-ui:panel collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
   </liferay-ui:panel>

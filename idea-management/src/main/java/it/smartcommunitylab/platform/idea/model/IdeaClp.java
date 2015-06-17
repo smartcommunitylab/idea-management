@@ -35,6 +35,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     private String _title;
     private String _longDesc;
     private String _shortDesc;
+    private long _userGroupId;
     private BaseModel<?> _ideaRemoteModel;
     private Class<?> _clpSerializerClass = it.smartcommunitylab.platform.idea.service.ClpSerializer.class;
 
@@ -86,6 +87,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         attributes.put("title", getTitle());
         attributes.put("longDesc", getLongDesc());
         attributes.put("shortDesc", getShortDesc());
+        attributes.put("userGroupId", getUserGroupId());
 
         return attributes;
     }
@@ -156,6 +158,12 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
         if (shortDesc != null) {
             setShortDesc(shortDesc);
+        }
+
+        Long userGroupId = (Long) attributes.get("userGroupId");
+
+        if (userGroupId != null) {
+            setUserGroupId(userGroupId);
         }
     }
 
@@ -412,6 +420,28 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     }
 
     @Override
+    public long getUserGroupId() {
+        return _userGroupId;
+    }
+
+    @Override
+    public void setUserGroupId(long userGroupId) {
+        _userGroupId = userGroupId;
+
+        if (_ideaRemoteModel != null) {
+            try {
+                Class<?> clazz = _ideaRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setUserGroupId", long.class);
+
+                method.invoke(_ideaRemoteModel, userGroupId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Idea.class.getName()));
@@ -495,6 +525,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         clone.setTitle(getTitle());
         clone.setLongDesc(getLongDesc());
         clone.setShortDesc(getShortDesc());
+        clone.setUserGroupId(getUserGroupId());
 
         return clone;
     }
@@ -552,7 +583,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -576,6 +607,8 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(getLongDesc());
         sb.append(", shortDesc=");
         sb.append(getShortDesc());
+        sb.append(", userGroupId=");
+        sb.append(getUserGroupId());
         sb.append("}");
 
         return sb.toString();
@@ -583,7 +616,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(37);
+        StringBundler sb = new StringBundler(40);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -632,6 +665,10 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(
             "<column><column-name>shortDesc</column-name><column-value><![CDATA[");
         sb.append(getShortDesc());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>userGroupId</column-name><column-value><![CDATA[");
+        sb.append(getUserGroupId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");
