@@ -24,6 +24,7 @@ public class CallSoap implements Serializable {
     private Date _modifiedDate;
     private String _description;
     private Date _deadline;
+    private Date _publicationDeadline;
 
     public CallSoap() {
     }
@@ -42,6 +43,7 @@ public class CallSoap implements Serializable {
         soapModel.setModifiedDate(model.getModifiedDate());
         soapModel.setDescription(model.getDescription());
         soapModel.setDeadline(model.getDeadline());
+        soapModel.setPublicationDeadline(model.getPublicationDeadline());
 
         return soapModel;
     }
@@ -176,5 +178,13 @@ public class CallSoap implements Serializable {
 
     public void setDeadline(Date deadline) {
         _deadline = deadline;
+    }
+
+    public Date getPublicationDeadline() {
+        return _publicationDeadline;
+    }
+
+    public void setPublicationDeadline(Date publicationDeadline) {
+        _publicationDeadline = publicationDeadline;
     }
 }

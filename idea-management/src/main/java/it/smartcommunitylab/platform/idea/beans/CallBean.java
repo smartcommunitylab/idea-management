@@ -7,6 +7,7 @@ public class CallBean {
 	private String title;
 	private String description;
 	private Date deadline;
+	private Date publicationDeadline;
 
 	public long getId() {
 		return id;
@@ -38,6 +39,20 @@ public class CallBean {
 
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
+	}
+
+	/**
+	 * @return the publicationDeadline
+	 */
+	public Date getPublicationDeadline() {
+		return publicationDeadline;
+	}
+
+	/**
+	 * @param publicationDeadline the publicationDeadline to set
+	 */
+	public void setPublicationDeadline(Date publicationDeadline) {
+		this.publicationDeadline = publicationDeadline;
 	}
 
 }

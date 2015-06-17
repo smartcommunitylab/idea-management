@@ -2218,6 +2218,7 @@ public class CallPersistenceImpl extends BasePersistenceImpl<Call>
         callImpl.setModifiedDate(call.getModifiedDate());
         callImpl.setDescription(call.getDescription());
         callImpl.setDeadline(call.getDeadline());
+        callImpl.setPublicationDeadline(call.getPublicationDeadline());
 
         return callImpl;
     }

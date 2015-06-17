@@ -67,6 +67,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		call.setCompanyId(user.getCompanyId());
 		call.setTitle(callBean.getTitle());
 		call.setDeadline(callBean.getDeadline());
+		call.setPublicationDeadline(callBean.getPublicationDeadline());
 		call.setDescription(callBean.getDescription());
 
 		call = callPersistence.update(call);
@@ -99,6 +100,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 			call.setTitle(callBean.getTitle());
 			call.setDescription(callBean.getDescription());
 			call.setDeadline(callBean.getDeadline());
+			call.setPublicationDeadline(callBean.getPublicationDeadline());
 
 			callPersistence.update(call);
 

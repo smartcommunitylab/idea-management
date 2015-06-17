@@ -39,7 +39,8 @@ public class CallManagementPortlet extends MVCPortlet {
 		CallBean bean = new CallBean();
 		bean.setTitle(title);
 		bean.setDescription(desc);
-		bean.setDeadline(calculateDeadline(req));
+		bean.setDeadline(calculateDeadline(req,"d"));
+		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
 
 		CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
 				serviceContext);
@@ -59,7 +60,8 @@ public class CallManagementPortlet extends MVCPortlet {
 		bean.setId(id);
 		bean.setTitle(title);
 		bean.setDescription(desc);
-		bean.setDeadline(calculateDeadline(req));
+		bean.setDeadline(calculateDeadline(req, "d"));
+		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
 
 		CallLocalServiceUtil.updateCall(bean, serviceContext);
 	}
@@ -74,10 +76,10 @@ public class CallManagementPortlet extends MVCPortlet {
 
 	}
 
-	private Date calculateDeadline(ActionRequest req) {
-		String day = ParamUtil.getString(req, "dday");
-		String month = ParamUtil.getString(req, "dmonth");
-		String year = ParamUtil.getString(req, "dyear");
+	private Date calculateDeadline(ActionRequest req, String prefix) {
+		String day = ParamUtil.getString(req, prefix+"day");
+		String month = ParamUtil.getString(req, prefix+"month");
+		String year = ParamUtil.getString(req, prefix+"year");
 
 		month = String.valueOf(Integer.valueOf(month) + 1);
 
@@ -94,14 +96,12 @@ public class CallManagementPortlet extends MVCPortlet {
 
 	@Override
 	protected void checkPath(String path) throws PortletException {
-		System.out.println(path);
 		super.checkPath(path);
 	}
 
 	@Override
 	public void doView(RenderRequest renderRequest,
 			RenderResponse renderResponse) throws IOException, PortletException {
-		System.out.println("do view");
 		super.doView(renderRequest, renderResponse);
 	}
 }

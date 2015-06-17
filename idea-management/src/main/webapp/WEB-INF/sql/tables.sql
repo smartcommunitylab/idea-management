@@ -9,7 +9,8 @@ create table IM_Call (
 	createDate DATE null,
 	modifiedDate DATE null,
 	description TEXT null,
-	deadline DATE null
+	deadline DATE null,
+	publicationDeadline DATE null
 );
 
 create table IM_Idea (

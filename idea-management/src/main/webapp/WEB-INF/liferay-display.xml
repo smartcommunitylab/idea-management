@@ -3,10 +3,10 @@
 
 <display>
 	
-	<category name="category.journal">
+	<category name="category.cms">
 		<portlet id="idea-management"></portlet>
 	</category>
-	<category name="category.hidden">
+	<category name="category.journal">
 		<portlet id="call-management"></portlet>
 	</category>
 </display>

@@ -20,12 +20,14 @@
 	<portlet>
 		<portlet-name>call-management</portlet-name>
 		<icon>/icon.png</icon>
+    <configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<indexer-class>it.smartcommunitylab.platform.idea.search.CallIndexer</indexer-class>
 		<control-panel-entry-category>
 			site_administration.content
 		</control-panel-entry-category>
 		<control-panel-entry-weight>1.5</control-panel-entry-weight>
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.CallAssetRendererFactory</asset-renderer-factory>
+    <instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js

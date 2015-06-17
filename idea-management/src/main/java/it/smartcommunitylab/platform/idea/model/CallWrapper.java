@@ -49,6 +49,7 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
         attributes.put("modifiedDate", getModifiedDate());
         attributes.put("description", getDescription());
         attributes.put("deadline", getDeadline());
+        attributes.put("publicationDeadline", getPublicationDeadline());
 
         return attributes;
     }
@@ -119,6 +120,12 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
 
         if (deadline != null) {
             setDeadline(deadline);
+        }
+
+        Date publicationDeadline = (Date) attributes.get("publicationDeadline");
+
+        if (publicationDeadline != null) {
+            setPublicationDeadline(publicationDeadline);
         }
     }
 
@@ -382,6 +389,26 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
     @Override
     public void setDeadline(java.util.Date deadline) {
         _call.setDeadline(deadline);
+    }
+
+    /**
+    * Returns the publication deadline of this call.
+    *
+    * @return the publication deadline of this call
+    */
+    @Override
+    public java.util.Date getPublicationDeadline() {
+        return _call.getPublicationDeadline();
+    }
+
+    /**
+    * Sets the publication deadline of this call.
+    *
+    * @param publicationDeadline the publication deadline of this call
+    */
+    @Override
+    public void setPublicationDeadline(java.util.Date publicationDeadline) {
+        _call.setPublicationDeadline(publicationDeadline);
     }
 
     @Override

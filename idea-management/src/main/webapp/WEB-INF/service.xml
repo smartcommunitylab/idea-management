@@ -85,6 +85,7 @@
 		<column name="modifiedDate" type="Date"></column>
 		<column name="description" type="String"></column>
 		<column name="deadline" type="Date"></column>
+        <column name="publicationDeadline" type="Date"></column>
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
 		</order>
