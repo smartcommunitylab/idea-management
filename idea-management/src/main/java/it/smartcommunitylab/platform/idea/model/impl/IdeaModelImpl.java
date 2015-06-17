@@ -58,9 +58,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
             { "modifiedDate", Types.TIMESTAMP },
             { "title", Types.VARCHAR },
             { "longDesc", Types.CLOB },
-            { "shortDesc", Types.CLOB }
+            { "shortDesc", Types.VARCHAR },
+            { "userGroupId", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc TEXT null)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG)";
     public static final String TABLE_SQL_DROP = "drop table IM_Idea";
     public static final String ORDER_BY_JPQL = " ORDER BY idea.createDate DESC, idea.title ASC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Idea.createDate DESC, IM_Idea.title ASC";
@@ -102,6 +103,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     private String _title;
     private String _longDesc;
     private String _shortDesc;
+    private long _userGroupId;
     private long _columnBitmask;
     private Idea _escapedModel;
 
@@ -153,6 +155,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         attributes.put("title", getTitle());
         attributes.put("longDesc", getLongDesc());
         attributes.put("shortDesc", getShortDesc());
+        attributes.put("userGroupId", getUserGroupId());
 
         return attributes;
     }
@@ -223,6 +226,12 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
         if (shortDesc != null) {
             setShortDesc(shortDesc);
+        }
+
+        Long userGroupId = (Long) attributes.get("userGroupId");
+
+        if (userGroupId != null) {
+            setUserGroupId(userGroupId);
         }
     }
 
@@ -403,6 +412,16 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     }
 
     @Override
+    public long getUserGroupId() {
+        return _userGroupId;
+    }
+
+    @Override
+    public void setUserGroupId(long userGroupId) {
+        _userGroupId = userGroupId;
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Idea.class.getName()));
@@ -450,6 +469,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         ideaImpl.setTitle(getTitle());
         ideaImpl.setLongDesc(getLongDesc());
         ideaImpl.setShortDesc(getShortDesc());
+        ideaImpl.setUserGroupId(getUserGroupId());
 
         ideaImpl.resetOriginalValues();
 
@@ -588,12 +608,14 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
             ideaCacheModel.shortDesc = null;
         }
 
+        ideaCacheModel.userGroupId = getUserGroupId();
+
         return ideaCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(23);
+        StringBundler sb = new StringBundler(25);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -617,6 +639,8 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         sb.append(getLongDesc());
         sb.append(", shortDesc=");
         sb.append(getShortDesc());
+        sb.append(", userGroupId=");
+        sb.append(getUserGroupId());
         sb.append("}");
 
         return sb.toString();
@@ -624,7 +648,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(37);
+        StringBundler sb = new StringBundler(40);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -673,6 +697,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         sb.append(
             "<column><column-name>shortDesc</column-name><column-value><![CDATA[");
         sb.append(getShortDesc());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>userGroupId</column-name><column-value><![CDATA[");
+        sb.append(getUserGroupId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

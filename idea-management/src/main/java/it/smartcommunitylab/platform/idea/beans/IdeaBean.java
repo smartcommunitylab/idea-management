@@ -5,10 +5,20 @@ public class IdeaBean {
 	private String title;
 	private String longDesc;
 	private String shortDesc;
+	private Long categoryId;
 	private long createTs;
 	private long modifiedTs;
 	private long creatorId;
 	private String creatorUsername;
+	private long userGroupId;
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
 
 	public long getId() {
 		return id;
@@ -74,4 +84,18 @@ public class IdeaBean {
 		this.creatorUsername = creatorUsername;
 	}
 
+	/**
+	 * @return the userGroupId
+	 */
+	public long getUserGroupId() {
+		return userGroupId;
+	}
+
+	/**
+	 * @param userGroupId the userGroupId to set
+	 */
+	public void setUserGroupId(long userGroupId) {
+		this.userGroupId = userGroupId;
+	}
+	
 }

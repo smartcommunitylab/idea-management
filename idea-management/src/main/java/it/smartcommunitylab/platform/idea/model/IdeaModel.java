@@ -237,6 +237,20 @@ public interface IdeaModel extends BaseModel<Idea>, StagedGroupedModel {
      */
     public void setShortDesc(String shortDesc);
 
+    /**
+     * Returns the user group ID of this idea.
+     *
+     * @return the user group ID of this idea
+     */
+    public long getUserGroupId();
+
+    /**
+     * Sets the user group ID of this idea.
+     *
+     * @param userGroupId the user group ID of this idea
+     */
+    public void setUserGroupId(long userGroupId);
+
     @Override
     public boolean isNew();
 

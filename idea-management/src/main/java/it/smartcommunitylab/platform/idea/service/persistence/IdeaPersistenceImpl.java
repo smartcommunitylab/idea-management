@@ -2568,6 +2568,7 @@ public class IdeaPersistenceImpl extends BasePersistenceImpl<Idea>
         ideaImpl.setTitle(idea.getTitle());
         ideaImpl.setLongDesc(idea.getLongDesc());
         ideaImpl.setShortDesc(idea.getShortDesc());
+        ideaImpl.setUserGroupId(idea.getUserGroupId());
 
         return ideaImpl;
     }

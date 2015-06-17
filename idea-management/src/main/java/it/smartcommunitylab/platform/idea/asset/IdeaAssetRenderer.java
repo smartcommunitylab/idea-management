@@ -2,12 +2,15 @@ package it.smartcommunitylab.platform.idea.asset;
 
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.permission.IdeaPermission;
+import it.smartcommunitylab.platform.idea.portlet.Constants;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -114,6 +117,16 @@ public class IdeaAssetRenderer extends BaseAssetRenderer {
 		return null;
 	}
 
+	
+	@Override
+	public PortletURL getURLView(LiferayPortletResponse liferayPortletResponse, WindowState windowState) throws Exception {
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(Constants.IDEA_PORTLET_ID, PortletRequest.RENDER_PHASE);
+				 portletURL.setParameter("mvcPath", "/html/idea/asset/full_content.jsp");
+				 portletURL.setWindowState(WindowState.MAXIMIZED);
+				 portletURL.setParameter("ideaId", String.valueOf(idea.getIdeaId()));
+				 return portletURL;	
+	}
+
 	@Override
 	public String getDiscussionPath() {
 		return "edit_entry_discussion";
@@ -124,7 +137,7 @@ public class IdeaAssetRenderer extends BaseAssetRenderer {
 			RenderResponse renderResponse, String template) throws Exception {
 
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			renderRequest.setAttribute("gb_idea", idea);
+			renderRequest.setAttribute("idea", idea);
 			return "/html/idea/asset/" + template + ".jsp";
 		} else {
 			return null;

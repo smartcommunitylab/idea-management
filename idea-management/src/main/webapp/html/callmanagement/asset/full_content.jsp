@@ -12,13 +12,15 @@
 <%@page import="com.liferay.portlet.asset.model.AssetEntry"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
+
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 
 
 <%@  include file="/html/common-init.jsp"%>
 
 <%
-	Call call = (Call) request.getAttribute("gb_call");
+	Call call = (Call) request.getAttribute("call");
 	call = call.toEscapedModel();
 %>
 
@@ -27,7 +29,7 @@
 			Call.class.getName(), call.getCallId());
 
 
-PortletURL ipcURL = PortletURLFactoryUtil.create(request, "ideamanagement_WAR_ideamanagement", themeDisplay.getPlid(),PortletRequest.RENDER_PHASE);
+PortletURL ipcURL = PortletURLFactoryUtil.create(request, Constants.IDEA_PORTLET_ID, themeDisplay.getPlid(),PortletRequest.RENDER_PHASE);
 ipcURL.setParameter("mvcPath", "/html/idea/edit_idea.jsp");
 ipcURL.setParameter("callId", String.valueOf(call.getCallId()));
 %>

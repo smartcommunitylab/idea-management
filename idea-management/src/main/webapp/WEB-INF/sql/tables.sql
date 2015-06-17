@@ -23,5 +23,6 @@ create table IM_Idea (
 	modifiedDate DATE null,
 	title VARCHAR(75) null,
 	longDesc TEXT null,
-	shortDesc TEXT null
+	shortDesc VARCHAR(75) null,
+	userGroupId LONG
 );

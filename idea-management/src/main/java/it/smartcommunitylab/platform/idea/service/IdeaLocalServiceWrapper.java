@@ -366,6 +366,18 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByRating();
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
+        long catId) throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByRating(catId);
+    }
+
+    @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas()
         throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeas();
@@ -383,6 +395,20 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
         long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeas(groupId, start, end);
+    }
+
+    @Override
+    public void toggleUserParticipation(long ideaId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        _ideaLocalService.toggleUserParticipation(ideaId, userId);
+    }
+
+    @Override
+    public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
+        long[] categoryIds, long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getCategoryTags(categoryIds, groupId);
     }
 
     /**

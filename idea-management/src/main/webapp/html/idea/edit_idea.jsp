@@ -2,8 +2,6 @@
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page
 	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
-<%@ page import="com.liferay.portal.theme.ThemeDisplay"%>
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -15,6 +13,7 @@
                 idea = IdeaLocalServiceUtil.getIdea(ideaId);
         }
         
+        String categoryId = ParamUtil.getString(request, "categoryId");
 %>
 
 <%
@@ -37,35 +36,24 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		<aui:input name="title" label="lbl_title"></aui:input>
 	</aui:fieldset>
 
-	<aui:field-wrapper label="lbl_shortDesc">
-		<liferay-ui:input-editor name="shortDesc"
-			toolbarSet="liferay-article" initMethod="initEditor1" width="200" />
-		<script type="text/javascript">
-        function <portlet:namespace />initEditor1() { return document.getElementById('_ideamanagement_WAR_ideamanagement_sdesc').value; }
-    </script>
-	</aui:field-wrapper>
-
+  <aui:field-wrapper label="lbl_shortDesc">
+    <aui:input name="shortDesc" type="textarea" label=""></aui:input>  
+  </aui:field-wrapper>
+  
 	<aui:field-wrapper label="lbl_longDesc">
 		<liferay-ui:input-editor name="longDesc"
 			toolbarSet="liferay-article" initMethod="initEditor2" width="200" />
 		<script type="text/javascript">
-        function <portlet:namespace />initEditor2() { return document.getElementById('_ideamanagement_WAR_ideamanagement_ldesc').value; }
+        function <portlet:namespace />initEditor2() { return document.getElementById('_<%=Constants.IDEA_PORTLET_ID%>_ldesc').value; }
     </script>
 	</aui:field-wrapper>
 	
 	<aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
-	<aui:input name="sdesc" type="hidden" value='<%= idea != null ? idea.getShortDesc() : "" %>'></aui:input>
 	<aui:input name="ideaId" type="hidden"></aui:input>
+	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>"></aui:input>
 	<aui:input name="redirect" type="hidden" value="<%= viewURL.toString() %>"></aui:input>
 
-	<liferay-ui:asset-categories-error />
 	<liferay-ui:asset-tags-error />
-
-	<liferay-ui:asset-categories-selector
-		className="<%=Idea.class.getName()%>" classPK="<%=ideaId%>">
-
-	</liferay-ui:asset-categories-selector>
-
 
 	<label>Tags</label>
 	<liferay-ui:asset-tags-selector className="<%=Idea.class.getName()%>"
@@ -84,9 +72,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	</liferay-ui:panel>
 
 	<aui:button-row>
-
 		<aui:button type="submit"></aui:button>
 		<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
-
 	</aui:button-row>
 </aui:form>

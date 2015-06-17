@@ -5,8 +5,10 @@ import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
+import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +17,22 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 
 /**
  * The implementation of the idea local service.
@@ -62,10 +74,27 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 		// validate(name);
 
-		long guestbookId = counterLocalService.increment();
+		long pkId = counterLocalService.increment();
 
-		Idea idea = ideaPersistence.create(guestbookId);
-
+		Idea idea = ideaPersistence.create(pkId);
+		
+		Group group = GroupLocalServiceUtil.addGroup(
+				userId, 
+				0L,
+				null, 
+				0L, 
+				0L,
+				ideaBean.getTitle(),
+				null, 
+				GroupConstants.TYPE_SITE_OPEN, 
+				false,
+				0,
+				null, 
+				true,
+				true,
+				serviceContext);
+		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
+		
 		idea.setUuid(serviceContext.getUuid());
 		idea.setUserId(userId);
 		idea.setGroupId(groupId);
@@ -74,6 +103,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setCreateDate(serviceContext.getCreateDate(now));
 		idea.setModifiedDate(serviceContext.getModifiedDate(now));
 		idea.setExpandoBridgeAttributes(serviceContext);
+		idea.setUserGroupId(group.getGroupId());
 
 		idea.setTitle(ideaBean.getTitle());
 		idea.setShortDesc(ideaBean.getShortDesc());
@@ -82,12 +112,12 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		ideaPersistence.update(idea);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
-				Idea.class.getName(), guestbookId, false, true, true);
+				Idea.class.getName(), pkId, false, true, true);
 
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 				groupId, idea.getCreateDate(), idea.getModifiedDate(),
-				Idea.class.getName(), guestbookId, idea.getUuid(), 0,
-				serviceContext.getAssetCategoryIds(),
+				Idea.class.getName(), pkId, idea.getUuid(), 0,
+				new long[] { ideaBean.getCategoryId() },
 				serviceContext.getAssetTagNames(), true, null, null, null,
 				ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
 				null, 0, 0, null, false);
@@ -150,6 +180,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class
 					.getClass());
 			indexer.delete(idea);
+			
+			GroupLocalServiceUtil.deleteUserGroup(userId, idea.getGroupId());
+
 			resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 					Idea.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
 					idea.getIdeaId());
@@ -175,8 +208,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				ideas.add(i);
 			}
 		}
-
 		return ideas;
+	}
+
+	public List<Idea> getIdeasByRating() throws SystemException {
+		return IdeaFinderUtil.findByRating();
+	}
+
+	public List<Idea> getIdeasByRating(long catId) throws SystemException {
+		return IdeaFinderUtil.findByCatAndRating(catId);
 	}
 
 	public List<Idea> getIdeas() throws SystemException {
@@ -190,5 +230,46 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 	public List<Idea> getIdeas(long groupId, int start, int end)
 			throws SystemException {
 		return ideaPersistence.findByGroupId(groupId, start, end);
+	}
+
+	public void toggleUserParticipation(long ideaId, long userId) throws SystemException, PortalException {
+		List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(userId);
+		Idea idea = getIdea(ideaId);
+		if (idea.getUserId() == userId) return;
+		
+		long groupId = idea.getUserGroupId();
+		if (userGroups != null) {
+			for (Group g : userGroups) {
+				if (g.getGroupId() == groupId) {
+					UserLocalServiceUtil.deleteGroupUser(groupId, userId);
+					return;
+				}
+			}
+		}
+		GroupLocalServiceUtil.addUserGroup(userId, groupId);
+	}
+	
+	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId) throws SystemException {
+		
+		AssetEntryQuery entryQuery = new AssetEntryQuery();
+		entryQuery.setAllCategoryIds(categoryIds);
+		entryQuery.setClassNameIds(new long[]{PortalUtil.getClassNameId(JournalArticle.class)});
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, "Idea Category") });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(entryQuery);
+		if (entries != null && entries.size() > 0) {
+			AssetEntry entry = entries.get(0);
+			return entry.getTags();
+		}
+		return Collections.emptyList();
+	}
+	
+	private long getStructureIdByStructureName(long groupId, String structureName) throws SystemException {
+		List<JournalStructure> journalStructures = JournalStructureLocalServiceUtil.getStructures(groupId);
+		for (JournalStructure journalStructure : journalStructures) {
+			if (journalStructure.getNameCurrentValue().equalsIgnoreCase(structureName)) {
+				return journalStructure.getId();
+			}
+		}
+		return -1;
 	}
 }

@@ -37,21 +37,33 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		 */
 
 		// search for category
-		String categoryId = req.getParameter("categoryId");
+		Long categoryId = ParamUtil.getLong(req, "categoryId");
 		req.setAttribute("categoryId", categoryId);
 
 		// search for filter search
 
-		System.out.println("&&& " + ParamUtil.getString(req, "filterBy"));
-
+		String filterBy = ParamUtil.getString(req, "filterBy");
+		if (filterBy.isEmpty()) {
+			filterBy = Constants.FILTER_BY_ALL;
+		}
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
-			if (categoryId == null) {
-				ideas = IdeaLocalServiceUtil.getIdeas();
-			} else {
-				ideas = IdeaLocalServiceUtil.getIdeasByCat(Long
-						.valueOf(categoryId));
+			// result already ordered by creation date DESC for default
+			if (filterBy.equals(Constants.FILTER_BY_ALL)
+					|| filterBy.equals(Constants.FILTER_BY_CREATION)) {
+				if (categoryId <= 0) {
+					ideas = IdeaLocalServiceUtil.getIdeas();
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId);
+				}
+			} else if (filterBy.equals(Constants.FILTER_BY_POPOLARITY)) {
+				if (categoryId <= 0) {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating();
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId);
+				}
 			}
+
 			req.setAttribute("ideas", ideas);
 			req.setAttribute("ideaCount", ideas.size());
 		} catch (SystemException e) {
@@ -81,6 +93,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Idea.class.getName(), req);
 
+		Long categoryId = ParamUtil.getLong(req, "categoryId");
+
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
@@ -88,17 +102,26 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
+		ideaBean.setCategoryId(categoryId);
 		IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 		SessionMessages.add(req, "addedIdea");
 	}
 
-	public void deleteIdea(ActionRequest req, ActionResponse res)
+	public void deleteEntry(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 
-		long ideaId = ParamUtil.getLong(req, "id");
+		long ideaId = ParamUtil.getLong(req, "entryId");
 		IdeaLocalServiceUtil.deleteIdea(ideaId);
 		SessionMessages.add(req, "deleteIdea");
+	}
+
+	public void toggleUserParticipation(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException {
+
+		long ideaId = ParamUtil.getLong(req, "ideaId");
+		long userId = ParamUtil.getLong(req, "userId");
+		IdeaLocalServiceUtil.toggleUserParticipation(ideaId, userId);
 	}
 
 	public void updateIdea(ActionRequest req, ActionResponse res)

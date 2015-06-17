@@ -49,6 +49,7 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("title", getTitle());
         attributes.put("longDesc", getLongDesc());
         attributes.put("shortDesc", getShortDesc());
+        attributes.put("userGroupId", getUserGroupId());
 
         return attributes;
     }
@@ -119,6 +120,12 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (shortDesc != null) {
             setShortDesc(shortDesc);
+        }
+
+        Long userGroupId = (Long) attributes.get("userGroupId");
+
+        if (userGroupId != null) {
+            setUserGroupId(userGroupId);
         }
     }
 
@@ -382,6 +389,26 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public void setShortDesc(java.lang.String shortDesc) {
         _idea.setShortDesc(shortDesc);
+    }
+
+    /**
+    * Returns the user group ID of this idea.
+    *
+    * @return the user group ID of this idea
+    */
+    @Override
+    public long getUserGroupId() {
+        return _idea.getUserGroupId();
+    }
+
+    /**
+    * Sets the user group ID of this idea.
+    *
+    * @param userGroupId the user group ID of this idea
+    */
+    @Override
+    public void setUserGroupId(long userGroupId) {
+        _idea.setUserGroupId(userGroupId);
     }
 
     @Override
