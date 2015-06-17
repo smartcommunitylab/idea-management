@@ -12,14 +12,11 @@ Integer elementInPage_cfg = GetterUtil.getInteger(portletPreferences.getValue("e
 %>
 
 <script type="text/javascript">
-
 function <portlet:namespace />disableText() {
-		var t = document.getElementById('<portlet:namespace />elementInPage');
-		t.disabled = !t.disabled;
+	var t = document.getElementById('<portlet:namespace />elementInPage');
+	t.disabled = !t.disabled;
 }
-
 </script>
-
 
 <aui:form action="<%= configurationURL %>" method="post" name="fm">
     <aui:input name="<%= com.liferay.portal.kernel.util.Constants.CMD %>" type="hidden" value="<%= com.liferay.portal.kernel.util.Constants.UPDATE %>" />
@@ -35,9 +32,10 @@ function <portlet:namespace />disableText() {
     
     <aui:input name="preferences--hideFilters--" type="checkbox" label="lbl_hideFilters" value="<%= hideFilters_cfg %>" />
     
-    <aui:input name="preferences--activatePagination--" type="checkbox" label="lbl_activatePagination" value="<%= activatePagination_cfg %>" onChange="_86_disableText();"/>
+    <aui:input name="preferences--activatePagination--" type="checkbox" label="lbl_activatePagination" value="<%= activatePagination_cfg %>" onChange='<%= renderResponse.getNamespace()+"disableText();" %>'/>
 
-	<aui:input disabled="<%=!activatePagination_cfg %>" name="preferences--elementInPage--" type="text" label="lbl_elementInPage" value="<%= elementInPage_cfg %>" />
+	<aui:input disabled="<%=!activatePagination_cfg %>" name="preferences--elementInPage--" type="text"  label="lbl_elementInPage" value="<%= elementInPage_cfg %>" />
+    
     <aui:button-row>
        <aui:button type="submit" />
     </aui:button-row>
