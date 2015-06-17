@@ -55,8 +55,8 @@ String filterBy = (String) request.getAttribute("filterBy");
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by"/>  
 		<aui:input inlineField="true" checked="<%= filterBy == null|| filterBy.equals(Constants.FILTER_BY_ALL) %>" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
-		<aui:input inlineField="true" onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
-		<aui:input inlineField="true" onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
+		<aui:input inlineField="true" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
+		<aui:input inlineField="true" onChange="_ideamanagement_WAR_ideamanagement_doSearch()" type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
 		</div>
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by_tags"/>  
