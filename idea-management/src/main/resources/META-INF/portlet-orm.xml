@@ -57,6 +57,7 @@
 			<basic name="longDesc" />
 			<basic name="shortDesc" />
 			<basic name="userGroupId" />
+			<basic name="callId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

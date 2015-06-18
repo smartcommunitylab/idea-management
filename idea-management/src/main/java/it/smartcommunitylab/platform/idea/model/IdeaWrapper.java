@@ -50,6 +50,7 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("longDesc", getLongDesc());
         attributes.put("shortDesc", getShortDesc());
         attributes.put("userGroupId", getUserGroupId());
+        attributes.put("callId", getCallId());
 
         return attributes;
     }
@@ -126,6 +127,12 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (userGroupId != null) {
             setUserGroupId(userGroupId);
+        }
+
+        Long callId = (Long) attributes.get("callId");
+
+        if (callId != null) {
+            setCallId(callId);
         }
     }
 
@@ -409,6 +416,26 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public void setUserGroupId(long userGroupId) {
         _idea.setUserGroupId(userGroupId);
+    }
+
+    /**
+    * Returns the call ID of this idea.
+    *
+    * @return the call ID of this idea
+    */
+    @Override
+    public long getCallId() {
+        return _idea.getCallId();
+    }
+
+    /**
+    * Sets the call ID of this idea.
+    *
+    * @param callId the call ID of this idea
+    */
+    @Override
+    public void setCallId(long callId) {
+        _idea.setCallId(callId);
     }
 
     @Override

@@ -45,6 +45,7 @@
 		<column name="longDesc" type="String"></column>
 		<column name="shortDesc" type="String"></column>
         <column name="userGroupId" type="long"></column>
+        <column name="callId" type="long"></column>
 
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
@@ -56,6 +57,9 @@
 		</finder>
 
 		<!-- References -->
+        <finder name="CallId" return-type="Collection">
+            <finder-column name="callId"></finder-column>
+        </finder>
 
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />

@@ -35,32 +35,37 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			throws PortletException, IOException {
 
 		int begin = -1, end = -1;
-		
+
 		PortletPreferences preferences = req.getPreferences();
-		boolean pagination = GetterUtil.getBoolean(preferences.getValue("activatePagination", StringPool.TRUE));
-		int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
-		String listType = preferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT);
+		boolean pagination = GetterUtil.getBoolean(preferences.getValue(
+				"activatePagination", StringPool.TRUE));
+		int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",
+				String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
+		String listType = preferences.getValue("listType",
+				Constants.PREF_LISTTYPE_RECENT);
 
 		if (pagination) {
-			if (req.getParameter("begin") != null && req.getParameter("end") != null) {
+			if (req.getParameter("begin") != null
+					&& req.getParameter("end") != null) {
 				begin = ParamUtil.getInteger(req, "begin");
 				end = ParamUtil.getInteger(req, "end");
 			} else {
-				int currentPage =  ParamUtil.getInteger(req, "cur", 1);
+				int currentPage = ParamUtil.getInteger(req, "cur", 1);
 				begin = (currentPage - 1) * delta;
 				end = begin + delta;
 			}
 		}
 		if (req.getAttribute("listType") != null) {
-			listType = (String)req.getAttribute("listType");
+			listType = (String) req.getAttribute("listType");
 		}
 		if (req.getParameter("listType") != null) {
 			listType = ParamUtil.getString(req, "listType");
 		}
 		req.setAttribute("listType", listType);
 
-//		System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]", listType, begin, end));
-		
+		// System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]",
+		// listType, begin, end));
+
 		/*
 		 * Enumeration<String> f = req.getAttributeNames(); while
 		 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
@@ -68,28 +73,45 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 		// pagination
 
-		// search for category
+		// search by category
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
+		boolean searchByCat = categoryId > 0;
 		req.setAttribute("categoryId", categoryId);
-		
-		// search for filter search
+
+		// search by call
+		Long callId = ParamUtil.getLong(req, "callId");
+		boolean searchByCall = callId > 0;
+		req.setAttribute("callId", callId);
+
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
 			// result already ordered by creation date DESC for default
-			if (listType.equals(Constants.PREF_LISTTYPE_RECENT)) {
-				if (categoryId <= 0) {
-					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
-				} else {
+			switch (listType) {
+			case Constants.PREF_LISTTYPE_RECENT:
+				if (searchByCat) {
 					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
 							begin, end);
-				}
-			} else if (listType.equals(Constants.PREF_LISTTYPE_POPULAR)) {
-				if (categoryId <= 0) {
-					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
+				} else if (searchByCall) {
+					ideas = IdeaLocalServiceUtil.getIdeasByCall(callId, begin,
+							end);
+
 				} else {
+					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
+				}
+				break;
+			case Constants.PREF_LISTTYPE_POPULAR:
+				if (searchByCat) {
 					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId,
 							begin, end);
+				} else if (searchByCall) {
+					ideas = IdeaLocalServiceUtil.getIdeasByCallAndRating(
+							callId, begin, end);
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
 				}
+				break;
+			default:
+				break;
 			}
 
 			req.setAttribute("ideas", ideas);

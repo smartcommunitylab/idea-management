@@ -4,16 +4,12 @@ import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -39,7 +35,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		CallBean bean = new CallBean();
 		bean.setTitle(title);
 		bean.setDescription(desc);
-		bean.setDeadline(calculateDeadline(req,"d"));
+		bean.setDeadline(calculateDeadline(req, "d"));
 		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
 
 		CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
@@ -77,9 +73,9 @@ public class CallManagementPortlet extends MVCPortlet {
 	}
 
 	private Date calculateDeadline(ActionRequest req, String prefix) {
-		String day = ParamUtil.getString(req, prefix+"day");
-		String month = ParamUtil.getString(req, prefix+"month");
-		String year = ParamUtil.getString(req, prefix+"year");
+		String day = ParamUtil.getString(req, prefix + "day");
+		String month = ParamUtil.getString(req, prefix + "month");
+		String year = ParamUtil.getString(req, prefix + "year");
 
 		month = String.valueOf(Integer.valueOf(month) + 1);
 
@@ -94,14 +90,4 @@ public class CallManagementPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	protected void checkPath(String path) throws PortletException {
-		super.checkPath(path);
-	}
-
-	@Override
-	public void doView(RenderRequest renderRequest,
-			RenderResponse renderResponse) throws IOException, PortletException {
-		super.doView(renderRequest, renderResponse);
-	}
 }

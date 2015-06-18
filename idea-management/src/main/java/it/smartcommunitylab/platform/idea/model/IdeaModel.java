@@ -251,6 +251,20 @@ public interface IdeaModel extends BaseModel<Idea>, StagedGroupedModel {
      */
     public void setUserGroupId(long userGroupId);
 
+    /**
+     * Returns the call ID of this idea.
+     *
+     * @return the call ID of this idea
+     */
+    public long getCallId();
+
+    /**
+     * Sets the call ID of this idea.
+     *
+     * @param callId the call ID of this idea
+     */
+    public void setCallId(long callId);
+
     @Override
     public boolean isNew();
 

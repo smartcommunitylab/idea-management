@@ -34,7 +34,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(categoryId);
 			List<Idea> res = null;
-			if (begin < 0 || end < 0) {
+			if (begin <= 0 || end <= 0) {
 				res = (List<Idea>) q.list();
 			} else {
 				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
@@ -69,7 +69,44 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			q.addEntity("IM_Idea", IdeaImpl.class);
 
 			List<Idea> res = null;
-			if (begin < 0 || end < 0) {
+			if (begin <= 0 || end <= 0) {
+				res = (List<Idea>) q.list();
+			} else {
+				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
+			}
+			return res;
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+
+		return null;
+	}
+
+	public List<Idea> findByCallAndRating(long callId) {
+		return findByCallAndRating(callId, -1, -1);
+	}
+
+	public List<Idea> findByCallAndRating(long callId, int begin, int end) {
+
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_BY_CALL_RATING);
+
+			SQLQuery q = session.createSQLQuery(sql);
+			q.setCacheable(false);
+			q.addEntity("IM_Idea", IdeaImpl.class);
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(callId);
+
+			List<Idea> res = null;
+			if (begin <= 0 || end <= 0) {
 				res = (List<Idea>) q.list();
 			} else {
 				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
@@ -93,4 +130,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public static final String FIND_BY_RATING = IdeaFinder.class.getName()
 			+ ".findByRating";
+
+	public static final String FIND_BY_CALL_RATING = IdeaFinder.class.getName()
+			+ ".findByCallAndRating";
 }

@@ -37,5 +37,6 @@
 		<property name="longDesc" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="shortDesc" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="callId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

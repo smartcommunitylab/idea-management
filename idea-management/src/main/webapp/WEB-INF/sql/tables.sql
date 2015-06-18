@@ -25,5 +25,6 @@ create table IM_Idea (
 	title VARCHAR(75) null,
 	longDesc TEXT null,
 	shortDesc VARCHAR(75) null,
-	userGroupId LONG
+	userGroupId LONG,
+	callId LONG
 );

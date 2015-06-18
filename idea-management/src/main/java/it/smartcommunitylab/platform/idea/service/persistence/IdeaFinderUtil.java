@@ -26,6 +26,16 @@ public class IdeaFinderUtil {
         return getFinder().findByRating(begin, end);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndRating(
+        long callId) {
+        return getFinder().findByCallAndRating(callId);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndRating(
+        long callId, int begin, int end) {
+        return getFinder().findByCallAndRating(callId, begin, end);
+    }
+
     public static IdeaFinder getFinder() {
         if (_finder == null) {
             _finder = (IdeaFinder) PortletBeanLocatorUtil.locate(it.smartcommunitylab.platform.idea.service.ClpSerializer.getServletContextName(),

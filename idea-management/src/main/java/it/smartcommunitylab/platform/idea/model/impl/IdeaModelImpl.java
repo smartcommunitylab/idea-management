@@ -59,9 +59,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
             { "title", Types.VARCHAR },
             { "longDesc", Types.CLOB },
             { "shortDesc", Types.VARCHAR },
-            { "userGroupId", Types.BIGINT }
+            { "userGroupId", Types.BIGINT },
+            { "callId", Types.BIGINT }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG,callId LONG)";
     public static final String TABLE_SQL_DROP = "drop table IM_Idea";
     public static final String ORDER_BY_JPQL = " ORDER BY idea.createDate DESC, idea.title ASC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Idea.createDate DESC, IM_Idea.title ASC";
@@ -77,11 +78,12 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.column.bitmask.enabled.it.smartcommunitylab.platform.idea.model.Idea"),
             true);
-    public static long COMPANYID_COLUMN_BITMASK = 1L;
-    public static long GROUPID_COLUMN_BITMASK = 2L;
-    public static long UUID_COLUMN_BITMASK = 4L;
-    public static long CREATEDATE_COLUMN_BITMASK = 8L;
-    public static long TITLE_COLUMN_BITMASK = 16L;
+    public static long CALLID_COLUMN_BITMASK = 1L;
+    public static long COMPANYID_COLUMN_BITMASK = 2L;
+    public static long GROUPID_COLUMN_BITMASK = 4L;
+    public static long UUID_COLUMN_BITMASK = 8L;
+    public static long CREATEDATE_COLUMN_BITMASK = 16L;
+    public static long TITLE_COLUMN_BITMASK = 32L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.it.smartcommunitylab.platform.idea.model.Idea"));
     private static ClassLoader _classLoader = Idea.class.getClassLoader();
@@ -104,6 +106,9 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     private String _longDesc;
     private String _shortDesc;
     private long _userGroupId;
+    private long _callId;
+    private long _originalCallId;
+    private boolean _setOriginalCallId;
     private long _columnBitmask;
     private Idea _escapedModel;
 
@@ -156,6 +161,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         attributes.put("longDesc", getLongDesc());
         attributes.put("shortDesc", getShortDesc());
         attributes.put("userGroupId", getUserGroupId());
+        attributes.put("callId", getCallId());
 
         return attributes;
     }
@@ -232,6 +238,12 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
         if (userGroupId != null) {
             setUserGroupId(userGroupId);
+        }
+
+        Long callId = (Long) attributes.get("callId");
+
+        if (callId != null) {
+            setCallId(callId);
         }
     }
 
@@ -422,6 +434,28 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     }
 
     @Override
+    public long getCallId() {
+        return _callId;
+    }
+
+    @Override
+    public void setCallId(long callId) {
+        _columnBitmask |= CALLID_COLUMN_BITMASK;
+
+        if (!_setOriginalCallId) {
+            _setOriginalCallId = true;
+
+            _originalCallId = _callId;
+        }
+
+        _callId = callId;
+    }
+
+    public long getOriginalCallId() {
+        return _originalCallId;
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Idea.class.getName()));
@@ -470,6 +504,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         ideaImpl.setLongDesc(getLongDesc());
         ideaImpl.setShortDesc(getShortDesc());
         ideaImpl.setUserGroupId(getUserGroupId());
+        ideaImpl.setCallId(getCallId());
 
         ideaImpl.resetOriginalValues();
 
@@ -536,6 +571,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         ideaModelImpl._originalCompanyId = ideaModelImpl._companyId;
 
         ideaModelImpl._setOriginalCompanyId = false;
+
+        ideaModelImpl._originalCallId = ideaModelImpl._callId;
+
+        ideaModelImpl._setOriginalCallId = false;
 
         ideaModelImpl._columnBitmask = 0;
     }
@@ -610,12 +649,14 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
         ideaCacheModel.userGroupId = getUserGroupId();
 
+        ideaCacheModel.callId = getCallId();
+
         return ideaCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -641,6 +682,8 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         sb.append(getShortDesc());
         sb.append(", userGroupId=");
         sb.append(getUserGroupId());
+        sb.append(", callId=");
+        sb.append(getCallId());
         sb.append("}");
 
         return sb.toString();
@@ -648,7 +691,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -701,6 +744,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         sb.append(
             "<column><column-name>userGroupId</column-name><column-value><![CDATA[");
         sb.append(getUserGroupId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>callId</column-name><column-value><![CDATA[");
+        sb.append(getCallId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");
