@@ -47,14 +47,19 @@
 				<a href="${sign_in_url}" data-redirect="${is_login_redirect_required?string}" idrel="nofollow">${sign_in_text}</a>
 			<#else>
 				<#--  ${themeDisplay.isImpersonated()?string("impersonating-user", "")} -->
-				<a class="user-avatar-link">
-					<span class="nav-item-label">
-						<span class="user-full-name">
+				<div class="user-data-container">
+					<div class="user-data">
+						<div class="user-full-name">
 							${user.getFullName()}
-        				</span>
-        				<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
-					</span>
-				</a>
+						</div>
+						<div class="user-actions">
+							<a href="/c/portal/logout">Logout</a>
+						</div>
+					</div>
+					<div class="user-image">
+						<img src="${user.getPortraitURL(themeDisplay)}" />
+					</div>
+				</div>
 			</#if>
 		</div>
 	</div>
