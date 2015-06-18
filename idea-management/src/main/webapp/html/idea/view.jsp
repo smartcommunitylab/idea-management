@@ -41,14 +41,6 @@ if (pagination_view) {
 
 </c:if>
 
-<%-- TEMP - USED FOR TEST 
-<c:if test='<%= request.getAttribute("categoryId") != null %>'>
- <p><strong>CATEGORY SELECTED <%= request.getAttribute("categoryId") %></strong></p>
-</c:if>
-<c:if test='<%= request.getAttribute("categoryId") == null %>'>
- <p><strong>NO CATEGORY</strong></p>
-</c:if>
---%>
 
 <script type="text/javascript">
     function <portlet:namespace/>doSearch() {

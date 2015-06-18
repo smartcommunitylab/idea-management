@@ -322,9 +322,22 @@ public class CallLocalServiceUtil {
         return getService().invokeMethod(name, parameterTypes, arguments);
     }
 
-    public static java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCalls(
-        long userId) throws com.liferay.portal.kernel.exception.SystemException {
-        return getService().getCalls(userId);
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Call> getOpenCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getOpenCalls(begin, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Call> getInDiscussionCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getInDiscussionCalls(begin, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Call> getClosedCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getClosedCalls(begin, end);
     }
 
     public static it.smartcommunitylab.platform.idea.model.Call createCall(

@@ -333,9 +333,24 @@ public class CallLocalServiceWrapper implements CallLocalService,
     }
 
     @Override
-    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCalls(
-        long userId) throws com.liferay.portal.kernel.exception.SystemException {
-        return _callLocalService.getCalls(userId);
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getOpenCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _callLocalService.getOpenCalls(begin, end);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getInDiscussionCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _callLocalService.getInDiscussionCalls(begin, end);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getClosedCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _callLocalService.getClosedCalls(begin, end);
     }
 
     @Override
