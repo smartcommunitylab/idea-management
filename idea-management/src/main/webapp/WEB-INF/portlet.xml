@@ -106,7 +106,7 @@
     <qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:ideaId</qname>
   </public-render-parameter>
    <public-render-parameter>
-    <identifier>ideaId</identifier>
+    <identifier>callId</identifier>
     <qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:callId</qname>
   </public-render-parameter>
 </portlet-app>

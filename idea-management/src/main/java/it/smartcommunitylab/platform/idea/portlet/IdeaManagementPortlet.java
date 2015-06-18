@@ -40,12 +40,17 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		int begin = ParamUtil.getInteger(req, "begin");
 		int end = ParamUtil.getInteger(req, "end");
 
-		// search for category
+		// search by category
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
+		boolean searchByCat = categoryId > 0;
 		req.setAttribute("categoryId", categoryId);
 
-		// search for filter search
+		// search by call
+		Long callId = ParamUtil.getLong(req, "callId");
+		boolean searchByCall = callId > 0;
+		req.setAttribute("callId", callId);
 
+		// search for filter search
 		String filterBy = ParamUtil.getString(req, "filterBy");
 		if (filterBy.isEmpty()) {
 			filterBy = Constants.FILTER_BY_ALL;
@@ -53,21 +58,34 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
 			// result already ordered by creation date DESC for default
-			if (filterBy.equals(Constants.FILTER_BY_ALL)
-					|| filterBy.equals(Constants.FILTER_BY_CREATION)) {
-				if (categoryId <= 0) {
-					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
-				} else {
+			switch (filterBy) {
+			case Constants.FILTER_BY_ALL:
+			case Constants.FILTER_BY_CREATION:
+				if (searchByCat) {
 					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
 							begin, end);
 				}
-			} else if (filterBy.equals(Constants.FILTER_BY_POPOLARITY)) {
-				if (categoryId <= 0) {
-					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
+				if (searchByCall) {
+					ideas = IdeaLocalServiceUtil.getIdeasByCall(callId, begin,
+							end);
 				} else {
+					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
+				}
+				break;
+			case Constants.FILTER_BY_POPOLARITY:
+				if (searchByCat) {
 					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId,
 							begin, end);
 				}
+				if (searchByCall) {
+					ideas = IdeaLocalServiceUtil.getIdeasByCallAndRating(
+							callId, begin, end);
+				} else {
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
+				}
+				break;
+			default:
+				break;
 			}
 
 			req.setAttribute("ideas", ideas);

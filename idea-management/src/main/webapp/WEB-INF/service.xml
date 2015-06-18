@@ -57,6 +57,9 @@
 		</finder>
 
 		<!-- References -->
+        <finder name="CallId" return-type="Collection">
+            <finder-column name="callId"></finder-column>
+        </finder>
 
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />

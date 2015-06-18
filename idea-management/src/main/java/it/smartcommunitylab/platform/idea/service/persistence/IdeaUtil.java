@@ -750,6 +750,165 @@ public class IdeaUtil {
     }
 
     /**
+    * Returns all the ideas where callId = &#63;.
+    *
+    * @param callId the call ID
+    * @return the matching ideas
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallId(
+        long callId) throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByCallId(callId);
+    }
+
+    /**
+    * Returns a range of all the ideas where callId = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link it.smartcommunitylab.platform.idea.model.impl.IdeaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param callId the call ID
+    * @param start the lower bound of the range of ideas
+    * @param end the upper bound of the range of ideas (not inclusive)
+    * @return the range of matching ideas
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallId(
+        long callId, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().findByCallId(callId, start, end);
+    }
+
+    /**
+    * Returns an ordered range of all the ideas where callId = &#63;.
+    *
+    * <p>
+    * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link it.smartcommunitylab.platform.idea.model.impl.IdeaModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+    * </p>
+    *
+    * @param callId the call ID
+    * @param start the lower bound of the range of ideas
+    * @param end the upper bound of the range of ideas (not inclusive)
+    * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+    * @return the ordered range of matching ideas
+    * @throws SystemException if a system exception occurred
+    */
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallId(
+        long callId, int start, int end,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence()
+                   .findByCallId(callId, start, end, orderByComparator);
+    }
+
+    /**
+    * Returns the first idea in the ordered set where callId = &#63;.
+    *
+    * @param callId the call ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching idea
+    * @throws it.smartcommunitylab.platform.idea.NoSuchIdeaException if a matching idea could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static it.smartcommunitylab.platform.idea.model.Idea findByCallId_First(
+        long callId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            it.smartcommunitylab.platform.idea.NoSuchIdeaException {
+        return getPersistence().findByCallId_First(callId, orderByComparator);
+    }
+
+    /**
+    * Returns the first idea in the ordered set where callId = &#63;.
+    *
+    * @param callId the call ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the first matching idea, or <code>null</code> if a matching idea could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static it.smartcommunitylab.platform.idea.model.Idea fetchByCallId_First(
+        long callId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByCallId_First(callId, orderByComparator);
+    }
+
+    /**
+    * Returns the last idea in the ordered set where callId = &#63;.
+    *
+    * @param callId the call ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching idea
+    * @throws it.smartcommunitylab.platform.idea.NoSuchIdeaException if a matching idea could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static it.smartcommunitylab.platform.idea.model.Idea findByCallId_Last(
+        long callId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            it.smartcommunitylab.platform.idea.NoSuchIdeaException {
+        return getPersistence().findByCallId_Last(callId, orderByComparator);
+    }
+
+    /**
+    * Returns the last idea in the ordered set where callId = &#63;.
+    *
+    * @param callId the call ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the last matching idea, or <code>null</code> if a matching idea could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static it.smartcommunitylab.platform.idea.model.Idea fetchByCallId_Last(
+        long callId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().fetchByCallId_Last(callId, orderByComparator);
+    }
+
+    /**
+    * Returns the ideas before and after the current idea in the ordered set where callId = &#63;.
+    *
+    * @param ideaId the primary key of the current idea
+    * @param callId the call ID
+    * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+    * @return the previous, current, and next idea
+    * @throws it.smartcommunitylab.platform.idea.NoSuchIdeaException if a idea with the primary key could not be found
+    * @throws SystemException if a system exception occurred
+    */
+    public static it.smartcommunitylab.platform.idea.model.Idea[] findByCallId_PrevAndNext(
+        long ideaId, long callId,
+        com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+        throws com.liferay.portal.kernel.exception.SystemException,
+            it.smartcommunitylab.platform.idea.NoSuchIdeaException {
+        return getPersistence()
+                   .findByCallId_PrevAndNext(ideaId, callId, orderByComparator);
+    }
+
+    /**
+    * Removes all the ideas where callId = &#63; from the database.
+    *
+    * @param callId the call ID
+    * @throws SystemException if a system exception occurred
+    */
+    public static void removeByCallId(long callId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        getPersistence().removeByCallId(callId);
+    }
+
+    /**
+    * Returns the number of ideas where callId = &#63;.
+    *
+    * @param callId the call ID
+    * @return the number of matching ideas
+    * @throws SystemException if a system exception occurred
+    */
+    public static int countByCallId(long callId)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getPersistence().countByCallId(callId);
+    }
+
+    /**
     * Caches the idea in the entity cache if it is enabled.
     *
     * @param idea the idea

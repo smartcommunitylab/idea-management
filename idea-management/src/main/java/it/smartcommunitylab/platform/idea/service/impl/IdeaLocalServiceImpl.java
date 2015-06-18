@@ -249,6 +249,29 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return IdeaFinderUtil.findByCatAndRating(catId, begin, end);
 	}
 
+	public List<Idea> getIdeasByCall(long callId, int begin, int end)
+			throws SystemException {
+		if (begin <= 0 && end <= 0) {
+			return ideaPersistence.findByCallId(callId);
+		} else {
+			return ideaPersistence.findByCallId(callId, begin, end);
+		}
+	}
+
+	public List<Idea> getIdeasByCallAndRating(long callId)
+			throws SystemException {
+		return getIdeasByCallAndRating(callId, -1, -1);
+	}
+
+	public List<Idea> getIdeasByCallAndRating(long callId, int begin, int end)
+			throws SystemException {
+		if (begin <= 0 && end <= 0) {
+			return IdeaFinderUtil.findByCallAndRating(callId);
+		} else {
+			return IdeaFinderUtil.findByCallAndRating(callId, begin, end);
+		}
+	}
+
 	public List<Idea> getIdeas() throws SystemException {
 		return ideaPersistence.findAll();
 	}

@@ -380,6 +380,23 @@ public class IdeaLocalServiceUtil {
         return getService().getIdeasByRating(catId, begin, end);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCall(
+        long callId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByCall(callId, begin, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId) throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByCallAndRating(callId);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByCallAndRating(callId, begin, end);
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas()
         throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getIdeas();

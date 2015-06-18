@@ -78,11 +78,12 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
                 "value.object.column.bitmask.enabled.it.smartcommunitylab.platform.idea.model.Idea"),
             true);
-    public static long COMPANYID_COLUMN_BITMASK = 1L;
-    public static long GROUPID_COLUMN_BITMASK = 2L;
-    public static long UUID_COLUMN_BITMASK = 4L;
-    public static long CREATEDATE_COLUMN_BITMASK = 8L;
-    public static long TITLE_COLUMN_BITMASK = 16L;
+    public static long CALLID_COLUMN_BITMASK = 1L;
+    public static long COMPANYID_COLUMN_BITMASK = 2L;
+    public static long GROUPID_COLUMN_BITMASK = 4L;
+    public static long UUID_COLUMN_BITMASK = 8L;
+    public static long CREATEDATE_COLUMN_BITMASK = 16L;
+    public static long TITLE_COLUMN_BITMASK = 32L;
     public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
                 "lock.expiration.time.it.smartcommunitylab.platform.idea.model.Idea"));
     private static ClassLoader _classLoader = Idea.class.getClassLoader();
@@ -106,6 +107,8 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     private String _shortDesc;
     private long _userGroupId;
     private long _callId;
+    private long _originalCallId;
+    private boolean _setOriginalCallId;
     private long _columnBitmask;
     private Idea _escapedModel;
 
@@ -437,7 +440,19 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
     @Override
     public void setCallId(long callId) {
+        _columnBitmask |= CALLID_COLUMN_BITMASK;
+
+        if (!_setOriginalCallId) {
+            _setOriginalCallId = true;
+
+            _originalCallId = _callId;
+        }
+
         _callId = callId;
+    }
+
+    public long getOriginalCallId() {
+        return _originalCallId;
     }
 
     @Override
@@ -556,6 +571,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         ideaModelImpl._originalCompanyId = ideaModelImpl._companyId;
 
         ideaModelImpl._setOriginalCompanyId = false;
+
+        ideaModelImpl._originalCallId = ideaModelImpl._callId;
+
+        ideaModelImpl._setOriginalCallId = false;
 
         ideaModelImpl._columnBitmask = 0;
     }

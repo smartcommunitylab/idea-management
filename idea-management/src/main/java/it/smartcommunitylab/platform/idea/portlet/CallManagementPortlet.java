@@ -4,17 +4,12 @@ import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -95,20 +90,4 @@ public class CallManagementPortlet extends MVCPortlet {
 		}
 	}
 
-	@Override
-	protected void checkPath(String path) throws PortletException {
-		super.checkPath(path);
-	}
-
-	@Override
-	public void doView(RenderRequest renderRequest,
-			RenderResponse renderResponse) throws IOException, PortletException {
-
-		Enumeration<String> f = renderRequest.getAttributeNames();
-		while (f.hasMoreElements()) {
-			System.out.println(f.nextElement());
-		}
-
-		super.doView(renderRequest, renderResponse);
-	}
 }

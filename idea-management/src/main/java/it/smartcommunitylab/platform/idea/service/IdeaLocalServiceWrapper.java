@@ -399,6 +399,26 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCall(
+        long callId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByCall(callId, begin, end);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId) throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByCallAndRating(callId);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByCallAndRating(callId, begin, end);
+    }
+
+    @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas()
         throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeas();
