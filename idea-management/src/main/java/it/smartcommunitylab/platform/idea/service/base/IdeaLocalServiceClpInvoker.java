@@ -83,6 +83,8 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes71;
     private String _methodName72;
     private String[] _methodParameterTypes72;
+    private String _methodName73;
+    private String[] _methodParameterTypes73;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -242,23 +244,27 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodName68 = "getIdeas";
 
-        _methodParameterTypes68 = new String[] { "long" };
+        _methodParameterTypes68 = new String[] { "int", "int" };
 
         _methodName69 = "getIdeas";
 
-        _methodParameterTypes69 = new String[] { "long", "int", "int" };
+        _methodParameterTypes69 = new String[] { "long" };
 
-        _methodName70 = "toggleUserParticipation";
+        _methodName70 = "getIdeas";
 
-        _methodParameterTypes70 = new String[] { "long", "long" };
+        _methodParameterTypes70 = new String[] { "long", "int", "int" };
 
-        _methodName71 = "getCategoryColors";
+        _methodName71 = "toggleUserParticipation";
 
-        _methodParameterTypes71 = new String[] { "long" };
+        _methodParameterTypes71 = new String[] { "long", "long" };
 
-        _methodName72 = "getCategoryTags";
+        _methodName72 = "getCategoryColors";
 
-        _methodParameterTypes72 = new String[] { "long[][]", "long" };
+        _methodParameterTypes72 = new String[] { "long" };
+
+        _methodName73 = "getCategoryTags";
+
+        _methodParameterTypes73 = new String[] { "long[][]", "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -453,31 +459,37 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName68.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeas(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName69.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName70.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
-        if (_methodName70.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
+        if (_methodName71.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
             IdeaLocalServiceUtil.toggleUserParticipation(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue());
 
             return null;
         }
 
-        if (_methodName71.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
+        if (_methodName72.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryColors(((Long) arguments[0]).longValue());
         }
 
-        if (_methodName72.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
+        if (_methodName73.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
                 ((Long) arguments[1]).longValue());
         }

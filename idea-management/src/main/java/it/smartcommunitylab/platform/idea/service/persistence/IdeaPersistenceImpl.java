@@ -2569,6 +2569,7 @@ public class IdeaPersistenceImpl extends BasePersistenceImpl<Idea>
         ideaImpl.setLongDesc(idea.getLongDesc());
         ideaImpl.setShortDesc(idea.getShortDesc());
         ideaImpl.setUserGroupId(idea.getUserGroupId());
+        ideaImpl.setCallId(idea.getCallId());
 
         return ideaImpl;
     }

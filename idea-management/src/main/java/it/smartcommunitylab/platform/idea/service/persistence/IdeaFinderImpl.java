@@ -34,7 +34,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			QueryPos qPos = QueryPos.getInstance(q);
 			qPos.add(categoryId);
 			List<Idea> res = null;
-			if (begin < 0 || end < 0) {
+			if (begin <= 0 || end <= 0) {
 				res = (List<Idea>) q.list();
 			} else {
 				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
@@ -69,7 +69,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			q.addEntity("IM_Idea", IdeaImpl.class);
 
 			List<Idea> res = null;
-			if (begin < 0 || end < 0) {
+			if (begin <= 0 || end <= 0) {
 				res = (List<Idea>) q.list();
 			} else {
 				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);

@@ -11,6 +11,7 @@ public class IdeaBean {
 	private long creatorId;
 	private String creatorUsername;
 	private long userGroupId;
+	private long callId;
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -92,10 +93,19 @@ public class IdeaBean {
 	}
 
 	/**
-	 * @param userGroupId the userGroupId to set
+	 * @param userGroupId
+	 *            the userGroupId to set
 	 */
 	public void setUserGroupId(long userGroupId) {
 		this.userGroupId = userGroupId;
 	}
-	
+
+	public long getCallId() {
+		return callId;
+	}
+
+	public void setCallId(long callId) {
+		this.callId = callId;
+	}
+
 }

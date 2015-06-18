@@ -109,10 +109,14 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 				Idea.class.getName(), pkId, false, true, true);
 
+		long[] cats = null;
+		if (ideaBean.getCategoryId() > 0) {
+			cats = new long[] { ideaBean.getCategoryId() };
+		}
+
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 				groupId, idea.getCreateDate(), idea.getModifiedDate(),
-				Idea.class.getName(), pkId, idea.getUuid(), 0,
-				new long[] { ideaBean.getCategoryId() },
+				Idea.class.getName(), pkId, idea.getUuid(), 0, cats,
 				serviceContext.getAssetTagNames(), true, null, null, null,
 				ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
 				null, 0, 0, null, false);
@@ -210,7 +214,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			throws SystemException {
 		// TODO improve query with join
 		List<AssetEntry> entries = null;
-		if (begin < 0 && end < 0) {
+		if (begin <= 0 && end <= 0) {
 			entries = AssetEntryLocalServiceUtil
 					.getAssetCategoryAssetEntries(catId);
 		} else {
@@ -247,6 +251,14 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	public List<Idea> getIdeas() throws SystemException {
 		return ideaPersistence.findAll();
+	}
+
+	public List<Idea> getIdeas(int begin, int end) throws SystemException {
+		if (begin <= 0 && end <= 0) {
+			return ideaPersistence.findAll();
+		} else {
+			return ideaPersistence.findAll(begin, end);
+		}
 	}
 
 	public List<Idea> getIdeas(long groupId) throws SystemException {

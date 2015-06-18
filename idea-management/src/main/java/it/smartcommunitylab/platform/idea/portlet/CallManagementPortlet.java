@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -39,7 +40,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		CallBean bean = new CallBean();
 		bean.setTitle(title);
 		bean.setDescription(desc);
-		bean.setDeadline(calculateDeadline(req,"d"));
+		bean.setDeadline(calculateDeadline(req, "d"));
 		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
 
 		CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
@@ -77,9 +78,9 @@ public class CallManagementPortlet extends MVCPortlet {
 	}
 
 	private Date calculateDeadline(ActionRequest req, String prefix) {
-		String day = ParamUtil.getString(req, prefix+"day");
-		String month = ParamUtil.getString(req, prefix+"month");
-		String year = ParamUtil.getString(req, prefix+"year");
+		String day = ParamUtil.getString(req, prefix + "day");
+		String month = ParamUtil.getString(req, prefix + "month");
+		String year = ParamUtil.getString(req, prefix + "year");
 
 		month = String.valueOf(Integer.valueOf(month) + 1);
 
@@ -102,6 +103,12 @@ public class CallManagementPortlet extends MVCPortlet {
 	@Override
 	public void doView(RenderRequest renderRequest,
 			RenderResponse renderResponse) throws IOException, PortletException {
+
+		Enumeration<String> f = renderRequest.getAttributeNames();
+		while (f.hasMoreElements()) {
+			System.out.println(f.nextElement());
+		}
+
 		super.doView(renderRequest, renderResponse);
 	}
 }

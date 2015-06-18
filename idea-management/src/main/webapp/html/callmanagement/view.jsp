@@ -16,7 +16,7 @@
 <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
 
 <aui:button-row>
-	<aui:button href="<%=addCallUrl.toString() %>" value="<%= LanguageUtil.get(locale, "btn_add_call") %>"></aui:button>
+	<aui:button href="<%=addCallUrl.toString() %>" value='<%= LanguageUtil.get(locale, "btn_add_call") %>'></aui:button>
 </aui:button-row>
 
 </c:if>
