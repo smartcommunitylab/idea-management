@@ -60,6 +60,10 @@ public class CallLocalServiceClp implements CallLocalService {
     private String[] _methodParameterTypes25;
     private String _methodName26;
     private String[] _methodParameterTypes26;
+    private String _methodName27;
+    private String[] _methodParameterTypes27;
+    private String _methodName28;
+    private String[] _methodParameterTypes28;
 
     public CallLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -170,27 +174,35 @@ public class CallLocalServiceClp implements CallLocalService {
 
         _methodParameterTypes21 = new String[] { "java.lang.String" };
 
-        _methodName23 = "getCalls";
+        _methodName23 = "getOpenCalls";
 
-        _methodParameterTypes23 = new String[] { "long" };
+        _methodParameterTypes23 = new String[] { "int", "int" };
 
-        _methodName24 = "createCall";
+        _methodName24 = "getInDiscussionCalls";
 
-        _methodParameterTypes24 = new String[] {
+        _methodParameterTypes24 = new String[] { "int", "int" };
+
+        _methodName25 = "getClosedCalls";
+
+        _methodParameterTypes25 = new String[] { "int", "int" };
+
+        _methodName26 = "createCall";
+
+        _methodParameterTypes26 = new String[] {
                 "long", "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName25 = "updateCall";
+        _methodName27 = "updateCall";
 
-        _methodParameterTypes25 = new String[] {
+        _methodParameterTypes27 = new String[] {
                 "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName26 = "deleteCall";
+        _methodName28 = "deleteCall";
 
-        _methodParameterTypes26 = new String[] {
+        _methodParameterTypes28 = new String[] {
                 "long", "com.liferay.portal.service.ServiceContext"
             };
     }
@@ -828,13 +840,68 @@ public class CallLocalServiceClp implements CallLocalService {
     }
 
     @Override
-    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCalls(
-        long userId) throws com.liferay.portal.kernel.exception.SystemException {
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getOpenCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName23,
-                    _methodParameterTypes23, new Object[] { userId });
+                    _methodParameterTypes23, new Object[] { begin, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<it.smartcommunitylab.platform.idea.model.Call>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getInDiscussionCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName24,
+                    _methodParameterTypes24, new Object[] { begin, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<it.smartcommunitylab.platform.idea.model.Call>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getClosedCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName25,
+                    _methodParameterTypes25, new Object[] { begin, end });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -863,8 +930,8 @@ public class CallLocalServiceClp implements CallLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName24,
-                    _methodParameterTypes24,
+            returnObj = _invokableLocalService.invokeMethod(_methodName26,
+                    _methodParameterTypes26,
                     new Object[] {
                         userId,
                         
@@ -901,8 +968,8 @@ public class CallLocalServiceClp implements CallLocalService {
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
         try {
-            _invokableLocalService.invokeMethod(_methodName25,
-                _methodParameterTypes25,
+            _invokableLocalService.invokeMethod(_methodName27,
+                _methodParameterTypes27,
                 new Object[] {
                     ClpSerializer.translateInput(callBean),
                     
@@ -934,8 +1001,8 @@ public class CallLocalServiceClp implements CallLocalService {
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
         try {
-            _invokableLocalService.invokeMethod(_methodName26,
-                _methodParameterTypes26,
+            _invokableLocalService.invokeMethod(_methodName28,
+                _methodParameterTypes28,
                 new Object[] {
                     callId,
                     

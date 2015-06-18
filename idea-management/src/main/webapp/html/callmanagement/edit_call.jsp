@@ -31,7 +31,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 
 
 <portlet:renderURL var="viewURL">
-	<portlet:param name="mvcPath" value="/html/idea/view.jsp"></portlet:param>
+	<portlet:param name="mvcPath" value="/html/callmanagement/view.jsp"></portlet:param>
 </portlet:renderURL>
 
 <portlet:actionURL
@@ -62,10 +62,24 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		int initMonth = cal.get(Calendar.MONTH); 
 		int initYear  = cal.get(Calendar.YEAR);
 	%>
+
+  <%
+    GregorianCalendar pcal = new GregorianCalendar();
+    if(entry != null && entry.getPublicationDeadline() != null) {
+      cal.setTime(entry.getPublicationDeadline());
+    }
+    int initPDay = cal.get(Calendar.DAY_OF_MONTH);
+    int initPMonth = cal.get(Calendar.MONTH); 
+    int initPYear  = cal.get(Calendar.YEAR);
+  %>
 	
 	<aui:fieldset label="lbl_deadline">
 		<liferay-ui:input-date name="deadline" dayParam="dday" monthParam="dmonth" yearParam="dyear" dayValue="<%=initDay %>" monthValue="<%=initMonth %>" yearValue="<%=initYear %>"></liferay-ui:input-date>
 	</aui:fieldset>
+
+  <aui:fieldset label="lbl_publicationdeadline">
+    <liferay-ui:input-date name="publicationdeadline" dayParam="pdday" monthParam="pdmonth" yearParam="pdyear" dayValue="<%=initDay %>" monthValue="<%=initMonth %>" yearValue="<%=initYear %>"></liferay-ui:input-date>
+  </aui:fieldset>
 	
 	
 	<aui:input name="hdesc" type="hidden" value='<%= entry != null ? entry.getDescription() : "" %>'></aui:input>

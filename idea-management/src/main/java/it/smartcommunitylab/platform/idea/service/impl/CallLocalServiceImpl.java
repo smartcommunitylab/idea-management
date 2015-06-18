@@ -2,16 +2,23 @@ package it.smartcommunitylab.platform.idea.service.impl;
 
 import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.model.impl.CallModelImpl;
 import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -46,8 +53,25 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	 * access the call local service.
 	 */
 
-	public List<Call> getCalls(long userId) throws SystemException {
-		return callPersistence.findByUserId(userId);
+	public List<Call> getOpenCalls(int begin, int end) throws SystemException {
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
+				.add(PropertyFactoryUtil.forName("deadline").ge(new Date()))
+				.addOrder(OrderFactoryUtil.desc("deadline"));
+		return callPersistence.findWithDynamicQuery(query, begin, end);
+	}
+	public List<Call> getInDiscussionCalls(int begin, int end) throws SystemException {
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
+				.add(PropertyFactoryUtil.forName("deadline").lt(new Date()))
+				.add(PropertyFactoryUtil.forName("publicationDeadline").ge(new Date()))
+				.addOrder(OrderFactoryUtil.desc("deadline"));
+		return callPersistence.findWithDynamicQuery(query, begin, end);
+	}
+	public List<Call> getClosedCalls(int begin, int end) throws SystemException {
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
+				.add(PropertyFactoryUtil.forName("deadline").lt(new Date()))
+				.add(PropertyFactoryUtil.forName("publicationDeadline").lt(new Date()))
+				.addOrder(OrderFactoryUtil.desc("deadline"));
+		return callPersistence.findWithDynamicQuery(query, begin, end);
 	}
 
 	public Call createCall(long userId, CallBean callBean,

@@ -294,8 +294,19 @@ public interface CallLocalService extends BaseLocalService, InvokableLocalServic
         throws java.lang.Throwable;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCalls(
-        long userId) throws com.liferay.portal.kernel.exception.SystemException;
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getOpenCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getInDiscussionCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getClosedCalls(
+        int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     public it.smartcommunitylab.platform.idea.model.Call createCall(
         long userId,

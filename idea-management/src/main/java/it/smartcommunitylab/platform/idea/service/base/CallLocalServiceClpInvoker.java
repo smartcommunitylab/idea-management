@@ -61,6 +61,10 @@ public class CallLocalServiceClpInvoker {
     private String[] _methodParameterTypes60;
     private String _methodName61;
     private String[] _methodParameterTypes61;
+    private String _methodName62;
+    private String[] _methodParameterTypes62;
+    private String _methodName63;
+    private String[] _methodParameterTypes63;
 
     public CallLocalServiceClpInvoker() {
         _methodName0 = "addCall";
@@ -169,27 +173,35 @@ public class CallLocalServiceClpInvoker {
 
         _methodParameterTypes53 = new String[] { "java.lang.String" };
 
-        _methodName58 = "getCalls";
+        _methodName58 = "getOpenCalls";
 
-        _methodParameterTypes58 = new String[] { "long" };
+        _methodParameterTypes58 = new String[] { "int", "int" };
 
-        _methodName59 = "createCall";
+        _methodName59 = "getInDiscussionCalls";
 
-        _methodParameterTypes59 = new String[] {
+        _methodParameterTypes59 = new String[] { "int", "int" };
+
+        _methodName60 = "getClosedCalls";
+
+        _methodParameterTypes60 = new String[] { "int", "int" };
+
+        _methodName61 = "createCall";
+
+        _methodParameterTypes61 = new String[] {
                 "long", "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName60 = "updateCall";
+        _methodName62 = "updateCall";
 
-        _methodParameterTypes60 = new String[] {
+        _methodParameterTypes62 = new String[] {
                 "it.smartcommunitylab.platform.idea.beans.CallBean",
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName61 = "deleteCall";
+        _methodName63 = "deleteCall";
 
-        _methodParameterTypes61 = new String[] {
+        _methodParameterTypes63 = new String[] {
                 "long", "com.liferay.portal.service.ServiceContext"
             };
     }
@@ -321,26 +333,39 @@ public class CallLocalServiceClpInvoker {
 
         if (_methodName58.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-            return CallLocalServiceUtil.getCalls(((Long) arguments[0]).longValue());
+            return CallLocalServiceUtil.getOpenCalls(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName59.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+            return CallLocalServiceUtil.getInDiscussionCalls(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
+        }
+
+        if (_methodName60.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+            return CallLocalServiceUtil.getClosedCalls(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
+        }
+
+        if (_methodName61.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
             return CallLocalServiceUtil.createCall(((Long) arguments[0]).longValue(),
                 (it.smartcommunitylab.platform.idea.beans.CallBean) arguments[1],
                 (com.liferay.portal.service.ServiceContext) arguments[2]);
         }
 
-        if (_methodName60.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+        if (_methodName62.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
             CallLocalServiceUtil.updateCall((it.smartcommunitylab.platform.idea.beans.CallBean) arguments[0],
                 (com.liferay.portal.service.ServiceContext) arguments[1]);
 
             return null;
         }
 
-        if (_methodName61.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+        if (_methodName63.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
             CallLocalServiceUtil.deleteCall(((Long) arguments[0]).longValue(),
                 (com.liferay.portal.service.ServiceContext) arguments[1]);
 
