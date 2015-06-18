@@ -2,12 +2,15 @@ package it.smartcommunitylab.platform.idea.asset;
 
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.permission.CallPermission;
+import it.smartcommunitylab.platform.idea.portlet.Constants;
 
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -110,6 +113,15 @@ public class CallAssetRenderer extends BaseAssetRenderer {
 	public PortletURL getURLEdit(LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse) throws Exception {
 		return null;
+	}
+	
+	@Override
+	public PortletURL getURLView(LiferayPortletResponse liferayPortletResponse, WindowState windowState) throws Exception {
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(Constants.CALL_PORTLET_ID, PortletRequest.RENDER_PHASE);
+				 portletURL.setParameter("mvcPath", "/html/callmanagement/asset/full_content.jsp");
+				 portletURL.setWindowState(windowState);
+				 portletURL.setParameter("callId", String.valueOf(call.getCallId()));
+				 return portletURL;	
 	}
 
 	@Override

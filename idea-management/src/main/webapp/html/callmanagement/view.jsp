@@ -42,6 +42,10 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 
 <div class="idea-slider row-fluid">
 <% for(Call call : list) {%>
+        <portlet:renderURL var="viewCall">
+          <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp" />
+          <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
+        </portlet:renderURL>
         <% 
         long classPK = call.getCallId();
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(),classPK);
@@ -50,7 +54,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         %>
   <span class="span12">
-      <a class="idea" href="#">
+      <a class="idea" href="<%=viewCall.toString()%>">
           <div class="thumbnail" style="border-left-color: <%=color %>;">
               <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
               <h4><%=call.getTitle() %></h4>

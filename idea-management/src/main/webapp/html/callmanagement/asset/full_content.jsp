@@ -13,6 +13,7 @@
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
+<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 
@@ -21,6 +22,10 @@
 
 <%
 	Call call = (Call) request.getAttribute("call");
+	long callId = ParamUtil.getLong(renderRequest, "callId");
+	if (call == null) {
+	    call = CallLocalServiceUtil.getCall(callId);    
+	}
 	call = call.toEscapedModel();
 %>
 
@@ -36,23 +41,6 @@ ipcURL.setParameter("callId", String.valueOf(call.getCallId()));
 
 <div>
 <%=HtmlUtil.unescape(call.getDescription())%>
-</div>
-<div style="clear: both; margin-top: 5em;">
-<portlet:renderURL var="addIdeaUrl">
-	<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp"/>
-	<portlet:param name="callId" value="<%= String.valueOf(call.getCallId()) %>"/>
-</portlet:renderURL>
-
-<aui:button onClick="<%=addIdeaUrl.toString() %>" value="Idea Proposal"></aui:button>
-
-<aui:button-row>
-	<portlet:renderURL var="addIdea">
-		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
-		<portlet:param name="callId" value="<%= String.valueOf(call.getCallId()) %>"/>
-	</portlet:renderURL>
-	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
-</aui:button-row>
-
 </div>
 
 <liferay-ui:asset-links
