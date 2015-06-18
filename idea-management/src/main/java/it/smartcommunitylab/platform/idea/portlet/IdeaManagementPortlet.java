@@ -11,13 +11,16 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -31,37 +34,56 @@ public class IdeaManagementPortlet extends MVCPortlet {
 	public void render(RenderRequest req, RenderResponse res)
 			throws PortletException, IOException {
 
+		int begin = -1, end = -1;
+		
+		PortletPreferences preferences = req.getPreferences();
+		boolean pagination = GetterUtil.getBoolean(preferences.getValue("activatePagination", StringPool.TRUE));
+		int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
+		String listType = preferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT);
+
+		if (pagination) {
+			if (req.getParameter("begin") != null && req.getParameter("end") != null) {
+				begin = ParamUtil.getInteger(req, "begin");
+				end = ParamUtil.getInteger(req, "end");
+			} else {
+				int currentPage =  ParamUtil.getInteger(req, "cur", 1);
+				begin = (currentPage - 1) * delta;
+				end = begin + delta;
+			}
+		}
+		if (req.getAttribute("listType") != null) {
+			listType = (String)req.getAttribute("listType");
+		}
+		if (req.getParameter("listType") != null) {
+			listType = ParamUtil.getString(req, "listType");
+		}
+		req.setAttribute("listType", listType);
+
+//		System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]", listType, begin, end));
+		
 		/*
 		 * Enumeration<String> f = req.getAttributeNames(); while
 		 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
 		 */
 
 		// pagination
-		int begin = ParamUtil.getInteger(req, "begin");
-		int end = ParamUtil.getInteger(req, "end");
 
 		// search for category
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
 		req.setAttribute("categoryId", categoryId);
-
+		
 		// search for filter search
-
-		String filterBy = ParamUtil.getString(req, "filterBy");
-		if (filterBy.isEmpty()) {
-			filterBy = Constants.FILTER_BY_ALL;
-		}
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
 			// result already ordered by creation date DESC for default
-			if (filterBy.equals(Constants.FILTER_BY_ALL)
-					|| filterBy.equals(Constants.FILTER_BY_CREATION)) {
+			if (listType.equals(Constants.PREF_LISTTYPE_RECENT)) {
 				if (categoryId <= 0) {
 					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
 				} else {
 					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
 							begin, end);
 				}
-			} else if (filterBy.equals(Constants.FILTER_BY_POPOLARITY)) {
+			} else if (listType.equals(Constants.PREF_LISTTYPE_POPULAR)) {
 				if (categoryId <= 0) {
 					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
 				} else {
@@ -80,8 +102,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 	public void filter(ActionRequest req, ActionResponse res) {
 		// only to perform action
-		String fType = req.getParameter("filterBy");
-		res.setRenderParameter("filterBy", fType);
+		String fType = req.getParameter("listType");
+		res.setRenderParameter("listType", fType);
 
 	}
 

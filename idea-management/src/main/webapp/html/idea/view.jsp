@@ -3,6 +3,7 @@
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.IdeaModelPermission" %>
 <%@ page import="javax.portlet.WindowState" %>
+<%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -10,10 +11,20 @@
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
 boolean hideFilters_view = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
+boolean pagination_view = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", StringPool.TRUE));
 Long categoryId = (Long) request.getAttribute("categoryId");
-String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", "simple"));
+String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_VIEWTYPE_SIMPLE));
+String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
 
+if (pagination_view) {
+	int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
+	int currentPage = ParamUtil.getInteger(request, "cur", 1);
+	String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
+	request.setAttribute("_baseUrl", baseUrl);
+	request.setAttribute("_currentPage", currentPage);
+	request.setAttribute("_delta", delta);
+}		
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
@@ -46,7 +57,7 @@ List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{ca
 </script>
 
 <%
-String filterBy = (String) request.getAttribute("filterBy");
+if (request.getAttribute("listType") != null) listType = (String) request.getAttribute("listType");
 %>
 
 <portlet:actionURL
@@ -57,9 +68,8 @@ String filterBy = (String) request.getAttribute("filterBy");
 <aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by"/>  
-		<aui:input inlineField="true" checked="<%= filterBy == null|| filterBy.equals(Constants.FILTER_BY_ALL) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_ALL %>" label="lbl_filter_all"/>
-		<aui:input inlineField="true" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_CREATION %>" label="lbl_filter_newer"/>
-		<aui:input inlineField="true" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="filterBy" id="filterBy" value="<%= Constants.FILTER_BY_POPOLARITY %>" label="lbl_filter_famous"/>
+		<aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_RECENT) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_RECENT %>" label="lbl_filter_newer"/>
+    <aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_POPULAR) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_POPULAR %>" label="lbl_filter_famous"/>
 		</div>
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by_tags"/>  

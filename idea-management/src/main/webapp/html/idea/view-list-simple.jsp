@@ -14,11 +14,14 @@
 
 
 <%
-  int currentPage = ParamUtil.getInteger(request, "cur", 1);
-  int delta = 5;//GetterUtil.getInteger(portletPreferences.getValue("elementInPage", "5"));
-  PortletURL portletURL = renderResponse.createRenderURL();
-  String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
   List<Idea> results = (List)request.getAttribute("ideas");
+  Integer currentPage = (Integer)request.getAttribute("_currentPage");
+  Integer delta = (Integer)request.getAttribute("_delta");
+  if (currentPage == null) currentPage = 1;
+  if (delta == null) delta = results.size()+1;
+  
+  String baseUrl = (String) request.getAttribute("_baseUrl");
+  PortletURL portletURL = renderResponse.createRenderURL();
 	int offset = delta - results.size();
 	String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
 	java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
@@ -57,7 +60,7 @@
             <a class="idea" href="<%=viewIdea.toString() %>">
                 <div class="thumbnail" style="border-left-color: <%=color %>;">
                     <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
-                    <h3><%=idea.getTitle() %></h3>
+                    <h4><%=idea.getTitle() %></h4>
                     <p class="pull-right"><%=stat.getAverageScore() %> (<%=stat.getTotalEntries() %>)</p>
                 </div>
             </a>

@@ -4,7 +4,7 @@
 
 <%
 String viewType_cfg = GetterUtil.getString(portletPreferences.getValue("viewType",Constants.PREF_VIEWTYPE_SIMPLE));
-String listType_cfg = GetterUtil.getString(portletPreferences.getValue("listType",Constants.PREF_LISTTYPE_POPULAR));
+String listType_cfg = GetterUtil.getString(portletPreferences.getValue("listType",Constants.PREF_LISTTYPE_RECENT));
 boolean hidePortlet_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 boolean hideAddIdea_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
 boolean hideFilters_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
