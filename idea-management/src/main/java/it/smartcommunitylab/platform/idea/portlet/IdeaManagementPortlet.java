@@ -36,6 +36,10 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
 		 */
 
+		// pagination
+		int begin = ParamUtil.getInteger(req, "begin");
+		int end = ParamUtil.getInteger(req, "end");
+
 		// search for category
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
 		req.setAttribute("categoryId", categoryId);
@@ -52,15 +56,17 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			if (filterBy.equals(Constants.FILTER_BY_ALL)
 					|| filterBy.equals(Constants.FILTER_BY_CREATION)) {
 				if (categoryId <= 0) {
-					ideas = IdeaLocalServiceUtil.getIdeas();
+					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
 				} else {
-					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId);
+					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
+							begin, end);
 				}
 			} else if (filterBy.equals(Constants.FILTER_BY_POPOLARITY)) {
 				if (categoryId <= 0) {
-					ideas = IdeaLocalServiceUtil.getIdeasByRating();
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
 				} else {
-					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId);
+					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId,
+							begin, end);
 				}
 			}
 

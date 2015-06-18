@@ -77,6 +77,12 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes68;
     private String _methodName69;
     private String[] _methodParameterTypes69;
+    private String _methodName70;
+    private String[] _methodParameterTypes70;
+    private String _methodName71;
+    private String[] _methodParameterTypes71;
+    private String _methodName72;
+    private String[] _methodParameterTypes72;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -210,37 +216,49 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodParameterTypes61 = new String[] { "long" };
 
-        _methodName62 = "getIdeasByRating";
+        _methodName62 = "getIdeasByCat";
 
-        _methodParameterTypes62 = new String[] {  };
+        _methodParameterTypes62 = new String[] { "long", "int", "int" };
 
         _methodName63 = "getIdeasByRating";
 
-        _methodParameterTypes63 = new String[] { "long" };
+        _methodParameterTypes63 = new String[] {  };
 
-        _methodName64 = "getIdeas";
+        _methodName64 = "getIdeasByRating";
 
-        _methodParameterTypes64 = new String[] {  };
+        _methodParameterTypes64 = new String[] { "int", "int" };
 
-        _methodName65 = "getIdeas";
+        _methodName65 = "getIdeasByRating";
 
         _methodParameterTypes65 = new String[] { "long" };
 
-        _methodName66 = "getIdeas";
+        _methodName66 = "getIdeasByRating";
 
         _methodParameterTypes66 = new String[] { "long", "int", "int" };
 
-        _methodName67 = "toggleUserParticipation";
+        _methodName67 = "getIdeas";
 
-        _methodParameterTypes67 = new String[] { "long", "long" };
+        _methodParameterTypes67 = new String[] {  };
 
-        _methodName68 = "getCategoryColors";
+        _methodName68 = "getIdeas";
 
         _methodParameterTypes68 = new String[] { "long" };
 
-        _methodName69 = "getCategoryTags";
+        _methodName69 = "getIdeas";
 
-        _methodParameterTypes69 = new String[] { "long[][]", "long" };
+        _methodParameterTypes69 = new String[] { "long", "int", "int" };
+
+        _methodName70 = "toggleUserParticipation";
+
+        _methodParameterTypes70 = new String[] { "long", "long" };
+
+        _methodName71 = "getCategoryColors";
+
+        _methodParameterTypes71 = new String[] { "long" };
+
+        _methodName72 = "getCategoryTags";
+
+        _methodParameterTypes72 = new String[] { "long[][]", "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -400,46 +418,66 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName62.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByRating();
+            return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue(),
+                ((Integer) arguments[1]).intValue(),
+                ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName63.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeasByRating();
         }
 
         if (_methodName64.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas();
+            return IdeaLocalServiceUtil.getIdeasByRating(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName65.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue());
         }
 
         if (_methodName66.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
+            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName67.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas();
+        }
+
+        if (_methodName68.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName69.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
+                ((Integer) arguments[1]).intValue(),
+                ((Integer) arguments[2]).intValue());
+        }
+
+        if (_methodName70.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
             IdeaLocalServiceUtil.toggleUserParticipation(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue());
 
             return null;
         }
 
-        if (_methodName68.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+        if (_methodName71.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryColors(((Long) arguments[0]).longValue());
         }
 
-        if (_methodName69.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+        if (_methodName72.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
                 ((Long) arguments[1]).longValue());
         }

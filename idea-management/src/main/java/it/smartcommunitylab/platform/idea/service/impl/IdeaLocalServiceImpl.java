@@ -84,24 +84,12 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		long pkId = counterLocalService.increment();
 
 		Idea idea = ideaPersistence.create(pkId);
-		
-		Group group = GroupLocalServiceUtil.addGroup(
-				userId, 
-				0L,
-				null, 
-				0L, 
-				0L,
-				ideaBean.getTitle(),
-				null, 
-				GroupConstants.TYPE_SITE_OPEN, 
-				false,
-				0,
-				null, 
-				true,
-				true,
-				serviceContext);
+
+		Group group = GroupLocalServiceUtil.addGroup(userId, 0L, null, 0L, 0L,
+				ideaBean.getTitle(), null, GroupConstants.TYPE_SITE_OPEN,
+				false, 0, null, true, true, serviceContext);
 		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
-		
+
 		idea.setUuid(serviceContext.getUuid());
 		idea.setUserId(userId);
 		idea.setGroupId(groupId);
@@ -187,7 +175,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class
 					.getClass());
 			indexer.delete(idea);
-			
+
 			GroupLocalServiceUtil.deleteUserGroup(userId, idea.getGroupId());
 
 			resourceLocalService.deleteResource(serviceContext.getCompanyId(),
@@ -218,12 +206,43 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return ideas;
 	}
 
+	public List<Idea> getIdeasByCat(long catId, int begin, int end)
+			throws SystemException {
+		// TODO improve query with join
+		List<AssetEntry> entries = null;
+		if (begin < 0 && end < 0) {
+			entries = AssetEntryLocalServiceUtil
+					.getAssetCategoryAssetEntries(catId);
+		} else {
+			entries = AssetEntryLocalServiceUtil.getAssetCategoryAssetEntries(
+					catId, begin, end);
+		}
+		List<Idea> ideas = new ArrayList<Idea>();
+		for (AssetEntry entry : entries) {
+			Idea i = IdeaLocalServiceUtil.fetchIdea(entry.getClassPK());
+			if (i != null) {
+				ideas.add(i);
+			}
+		}
+		return ideas;
+	}
+
 	public List<Idea> getIdeasByRating() throws SystemException {
 		return IdeaFinderUtil.findByRating();
 	}
 
+	public List<Idea> getIdeasByRating(int begin, int end)
+			throws SystemException {
+		return IdeaFinderUtil.findByRating(begin, end);
+	}
+
 	public List<Idea> getIdeasByRating(long catId) throws SystemException {
 		return IdeaFinderUtil.findByCatAndRating(catId);
+	}
+
+	public List<Idea> getIdeasByRating(long catId, int begin, int end)
+			throws SystemException {
+		return IdeaFinderUtil.findByCatAndRating(catId, begin, end);
 	}
 
 	public List<Idea> getIdeas() throws SystemException {
@@ -239,11 +258,13 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return ideaPersistence.findByGroupId(groupId, start, end);
 	}
 
-	public void toggleUserParticipation(long ideaId, long userId) throws SystemException, PortalException {
+	public void toggleUserParticipation(long ideaId, long userId)
+			throws SystemException, PortalException {
 		List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(userId);
 		Idea idea = getIdea(ideaId);
-		if (idea.getUserId() == userId) return;
-		
+		if (idea.getUserId() == userId)
+			return;
+
 		long groupId = idea.getUserGroupId();
 		if (userGroups != null) {
 			for (Group g : userGroups) {
@@ -255,23 +276,32 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 		GroupLocalServiceUtil.addUserGroup(userId, groupId);
 	}
-	
-	public Map<String, String> getCategoryColors(long groupId) throws SystemException, PortalException {
+
+	public Map<String, String> getCategoryColors(long groupId)
+			throws SystemException, PortalException {
 		Map<String, String> res = new HashMap<String, String>();
 		AssetEntryQuery entryQuery = new AssetEntryQuery();
-		XPath xpath = SAXReaderUtil.createXPath("dynamic-element[@name='color']");
+		XPath xpath = SAXReaderUtil
+				.createXPath("dynamic-element[@name='color']");
 
-		entryQuery.setClassNameIds(new long[]{PortalUtil.getClassNameId(JournalArticle.class)});
-		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
-		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(entryQuery);
+		entryQuery.setClassNameIds(new long[] { PortalUtil
+				.getClassNameId(JournalArticle.class) });
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(
+				groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil
+				.getEntries(entryQuery);
 		if (entries != null && entries.size() > 0) {
 			for (AssetEntry entry : entries) {
-				if (entry.getCategoryIds() != null && entry.getCategoryIds().length > 0) {
-					JournalArticle article = JournalArticleLocalServiceUtil.getLatestArticle(entry.getClassPK());
+				if (entry.getCategoryIds() != null
+						&& entry.getCategoryIds().length > 0) {
+					JournalArticle article = JournalArticleLocalServiceUtil
+							.getLatestArticle(entry.getClassPK());
 					try {
-						Element el = SAXReaderUtil.read(article.getContent()).getRootElement();
-						String color = xpath.selectSingleNode(el).getStringValue();
-						res.put(""+entry.getCategoryIds()[0], color.trim());
+						Element el = SAXReaderUtil.read(article.getContent())
+								.getRootElement();
+						String color = xpath.selectSingleNode(el)
+								.getStringValue();
+						res.put("" + entry.getCategoryIds()[0], color.trim());
 					} catch (Exception e) {
 						e.printStackTrace();
 						continue;
@@ -281,25 +311,32 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 		return res;
 	}
-	
-	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId) throws SystemException {
-		
+
+	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId)
+			throws SystemException {
+
 		AssetEntryQuery entryQuery = new AssetEntryQuery();
 		entryQuery.setAllCategoryIds(categoryIds);
-		entryQuery.setClassNameIds(new long[]{PortalUtil.getClassNameId(JournalArticle.class)});
-		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
-		List<AssetEntry> entries = AssetEntryLocalServiceUtil.getEntries(entryQuery);
+		entryQuery.setClassNameIds(new long[] { PortalUtil
+				.getClassNameId(JournalArticle.class) });
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(
+				groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil
+				.getEntries(entryQuery);
 		if (entries != null && entries.size() > 0) {
 			AssetEntry entry = entries.get(0);
 			return entry.getTags();
 		}
 		return Collections.emptyList();
 	}
-	
-	private long getStructureIdByStructureName(long groupId, String structureName) throws SystemException {
-		List<JournalStructure> journalStructures = JournalStructureLocalServiceUtil.getStructures(groupId);
+
+	private long getStructureIdByStructureName(long groupId,
+			String structureName) throws SystemException {
+		List<JournalStructure> journalStructures = JournalStructureLocalServiceUtil
+				.getStructures(groupId);
 		for (JournalStructure journalStructure : journalStructures) {
-			if (journalStructure.getNameCurrentValue().equalsIgnoreCase(structureName)) {
+			if (journalStructure.getNameCurrentValue().equalsIgnoreCase(
+					structureName)) {
 				return journalStructure.getId();
 			}
 		}
