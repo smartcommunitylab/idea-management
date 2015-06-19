@@ -57,21 +57,21 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
 				.add(PropertyFactoryUtil.forName("deadline").ge(new Date()))
 				.addOrder(OrderFactoryUtil.desc("deadline"));
-		return callPersistence.findWithDynamicQuery(query, begin, end);
+		return end > 0 ? callPersistence.findWithDynamicQuery(query, begin, end) : callPersistence.findWithDynamicQuery(query);
 	}
 	public List<Call> getInDiscussionCalls(int begin, int end) throws SystemException {
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
 				.add(PropertyFactoryUtil.forName("deadline").lt(new Date()))
 				.add(PropertyFactoryUtil.forName("publicationDeadline").ge(new Date()))
 				.addOrder(OrderFactoryUtil.desc("deadline"));
-		return callPersistence.findWithDynamicQuery(query, begin, end);
+		return end > 0 ? callPersistence.findWithDynamicQuery(query, begin, end) : callPersistence.findWithDynamicQuery(query);
 	}
 	public List<Call> getClosedCalls(int begin, int end) throws SystemException {
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
 				.add(PropertyFactoryUtil.forName("deadline").lt(new Date()))
 				.add(PropertyFactoryUtil.forName("publicationDeadline").lt(new Date()))
 				.addOrder(OrderFactoryUtil.desc("deadline"));
-		return callPersistence.findWithDynamicQuery(query, begin, end);
+		return end > 0 ? callPersistence.findWithDynamicQuery(query, begin, end) : callPersistence.findWithDynamicQuery(query);
 	}
 
 	public Call createCall(long userId, CallBean callBean,
