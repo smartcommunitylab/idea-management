@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page
@@ -14,6 +15,16 @@
         }
         
         String categoryId = ParamUtil.getString(request, "categoryId");
+        String tagNames = "";
+        
+        if(!categoryId.isEmpty()) {
+        	List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{Long.valueOf(categoryId)}, scopeGroupId);
+        	for(AssetTag t : categoryTags) {
+        		tagNames+= (tagNames.isEmpty() ? "" : ",") + t.getName();
+        	}
+        }
+        
+        String callId = ParamUtil.getString(request, "callId");
 %>
 
 <%
@@ -51,12 +62,12 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
 	<aui:input name="ideaId" type="hidden"></aui:input>
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>"></aui:input>
-	<aui:input name="redirect" type="hidden" value="<%= viewURL.toString() %>"></aui:input>
+	<aui:input name="callId" type="hidden" value="<%= callId %>"></aui:input>
 
 	<liferay-ui:asset-tags-error />
 
 	<label>Tags</label>
-	<liferay-ui:asset-tags-selector className="<%=Idea.class.getName()%>"
+	<liferay-ui:asset-tags-selector  curTags='<%=tagNames %>' className="<%=Idea.class.getName()%>"
 		classPK="<%=ideaId%>">
 	</liferay-ui:asset-tags-selector>
 

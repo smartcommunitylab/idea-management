@@ -32,7 +32,7 @@ if (pagination_view) {
 <c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && !hideAddIdea_view %>'>
 
 <aui:button-row>
-	<portlet:renderURL var="addIdea">
+	<portlet:renderURL var="addIdea" windowState="maximized">
 		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
 		<portlet:param name="categoryId" value="<%=  String.valueOf(categoryId) %>" />
 	</portlet:renderURL>

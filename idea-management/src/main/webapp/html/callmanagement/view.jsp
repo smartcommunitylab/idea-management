@@ -9,6 +9,9 @@
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
+<%@ page import="javax.portlet.PortletURL" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -26,6 +29,9 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
     list =  CallLocalServiceUtil.getClosedCalls(begin, end);
 }
   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+  
+  String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
+
 %>
 
 <portlet:renderURL var="addCallUrl">
@@ -42,6 +48,10 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 
 <div class="idea-slider row-fluid">
 <% for(Call call : list) {%>
+        <portlet:renderURL var="viewCall">
+          <portlet:param name="REDIRECT" value="/html/callmanagement/asset/full_content.jsp" />
+          <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
+        </portlet:renderURL>
         <% 
         long classPK = call.getCallId();
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(),classPK);
@@ -50,7 +60,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         %>
   <span class="span12">
-      <a class="idea" href="#">
+      <a class="idea" href="<%=viewCall.toString()%>">
           <div class="thumbnail" style="border-left-color: <%=color %>;">
               <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
               <h4><%=call.getTitle() %></h4>
@@ -58,4 +68,14 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
       </a>
   </span>
 <% } %>  
+  <div class="row-fluid">
+    <div class="span12 pull-right">
+      <% 
+      PortletURL portletURL = renderResponse.createRenderURL();
+      portletURL.setParameter("viewAll", "true"); 
+      String showAllURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+      %>
+      <a href="<%=showAllURL%>"><liferay-ui:message key="lbl_showAll"/></a>
+    </div>
+  </div>
 </div>

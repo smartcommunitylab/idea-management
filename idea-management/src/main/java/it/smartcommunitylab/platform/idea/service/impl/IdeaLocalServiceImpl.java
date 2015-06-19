@@ -103,6 +103,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setTitle(ideaBean.getTitle());
 		idea.setShortDesc(ideaBean.getShortDesc());
 		idea.setLongDesc(ideaBean.getLongDesc());
+		idea.setCallId(ideaBean.getCallId());
 
 		ideaPersistence.update(idea);
 

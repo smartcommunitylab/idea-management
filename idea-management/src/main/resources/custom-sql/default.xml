@@ -2,13 +2,13 @@
 <custom-sql>
 <!-- FIND BY CATEGORY -->
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndRating">
-    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec, AssetEntry a, RatingsEntry r, IM_Idea i WHERE (ec.categoryId= ?) AND ec.entryId= a.entryId AND a.classPK=r.classPK AND i.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC ]]>
+    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId= ?) GROUP BY r.classPK ORDER BY media DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByRating">
     	<![CDATA[select idea.*, AVG(r.score) AS media from AssetEntry a, RatingsEntry r, IM_Idea idea WHERE a.classPK=r.classPK AND idea.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC ]]>
     </sql>
 <!-- FIND BY CALL -->
 	<sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndRating">
-    	<![CDATA[select i.*, AVG(r.score) AS media FROM AssetEntry a, RatingsEntry r, IM_Idea i WHERE (i.callId=?) AND a.classPK=r.classPK AND i.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC ]]>
+    	<![CDATA[select i.*, AVG(r.score) AS media FROM IM_Idea i LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) GROUP BY i.ideaId ORDER BY media DESC ]]>
     </sql>
 </custom-sql>
