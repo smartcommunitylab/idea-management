@@ -62,23 +62,16 @@
 	line-height: 20px;
 }
 
-#sign-in .user-data, #sign-in .user-image {
-	float: left;
+#sign-in .user-avatar {
+	list-style-type: none;
 }
 
-#sign-in .user-actions a {
-	font-size: smaller;
-	color: black !important;
-	text-decoration: underline !important;
-	cursor: pointer;
-	float: right;
+#sign-in .user-avatar a {
+	text-decoration: none;
+	color: black;
 }
 
-#sign-in .user-image {
-	padding-left: 8px;
-}
-
-#sign-in .user-image img {
+#sign-in .user-avatar-image {
 	width: 38px;
 	height: 38px;
 	-webkit-border-radius: 20px;
