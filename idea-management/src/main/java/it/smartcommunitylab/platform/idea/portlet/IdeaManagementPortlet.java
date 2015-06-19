@@ -71,8 +71,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
 		 */
 
-		// pagination
-
 		// search by category
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
 		boolean searchByCat = categoryId > 0;
@@ -144,6 +142,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				Idea.class.getName(), req);
 
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
+		Long callId = ParamUtil.getLong(req, "callId");
 
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
@@ -153,6 +152,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
 		ideaBean.setCategoryId(categoryId);
+		ideaBean.setCallId(callId);
 		IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 		SessionMessages.add(req, "addedIdea");
