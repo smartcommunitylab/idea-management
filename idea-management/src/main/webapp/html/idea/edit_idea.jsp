@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page
@@ -14,6 +15,14 @@
         }
         
         String categoryId = ParamUtil.getString(request, "categoryId");
+        String tagNames = "";
+        
+        if(!categoryId.isEmpty()) {
+        	List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{Long.valueOf(categoryId)}, scopeGroupId);
+        	for(AssetTag t : categoryTags) {
+        		tagNames+= (tagNames.isEmpty() ? "" : ",") + t.getName();
+        	}
+        }
         
         String callId = ParamUtil.getString(request, "callId");
 %>
@@ -58,7 +67,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<liferay-ui:asset-tags-error />
 
 	<label>Tags</label>
-	<liferay-ui:asset-tags-selector className="<%=Idea.class.getName()%>"
+	<liferay-ui:asset-tags-selector  curTags='<%=tagNames %>' className="<%=Idea.class.getName()%>"
 		classPK="<%=ideaId%>">
 	</liferay-ui:asset-tags-selector>
 
