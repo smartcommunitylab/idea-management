@@ -4,15 +4,21 @@ import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -23,6 +29,16 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
  */
 public class CallManagementPortlet extends MVCPortlet {
 
+	@Override
+	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+		long callId = ParamUtil.getLong(renderRequest, "callId", 0);
+		if (callId > 0) {
+			include("/html/callmanagement/asset/full_content.jsp", renderRequest, renderResponse);
+		} else { 
+			super.doView(renderRequest, renderResponse);
+		}
+	}
+	
 	public void addEntry(ActionRequest req, ActionResponse res)
 			throws SystemException, PortalException {
 
