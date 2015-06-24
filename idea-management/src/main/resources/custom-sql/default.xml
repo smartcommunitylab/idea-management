@@ -18,4 +18,10 @@
 	<sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndRating">
     	<![CDATA[select i.*, AVG(r.score) AS media FROM IM_Idea i LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) GROUP BY i.ideaId ORDER BY media DESC ]]>
     </sql>
+    <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndRatingAndTags">
+    	<![CDATA[select i.*, AVG(r.score) AS media FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) AND et.tagId IN (?) GROUP BY i.ideaId ORDER BY media DESC ]]>
+    </sql>
+     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndTags">
+    	<![CDATA[select i.* FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK WHERE (i.callId=?) AND et.tagId IN (?) ]]>
+    </sql>
 </custom-sql>

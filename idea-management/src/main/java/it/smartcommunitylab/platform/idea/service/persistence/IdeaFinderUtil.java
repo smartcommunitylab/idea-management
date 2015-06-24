@@ -57,6 +57,26 @@ public class IdeaFinderUtil {
         return getFinder().findByCallAndRating(callId, begin, end);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndTags(
+        long callId, long[] tagIds) {
+        return getFinder().findByCallAndTags(callId, tagIds);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndTags(
+        long callId, long[] tagIds, int begin, int end) {
+        return getFinder().findByCallAndTags(callId, tagIds, begin, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndRatingAndTags(
+        long callId, long[] tagIds) {
+        return getFinder().findByCallAndRatingAndTags(callId, tagIds);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndRatingAndTags(
+        long callId, long[] tagIds, int begin, int end) {
+        return getFinder().findByCallAndRatingAndTags(callId, tagIds, begin, end);
+    }
+
     public static IdeaFinder getFinder() {
         if (_finder == null) {
             _finder = (IdeaFinder) PortletBeanLocatorUtil.locate(it.smartcommunitylab.platform.idea.service.ClpSerializer.getServletContextName(),

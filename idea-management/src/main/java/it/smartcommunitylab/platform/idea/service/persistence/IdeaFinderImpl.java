@@ -70,6 +70,30 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 		return execQuery(FIND_BY_CALL_RATING, params, begin, end);
 	}
 
+	public List<Idea> findByCallAndTags(long callId, long[] tagIds) {
+		return findByCallAndTags(callId, tagIds, -1, -1);
+	}
+
+	public List<Idea> findByCallAndTags(long callId, long[] tagIds, int begin,
+			int end) {
+		List<Object> params = new ArrayList<Object>();
+		params.add(callId);
+		params.add(tagIds);
+		return execQuery(FIND_BY_CALL_TAGS, params, begin, end);
+	}
+
+	public List<Idea> findByCallAndRatingAndTags(long callId, long[] tagIds) {
+		return findByCallAndRatingAndTags(callId, tagIds, -1, -1);
+	}
+
+	public List<Idea> findByCallAndRatingAndTags(long callId, long[] tagIds,
+			int begin, int end) {
+		List<Object> params = new ArrayList<Object>();
+		params.add(callId);
+		params.add(tagIds);
+		return execQuery(FIND_BY_CALL_RATING_TAGS, params, begin, end);
+	}
+
 	private List<Idea> execQuery(String queryName, List<Object> params,
 			int begin, int end) {
 		Session session = null;
@@ -119,4 +143,10 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public static final String FIND_BY_CALL_RATING = IdeaFinder.class.getName()
 			+ ".findByCallAndRating";
+
+	public static final String FIND_BY_CALL_TAGS = IdeaFinder.class.getName()
+			+ ".findByCallAndTags";
+
+	public static final String FIND_BY_CALL_RATING_TAGS = IdeaFinder.class
+			.getName() + ".findByCallAndRatingAndTags";
 }

@@ -362,12 +362,22 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
         throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCall(
+        long callId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
         long callId) throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
         long callId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId, long[] tagIds, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

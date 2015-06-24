@@ -279,6 +279,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 	}
 
+	public List<Idea> getIdeasByCall(long callId, long[] tagIds, int begin,
+			int end) throws SystemException {
+		if (begin <= 0 && end <= 0) {
+			return IdeaFinderUtil.findByCallAndTags(callId, tagIds);
+		} else {
+			return IdeaFinderUtil.findByCallAndTags(callId, tagIds, begin, end);
+		}
+	}
+
 	public List<Idea> getIdeasByCallAndRating(long callId)
 			throws SystemException {
 		return getIdeasByCallAndRating(callId, -1, -1);
@@ -290,6 +299,16 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			return IdeaFinderUtil.findByCallAndRating(callId);
 		} else {
 			return IdeaFinderUtil.findByCallAndRating(callId, begin, end);
+		}
+	}
+
+	public List<Idea> getIdeasByCallAndRating(long callId, long[] tagIds,
+			int begin, int end) throws SystemException {
+		if (begin <= 0 && end <= 0) {
+			return IdeaFinderUtil.findByCallAndRatingAndTags(callId, tagIds);
+		} else {
+			return IdeaFinderUtil.findByCallAndRatingAndTags(callId, tagIds,
+					begin, end);
 		}
 	}
 
