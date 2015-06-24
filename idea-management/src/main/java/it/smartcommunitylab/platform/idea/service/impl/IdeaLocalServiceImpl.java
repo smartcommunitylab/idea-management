@@ -250,6 +250,16 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return IdeaFinderUtil.findByCatAndRating(catId, begin, end);
 	}
 
+	public List<Idea> getIdeasByRating(long catId, long[] tagIds) {
+		return IdeaFinderUtil.findByCatAndRatingAndTags(catId, tagIds);
+	}
+
+	public List<Idea> getIdeasByRating(long catId, long[] tagIds, int begin,
+			int end) {
+		return IdeaFinderUtil.findByCatAndRatingAndTags(catId, tagIds, begin,
+				end);
+	}
+
 	public List<Idea> getIdeasByCall(long callId, int begin, int end)
 			throws SystemException {
 		if (begin <= 0 && end <= 0) {

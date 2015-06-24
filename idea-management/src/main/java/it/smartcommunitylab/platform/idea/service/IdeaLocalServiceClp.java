@@ -88,6 +88,10 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     private String[] _methodParameterTypes39;
     private String _methodName40;
     private String[] _methodParameterTypes40;
+    private String _methodName41;
+    private String[] _methodParameterTypes41;
+    private String _methodName42;
+    private String[] _methodParameterTypes42;
 
     public IdeaLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -243,41 +247,49 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
 
         _methodParameterTypes31 = new String[] { "long", "int", "int" };
 
-        _methodName32 = "getIdeasByCall";
+        _methodName32 = "getIdeasByRating";
 
-        _methodParameterTypes32 = new String[] { "long", "int", "int" };
+        _methodParameterTypes32 = new String[] { "long", "long[][]" };
 
-        _methodName33 = "getIdeasByCallAndRating";
+        _methodName33 = "getIdeasByRating";
 
-        _methodParameterTypes33 = new String[] { "long" };
+        _methodParameterTypes33 = new String[] { "long", "long[][]", "int", "int" };
 
-        _methodName34 = "getIdeasByCallAndRating";
+        _methodName34 = "getIdeasByCall";
 
         _methodParameterTypes34 = new String[] { "long", "int", "int" };
 
-        _methodName35 = "getIdeas";
+        _methodName35 = "getIdeasByCallAndRating";
 
-        _methodParameterTypes35 = new String[] {  };
+        _methodParameterTypes35 = new String[] { "long" };
 
-        _methodName36 = "getIdeas";
+        _methodName36 = "getIdeasByCallAndRating";
 
-        _methodParameterTypes36 = new String[] { "long" };
+        _methodParameterTypes36 = new String[] { "long", "int", "int" };
 
         _methodName37 = "getIdeas";
 
-        _methodParameterTypes37 = new String[] { "long", "int", "int" };
+        _methodParameterTypes37 = new String[] {  };
 
-        _methodName38 = "toggleUserParticipation";
+        _methodName38 = "getIdeas";
 
-        _methodParameterTypes38 = new String[] { "long", "long" };
+        _methodParameterTypes38 = new String[] { "long" };
 
-        _methodName39 = "getCategoryColors";
+        _methodName39 = "getIdeas";
 
-        _methodParameterTypes39 = new String[] { "long" };
+        _methodParameterTypes39 = new String[] { "long", "int", "int" };
 
-        _methodName40 = "getCategoryTags";
+        _methodName40 = "toggleUserParticipation";
 
-        _methodParameterTypes40 = new String[] { "long[][]", "long" };
+        _methodParameterTypes40 = new String[] { "long", "long" };
+
+        _methodName41 = "getCategoryColors";
+
+        _methodParameterTypes41 = new String[] { "long" };
+
+        _methodName42 = "getCategoryTags";
+
+        _methodParameterTypes42 = new String[] { "long[][]", "long" };
     }
 
     @Override
@@ -1184,20 +1196,16 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
-    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCall(
-        long callId, int begin, int end)
-        throws com.liferay.portal.kernel.exception.SystemException {
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
+        long catId, long[] tagIds) {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName32,
-                    _methodParameterTypes32, new Object[] { callId, begin, end });
+                    _methodParameterTypes32,
+                    new Object[] { catId, ClpSerializer.translateInput(tagIds) });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -1211,19 +1219,24 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
-    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
-        long callId) throws com.liferay.portal.kernel.exception.SystemException {
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
+        long catId, long[] tagIds, int begin, int end) {
         Object returnObj = null;
 
         try {
             returnObj = _invokableLocalService.invokeMethod(_methodName33,
-                    _methodParameterTypes33, new Object[] { callId });
+                    _methodParameterTypes33,
+                    new Object[] {
+                        catId,
+                        
+                    ClpSerializer.translateInput(tagIds),
+                        
+                    begin,
+                        
+                    end
+                    });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
-
-            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-                throw (com.liferay.portal.kernel.exception.SystemException) t;
-            }
 
             if (t instanceof RuntimeException) {
                 throw (RuntimeException) t;
@@ -1237,7 +1250,7 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
-    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCall(
         long callId, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
@@ -1264,13 +1277,66 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId) throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName35,
+                    _methodParameterTypes35, new Object[] { callId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<it.smartcommunitylab.platform.idea.model.Idea>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
+        long callId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName36,
+                    _methodParameterTypes36, new Object[] { callId, begin, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<it.smartcommunitylab.platform.idea.model.Idea>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas()
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName35,
-                    _methodParameterTypes35, new Object[] {  });
+            returnObj = _invokableLocalService.invokeMethod(_methodName37,
+                    _methodParameterTypes37, new Object[] {  });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1296,8 +1362,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName36,
-                    _methodParameterTypes36, new Object[] { groupId });
+            returnObj = _invokableLocalService.invokeMethod(_methodName38,
+                    _methodParameterTypes38, new Object[] { groupId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1323,8 +1389,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName37,
-                    _methodParameterTypes37,
+            returnObj = _invokableLocalService.invokeMethod(_methodName39,
+                    _methodParameterTypes39,
                     new Object[] { groupId, start, end });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
@@ -1349,8 +1415,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
         try {
-            _invokableLocalService.invokeMethod(_methodName38,
-                _methodParameterTypes38, new Object[] { ideaId, userId });
+            _invokableLocalService.invokeMethod(_methodName40,
+                _methodParameterTypes40, new Object[] { ideaId, userId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1379,8 +1445,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName39,
-                    _methodParameterTypes39, new Object[] { groupId });
+            returnObj = _invokableLocalService.invokeMethod(_methodName41,
+                    _methodParameterTypes41, new Object[] { groupId });
         } catch (Throwable t) {
             t = ClpSerializer.translateThrowable(t);
 
@@ -1410,8 +1476,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName40,
-                    _methodParameterTypes40,
+            returnObj = _invokableLocalService.invokeMethod(_methodName42,
+                    _methodParameterTypes42,
                     new Object[] {
                         ClpSerializer.translateInput(categoryIds),
                         

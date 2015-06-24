@@ -16,6 +16,45 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 		IdeaFinder {
 
+	public List<Idea> findByCatAndRatingAndTags(Long categoryId, long[] tagIds) {
+		return findByCatAndRatingAndTags(categoryId, tagIds, -1, -1);
+	}
+
+	public List<Idea> findByCatAndRatingAndTags(Long categoryId, long[] tagIds,
+			int begin, int end) {
+
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = CustomSQLUtil.get(FIND_BY_CAT_RATING_TAGS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+			q.setCacheable(false);
+			q.addEntity("IM_Idea", IdeaImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(categoryId);
+			qPos.add(tagIds);
+			List<Idea> res = null;
+			if (begin <= 0 || end <= 0) {
+				res = (List<Idea>) q.list();
+			} else {
+				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
+			}
+			return res;
+		} catch (Exception e) {
+			try {
+				throw new SystemException(e);
+			} catch (SystemException se) {
+				se.printStackTrace();
+			}
+		} finally {
+			closeSession(session);
+		}
+
+		return null;
+	}
+
 	public List<Idea> findByCatAndRating(Long categoryId) {
 		return findByCatAndRating(categoryId, -1, -1);
 	}
@@ -124,6 +163,12 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 		return null;
 	}
+
+	public static final String FIND_BY_CAT_TAGS = IdeaFinder.class.getName()
+			+ ".findByCatAndTags";
+
+	public static final String FIND_BY_CAT_RATING_TAGS = IdeaFinder.class
+			.getName() + ".findByCatAndRatingAndTags";
 
 	public static final String FIND_BY_CAT_RATING = IdeaFinder.class.getName()
 			+ ".findByCatAndRating";

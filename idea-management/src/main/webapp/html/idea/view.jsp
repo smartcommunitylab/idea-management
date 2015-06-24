@@ -1,3 +1,4 @@
+<%@page import="java.util.Arrays"%>
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
@@ -16,6 +17,7 @@ Long categoryId = (Long) request.getAttribute("categoryId");
 String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_VIEWTYPE_SIMPLE));
 String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
+long[] tagSelected = (long[]) request.getAttribute("tagSelected");
 
 if (pagination_view) {
 	int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
@@ -64,9 +66,9 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
     <aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_POPULAR) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_POPULAR %>" label="lbl_filter_famous"/>
 		</div>
     <div class="row-fluid">
-    <liferay-ui:message key="lbl_filter_by_tags"/>  
+    <liferay-ui:message key="lbl_filter_by_tags"/>
     <% for (AssetTag tag: categoryTags) {%>
-    <aui:input inlineField="true" onChange="_<%=Constants.IDEA_PORTLET_ID%>_doSearch()" type="checkbox" name="filterByTags" id="filterByTags<%=tag.getTagId() %>" value="<%= tag.getTagId() %>" label="<%=tag.getName() %>"/>
+    <aui:input inlineField="true"  onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="checkbox" name="filterByTags"  id='<%="filterByTags" + tag.getTagId() %>'  value="<%= tag.getTagId() %>"   label='<%=tag.getName() %>'/>
     <% } %>
     </div>
 </aui:form>

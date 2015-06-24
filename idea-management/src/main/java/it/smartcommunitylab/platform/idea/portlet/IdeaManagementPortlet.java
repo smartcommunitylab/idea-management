@@ -81,6 +81,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		boolean searchByCall = callId > 0;
 		req.setAttribute("callId", callId);
 
+		// filter by tags
+		long[] tagIds = ParamUtil.getLongValues(req, "filterByTagsCheckbox");
+		boolean searchByTags = tagIds.length > 0;
+		req.setAttribute("tagSelected", tagIds);
+		req.setAttribute("filterByTags", tagIds);
+
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
 			// result already ordered by creation date DESC for default
@@ -99,8 +105,13 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				break;
 			case Constants.PREF_LISTTYPE_POPULAR:
 				if (searchByCat) {
-					ideas = IdeaLocalServiceUtil.getIdeasByRating(categoryId,
-							begin, end);
+					if (searchByTags) {
+						ideas = IdeaLocalServiceUtil.getIdeasByRating(
+								categoryId, tagIds, begin, end);
+					} else {
+						ideas = IdeaLocalServiceUtil.getIdeasByRating(
+								categoryId, begin, end);
+					}
 				} else if (searchByCall) {
 					ideas = IdeaLocalServiceUtil.getIdeasByCallAndRating(
 							callId, begin, end);
