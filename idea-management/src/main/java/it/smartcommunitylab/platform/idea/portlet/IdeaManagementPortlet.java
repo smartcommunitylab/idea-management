@@ -85,7 +85,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		long[] tagIds = ParamUtil.getLongValues(req, "filterByTagsCheckbox");
 		boolean searchByTags = tagIds.length > 0;
 		req.setAttribute("tagSelected", tagIds);
-		req.setAttribute("filterByTags", tagIds);
 
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
@@ -93,8 +92,13 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			switch (listType) {
 			case Constants.PREF_LISTTYPE_RECENT:
 				if (searchByCat) {
-					ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
-							begin, end);
+					if (searchByTags) {
+						ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
+								tagIds, begin, end);
+					} else {
+						ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
+								begin, end);
+					}
 				} else if (searchByCall) {
 					ideas = IdeaLocalServiceUtil.getIdeasByCall(callId, begin,
 							end);

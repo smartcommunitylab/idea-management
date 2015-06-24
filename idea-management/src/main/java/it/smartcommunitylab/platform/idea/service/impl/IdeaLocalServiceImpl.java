@@ -197,6 +197,16 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	}
 
+	public List<Idea> getIdeasByCat(long catId, long[] tagIds)
+			throws SystemException {
+		return IdeaFinderUtil.findByCatAndTags(catId, tagIds);
+	}
+
+	public List<Idea> getIdeasByCat(long catId, long[] tagIds, int begin,
+			int end) throws SystemException {
+		return IdeaFinderUtil.findByCatAndTags(catId, tagIds, begin, end);
+	}
+
 	public List<Idea> getIdeasByCat(long catId) throws SystemException {
 		// TODO improve query with join
 		List<AssetEntry> entries = AssetEntryLocalServiceUtil
