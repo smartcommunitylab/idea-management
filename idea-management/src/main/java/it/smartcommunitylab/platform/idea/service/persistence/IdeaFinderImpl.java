@@ -3,6 +3,7 @@ package it.smartcommunitylab.platform.idea.service.persistence;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.model.impl.IdeaImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -22,37 +23,10 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public List<Idea> findByCatAndTags(Long categoryId, long[] tagIds,
 			int begin, int end) {
-
-		Session session = null;
-		try {
-			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_BY_CAT_TAGS);
-
-			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("IM_Idea", IdeaImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-			qPos.add(categoryId);
-			qPos.add(tagIds);
-			List<Idea> res = null;
-			if (begin <= 0 || end <= 0) {
-				res = (List<Idea>) q.list();
-			} else {
-				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
-			}
-			return res;
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
-		}
-
-		return null;
+		List<Object> params = new ArrayList<Object>();
+		params.add(categoryId);
+		params.add(tagIds);
+		return execQuery(FIND_BY_CAT_TAGS, params, begin, end);
 	}
 
 	public List<Idea> findByCatAndRatingAndTags(Long categoryId, long[] tagIds) {
@@ -61,37 +35,10 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public List<Idea> findByCatAndRatingAndTags(Long categoryId, long[] tagIds,
 			int begin, int end) {
-
-		Session session = null;
-		try {
-			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_BY_CAT_RATING_TAGS);
-
-			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("IM_Idea", IdeaImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-			qPos.add(categoryId);
-			qPos.add(tagIds);
-			List<Idea> res = null;
-			if (begin <= 0 || end <= 0) {
-				res = (List<Idea>) q.list();
-			} else {
-				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
-			}
-			return res;
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
-		}
-
-		return null;
+		List<Object> params = new ArrayList<Object>();
+		params.add(categoryId);
+		params.add(tagIds);
+		return execQuery(FIND_BY_CAT_RATING_TAGS, params, begin, end);
 	}
 
 	public List<Idea> findByCatAndRating(Long categoryId) {
@@ -99,36 +46,9 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 	}
 
 	public List<Idea> findByCatAndRating(Long categoryId, int begin, int end) {
-
-		Session session = null;
-		try {
-			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_BY_CAT_RATING);
-
-			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("IM_Idea", IdeaImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-			qPos.add(categoryId);
-			List<Idea> res = null;
-			if (begin <= 0 || end <= 0) {
-				res = (List<Idea>) q.list();
-			} else {
-				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
-			}
-			return res;
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
-		}
-
-		return null;
+		List<Object> params = new ArrayList<Object>();
+		params.add(categoryId);
+		return execQuery(FIND_BY_CAT_RATING, params, begin, end);
 	}
 
 	public List<Idea> findByRating() {
@@ -136,34 +56,8 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 	}
 
 	public List<Idea> findByRating(int begin, int end) {
-
-		Session session = null;
-		try {
-			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_BY_RATING);
-
-			SQLQuery q = session.createSQLQuery(sql);
-			q.setCacheable(false);
-			q.addEntity("IM_Idea", IdeaImpl.class);
-
-			List<Idea> res = null;
-			if (begin <= 0 || end <= 0) {
-				res = (List<Idea>) q.list();
-			} else {
-				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);
-			}
-			return res;
-		} catch (Exception e) {
-			try {
-				throw new SystemException(e);
-			} catch (SystemException se) {
-				se.printStackTrace();
-			}
-		} finally {
-			closeSession(session);
-		}
-
-		return null;
+		List<Object> params = new ArrayList<Object>();
+		return execQuery(FIND_BY_RATING, params, begin, end);
 	}
 
 	public List<Idea> findByCallAndRating(long callId) {
@@ -171,17 +65,25 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 	}
 
 	public List<Idea> findByCallAndRating(long callId, int begin, int end) {
+		List<Object> params = new ArrayList<Object>();
+		params.add(callId);
+		return execQuery(FIND_BY_CALL_RATING, params, begin, end);
+	}
 
+	private List<Idea> execQuery(String queryName, List<Object> params,
+			int begin, int end) {
 		Session session = null;
 		try {
 			session = openSession();
-			String sql = CustomSQLUtil.get(FIND_BY_CALL_RATING);
+			String sql = CustomSQLUtil.get(queryName);
 
 			SQLQuery q = session.createSQLQuery(sql);
 			q.setCacheable(false);
 			q.addEntity("IM_Idea", IdeaImpl.class);
 			QueryPos qPos = QueryPos.getInstance(q);
-			qPos.add(callId);
+			for (Object param : params) {
+				qPos.add(param);
+			}
 
 			List<Idea> res = null;
 			if (begin <= 0 || end <= 0) {
