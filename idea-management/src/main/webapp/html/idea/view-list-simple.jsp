@@ -1,3 +1,5 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ include file="/html/common-init.jsp" %>
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="javax.portlet.ActionRequest" %>
@@ -61,7 +63,13 @@
                 <div class="thumbnail" style="border-left-color: <%=color %>;">
                     <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
                     <h4><%=idea.getTitle() %></h4>
-                    <p class="pull-right"><%=stat.getAverageScore() %> (<%=stat.getTotalEntries() %>)</p>
+                    <p class="pull-left">
+                    <%
+                    DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, themeDisplay.getLocale());
+                    out.print(formatter.format(idea.getCreateDate()));
+                    %>
+                    </p>
+   		            <p class="pull-right"><%=stat.getAverageScore() %> (<%=stat.getTotalEntries() %>)</p>
                 </div>
             </a>
         </span>
