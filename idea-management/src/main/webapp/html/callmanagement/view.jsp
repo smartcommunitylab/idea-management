@@ -1,3 +1,4 @@
+<%@page import="java.text.DateFormat"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallPermission"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallModelPermission"%>
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
@@ -31,7 +32,6 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   
   String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
-
 %>
 
 <portlet:renderURL var="addCallUrl">
@@ -58,12 +58,19 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
         List<AssetCategory> categories = curEntry.getCategories();   
         String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "";
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
+        int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
         %>
   <span class="span12">
       <a class="idea" href="<%=viewCall.toString()%>">
           <div class="thumbnail" style="border-left-color: <%=color %>;">
-              <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
+              <h6 class="idea-cat, pull-left" style="color: <%=color %>;"><%=catTitle %></h6>
+              <p class="pull-right"><%= LanguageUtil.get(locale, "lbl_deadline") %>: <%
+              DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+              out.print(formatter.format(call.getDeadline()));
+              %></p>
               <h4><%=call.getTitle() %></h4>
+              <p><%=call.getDescription() %></p>
+              <p class="pull-right"><%=countIdeaByCall %></p>
           </div>
       </a>
   </span>

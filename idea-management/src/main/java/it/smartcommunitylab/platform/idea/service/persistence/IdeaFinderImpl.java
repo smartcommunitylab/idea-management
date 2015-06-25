@@ -166,4 +166,5 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public static final String FIND_BY_CALL_RATING_TAGS = IdeaFinder.class
 			.getName() + ".findByCallAndRatingAndTags";
+
 }
