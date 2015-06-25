@@ -65,12 +65,14 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
 		<aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_RECENT) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_RECENT %>" label="lbl_filter_newer"/>
     <aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_POPULAR) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_POPULAR %>" label="lbl_filter_famous"/>
 		</div>
+	<c:if test='<%= !categoryTags.isEmpty() %>'>
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by_tags"/>
     <% for (AssetTag tag: categoryTags) {%>
     <aui:input inlineField="true"  onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="checkbox" name="filterByTags"  id='<%="filterByTags" + tag.getTagId() %>'  value="<%= tag.getTagId() %>"   label='<%=tag.getName() %>'/>
     <% } %>
     </div>
+    </c:if>
 </aui:form>
 </c:if>
 
