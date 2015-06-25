@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
 <!-- FIND BY CATEGORY -->
+   <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCat">
+    	<![CDATA[select i.*from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  WHERE (ec.categoryId=?) ]]>
+    </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndRating">
     	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId= ?) GROUP BY r.classPK ORDER BY media DESC ]]>
     </sql>

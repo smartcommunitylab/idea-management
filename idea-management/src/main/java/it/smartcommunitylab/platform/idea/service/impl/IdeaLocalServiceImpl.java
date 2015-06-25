@@ -4,11 +4,9 @@ import it.smartcommunitylab.platform.idea.NoSuchIdeaException;
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.portlet.Constants;
-import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -208,38 +206,12 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 	}
 
 	public List<Idea> getIdeasByCat(long catId) throws SystemException {
-		// TODO improve query with join
-		List<AssetEntry> entries = AssetEntryLocalServiceUtil
-				.getAssetCategoryAssetEntries(catId);
-		List<Idea> ideas = new ArrayList<Idea>();
-		for (AssetEntry entry : entries) {
-			Idea i = IdeaLocalServiceUtil.fetchIdea(entry.getClassPK());
-			if (i != null) {
-				ideas.add(i);
-			}
-		}
-		return ideas;
+		return IdeaFinderUtil.findByCat(catId);
 	}
 
 	public List<Idea> getIdeasByCat(long catId, int begin, int end)
 			throws SystemException {
-		// TODO improve query with join
-		List<AssetEntry> entries = null;
-		if (begin <= 0 && end <= 0) {
-			entries = AssetEntryLocalServiceUtil
-					.getAssetCategoryAssetEntries(catId);
-		} else {
-			entries = AssetEntryLocalServiceUtil.getAssetCategoryAssetEntries(
-					catId, begin, end);
-		}
-		List<Idea> ideas = new ArrayList<Idea>();
-		for (AssetEntry entry : entries) {
-			Idea i = IdeaLocalServiceUtil.fetchIdea(entry.getClassPK());
-			if (i != null) {
-				ideas.add(i);
-			}
-		}
-		return ideas;
+		return IdeaFinderUtil.findByCat(catId, begin, end);
 	}
 
 	public List<Idea> getIdeasByRating() throws SystemException {

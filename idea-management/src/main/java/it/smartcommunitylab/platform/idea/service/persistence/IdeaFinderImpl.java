@@ -17,6 +17,16 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 		IdeaFinder {
 
+	public List<Idea> findByCat(Long categoryId) {
+		return findByCat(categoryId, -1, -1);
+	}
+
+	public List<Idea> findByCat(Long categoryId, int begin, int end) {
+		List<Object> params = new ArrayList<Object>();
+		params.add(categoryId);
+		return execQuery(FIND_BY_CAT, params, begin, end);
+	}
+
 	public List<Idea> findByCatAndTags(Long categoryId, long[] tagIds) {
 		return findByCatAndTags(categoryId, tagIds, -1, -1);
 	}
@@ -106,7 +116,11 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			q.addEntity("IM_Idea", IdeaImpl.class);
 			QueryPos qPos = QueryPos.getInstance(q);
 			for (Object param : params) {
-				qPos.add(param);
+				if (param instanceof long[]) {
+					qPos.add((long[]) param);
+				} else {
+					qPos.add(param);
+				}
 			}
 
 			List<Idea> res = null;
@@ -128,6 +142,9 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 		return null;
 	}
+
+	public static final String FIND_BY_CAT = IdeaFinder.class.getName()
+			+ ".findByCat";
 
 	public static final String FIND_BY_CAT_TAGS = IdeaFinder.class.getName()
 			+ ".findByCatAndTags";
