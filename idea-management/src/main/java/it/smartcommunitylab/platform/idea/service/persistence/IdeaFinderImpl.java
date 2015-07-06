@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -117,7 +118,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			QueryPos qPos = QueryPos.getInstance(q);
 			for (Object param : params) {
 				if (param instanceof long[]) {
-					qPos.add((long[]) param);
+					qPos.add(StringUtil.merge((long[]) param));
 				} else {
 					qPos.add(param);
 				}
