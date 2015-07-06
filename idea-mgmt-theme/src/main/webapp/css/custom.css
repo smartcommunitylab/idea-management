@@ -133,3 +133,26 @@
 	color: red;
 	padding-right: 9px;
 }
+
+.idea-view-title {
+	font-size: 20px;
+	text-transform: uppercase;
+}
+
+.idea-creator {
+	font-style: italic;
+}
+
+.idea-slider-title {
+  font-size: 16px;
+  padding-bottom: 20px;
+}
+
+.toggler-header-expanded {
+  background-color: #BCBCBC;
+  font-weight: bold;	
+}
+.toggler-header-collapsed {
+  background-color: #EDEDED;
+  font-weight: bold;  
+  }

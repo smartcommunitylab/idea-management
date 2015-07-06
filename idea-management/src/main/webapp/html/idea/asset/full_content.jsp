@@ -74,11 +74,9 @@
 </div>
 
 <div class="row-fluid">
-<%--   <portlet:renderURL var="bookmarkURL" windowState="<%= javax.portlet.WindowState.NORMAL.toString() %>"> --%>
-<%--     <portlet:param name="struts_action" value="/idea/view_entry" /> --%>
-<%--     <portlet:param name="urlTitle" value="<%= assetEntry.getUrlTitle() %>" /> --%>
-<%--   </portlet:renderURL> --%>
-  <div class="span12 pull-right"><liferay-ui:social-bookmarks target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks></div>
+  <div class="span12 pull-right">
+    <liferay-ui:social-bookmarks target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks>
+  </div>
 </div>
 
 <liferay-ui:panel-container accordion="true" extended="true">

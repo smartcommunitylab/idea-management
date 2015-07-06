@@ -33,7 +33,14 @@
 	numberFormat.setMaximumFractionDigits(1);
 	numberFormat.setMinimumFractionDigits(0);
 
+	String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
+
 %>
+  <div class="row-fluid">
+    <span class="idea-slider-title offset1 span10">
+    <liferay-ui:message key='<%="lbl_listTypeTitle_"+listType %>'/> 
+    </span>
+  </div>
   <div class="idea-slider row-fluid">
     <span class="span1 text-right">
         <c:if test="<%= currentPage > 1%>">
