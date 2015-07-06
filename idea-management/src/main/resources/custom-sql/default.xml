@@ -8,7 +8,7 @@
     	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId= ?) GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByRating">
-    	<![CDATA[select idea.*, AVG(r.score) AS media from AssetEntry a, RatingsEntry r, IM_Idea idea WHERE a.classPK=r.classPK AND idea.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>
+    	<![CDATA[select idea.*, AVG(r.score) AS media from AssetEntry a, RatingsEntry r, IM_Idea idea WHERE a.classPK=r.classPK AND idea.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC, idea.createDate DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndRatingAndTags">
     	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  INNER JOIN AssetEntries_AssetTags et ON et.entryId=a.entryId LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId=?) AND et.tagId IN (?) GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>

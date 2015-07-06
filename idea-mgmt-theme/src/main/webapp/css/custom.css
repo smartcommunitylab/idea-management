@@ -89,9 +89,9 @@
 }
 
 .idea-slider .idea-slider-arrow {
-	font-size: 3em;
+	font-size: 2em;
 	text-decoration: none;
-	line-height: 150px;
+	line-height: 120px;
 }
 
 .idea-slider .idea {
@@ -101,7 +101,8 @@
 
 .idea-slider .idea .thumbnail {
 	border-left-width: 16px;
-	height: 150px;
+	height: 120px;
+	position: relative;
 }
 
 /*
@@ -114,4 +115,21 @@
 
 .idea-slider .idea .thumbnail .idea-cat {
 	text-transform: uppercase;
+}
+
+.idea-cat {
+	margin-top:0 !important;
+}
+
+.thumbnail-bottom {
+	position: absolute;
+	bottom: 4px;
+	left:4px;
+	width: 100%;
+	font-size:smaller;
+}
+
+.idea-rating {
+	color: red;
+	padding-right: 9px;
 }

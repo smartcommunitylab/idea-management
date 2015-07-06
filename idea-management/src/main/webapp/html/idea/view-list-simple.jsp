@@ -1,5 +1,6 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.NumberFormat"%>
 <%@ include file="/html/common-init.jsp" %>
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="javax.portlet.ActionRequest" %>
@@ -27,6 +28,11 @@
 	int offset = delta - results.size();
 	String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
 	java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+	
+	NumberFormat numberFormat = NumberFormat.getInstance();
+	numberFormat.setMaximumFractionDigits(1);
+	numberFormat.setMinimumFractionDigits(0);
+
 %>
   <div class="idea-slider row-fluid">
     <span class="span1 text-right">
@@ -63,13 +69,24 @@
                 <div class="thumbnail" style="border-left-color: <%=color %>;">
                     <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
                     <h4><%=idea.getTitle() %></h4>
-                    <p class="pull-left">
-                    <%
-                    DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, themeDisplay.getLocale());
-                    out.print(formatter.format(idea.getCreateDate()));
-                    %>
-                    </p>
-   		            <p class="pull-right"><%=stat.getAverageScore() %> (<%=stat.getTotalEntries() %>)</p>
+                    <div class="thumbnail-bottom">
+	                    <div class="pull-left">
+	                    <%
+	                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", themeDisplay.getLocale());
+	                    out.print(formatter.format(idea.getCreateDate()));
+	                    String scoreString = numberFormat.format(stat.getAverageScore());
+	                    %>
+	                    </div>
+	   		              <div class="idea-rating pull-right">
+                            <%
+                            for (int i = 1; i <= 5; i++) {
+                            %>
+                              <i class="<%= (i <= stat.getAverageScore()) ? "icon-star" : "icon-star-empty" %>"></i>
+                            <%
+                            }
+                            %>
+	   		              </div>
+   		            </div>
                 </div>
             </a>
         </span>

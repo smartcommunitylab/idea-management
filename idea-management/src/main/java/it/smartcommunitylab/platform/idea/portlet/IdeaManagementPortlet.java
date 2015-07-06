@@ -18,11 +18,14 @@ import javax.portlet.RenderResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -82,7 +85,23 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		req.setAttribute("callId", callId);
 
 		// filter by tags
-		long[] tagIds = ParamUtil.getLongValues(req, "filterByTagsCheckbox");
+		long[] tagIds = new long[0];
+		try {
+			List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(
+					new long[] { categoryId }, PortalUtil.getScopeGroupId(req));
+			for (AssetTag tags : categoryTags) {
+				long tagSel = ParamUtil.getLong(req,
+						"filterByTags" + tags.getTagId() + "Checkbox");
+				if (tagSel > 0) {
+					tagIds = ArrayUtil.append(tagIds, tags.getTagId());
+				}
+			}
+		} catch (SystemException e1) {
+			e1.printStackTrace();
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+
 		boolean searchByTags = tagIds.length > 0;
 		req.setAttribute("tagSelected", tagIds);
 
