@@ -48,6 +48,13 @@ if (pagination_view) {
     function <portlet:namespace/>doSearch() {
     	document.<portlet:namespace />filter.submit();
     }
+    
+    function <portlet:namespace/>fixCheckbox(elem) {
+    	var hideValueName = elem.name.slice(0,-8);
+    	var hideElem = document.getElementById(hideValueName);
+    	var realValue = hideValueName.substring('<portlet:namespace/>filterByTags'.length);
+    	hideElem.value = realValue;
+    }
 </script>
 
 <%
@@ -69,7 +76,7 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
     <div class="row-fluid">
     <liferay-ui:message key="lbl_filter_by_tags"/>
     <% for (AssetTag tag: categoryTags) {%>
-    <aui:input inlineField="true"  onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="checkbox" name="filterByTags"  id='<%="filterByTags" + tag.getTagId() %>'  value="<%= tag.getTagId() %>"   label='<%=tag.getName() %>'/>
+    <aui:input inlineField="true"  checked='<%=Arrays.binarySearch(tagSelected, tag.getTagId()) >= 0 %>' onClick='<%= renderResponse.getNamespace()+"fixCheckbox(this)"%>' onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="checkbox" name='<%="filterByTags" + tag.getTagId() %>'  id='<%="filterByTags" + tag.getTagId() %>'  value="<%= tag.getTagId() %>"   label='<%=tag.getName() %>'/>
     <% } %>
     </div>
     </c:if>
