@@ -217,7 +217,7 @@
 }
 
 #participants .avatar {
-	  width: 76px;
+    width: 76px;
   height: 76px;
   -webkit-border-radius: 40px;
   -moz-border-radius: 40px;
@@ -226,7 +226,7 @@
 }
 
 #participants .taglib-user-display span {
-	display: block;
+  display: block;
 }
 
 #participants .taglib-user-display .user-details {
@@ -246,15 +246,15 @@
 }
 .share-on-label {
   text-transform: uppercase;
-	display: inline-block;
+  display: inline-block;
   height: 32px;
   vertical-align: bottom;
 }
 .share-on-link {
-	display: inline-block;
-	padding-left: 10px; 
-	height: 32px;
-	width: 32px;
+  display: inline-block;
+  padding-left: 10px; 
+  height: 32px;
+  width: 32px;
 }
 
 .share-on-googleplus {
@@ -269,9 +269,9 @@
 }
 
 .liferay-rating-vote > div {
-	position: relative;
-	text-align: center;
-	padding-bottom: 50px;
+  position: relative;
+  text-align: center;
+  padding-bottom: 50px;
 }
 .liferay-rating-vote .rating-label {
   position: absolute;
@@ -289,25 +289,25 @@
 }
 
 .taglib-ratings {
-	display: inline-block;
+  display: inline-block;
 }
 
 .liferay-rating-score {
-	clear: left;
+  clear: left;
 }
 .liferay-rating-score .rating-element {
   color: #F1453D !important;
 }
 
 .idea-button {
-	margin-top: 10px;
+  margin-top: 10px;
   padding: 11px 19px !important;
   font-size: 17.5px !important;
   background-color: #F1453D !important;
-  background-image: linear-gradient(to bottom, #F1453D, #F1453D) !important;  	
+  background-image: linear-gradient(to bottom, #F1453D, #F1453D) !important;    
 }
 
 .participation-details {
-	padding-top: 20px;
+  padding-top: 20px;
 }
 
