@@ -105,8 +105,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		boolean searchByTags = tagIds.length > 0;
 		req.setAttribute("tagSelected", tagIds);
 
-		System.err.print("SEARCH "+ listType+" - "+begin+"/"+end);
-		
 		try {
 			List<Idea> ideas = new ArrayList<Idea>();
 			// result already ordered by creation date DESC for default
@@ -147,7 +145,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			default:
 				break;
 			}
-			System.err.println(": "+ ideas.size());
 			req.setAttribute("ideas", ideas);
 			req.setAttribute("ideaCount", ideas.size());
 		} catch (SystemException e) {
