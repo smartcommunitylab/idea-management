@@ -46,7 +46,8 @@
 				
 			</#if>
 		</ul>
-		<ul id="user-menu">
+		<div id="menu-right">
+		<ul id="user-menu" class="nav-menu">
 			<#if !is_signed_in>
 				<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
 				<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="sign-in" />
@@ -62,14 +63,12 @@
 			
 				<#--  ${themeDisplay.isImpersonated()?string("impersonating-user", "")} -->
 				<@liferay_util["buffer"] var="userprofile">
-					<a href="${portletURL.toString()}">
-						<span class="user-full-name">${user.getFullName()}</span>
-						<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
-					</a>
+					<span class="user-full-name">${user.getFullName()}</span>
+					<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
 				</@>
 				
 				<#--
-				<@aui["nav-item"] anchorCssClass="user-avatar-link" cssClass="user-avatar" dropdown=false id="userAvatar" label="${userprofile}">
+				<@aui["nav-item"] cssClass="user-avatar" dropdown=false id="userAvatar" label="${userprofile}">
 					<li class="my-sites-menu public-site">
 						<#-- <a href="<%= myProfileURL.toString() %>"> ->
 						<a href="${portletURL.toString()}">
@@ -84,12 +83,12 @@
 				</@>
 				-->
 				
-				<@aui["nav-item"] anchorCssClass="user-avatar-link" dropdown=false id="userAvatar" label="${userprofile}" />
+				<@aui["nav-item"] href="${portletURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
 				
-				<@aui["nav-item"] anchorCssClass="user-avatar-link" href="${portletURL.toString()}" iconCssClass="icon-bell" />
+				<@aui["nav-item"] href="${portletURL.toString()}" id="userNotifications" iconCssClass="icon-bell" />
 				
 				<#if themeDisplay.isShowSignOutIcon()>
-					<@aui["nav-item"] anchorCssClass="user-avatar-link" href="${themeDisplay.getURLSignOut()}" iconCssClass="icon-off" />
+					<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="icon-off" />
 				</#if>
 				
 				<#--
@@ -108,6 +107,14 @@
 				</div>
 				-->
 			</#if>
+		</ul>
+		<ul id="search" class="nav-menu">
+			<@aui["nav-item"] href="#" iconCssClass="icon-search" />
+			
+			<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> -->
+			<li id="searchform">
+				<@liferay_ui["search"] />
+			</li>
 		</ul>
 	</div>
 </nav>
