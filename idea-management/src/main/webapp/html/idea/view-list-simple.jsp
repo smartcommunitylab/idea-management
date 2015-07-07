@@ -79,8 +79,7 @@
                     <div class="thumbnail-bottom">
 	                    <div class="pull-left">
 	                    <%
-	                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", themeDisplay.getLocale());
-	                    out.print(formatter.format(idea.getCreateDate()));
+	                    out.print(dateFormatter.format(idea.getCreateDate()));
 	                    String scoreString = numberFormat.format(stat.getAverageScore());
 	                    %>
 	                    </div>
