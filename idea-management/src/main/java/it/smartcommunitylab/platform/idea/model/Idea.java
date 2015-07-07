@@ -17,4 +17,5 @@ public interface Idea extends IdeaModel, PersistedModel {
      *
      * Never modify this interface directly. Add methods to {@link it.smartcommunitylab.platform.idea.model.impl.IdeaImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
      */
+    public java.util.Date discussionDeadline();
 }

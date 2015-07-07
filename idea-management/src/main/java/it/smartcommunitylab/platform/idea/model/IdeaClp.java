@@ -472,6 +472,24 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     }
 
     @Override
+    public java.util.Date discussionDeadline() {
+        try {
+            String methodName = "discussionDeadline";
+
+            Class<?>[] parameterTypes = new Class<?>[] {  };
+
+            Object[] parameterValues = new Object[] {  };
+
+            java.util.Date returnObj = (java.util.Date) invokeOnRemoteModel(methodName,
+                    parameterTypes, parameterValues);
+
+            return returnObj;
+        } catch (Exception e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Idea.class.getName()));
