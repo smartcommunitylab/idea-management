@@ -543,6 +543,11 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     }
 
     @Override
+    public java.util.Date discussionDeadline() {
+        return _idea.discussionDeadline();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

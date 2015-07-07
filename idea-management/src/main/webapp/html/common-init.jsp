@@ -1,3 +1,4 @@
+<%@page import="java.text.DateFormat"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 <%@ taglib uri="http://alloy.liferay.com/tld/aui" prefix="aui" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -26,5 +27,10 @@
 <%@ page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 
 
+
 <portlet:defineObjects />
 <theme:defineObjects/>
+
+<%
+DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+%>

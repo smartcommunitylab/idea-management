@@ -5,6 +5,10 @@
 <%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %>
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.model.User" %>
+<%@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
+
+<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -53,6 +57,12 @@
   
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"),
 			request);
+	
+	String canonicalURL = PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout);
+	String htmlTitle = HtmlUtil.unescape(idea.getTitle());
+	
+  RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),idea.getIdeaId());
+
 %>
 <div class="row-fluid">
   <span class="span8 idea-view-title"><%=HtmlUtil.unescape(idea.getTitle())%></span>
@@ -73,27 +83,38 @@
   </span>
 </div>
 
-<div class="row-fluid">
+<%-- <div class="row-fluid">
   <div class="span12 pull-right">
-    <liferay-ui:social-bookmarks target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks>
-  </div>
+    <liferay-ui:social-bookmarks displayStyle="vertical" target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks>
+  </div>  
 </div>
-
-<liferay-ui:panel-container accordion="true" extended="true">
+ --%>
+<div class="row-fluid">
+  <div class="span12 text-right">
+      <span class="share-on-label"><liferay-ui:message key="lbl_share"/></span>
+      <a class="share-on-link share-on-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=<%=htmlTitle %>&url=<%=canonicalURL%>"></a>
+      <a class="share-on-link share-on-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%=canonicalURL%>"></a>
+      <a class="share-on-link share-on-googleplus" target="_blank" href="https://plus.google.com/share?url=<%=canonicalURL%>"></a>
+  </div>  
+</div>
+ 
+ <liferay-ui:panel-container accordion="true" extended="true">
 	<liferay-ui:panel collapsible="true" id="info" title='<%= LanguageUtil.get(locale, "lbl_info") %>'>
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
 
     <c:if test="<%=parentTagSet.size() > 0 %>">
-    <div class="row-fluid">
-      <liferay-ui:message key="lbl_tags"/>
+    <div class="row-fluid info-meta">
+      <i class="icon-tags icon-white"></i>
+      <span class="info-meta-label"><liferay-ui:message key="lbl_tags"/></span>
         <% for (String tag: parentTagSet) {%>
         <span class="badge"><%=tag %></span>
         <%} %>
     </div>
     </c:if>
     <c:if test="<%=ownTagSet.size() > 0 %>">
-    <div class="row-fluid">
-      <liferay-ui:message key="lbl_usertags"/>
+    <div class="row-fluid info-meta">
+      <i class="icon-user icon-white"></i>
+      <span class="info-meta-label"><liferay-ui:message key="lbl_usertags"/></span>
         <% for (String tag: ownTagSet) {%>
         <span class="badge"><%=tag %></span>
         <%} %>
@@ -103,36 +124,62 @@
 		  assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
 		  className="<%=Idea.class.getName()%>" classPK="<%=idea.getIdeaId()%>" />
   </liferay-ui:panel>
-  <c:if test="<%=themeDisplay.isSignedIn()%>">
   <liferay-ui:panel collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
+    <c:if test="<%=!themeDisplay.isSignedIn()%>">
+      <div class="row-fluid">
+        <span class="span12 idea-creator text-right">
+            <liferay-ui:message key="lbl_access"/>  
+        </span>
+      </div>
       <div class="row-fluid text-center">
-        <div class="span6">
-          <liferay-ui:message key="lbl_rate"/>
+        <div class="span6"> 
+          <liferay-ui:message key="lbl_rating"/>
+          <div>
+          <liferay-ui:ratings-score score='<%=stat.getAverageScore() %>'></liferay-ui:ratings-score> 
+          </div>
+          <div>
+            <span><%=stat.getTotalEntries() %></span>
+            <i class="icon-user"></i>
+          </div>
         </div>
-        <div class="span6">
-          <liferay-ui:message key="lbl_participate"/>
+        <div class="span6 text-center"> 
+          <liferay-ui:message key="lbl_participationcount"/> 
+          <div class="participation-details">
+            <span><%=users.size() %></span>
+            <i class="icon-user"></i>
+          </div>
         </div>
       </div>
+    </c:if>
+    <c:if test="<%=themeDisplay.isSignedIn()%>">
+      <div class="row-fluid text-center">
+        <div class="span6"> <liferay-ui:message key="lbl_rate"/> </div>
+        <div class="span6"> <liferay-ui:message key="lbl_participate"/> </div>
+      </div>
 		  <div class="row-fluid">
-		    <div class="span6">
-				  <liferay-ui:ratings
-				    className="<%= Idea.class.getName() %>"
-				    classPK="<%= idea.getIdeaId() %>"
-		      />
+		    <div class="span6 text-center">
+				  <liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>" />
         </div>
-	      <div class="span6">
+	      <div class="span6 text-center">
 		      <portlet:actionURL var="toggleURL" name="toggleUserParticipation">
             <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
 		        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
             <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
 		      </portlet:actionURL>
-  	      <a class="btn <%=participates ? "btn-primary" : "" %>" href="<%=toggleURL.toString() %>"><i class="icon-hand-up"></i></a>
-  	      <i class="icon-user"></i><%=users.size() %>
+  	      <div><a class="idea-button btn <%=participates ? "btn-primary" : "" %>" href="<%=toggleURL.toString() %>"><i class="icon-hand-up"></i></a></div>
+          <div><span><liferay-ui:message key="lbl_participating"/></span></div>
+          <div class="participation-details">
+	          <span><%=users.size() %></span>
+	          <i class="icon-user"></i>
+          </div>
 	      </div>
-	      
       </div>
-
       <hr/>
+        <div class="row-fluid">
+          <span class="span12 idea-creator text-right">
+              <liferay-ui:message key="lbl_discussionExpiration" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.discussionDeadline())}%>" />  
+          </span>
+        </div>
       <div class="row-fluid">
 	      <portlet:actionURL name="addComment" var="discussionURL">
 	        <!-- workaround to invoke liferary class that manage comment/discussion -->
@@ -140,18 +187,21 @@
 	          value="/asset_publisher/edit_entry_discussion" />
 	      </portlet:actionURL>
       </div>		
-		
 		  <liferay-ui:discussion className="<%=Idea.class.getName()%>" 
 		    classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
 		    formName="fm2" ratingsEnabled="<%=true%>" redirect="<%=currentURL%>"
 		    subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />
+    </c:if>
   </liferay-ui:panel>
-  </c:if>
   <liferay-ui:panel collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
+        <div class="span2">
         <% for (User participant: users) {%>
         <liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getScreenName() %>" displayStyle="0"></liferay-ui:user-display>
-        <c:if test="<%=participant.getUserId() == owner.getUserId() %>"><liferay-ui:message key="lbl_author"/></c:if>
+        <c:if test="<%=participant.getUserId() == owner.getUserId() %>">
+        <span class="user-role"><liferay-ui:message key="lbl_author"/></span>
+        </c:if>
         <%} %>
+        </div>
   </liferay-ui:panel>
   <liferay-ui:panel collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
   </liferay-ui:panel>

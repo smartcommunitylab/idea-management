@@ -1,5 +1,8 @@
 package it.smartcommunitylab.platform.idea.model.impl;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * The extended model implementation for the Idea service. Represents a row in the &quot;IM_Idea&quot; database table, with each column mapped to a property of this class.
  *
@@ -16,5 +19,12 @@ public class IdeaImpl extends IdeaBaseImpl {
      * Never reference this class directly. All methods that expect a idea model instance should use the {@link it.smartcommunitylab.platform.idea.model.Idea} interface instead.
      */
     public IdeaImpl() {
+    }
+    
+    public Date discussionDeadline() {
+    	Calendar c = Calendar.getInstance();
+    	c.setTimeInMillis(getCreateDate().getTime());
+    	c.add(Calendar.DATE, 30);
+    	return c.getTime();
     }
 }

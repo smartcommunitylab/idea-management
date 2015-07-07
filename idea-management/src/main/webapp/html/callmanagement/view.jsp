@@ -65,8 +65,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
           <div class="thumbnail" style="border-left-color: <%=color %>;">
               <h6 class="idea-cat, pull-left" style="color: <%=color %>;"><%=catTitle %></h6>
               <p class="pull-right"><%= LanguageUtil.get(locale, "lbl_deadline") %>: <%
-              DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, locale);
-              out.print(formatter.format(call.getDeadline()));
+              out.print(dateFormatter.format(call.getDeadline()));
               %></p>
               <h4><%=call.getTitle() %></h4>
               <p><%=call.getDescription() %></p>
