@@ -6,6 +6,8 @@
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.model.User" %>
 
+<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -53,6 +55,8 @@
   
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"),
 			request);
+	
+	String canonicalURL = PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout);
 %>
 <div class="row-fluid">
   <span class="span8 idea-view-title"><%=HtmlUtil.unescape(idea.getTitle())%></span>
@@ -73,27 +77,52 @@
   </span>
 </div>
 
+<!-- <div class="row-fluid idea-bookmarks"> -->
+<%--     <liferay-ui:message key="lbl_share"/> --%>
+<%-- 		<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_facebook"> --%>
+<%-- 		  <script src="https://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/all.js#xfbml=1"></script> --%>
+<%-- 		</liferay-util:html-bottom> --%>
+<!-- 		<div id="fb-root"></div> -->
+		
+<!-- 		<div class="fb-like" -->
+<!-- 		  data-font="" -->
+<%-- 		  data-href="<%= canonicalURL %>" --%>
+<!-- 		  data-layout="icon" -->
+<!-- 		  data-send="false" -->
+<!-- 		  data-show_faces="true" -->
+<!-- 		> -->
+<!-- 		</div> -->
+<%-- 		<a href="https://plus.google.com/share?url=<%=canonicalURL %>" onclick="javascript:window.open(this.href, --%>
+<!-- 		  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img -->
+<!-- 		  src="https://www.gstatic.com/images/icons/gplus-32.png"/></a> -->
+  
+<!-- 		<a class="twitter-share-button" href="https://twitter.com/share" target="_blank" -->
+<%-- 		  data-url="<%=canonicalURL %>" data-count-url="<%=canonicalURL %>" --%>
+<%-- 		  data-text="<%=HtmlUtil.unescape(idea.getTitle())%>"><img src="/idea-mgmt-theme/images/twitter.png"/></a> --%>
+<!-- </div> -->
+  
 <div class="row-fluid">
   <div class="span12 pull-right">
-    <liferay-ui:social-bookmarks target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks>
-  </div>
+    <liferay-ui:social-bookmarks displayStyle="vertical" target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks>
+  </div>  
 </div>
-
 <liferay-ui:panel-container accordion="true" extended="true">
 	<liferay-ui:panel collapsible="true" id="info" title='<%= LanguageUtil.get(locale, "lbl_info") %>'>
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
 
     <c:if test="<%=parentTagSet.size() > 0 %>">
-    <div class="row-fluid">
-      <liferay-ui:message key="lbl_tags"/>
+    <div class="row-fluid info-meta">
+      <i class="icon-tags icon-white"></i>
+      <span class="info-meta-label"><liferay-ui:message key="lbl_tags"/></span>
         <% for (String tag: parentTagSet) {%>
         <span class="badge"><%=tag %></span>
         <%} %>
     </div>
     </c:if>
     <c:if test="<%=ownTagSet.size() > 0 %>">
-    <div class="row-fluid">
-      <liferay-ui:message key="lbl_usertags"/>
+    <div class="row-fluid info-meta">
+      <i class="icon-user icon-white"></i>
+      <span class="info-meta-label"><liferay-ui:message key="lbl_usertags"/></span>
         <% for (String tag: ownTagSet) {%>
         <span class="badge"><%=tag %></span>
         <%} %>
