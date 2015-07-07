@@ -34,10 +34,11 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
     public String shortDesc;
     public long userGroupId;
     public long callId;
+    public String state;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(27);
+        StringBundler sb = new StringBundler(29);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -65,6 +66,8 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         sb.append(userGroupId);
         sb.append(", callId=");
         sb.append(callId);
+        sb.append(", state=");
+        sb.append(state);
         sb.append("}");
 
         return sb.toString();
@@ -124,6 +127,12 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         ideaImpl.setUserGroupId(userGroupId);
         ideaImpl.setCallId(callId);
 
+        if (state == null) {
+            ideaImpl.setState(StringPool.BLANK);
+        } else {
+            ideaImpl.setState(state);
+        }
+
         ideaImpl.resetOriginalValues();
 
         return ideaImpl;
@@ -144,6 +153,7 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         shortDesc = objectInput.readUTF();
         userGroupId = objectInput.readLong();
         callId = objectInput.readLong();
+        state = objectInput.readUTF();
     }
 
     @Override
@@ -189,5 +199,11 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
 
         objectOutput.writeLong(userGroupId);
         objectOutput.writeLong(callId);
+
+        if (state == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(state);
+        }
     }
 }

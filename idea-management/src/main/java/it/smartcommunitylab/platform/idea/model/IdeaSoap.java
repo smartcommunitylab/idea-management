@@ -26,6 +26,7 @@ public class IdeaSoap implements Serializable {
     private String _shortDesc;
     private long _userGroupId;
     private long _callId;
+    private String _state;
 
     public IdeaSoap() {
     }
@@ -46,6 +47,7 @@ public class IdeaSoap implements Serializable {
         soapModel.setShortDesc(model.getShortDesc());
         soapModel.setUserGroupId(model.getUserGroupId());
         soapModel.setCallId(model.getCallId());
+        soapModel.setState(model.getState());
 
         return soapModel;
     }
@@ -196,5 +198,13 @@ public class IdeaSoap implements Serializable {
 
     public void setCallId(long callId) {
         _callId = callId;
+    }
+
+    public String getState() {
+        return _state;
+    }
+
+    public void setState(String state) {
+        _state = state;
     }
 }

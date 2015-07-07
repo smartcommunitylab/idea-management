@@ -265,6 +265,21 @@ public interface IdeaModel extends BaseModel<Idea>, StagedGroupedModel {
      */
     public void setCallId(long callId);
 
+    /**
+     * Returns the state of this idea.
+     *
+     * @return the state of this idea
+     */
+    @AutoEscape
+    public String getState();
+
+    /**
+     * Sets the state of this idea.
+     *
+     * @param state the state of this idea
+     */
+    public void setState(String state);
+
     @Override
     public boolean isNew();
 

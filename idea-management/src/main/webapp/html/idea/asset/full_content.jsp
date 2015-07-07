@@ -63,6 +63,9 @@
 	
   RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),idea.getIdeaId());
 
+  String state = idea.getState();
+  if (state == null || state.equals("")) state = Constants.IDEA_STATE_PROPOSED;
+  
 %>
 <div class="row-fluid">
   <span class="span8 idea-view-title"><%=HtmlUtil.unescape(idea.getTitle())%></span>
@@ -166,7 +169,7 @@
 		        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
             <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
 		      </portlet:actionURL>
-  	      <div><a class="idea-button btn <%=participates ? "btn-primary" : "" %>" href="<%=toggleURL.toString() %>"><i class="icon-hand-up"></i></a></div>
+  	      <div><a class='idea-button idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
           <div><span><liferay-ui:message key="lbl_participating"/></span></div>
           <div class="participation-details">
 	          <span><%=users.size() %></span>
@@ -204,5 +207,9 @@
         </div>
   </liferay-ui:panel>
   <liferay-ui:panel collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
+    <div class="span3 text-center"><a class='idea-state state-proposed<%=Constants.IDEA_STATE_PROPOSED.equals(state) ? "active" : "" %>'></a></div>
+    <div class="span3 text-center"><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div>
+    <div class="span3 text-center"><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div>
+    <div class="span3 text-center"><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div>
   </liferay-ui:panel>
 </liferay-ui:panel-container>

@@ -46,6 +46,7 @@
 		<column name="shortDesc" type="String"></column>
         <column name="userGroupId" type="long"></column>
         <column name="callId" type="long"></column>
+        <column name="state" type="String"></column>
 
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
