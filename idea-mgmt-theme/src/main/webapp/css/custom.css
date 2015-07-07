@@ -51,37 +51,57 @@
 	color: black;
 }
 
-#user-menu, #search {
+#menu-right {
 	float: right;
 }
 
-#user-menu {
-	margin: 0;
+.nav-menu {
+	float: left;
+	margin: 0 !important;
 }
 
-#user-menu li {
-	list-style-type: none;
+.nav-menu li {
 	display: inline-block;
+	list-style-type: none;
 	line-height: 40px;
 }
 
-#user-menu li a {
+.nav-menu li a, .nav-menu li a:hover {
+	display: block;
 	text-decoration: none;
 	color: black;
 	padding: 10px 20px;
 }
 
-#user-menu li a i[class*="icon-"] {
-	font-size: 38px;
+.nav-menu li a i[class*="icon-"] {
+	vertical-align: middle;
+	font-size: 40px;
 }
 
-#user-menu li .user-avatar-image {
+.nav-menu li .user-avatar-image {
 	width: 38px;
 	height: 38px;
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
 	border: 1px solid #DDD;
+}
+
+#search {
+	border-left: 3px solid black;
+}
+
+#search form {
+	display: inline-block;
+	padding: 10px 20px 10px 0;
+}
+
+#search form select, #search form input[type="image"] {
+	display: none;
+}
+
+#search form input[type="text"] {
+	margin-bottom: 0;
 }
 
 #content {
