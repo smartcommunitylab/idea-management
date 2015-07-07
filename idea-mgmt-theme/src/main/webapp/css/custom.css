@@ -380,17 +380,17 @@
 
 .idea-state {
   display: inline-block;
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
 }
 
 .state-proposed {
   background-image: url(../images/Proposta_disabled.png) !important;    
-  background-size: 50px 50px; 
+  background-size: 100% 100%; 
 }
 .state-proposedactive {
   background-image: url(../images/Proposta_enabled.png) !important;    
-  background-size: 50px 50px; 
+  background-size: 100% 100%; 
 }
 .state-accepted {
   background-image: url(../images/accettata_disabled.png) !important;    
@@ -417,4 +417,6 @@
   background-size: 100% 100%; 
 }
 
-
+.idea-state-container  {
+  text-transform: uppercase;
+}
