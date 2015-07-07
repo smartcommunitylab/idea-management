@@ -84,14 +84,7 @@
 	                    String scoreString = numberFormat.format(stat.getAverageScore());
 	                    %>
 	                    </div>
-	   		              <div class="idea-rating pull-right">
-                            <%
-                            for (int i = 1; i <= 5; i++) {
-                            %>
-                              <i class="<%= (i <= stat.getAverageScore()) ? "icon-star" : "icon-star-empty" %>"></i>
-                            <%
-                            }
-                            %>
+	   		              <div class="idea-rating pull-right"> <% for (int i = 1; i <= 5; i++) { %> <i class="<%= (i <= stat.getAverageScore()) ? "icon-star" : "icon-star-empty" %>"></i> <% } %>
 	   		              </div>
    		            </div>
                 </div>
