@@ -46,30 +46,32 @@
 				
 			</#if>
 		</ul>
-		<div id="sign-in">
+		<ul id="user-menu">
 			<#if !is_signed_in>
 				<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
 				<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="sign-in" />
 			<#else>
+				<#assign id = themeDisplay.getPortletDisplay().getId() />
+				<#assign plid = themeDisplay.getPlid() />
+				<#assign portletURL = portletURLFactory.create(request, "49", plid, "ACTION_PHASE") />
+				${portletURL.setParameter("struts_action", "/my_sites/view")}
+				${portletURL.setParameter("groupId", "" + themeDisplay.getUser().getGroupId())}
+				${portletURL.setParameter("privateLayout", "false")}
+				${portletURL.setPortletMode("VIEW")}
+				${portletURL.setWindowState("NORMAL")}
+			
 				<#--  ${themeDisplay.isImpersonated()?string("impersonating-user", "")} -->
-				<@liferay_util["buffer"] var="label">
-					<span class="user-full-name">${user.getFullName()}</span>
-					<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
+				<@liferay_util["buffer"] var="userprofile">
+					<a href="${portletURL.toString()}">
+						<span class="user-full-name">${user.getFullName()}</span>
+						<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
+					</a>
 				</@>
 				
-				<@aui["nav-item"] anchorCssClass="user-avatar-link" cssClass="user-avatar" dropdown=true id="userAvatar" label="${label}">
-					<#assign id = themeDisplay.getPortletDisplay().getId() />
-					<#assign plid = themeDisplay.getPlid() />
-					<#assign portletURL = portletURLFactory.create(request, id, plid, "ACTION_PHASE") />
-					
-					${portletURL.setParameter("struts_action", "/my_sites/view")}
-					<#-- ${portletURL.setParameter("groupId", mySiteGroup.getGroupId())} -->
-					${portletURL.setParameter("privateLayout", "FALSE")}
-					${portletURL.setPortletMode("VIEW")}
-					${portletURL.setWindowState("NORMAL")}
-
+				<#--
+				<@aui["nav-item"] anchorCssClass="user-avatar-link" cssClass="user-avatar" dropdown=false id="userAvatar" label="${userprofile}">
 					<li class="my-sites-menu public-site">
-						<#-- <a href="<%= myProfileURL.toString() %>"> -->
+						<#-- <a href="<%= myProfileURL.toString() %>"> ->
 						<a href="${portletURL.toString()}">
 							<span class="site-name"><@liferay_ui["message"] key="my-profile" /></span> 
 						</a>
@@ -78,8 +80,17 @@
 					<#if themeDisplay.isShowSignOutIcon()>
 						<@aui["nav-item"] cssClass="sign-out" href="${themeDisplay.getURLSignOut()}" iconCssClass="icon-off" label="sign-out" />
 					</#if>
+					
 				</@>
+				-->
 				
+				<@aui["nav-item"] anchorCssClass="user-avatar-link" dropdown=false id="userAvatar" label="${userprofile}" />
+				
+				<@aui["nav-item"] anchorCssClass="user-avatar-link" href="${portletURL.toString()}" iconCssClass="icon-bell" />
+				
+				<#if themeDisplay.isShowSignOutIcon()>
+					<@aui["nav-item"] anchorCssClass="user-avatar-link" href="${themeDisplay.getURLSignOut()}" iconCssClass="icon-off" />
+				</#if>
 				
 				<#--
 				<div class="user-data-container">
@@ -97,7 +108,7 @@
 				</div>
 				-->
 			</#if>
-		</div>
+		</ul>
 	</div>
 </nav>
 
