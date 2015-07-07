@@ -57,6 +57,7 @@
 			request);
 	
 	String canonicalURL = PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout);
+	String htmlTitle = HtmlUtil.unescape(idea.getTitle());
 %>
 <div class="row-fluid">
   <span class="span8 idea-view-title"><%=HtmlUtil.unescape(idea.getTitle())%></span>
@@ -77,36 +78,22 @@
   </span>
 </div>
 
-<!-- <div class="row-fluid idea-bookmarks"> -->
-<%--     <liferay-ui:message key="lbl_share"/> --%>
-<%-- 		<liferay-util:html-bottom outputKey="taglib_ui_social_bookmark_facebook"> --%>
-<%-- 		  <script src="https://connect.facebook.net/<%= locale.getLanguage() %>_<%= locale.getCountry() %>/all.js#xfbml=1"></script> --%>
-<%-- 		</liferay-util:html-bottom> --%>
-<!-- 		<div id="fb-root"></div> -->
-		
-<!-- 		<div class="fb-like" -->
-<!-- 		  data-font="" -->
-<%-- 		  data-href="<%= canonicalURL %>" --%>
-<!-- 		  data-layout="icon" -->
-<!-- 		  data-send="false" -->
-<!-- 		  data-show_faces="true" -->
-<!-- 		> -->
-<!-- 		</div> -->
-<%-- 		<a href="https://plus.google.com/share?url=<%=canonicalURL %>" onclick="javascript:window.open(this.href, --%>
-<!-- 		  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img -->
-<!-- 		  src="https://www.gstatic.com/images/icons/gplus-32.png"/></a> -->
-  
-<!-- 		<a class="twitter-share-button" href="https://twitter.com/share" target="_blank" -->
-<%-- 		  data-url="<%=canonicalURL %>" data-count-url="<%=canonicalURL %>" --%>
-<%-- 		  data-text="<%=HtmlUtil.unescape(idea.getTitle())%>"><img src="/idea-mgmt-theme/images/twitter.png"/></a> --%>
-<!-- </div> -->
-  
-<div class="row-fluid">
+<%-- <div class="row-fluid">
   <div class="span12 pull-right">
     <liferay-ui:social-bookmarks displayStyle="vertical" target="_blank" title='<%= LanguageUtil.get(locale, "lbl_share") %>' url="<%= PortalUtil.getCanonicalURL(currentURL.toString(), themeDisplay, layout) %>"></liferay-ui:social-bookmarks>
   </div>  
 </div>
-<liferay-ui:panel-container accordion="true" extended="true">
+ --%>
+<div class="row-fluid">
+  <div class="span12 text-right">
+      <span class="share-on-label"><liferay-ui:message key="lbl_share"/></span>
+      <a class="share-on-link share-on-twitter" href="https://twitter.com/intent/tweet?text=<%=htmlTitle %>&url=<%=canonicalURL%>"></a>
+      <a class="share-on-link share-on-facebook" href="https://www.facebook.com/sharer/sharer.php?u=<%=canonicalURL%>"></a>
+      <a class="share-on-link share-on-googleplus" href="https://plus.google.com/share?url=<%=canonicalURL%>"></a>
+  </div>  
+</div>
+ 
+ <liferay-ui:panel-container accordion="true" extended="true">
 	<liferay-ui:panel collapsible="true" id="info" title='<%= LanguageUtil.get(locale, "lbl_info") %>'>
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
 
@@ -177,10 +164,14 @@
   </liferay-ui:panel>
   </c:if>
   <liferay-ui:panel collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
+        <div class="span2">
         <% for (User participant: users) {%>
         <liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getScreenName() %>" displayStyle="0"></liferay-ui:user-display>
-        <c:if test="<%=participant.getUserId() == owner.getUserId() %>"><liferay-ui:message key="lbl_author"/></c:if>
+        <c:if test="<%=participant.getUserId() == owner.getUserId() %>">
+        <span class="user-role"><liferay-ui:message key="lbl_author"/></span>
+        </c:if>
         <%} %>
+        </div>
   </liferay-ui:panel>
   <liferay-ui:panel collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
   </liferay-ui:panel>
