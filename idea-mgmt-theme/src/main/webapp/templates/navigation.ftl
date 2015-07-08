@@ -109,12 +109,25 @@
 			</#if>
 		</ul>
 		<ul id="search" class="nav-menu">
-			<@aui["nav-item"] href="#" iconCssClass="icon-search" />
+			<@aui["nav-item"] href="#" id="searchtoggle" iconCssClass="icon-search" />
 			
 			<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> -->
 			<li id="searchform">
 				<@liferay_ui["search"] />
 			</li>
+			
+			<script>
+				var element = document.getElementById('searchform');
+				document.getElementById('searchtoggle').onclick = function() {
+					if (element.classList.contains('shown')) {
+						element.classList.remove('shown');
+						console.log('shown removed');
+					} else {
+						element.classList.add('shown');
+						console.log('shown added');
+					}
+				};
+			</script>
 		</ul>
 	</div>
 </nav>
