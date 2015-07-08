@@ -18,12 +18,15 @@
 	font-weight: 300;
 }
 
-/*header#banner {
-  height: 400px;
-  margin-bottom: 30px;
-  background-image: url('../images/cover.png');
-  background-size: cover;
-}*/
+header#banner {
+	/* height: 400px; */
+	/* margin-bottom: 30px; */
+	/* background-image: url('../images/cover.png'); */
+	/* background-size: cover; */
+	/* position: absolute; */
+	/* top: 0; */
+}
+
 #navigation .navbar-inner {
 	padding: 0;
 	border: 0;
@@ -33,51 +36,56 @@
 	background: rgba(255, 255, 255, 0.7);
 }
 
-#navigation .navbar-inner #navmenu {
+#navmenu {
 	text-transform: uppercase;
 }
 
-#navigation .navbar-inner #navmenu li {
+#navmenu li {
 	line-height: 40px;
 }
 
-#navigation .navbar-inner #navmenu li a {
+#navmenu li a {
 	padding: 10px 40px;
 }
 
-#navigation .navbar-inner #navmenu li a span {
+#navmenu li a span {
 	text-shadow: none;
 	color: black;
+}
+
+#navmenu li.selected a span {
+	font-weight: bold;
+	color: #F1453D;
 }
 
 #menu-right {
 	float: right;
 }
 
-.nav-menu {
+#menu-right ul {
 	float: left;
 	margin: 0 !important;
 }
 
-.nav-menu li {
+#menu-right ul li {
 	display: inline-block;
 	list-style-type: none;
 	line-height: 40px;
 }
 
-.nav-menu li a {
+#menu-right ul li a {
 	display: block !important;
 	text-decoration: none !important;
 	color: black !important;
 	padding: 10px 20px !important;
 }
 
-.nav-menu li a i[class*="icon-"] {
+#menu-right ul li a i[class*="icon-"] {
 	vertical-align: middle;
 	font-size: 40px;
 }
 
-.nav-menu li .user-avatar-image {
+#menu-right ul li .user-avatar-image {
 	width: 38px;
 	height: 38px;
 	-webkit-border-radius: 20px;
@@ -355,13 +363,13 @@
 }
 
 .idea-button {
-  display: inline-block;
-  height: 50px;
-  width: 50px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #F1453D;
-  -webkit-border-radius: 3px;
+	display: inline-block;
+	height: 50px;
+	width: 50px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #F1453D;
+	-webkit-border-radius: 3px;
 }
 
 .participation-details {
@@ -402,56 +410,63 @@
 }
 
 .idea-button-participate-enabled {
-  background-color: #F1453D !important;
-	background-image: url(../images/CiSto_enabled.png) !important;   
-	background-size: 100% 100%; 
+	background-color: #F1453D !important;
+	background-image: url(../images/CiSto_enabled.png) !important;
+	background-size: 100% 100%;
 }
 
 .idea-button-participate-disabled {
-  background-color: white !important;
-  background-image: url(../images/CiSto_disabled.png) !important;    
-  background-size: 100% 100%; 
+	background-color: white !important;
+	background-image: url(../images/CiSto_disabled.png) !important;
+	background-size: 100% 100%;
 }
 
 .idea-state {
-  display: inline-block;
-  height: 60px;
-  width: 60px;
+	display: inline-block;
+	height: 60px;
+	width: 60px;
 }
 
 .state-proposed {
-  background-image: url(../images/Proposta_disabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-proposedactive {
-  background-image: url(../images/Proposta_enabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-accepted {
-  background-image: url(../images/accettata_disabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-acceptedactive {
-  background-image: url(../images/accettata_enabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-exec {
-  background-image: url(../images/InEsecuzione_disabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-execactive {
-  background-image: url(../images/InEsecuzione_enabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-complete {
-  background-image: url(../images/Eseguita_disabled.png) !important;    
-  background-size: 100% 100%; 
-}
-.state-completeactive {
-  background-image: url(../images/Eseguita_enabled.png) !important;    
-  background-size: 100% 100%; 
+	background-image: url(../images/Proposta_disabled.png) !important;
+	background-size: 100% 100%;
 }
 
-.idea-state-container  {
-  text-transform: uppercase;
+.state-proposedactive {
+	background-image: url(../images/Proposta_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-accepted {
+	background-image: url(../images/accettata_disabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-acceptedactive {
+	background-image: url(../images/accettata_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-exec {
+	background-image: url(../images/InEsecuzione_disabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-execactive {
+	background-image: url(../images/InEsecuzione_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-complete {
+	background-image: url(../images/Eseguita_disabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-completeactive {
+	background-image: url(../images/Eseguita_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.idea-state-container {
+	text-transform: uppercase;
 }
