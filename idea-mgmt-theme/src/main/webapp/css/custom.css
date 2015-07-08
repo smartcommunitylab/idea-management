@@ -437,15 +437,47 @@ header#banner {
 	background-size: 100% 100%;
 }
 
-<<<<<<< HEAD
+.state-accepted {
+	background-image: url(../images/accettata_disabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-acceptedactive {
+	background-image: url(../images/accettata_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-exec {
+	background-image: url(../images/InEsecuzione_disabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-execactive {
+	background-image: url(../images/InEsecuzione_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-complete {
+	background-image: url(../images/Eseguita_disabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.state-completeactive {
+	background-image: url(../images/Eseguita_enabled.png) !important;
+	background-size: 100% 100%;
+}
+
+.idea-state-container {
+	text-transform: uppercase;
+}
 .idea-button-row {
-	text-align: center;
-	padding-top: 5px;
-	padding-bottom: 5px; 
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px; 
 }
 
 .addidea-button {
-	font-size: 18px !important;
+  font-size: 18px !important;
   text-transform: uppercase !important;
   padding: 8px 24px !important;
   color: white !important;
@@ -460,22 +492,22 @@ header#banner {
 }
 
 .filter-panel {
-	background-color: #F6F6F6 !important;
-	margin: 0;
+  background-color: #F6F6F6 !important;
+  margin: 0;
   padding: 30px 20px 0px 20px;
 }
 
 .filter-label {
-	margin-right: 20px;
+  margin-right: 20px;
 }
 
 .filter-panel .radio {
-	padding-top: 0 !important;
+  padding-top: 0 !important;
   text-transform: uppercase;
 }
 
 .idea-type-filter {
-	margin-right: 10px !important;
+  margin-right: 10px !important;
 }
 
 
@@ -518,38 +550,3 @@ header#banner {
     margin-right: 10px !important;
     padding-top: 0 !important;
 }
-=======
-.state-accepted {
-	background-image: url(../images/accettata_disabled.png) !important;
-	background-size: 100% 100%;
-}
-
-.state-acceptedactive {
-	background-image: url(../images/accettata_enabled.png) !important;
-	background-size: 100% 100%;
-}
-
-.state-exec {
-	background-image: url(../images/InEsecuzione_disabled.png) !important;
-	background-size: 100% 100%;
-}
-
-.state-execactive {
-	background-image: url(../images/InEsecuzione_enabled.png) !important;
-	background-size: 100% 100%;
-}
-
-.state-complete {
-	background-image: url(../images/Eseguita_disabled.png) !important;
-	background-size: 100% 100%;
-}
-
-.state-completeactive {
-	background-image: url(../images/Eseguita_enabled.png) !important;
-	background-size: 100% 100%;
-}
-
-.idea-state-container {
-	text-transform: uppercase;
-}
->>>>>>> branch 'master' of https://github.com/smartcommunitylab/idea-management.git
