@@ -27,18 +27,24 @@ if (pagination_view) {
 	request.setAttribute("_currentPage", currentPage);
 	request.setAttribute("_delta", delta);
 }		
+
+String categoryColor = "#DDD";
+if (categoryId > 0) {
+	 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+	 categoryColor = CC.get(""+categoryId);
+}
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
 
 <c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && !hideAddIdea_view %>'>
 
-<aui:button-row>
+<aui:button-row cssClass="idea-button-row" >
 	<portlet:renderURL var="addIdea" windowState="maximized">
 		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
 		<portlet:param name="categoryId" value="<%=  String.valueOf(categoryId) %>" />
 	</portlet:renderURL>
-	<aui:button name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
+	<aui:button cssClass="addidea-button" name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
 
 </c:if>
@@ -66,17 +72,35 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
 	var="filterURL"></portlet:actionURL>
 
 <c:if test='<%= !hideFilters_view %>'>
-<aui:form id="filter" name="filter" action="<%=filterURL.toString() %>">
+<aui:form cssClass="filter-panel" id="filter" name="filter" action="<%=filterURL.toString() %>">
     <div class="row-fluid">
-    <liferay-ui:message key="lbl_filter_by"/>  
-		<aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_RECENT) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_RECENT %>" label="lbl_filter_newer"/>
-    <aui:input inlineField="true" checked="<%= listType.equals(Constants.PREF_LISTTYPE_POPULAR) %>" onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="listType" id="listType" value="<%= Constants.PREF_LISTTYPE_POPULAR %>" label="lbl_filter_famous"/>
+    <span class="filter-label"><liferay-ui:message key="lbl_filter_by"/></span>
+    <div class="control-group control-group-inline form-inline">
+      <label class="radio inline" for="listTypeRecent">
+      <input class="field idea-type-filter" <%= listType.equals(Constants.PREF_LISTTYPE_RECENT)?"checked":"" %> onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="<%=renderResponse.getNamespace() %>listType" id="listTypeRecent" value="<%= Constants.PREF_LISTTYPE_RECENT %>"/>
+      <span><liferay-ui:message key="lbl_filter_newer"/></span>
+      </label> 
+      
+    </div>  
+    <div class="control-group control-group-inline form-inline">
+      <label class="radio inline" for="listTypePopular">
+      <input class="field idea-type-filter" <%= listType.equals(Constants.PREF_LISTTYPE_POPULAR)?"checked":"" %> onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="radio" name="<%=renderResponse.getNamespace() %>listType" id="listTypePopular" value="<%= Constants.PREF_LISTTYPE_POPULAR %>"/>
+      <span><liferay-ui:message key="lbl_filter_famous"/></span>
+      </label> 
+    </div>  
 		</div>
 	<c:if test='<%= !categoryTags.isEmpty() %>'>
-    <div class="row-fluid">
-    <liferay-ui:message key="lbl_filter_by_tags"/>
-    <% for (AssetTag tag: categoryTags) {%>
-    <aui:input inlineField="true"  checked='<%=Arrays.binarySearch(tagSelected, tag.getTagId()) >= 0 %>' onClick='<%= renderResponse.getNamespace()+"fixCheckbox(this)"%>' onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="checkbox" name='<%="filterByTags" + tag.getTagId() %>'  id='<%="filterByTags" + tag.getTagId() %>'  value="<%= tag.getTagId() %>"   label='<%=tag.getName() %>'/>
+    <div class="row-fluid tag-filters">
+    <span class="filter-label"><liferay-ui:message key="lbl_filter_by_tags"/></span>
+    <% for (AssetTag tag: categoryTags) { String cId = renderResponse.getNamespace()+"filterByTags" + tag.getTagId(); boolean checked = Arrays.binarySearch(tagSelected, tag.getTagId()) >= 0; %>
+    <div class="control-group control-group-inline form-inline">
+      <label style='border-color: <%=categoryColor %>;<%=checked?"background-color:"+categoryColor :"" %>' class="checkbox inline" for='<%=cId %>Checkbox'>
+      <input id="<%=cId %>" name="<%=cId %>" type="hidden" value="<%=tag.getTagId() %>">
+      <input class="field idea-tag-filter" <%=checked ? "checked" :"" %> id="<%=cId %>Checkbox" name="<%=cId %>Checkbox" onchange='<%= renderResponse.getNamespace()+"doSearch()"%>' onclick="Liferay.Util.updateCheckboxValue(this); <%=renderResponse.getNamespace() %>fixCheckbox(this)" type="checkbox" value="<%=tag.getTagId() %>">
+      <%=tag.getName() %>
+      </label> 
+    </div>  
+<%--     <aui:input cssClass="idea-tag-filter" inlineField="true"  checked='<%=Arrays.binarySearch(tagSelected, tag.getTagId()) >= 0 %>' onClick='<%= renderResponse.getNamespace()+"fixCheckbox(this)"%>' onChange='<%= renderResponse.getNamespace()+"doSearch()"%>' type="checkbox" name='<%="filterByTags" + tag.getTagId() %>'  id='<%="filterByTags" + tag.getTagId() %>'  value="<%= tag.getTagId() %>"   label='<%=tag.getName() %>'/> --%>
     <% } %>
     </div>
     </c:if>

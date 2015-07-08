@@ -420,3 +420,84 @@
 .idea-state-container  {
   text-transform: uppercase;
 }
+
+.idea-button-row {
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px; 
+}
+
+.addidea-button {
+	font-size: 18px !important;
+  text-transform: uppercase !important;
+  padding: 8px 24px !important;
+  color: white !important;
+  background-color: #F1453D !important;
+  background-image: linear-gradient(to bottom, #F1453D, #F1453D) !important;
+  border: 0 !important;
+  -webkit-border-radius: 3px !important;
+  -moz-border-radius: 3px  !important;
+  border-radius: 3px  !important;
+  box-shadow: 0px 0px 4px 2px #888888 !important;
+  text-shadow: 0 !important;
+}
+
+.filter-panel {
+	background-color: #F6F6F6 !important;
+	margin: 0;
+  padding: 30px 20px 0px 20px;
+}
+
+.filter-label {
+	margin-right: 20px;
+}
+
+.filter-panel .radio {
+	padding-top: 0 !important;
+  text-transform: uppercase;
+}
+
+.idea-type-filter {
+	margin-right: 10px !important;
+}
+
+
+.filter-panel label *
+{
+    cursor: pointer;
+}
+.filter-panel input[type="radio"]
+{
+    opacity: 0;
+}
+.filter-panel input[type="radio"] +span,
+{
+}
+
+.filter-panel input[type="radio"] +span::before,
+{
+    content: "";
+    padding-left:24px;
+    background-image: url(../images/off.png);
+    background-size: contain;
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+
+.filter-panel  input[type="radio"]:checked + span::before
+{
+    background-image: url(../images/on.png) ;
+}
+
+.idea-tag-filter {
+    display: none !important;
+}
+
+.tag-filters label {
+    border-style: solid;
+    border-width: 2px;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    margin-right: 10px !important;
+    padding-top: 0 !important;
+}
