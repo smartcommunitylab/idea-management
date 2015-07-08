@@ -47,75 +47,89 @@
 			</#if>
 		</ul>
 		<div id="menu-right">
-		<ul id="user-menu" class="nav-menu">
-			<#if !is_signed_in>
-				<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
-				<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="sign-in" />
-			<#else>
-				<#assign id = themeDisplay.getPortletDisplay().getId() />
-				<#assign plid = themeDisplay.getPlid() />
-				<#assign portletURL = portletURLFactory.create(request, "49", plid, "ACTION_PHASE") />
-				${portletURL.setParameter("struts_action", "/my_sites/view")}
-				${portletURL.setParameter("groupId", "" + themeDisplay.getUser().getGroupId())}
-				${portletURL.setParameter("privateLayout", "false")}
-				${portletURL.setPortletMode("VIEW")}
-				${portletURL.setWindowState("NORMAL")}
-			
-				<#--  ${themeDisplay.isImpersonated()?string("impersonating-user", "")} -->
-				<@liferay_util["buffer"] var="userprofile">
-					<span class="user-full-name">${user.getFullName()}</span>
-					<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
-				</@>
+			<ul id="user-menu">
+				<#if !is_signed_in>
+					<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
+					<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="Accedi" />
+				<#else>
+					<#assign id = themeDisplay.getPortletDisplay().getId() />
+					<#assign plid = themeDisplay.getPlid() />
+					<#assign portletURL = portletURLFactory.create(request, "49", plid, "ACTION_PHASE") />
+					${portletURL.setParameter("struts_action", "/my_sites/view")}
+					${portletURL.setParameter("groupId", "" + themeDisplay.getUser().getGroupId())}
+					${portletURL.setParameter("privateLayout", "false")}
+					${portletURL.setPortletMode("VIEW")}
+					${portletURL.setWindowState("NORMAL")}
 				
-				<#--
-				<@aui["nav-item"] cssClass="user-avatar" dropdown=false id="userAvatar" label="${userprofile}">
-					<li class="my-sites-menu public-site">
-						<#-- <a href="<%= myProfileURL.toString() %>"> ->
-						<a href="${portletURL.toString()}">
-							<span class="site-name"><@liferay_ui["message"] key="my-profile" /></span> 
-						</a>
-					</li>
+					<#--  ${themeDisplay.isImpersonated()?string("impersonating-user", "")} -->
+					<@liferay_util["buffer"] var="userprofile">
+						<span class="user-full-name">${user.getFullName()}</span>
+						<img class="user-avatar-image" src="${user.getPortraitURL(themeDisplay)}" />
+					</@>
+					
+					<#--
+					<@aui["nav-item"] cssClass="user-avatar" dropdown=false id="userAvatar" label="${userprofile}">
+						<li class="my-sites-menu public-site">
+							<#-- <a href="<%= myProfileURL.toString() %>"> ->
+							<a href="${portletURL.toString()}">
+								<span class="site-name"><@liferay_ui["message"] key="my-profile" /></span> 
+							</a>
+						</li>
+						
+						<#if themeDisplay.isShowSignOutIcon()>
+							<@aui["nav-item"] cssClass="sign-out" href="${themeDisplay.getURLSignOut()}" iconCssClass="icon-off" label="sign-out" />
+						</#if>
+						
+					</@>
+					-->
+					
+					<@aui["nav-item"] href="${portletURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
+					
+					<@aui["nav-item"] href="${portletURL.toString()}" id="userNotifications" iconCssClass="icon-bell" />
 					
 					<#if themeDisplay.isShowSignOutIcon()>
-						<@aui["nav-item"] cssClass="sign-out" href="${themeDisplay.getURLSignOut()}" iconCssClass="icon-off" label="sign-out" />
+						<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="icon-off" />
 					</#if>
 					
-				</@>
-				-->
-				
-				<@aui["nav-item"] href="${portletURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
-				
-				<@aui["nav-item"] href="${portletURL.toString()}" id="userNotifications" iconCssClass="icon-bell" />
-				
-				<#if themeDisplay.isShowSignOutIcon()>
-					<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="icon-off" />
+					<#--
+					<div class="user-data-container">
+						<div class="user-data">
+							<div class="user-full-name">
+								${user.getFullName()}
+							</div>
+							<div class="user-actions">
+								<a href="/c/portal/logout">Logout</a>
+							</div>
+						</div>
+						<div class="user-image">
+							<img src="${user.getPortraitURL(themeDisplay)}" />
+						</div>
+					</div>
+					-->
 				</#if>
+			</ul>
+			<ul id="search">
+				<@aui["nav-item"] href="#" id="searchtoggle" iconCssClass="icon-search" />
 				
-				<#--
-				<div class="user-data-container">
-					<div class="user-data">
-						<div class="user-full-name">
-							${user.getFullName()}
-						</div>
-						<div class="user-actions">
-							<a href="/c/portal/logout">Logout</a>
-						</div>
-					</div>
-					<div class="user-image">
-						<img src="${user.getPortraitURL(themeDisplay)}" />
-					</div>
-				</div>
-				-->
-			</#if>
-		</ul>
-		<ul id="search" class="nav-menu">
-			<@aui["nav-item"] href="#" iconCssClass="icon-search" />
-			
-			<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> -->
-			<li id="searchform">
-				<@liferay_ui["search"] />
-			</li>
-		</ul>
+				<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> -->
+				<li id="searchform">
+					<@liferay_ui["search"] />
+				</li>
+				
+				<script>
+					var element = document.getElementById('searchform');
+					document.getElementById('searchtoggle').onclick = function() {
+						if (element.classList.contains('shown')) {
+							element.classList.remove('shown');
+							console.log('shown removed');
+						} else {
+							element.classList.add('shown');
+							console.log('shown added');
+						}
+					};
+				</script>
+			</ul>
+		</div>
 	</div>
 </nav>
 
