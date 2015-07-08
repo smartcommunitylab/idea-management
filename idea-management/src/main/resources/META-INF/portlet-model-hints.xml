@@ -33,5 +33,6 @@
 		<field name="shortDesc" type="String" />
 		<field name="userGroupId" type="long" />
 		<field name="callId" type="long" />
+		<field name="state" type="String" />
 	</model>
 </model-hints>

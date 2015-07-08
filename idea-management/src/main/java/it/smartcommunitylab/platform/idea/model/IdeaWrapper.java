@@ -51,6 +51,7 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("shortDesc", getShortDesc());
         attributes.put("userGroupId", getUserGroupId());
         attributes.put("callId", getCallId());
+        attributes.put("state", getState());
 
         return attributes;
     }
@@ -133,6 +134,12 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (callId != null) {
             setCallId(callId);
+        }
+
+        String state = (String) attributes.get("state");
+
+        if (state != null) {
+            setState(state);
         }
     }
 
@@ -436,6 +443,26 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public void setCallId(long callId) {
         _idea.setCallId(callId);
+    }
+
+    /**
+    * Returns the state of this idea.
+    *
+    * @return the state of this idea
+    */
+    @Override
+    public java.lang.String getState() {
+        return _idea.getState();
+    }
+
+    /**
+    * Sets the state of this idea.
+    *
+    * @param state the state of this idea
+    */
+    @Override
+    public void setState(java.lang.String state) {
+        _idea.setState(state);
     }
 
     @Override

@@ -21,4 +21,10 @@ public class Constants {
 	public static final String PREF_CALLLISTTYPE_OPEN = "open";
 	public static final String PREF_CALLLISTTYPE_INDISCUSSION = "discussion";
 	public static final String PREF_CALLLISTTYPE_CLOSED = "closed";
+	
+	public static final String IDEA_STATE_PROPOSED = "proposed";
+	public static final String IDEA_STATE_ACCEPTED = "accepted";
+	public static final String IDEA_STATE_EXEC = "exec";
+	public static final String IDEA_STATE_COMPLETE = "complete";
+	public static final String IDEA_STATE_REJECTED = "rejected";
 }

@@ -37,6 +37,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     private String _shortDesc;
     private long _userGroupId;
     private long _callId;
+    private String _state;
     private BaseModel<?> _ideaRemoteModel;
     private Class<?> _clpSerializerClass = it.smartcommunitylab.platform.idea.service.ClpSerializer.class;
 
@@ -90,6 +91,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         attributes.put("shortDesc", getShortDesc());
         attributes.put("userGroupId", getUserGroupId());
         attributes.put("callId", getCallId());
+        attributes.put("state", getState());
 
         return attributes;
     }
@@ -172,6 +174,12 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
         if (callId != null) {
             setCallId(callId);
+        }
+
+        String state = (String) attributes.get("state");
+
+        if (state != null) {
+            setState(state);
         }
     }
 
@@ -472,6 +480,28 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     }
 
     @Override
+    public String getState() {
+        return _state;
+    }
+
+    @Override
+    public void setState(String state) {
+        _state = state;
+
+        if (_ideaRemoteModel != null) {
+            try {
+                Class<?> clazz = _ideaRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setState", String.class);
+
+                method.invoke(_ideaRemoteModel, state);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public java.util.Date discussionDeadline() {
         try {
             String methodName = "discussionDeadline";
@@ -575,6 +605,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         clone.setShortDesc(getShortDesc());
         clone.setUserGroupId(getUserGroupId());
         clone.setCallId(getCallId());
+        clone.setState(getState());
 
         return clone;
     }
@@ -632,7 +663,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(27);
+        StringBundler sb = new StringBundler(29);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -660,6 +691,8 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(getUserGroupId());
         sb.append(", callId=");
         sb.append(getCallId());
+        sb.append(", state=");
+        sb.append(getState());
         sb.append("}");
 
         return sb.toString();
@@ -667,7 +700,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(43);
+        StringBundler sb = new StringBundler(46);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -724,6 +757,10 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(
             "<column><column-name>callId</column-name><column-value><![CDATA[");
         sb.append(getCallId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>state</column-name><column-value><![CDATA[");
+        sb.append(getState());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

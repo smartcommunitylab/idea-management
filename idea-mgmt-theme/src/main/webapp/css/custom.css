@@ -355,12 +355,13 @@
 }
 
 .idea-button {
-	margin-top: 10px;
-	padding: 11px 19px !important;
-	font-size: 17.5px !important;
-	background-color: #F1453D !important;
-	background-image: linear-gradient(to bottom, #F1453D, #F1453D)
-		!important;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #F1453D;
+  -webkit-border-radius: 3px;
 }
 
 .participation-details {
@@ -398,4 +399,59 @@
 
 #discussion .rating-element {
 	color: #F1453D !important;
+}
+
+.idea-button-participate-enabled {
+  background-color: #F1453D !important;
+	background-image: url(../images/CiSto_enabled.png) !important;   
+	background-size: 100% 100%; 
+}
+
+.idea-button-participate-disabled {
+  background-color: white !important;
+  background-image: url(../images/CiSto_disabled.png) !important;    
+  background-size: 100% 100%; 
+}
+
+.idea-state {
+  display: inline-block;
+  height: 60px;
+  width: 60px;
+}
+
+.state-proposed {
+  background-image: url(../images/Proposta_disabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-proposedactive {
+  background-image: url(../images/Proposta_enabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-accepted {
+  background-image: url(../images/accettata_disabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-acceptedactive {
+  background-image: url(../images/accettata_enabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-exec {
+  background-image: url(../images/InEsecuzione_disabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-execactive {
+  background-image: url(../images/InEsecuzione_enabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-complete {
+  background-image: url(../images/Eseguita_disabled.png) !important;    
+  background-size: 100% 100%; 
+}
+.state-completeactive {
+  background-image: url(../images/Eseguita_enabled.png) !important;    
+  background-size: 100% 100%; 
+}
+
+.idea-state-container  {
+  text-transform: uppercase;
 }

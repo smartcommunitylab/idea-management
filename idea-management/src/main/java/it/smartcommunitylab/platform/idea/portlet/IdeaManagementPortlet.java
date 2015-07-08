@@ -145,7 +145,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			default:
 				break;
 			}
-
 			req.setAttribute("ideas", ideas);
 			req.setAttribute("ideaCount", ideas.size());
 		} catch (SystemException e) {

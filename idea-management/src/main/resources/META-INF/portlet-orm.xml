@@ -58,6 +58,9 @@
 			<basic name="shortDesc" />
 			<basic name="userGroupId" />
 			<basic name="callId" />
+			<basic name="state">
+				<column name="STATE_" />
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

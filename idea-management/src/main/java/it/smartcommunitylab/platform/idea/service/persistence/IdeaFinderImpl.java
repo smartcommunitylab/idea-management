@@ -126,7 +126,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			}
 
 			List<Idea> res = null;
-			if (begin <= 0 || end <= 0) {
+			if (begin < 0 || end <= 0) {
 				res = (List<Idea>) q.list();
 			} else {
 				res = (List<Idea>) QueryUtil.list(q, getDialect(), begin, end);

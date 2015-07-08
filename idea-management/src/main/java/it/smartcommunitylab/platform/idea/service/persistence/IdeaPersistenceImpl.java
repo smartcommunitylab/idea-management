@@ -203,7 +203,7 @@ public class IdeaPersistenceImpl extends BasePersistenceImpl<Idea>
                 PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
     private static Log _log = LogFactoryUtil.getLog(IdeaPersistenceImpl.class);
     private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-                "uuid"
+                "uuid", "state"
             });
     private static Idea _nullIdea = new IdeaImpl() {
             @Override
@@ -3052,6 +3052,7 @@ public class IdeaPersistenceImpl extends BasePersistenceImpl<Idea>
         ideaImpl.setShortDesc(idea.getShortDesc());
         ideaImpl.setUserGroupId(idea.getUserGroupId());
         ideaImpl.setCallId(idea.getCallId());
+        ideaImpl.setState(idea.getState());
 
         return ideaImpl;
     }
