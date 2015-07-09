@@ -665,6 +665,12 @@ header#banner {
   padding-left: 10px;
 }
 
+.idea-cards .empty-results {
+  font-size: 16px;
+  padding: 10px !important;
+  display: block;
+  font-weight: bold;
+}
 .calls .empty-results {
 	font-size: 16px;
 	margin-top: 10px !important;

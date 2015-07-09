@@ -80,7 +80,11 @@
         
         
     <% } %>
-
+		<c:if test="<%= currentPage == 1 && results.size() == 0%>">
+		  <div class="row-fluid">
+		  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
+		  </div>
+		</c:if>
 </div>
 <div class="idea-paging row-fluid">
   <div class="span6">
@@ -102,7 +106,6 @@
    </c:if>  
   </div>
 </div>
-
 <%-- <liferay-ui:search-container> --%>
 <%--     <liferay-ui:search-container-results --%>
 <%--     results='<%= (List) request.getAttribute("ideas") %>' /> --%>
