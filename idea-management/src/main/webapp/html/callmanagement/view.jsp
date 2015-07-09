@@ -46,7 +46,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 
 </c:if>
 
-<div class="call-title">
+<div class="calls-title">
 <c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) %>'><liferay-ui:message key="lbl_calls_title_open"/></c:if>
 <c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION) %>'><liferay-ui:message key="lbl_calls_title_indiscussion"/></c:if>
 <c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED) %>'><liferay-ui:message key="lbl_calls_title_closed"/></c:if>
@@ -54,7 +54,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 <div class="calls">
 <% for(Call call : list) {%>
         <portlet:renderURL var="viewCall">
-          <portlet:param name="REDIRECT" value="/html/callmanagement/asset/full_content.jsp" />
+          <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp" />
           <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
         </portlet:renderURL>
         <% 

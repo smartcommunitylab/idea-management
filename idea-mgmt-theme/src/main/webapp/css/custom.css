@@ -638,6 +638,7 @@ header#banner {
 	-webkit-border-radius: 6px !important;
 	-moz-border-radius: 6px !important;
 	border-radius: 6px !important;
+	background-color: white;
 }
 
 .idea-card-abstract {
@@ -687,7 +688,7 @@ header#banner {
 	padding-left: 10px !important;
 }
 
-.call-title {
+.calls-title {
 	text-transform: uppercase;
 	font-size: 20px;
 }

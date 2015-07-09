@@ -14,6 +14,8 @@
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="it.smartcommunitylab.platform.idea.permission.CallPermission"%>
+<%@ page import="it.smartcommunitylab.platform.idea.permission.CallModelPermission"%>
 
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 
@@ -34,16 +36,54 @@
 			Call.class.getName(), call.getCallId());
 
 
-PortletURL ipcURL = PortletURLFactoryUtil.create(request, Constants.IDEA_PORTLET_ID, themeDisplay.getPlid(),PortletRequest.RENDER_PHASE);
-ipcURL.setParameter("mvcPath", "/html/idea/edit_idea.jsp");
-ipcURL.setParameter("callId", String.valueOf(call.getCallId()));
+List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(Call.class.getName(), call.getCallId());
+
+java.util.Set<String> tagSet = new java.util.HashSet<String>();
+for (AssetTag tag : assetTags) {
+  tagSet.add(tag.getName());
+}
+
 %>
 
-<div>
-<%=HtmlUtil.unescape(call.getDescription())%>
+<div class="row-fluid">
+  <div class="span8 call-title">
+    <div class="call-maintitle">
+    <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
+      <portlet:renderURL var="editCall" windowState="maximized">
+        <portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp" />
+        <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
+      </portlet:renderURL>
+      <portlet:actionURL var="deleteURL" name="deleteEntry">
+        <portlet:param name="entryId" value="<%=String.valueOf(call.getCallId()) %>" />
+      </portlet:actionURL>
+      <a href="<%=editCall.toString()%>"><i class="icon-pencil"></i></a>
+      <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
+    </c:if>
+    </div>
+    <div class="call-cattitle"></div>
+  </div>
+  <div class="span4 call-deadlines">
+    <div class="call-deadline-remains"></div>
+    <div class="call-deadline-date"></div>
+  </div>
 </div>
 
-<liferay-ui:asset-links
-	assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
-	className="<%=Call.class.getName()%>"
-	classPK="<%=call.getCallId()%>" />
+<div class="call-description">
+<%=HtmlUtil.unescape(call.getDescription())%>
+</div>
+<div class="call-tags">
+    <c:if test="<%=tagSet.size() > 0 %>">
+    <div class="row-fluid info-meta">
+      <i class="icon-tags icon-white"></i>
+      <span class="info-meta-label"><liferay-ui:message key="lbl_tags"/></span>
+        <% for (String tag: tagSet) {%>
+        <span class="badge"><%=tag %></span>
+        <%} %>
+    </div>
+    </c:if>
+</div>
+<div class="call-attachments">
+    <liferay-ui:asset-links
+      assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
+      className="<%=Call.class.getName()%>" classPK="<%=call.getCallId()%>" />
+</div>

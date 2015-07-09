@@ -16,10 +16,10 @@
 <%
 	 Call entry = null;
 
-    long entryId = ParamUtil.getLong(request, "entryId");
+    long callId = ParamUtil.getLong(request, "callId");
 
-        if (entryId > 0) {
-                entry = CallLocalServiceUtil.getCall(entryId);
+        if (callId > 0) {
+                entry = CallLocalServiceUtil.getCall(callId);
         }
         
 %>
@@ -89,14 +89,14 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<liferay-ui:asset-tags-error />
 
 	<liferay-ui:asset-categories-selector
-		className="<%=Call.class.getName()%>" classPK="<%=entryId%>">
+		className="<%=Call.class.getName()%>" classPK="<%=callId%>">
 
 	</liferay-ui:asset-categories-selector>
 
 
 	<label>Tags</label>
 	<liferay-ui:asset-tags-selector className="<%=Call.class.getName()%>"
-		classPK="<%= entryId%>">
+		classPK="<%= callId%>">
 	</liferay-ui:asset-tags-selector>
 
 
@@ -106,7 +106,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		title="related-assets">
 		<aui:fieldset>
 			<liferay-ui:input-asset-links className="<%=Call.class.getName()%>"
-				classPK="<%=entryId%>" />
+				classPK="<%=callId%>" />
 		</aui:fieldset>
 	</liferay-ui:panel>
 

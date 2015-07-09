@@ -1,8 +1,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@ page
-	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -15,6 +18,18 @@
         }
         
         String categoryId = ParamUtil.getString(request, "categoryId");
+        
+        Long callId = ParamUtil.getLong(request, "callId");
+        if(callId > 0) {
+            AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+            	      Call.class.getName(), callId);
+            List<AssetCategory> categories = assetEntry.getCategories();   
+            if (categories != null && categories.size() > 0) {
+            	categoryId = ""+ categories.get(0).getCategoryId();
+            }
+        }
+        
+
         String tagNames = "";
         
         if(!categoryId.isEmpty()) {
@@ -24,7 +39,6 @@
         	}
         }
         
-        String callId = ParamUtil.getString(request, "callId");
 %>
 
 <%
