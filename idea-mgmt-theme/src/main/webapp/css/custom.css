@@ -493,8 +493,10 @@ header#banner {
 
 .filter-panel {
   background-color: #F6F6F6 !important;
-  margin: 0;
+  margin: 0 !important;
   padding: 30px 20px 0px 20px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
 }
 
 .filter-label {
@@ -549,4 +551,70 @@ header#banner {
     padding-right: 5px !important;
     margin-right: 10px !important;
     padding-top: 0 !important;
+}
+
+.idea-cards .idea {
+  text-decoration: none !important;
+  color: black !important;
+}
+
+.idea-cards {
+	background-color: #F6F6F6 !important;
+}
+
+.idea-card {
+	padding: 8px;
+	margin: 16px;
+  border-width: 2px;
+  border-style: solid;
+  -webkit-border-radius: 6px !important;
+  -moz-border-radius: 6px  !important;
+  border-radius: 6px  !important;
+}
+
+.idea-card-abstract {
+	margin-bottom: 8px;
+}
+
+.idea-card-footer {
+	min-height: 20px;
+}
+
+.idea-card-call-label {
+	background-color: #F1453D !important;
+	text-transform: uppercase;
+	color: white;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.idea-card-header div {
+	min-height: 20px !important;
+}
+
+.idea-card-date {
+	float: right;
+}
+
+.idea-paging {
+	padding-top: 10px; 
+	font-size: 20px;
+}
+
+.idea-paging a:focus, .idea-paging a {
+  color: #F1453D !important;
+}
+
+.idea-paging-next {
+	float: right;
+}
+
+.idea-card-comments {
+	float: right;
+}
+
+.idea-card-comments::after {
+  font-family: fontawesome-alloy;
+  content: "\f0e6";
+  padding-left: 10px !important;
 }
