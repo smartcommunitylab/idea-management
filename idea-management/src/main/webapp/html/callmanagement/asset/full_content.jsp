@@ -8,6 +8,7 @@
 <%@page import="javax.portlet.WindowState"%>
 <%@page import="javax.portlet.PortletURL"%>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
+<%@page import="com.liferay.portal.kernel.util.DateUtil"%>
 <%@page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil"%>
 <%@page import="com.liferay.portlet.asset.model.AssetEntry"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
@@ -16,6 +17,9 @@
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallPermission"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallModelPermission"%>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
+<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
 
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 
@@ -35,19 +39,36 @@
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			Call.class.getName(), call.getCallId());
 
+  List<AssetCategory> categories = assetEntry.getCategories();
+  AssetCategory category = null;
+  long categoryId = 0;
+  if (categories != null && categories.size() > 0) {
+	  category = categories.get(0);
+	  categoryId = category.getCategoryId();
+  }
+	String categoryColor = "#DDD";
+	if (categoryId > 0) {
+	   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+	   categoryColor = CC.get(""+categoryId);
+	}
 
-List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(Call.class.getName(), call.getCallId());
+  List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(Call.class.getName(), call.getCallId());
 
-java.util.Set<String> tagSet = new java.util.HashSet<String>();
-for (AssetTag tag : assetTags) {
-  tagSet.add(tag.getName());
-}
+  java.util.Set<String> tagSet = new java.util.HashSet<String>();
+  for (AssetTag tag : assetTags) {
+    tagSet.add(tag.getName());
+  }
 
+  java.util.Date today = DateUtil.newDate();
+  int distance = 
+		    DateUtil.getDaysBetween(today,call.getDeadline())
+		  * (DateUtil.compareTo(today, call.getDeadline()) <=0 ? 1: -1);
 %>
 
 <div class="row-fluid">
   <div class="span8 call-title">
     <div class="call-maintitle">
+    <%=call.getTitle() %>
     <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
       <portlet:renderURL var="editCall" windowState="maximized">
         <portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp" />
@@ -60,11 +81,21 @@ for (AssetTag tag : assetTags) {
       <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
     </c:if>
     </div>
-    <div class="call-cattitle"></div>
+    <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
+    <%=category != null ? category.getTitle(locale) : "" %>  
+    </div>
   </div>
   <div class="span4 call-deadlines">
-    <div class="call-deadline-remains"></div>
-    <div class="call-deadline-date"></div>
+    <div class="call-deadline-remains">
+    <% if (distance > 0) {%>
+    <liferay-ui:message key="call_deadline_remains_many" arguments="<%=distance %>"/>
+    <% } else if (distance ==0) { %>
+    <liferay-ui:message key="call_deadline_remains_one"/>
+    <% } else { %>
+    <liferay-ui:message key="call_deadline_remains_expired"/>
+    <% } %>  
+    </div>
+    <div class="call-deadline-date"><liferay-ui:message key="call_deadline_expireson" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/></div>
   </div>
 </div>
 

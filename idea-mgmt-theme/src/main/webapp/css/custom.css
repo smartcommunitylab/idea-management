@@ -772,3 +772,30 @@ header#banner {
 .call-card-footer {
 	min-height: 20px;
 }
+
+.call-maintitle {
+	text-transform: uppercase;
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.call-description {
+	margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.call-cattitle {
+	display: inline-block;
+	font-size: 18px;
+	padding: 3px 40px 3px 40px;
+}
+
+.call-deadline-remains {
+  font-size: 18px;
+  text-align: right;
+}
+
+.call-deadline-date {
+  text-transform: lowercase;
+  text-align: right;
+}
