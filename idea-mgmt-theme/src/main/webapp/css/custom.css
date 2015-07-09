@@ -563,11 +563,11 @@ header#banner {
 }
 
 .filter-panel {
-  background-color: #F6F6F6 !important;
-  margin: 0 !important;
-  padding: 30px 20px 0px 20px;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+	background-color: #F6F6F6 !important;
+	margin: 0 !important;
+	padding: 30px 20px 0px 20px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
 }
 
 .filter-label {
@@ -591,75 +591,19 @@ header#banner {
 	opacity: 0;
 }
 
-.filter-panel
- 
-input
-[
-type
-=
-"radio"
-]
-+
-span
-,
-{
+.filter-panel input[type="radio"]+span {
+	
 }
-.filter-panel
- 
-input
-[
-type
-=
-"radio"
-]
-+
-span
-:
-:before
-,
-{
-content
-:
- 
-"";
-padding-left
-:
-24px;
 
-    
-background-image
-:
- 
-url
-(../images/off
-.png
-);
-
-    
-background-size
-:
- 
-contain
-;
-
-    
-background-position
-:
- 
-left
- 
-center
-;
-
-    
-background-repeat
-:
- 
-no-repeat
-;
-
-
+.filter-panel input[type="radio"]+span::before {
+	content: "";
+	padding-left: 24px;
+	background-image: url(. ./images/off .png);
+	background-size: contain;
+	background-position: left center;
+	background-repeat: no-repeat;
 }
+
 .filter-panel  input[type="radio"]:checked+span::before {
 	background-image: url(../images/on.png);
 }
@@ -669,17 +613,17 @@ no-repeat
 }
 
 .tag-filters label {
-    border-style: solid;
-    border-width: 2px;
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-    margin-right: 10px !important;
-    padding-top: 0 !important;
+	border-style: solid;
+	border-width: 2px;
+	padding-left: 5px !important;
+	padding-right: 5px !important;
+	margin-right: 10px !important;
+	padding-top: 0 !important;
 }
 
 .idea-cards .idea {
-  text-decoration: none !important;
-  color: black !important;
+	text-decoration: none !important;
+	color: black !important;
 }
 
 .idea-cards {
@@ -689,11 +633,11 @@ no-repeat
 .idea-card {
 	padding: 8px;
 	margin: 16px;
-  border-width: 2px;
-  border-style: solid;
-  -webkit-border-radius: 6px !important;
-  -moz-border-radius: 6px  !important;
-  border-radius: 6px  !important;
+	border-width: 2px;
+	border-style: solid;
+	-webkit-border-radius: 6px !important;
+	-moz-border-radius: 6px !important;
+	border-radius: 6px !important;
 }
 
 .idea-card-abstract {
@@ -721,12 +665,12 @@ no-repeat
 }
 
 .idea-paging {
-	padding-top: 10px; 
+	padding-top: 10px;
 	font-size: 20px;
 }
 
 .idea-paging a:focus, .idea-paging a {
-  color: #F1453D !important;
+	color: #F1453D !important;
 }
 
 .idea-paging-next {
@@ -738,9 +682,9 @@ no-repeat
 }
 
 .idea-card-comments::after {
-  font-family: fontawesome-alloy;
-  content: "\f0e6";
-  padding-left: 10px !important;
+	font-family: fontawesome-alloy;
+	content: "\f0e6";
+	padding-left: 10px !important;
 }
 
 .call-title {
@@ -749,36 +693,36 @@ no-repeat
 }
 
 .call {
-  margin-top: 10px;
-  margin-bottom: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .call a {
 	text-decoration: none !important;
-  color: black !important;
+	color: black !important;
 }
 
 .call-card {
-  border-color: #DDD;
-  border-width: 2px;
-  border-style: solid;
-  -webkit-border-radius: 4px !important;
-  -moz-border-radius: 4px  !important;
-  border-radius: 4px  !important;
+	border-color: #DDD;
+	border-width: 2px;
+	border-style: solid;
+	-webkit-border-radius: 4px !important;
+	-moz-border-radius: 4px !important;
+	border-radius: 4px !important;
 	border-left-width: 16px;
 	padding: 3px;
-  position: relative;
+	position: relative;
 }
 
 .call-card-cat {
 	text-transform: uppercase;
-	font-size:12px;
+	font-size: 12px;
 	font-weight: normal;
 }
 
 .call-card-date {
 	float: right;
-	font-size:16px;
+	font-size: 16px;
 }
 
 .call-card h4 {
@@ -786,15 +730,16 @@ no-repeat
 }
 
 .call-card-abstract {
-  padding-left: 10px;
+	padding-left: 10px;
 }
 
 .idea-cards .empty-results {
-  font-size: 16px;
-  padding: 10px !important;
-  display: block;
-  font-weight: bold;
+	font-size: 16px;
+	padding: 10px !important;
+	display: block;
+	font-weight: bold;
 }
+
 .calls .empty-results {
 	font-size: 16px;
 	margin-top: 10px !important;
@@ -803,23 +748,24 @@ no-repeat
 }
 
 .call-paging {
-  padding-top: 10px; 
-  font-size: 20px;
+	padding-top: 10px;
+	font-size: 20px;
 }
 
 .call-paging a:focus, .call-paging a {
-  color: #F1453D !important;
+	color: #F1453D !important;
 }
 
 .call-card-ideas {
 	float: right;
 	font-size: 24px;
 }
+
 .call-card-ideas::after {
-  font-family: fontawesome-alloy;
-  content: "\f0eb";
-  font-size: 28px;
-  padding-left: 10px !important;
+	font-family: fontawesome-alloy;
+	content: "\f0eb";
+	font-size: 28px;
+	padding-left: 10px !important;
 }
 
 .call-card-footer {
