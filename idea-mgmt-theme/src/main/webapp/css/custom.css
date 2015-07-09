@@ -598,7 +598,7 @@ header#banner {
 .filter-panel input[type="radio"]+span::before {
 	content: "";
 	padding-left: 24px;
-	background-image: url(. ./images/off .png);
+	background-image: url(../images/off.png);
 	background-size: contain;
 	background-position: left center;
 	background-repeat: no-repeat;
