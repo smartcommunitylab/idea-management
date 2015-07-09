@@ -38,15 +38,20 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 	<portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp"/>
 </portlet:renderURL>
 
-<c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
+<c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
 
-<aui:button-row>
-	<aui:button href="<%=addCallUrl.toString() %>" value='<%= LanguageUtil.get(locale, "btn_add_call") %>'></aui:button>
+<aui:button-row  cssClass="idea-button-row" >
+	<aui:button cssClass="addidea-button"  href="<%=addCallUrl.toString() %>" value='<%= LanguageUtil.get(locale, "btn_add_call") %>'></aui:button>
 </aui:button-row>
 
 </c:if>
 
-<div class="idea-slider row-fluid">
+<div class="call-title">
+<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) %>'><liferay-ui:message key="lbl_calls_title_open"/></c:if>
+<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION) %>'><liferay-ui:message key="lbl_calls_title_indiscussion"/></c:if>
+<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED) %>'><liferay-ui:message key="lbl_calls_title_closed"/></c:if>
+</div>
+<div class="calls">
 <% for(Call call : list) {%>
         <portlet:renderURL var="viewCall">
           <portlet:param name="REDIRECT" value="/html/callmanagement/asset/full_content.jsp" />
@@ -60,22 +65,28 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
         %>
-  <span class="span12">
-      <a class="idea" href="<%=viewCall.toString()%>">
-          <div class="thumbnail" style="border-left-color: <%=color %>;">
-              <h6 class="idea-cat, pull-left" style="color: <%=color %>;"><%=catTitle %></h6>
-              <p class="pull-right"><%= LanguageUtil.get(locale, "lbl_deadline") %>: <%
-              out.print(dateFormatter.format(call.getDeadline()));
-              %></p>
+  <div class="row-fluid">
+    <div class="call">
+      <a href="<%=viewCall.toString()%>">
+          <div class="call-card" style="border-left-color: <%=color %>;">
+              <div class="call-card-header">
+                <div class="span6"><span class="call-card-cat" style="color: <%=color %>;"><%=catTitle %></span></div>
+                <div class="span6"><span class="call-card-date"><liferay-ui:message key="lbl_call_card_deadline" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/></span></div>
+              </div>
               <h4><%=call.getTitle() %></h4>
-              <p><%=call.getDescription() %></p>
-              <p class="pull-right"><%=countIdeaByCall %></p>
+              <div class="call-card-abstract"><%=call.getDescription() %></div>
+              <div class="call-card-footer">
+                <div class="span12"><span class="call-card-ideas"><%=countIdeaByCall %></span></div>
+              </div>
           </div>
       </a>
-  </span>
-<% } %>  
-  <div class="row-fluid">
-    <div class="span12 pull-right">
+    </div>
+  </div>
+<% } %>
+  
+  <c:if test='<%=list.size() > 0 && !viewAll %>'>
+  <div class="row-fluid call-paging">
+    <div class="span12">
       <% 
       PortletURL portletURL = renderResponse.createRenderURL();
       portletURL.setParameter("viewAll", "true"); 
@@ -84,4 +95,11 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
       <a href="<%=showAllURL%>"><liferay-ui:message key="lbl_showAll"/></a>
     </div>
   </div>
+  </c:if>
+  
+  <c:if test='<%=list.size() ==0 %>'>
+  <div class="row-fluid">
+  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
+  </div>
+  </c:if>
 </div>

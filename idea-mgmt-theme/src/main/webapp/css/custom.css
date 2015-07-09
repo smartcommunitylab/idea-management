@@ -618,3 +618,81 @@ header#banner {
   content: "\f0e6";
   padding-left: 10px !important;
 }
+
+.call-title {
+	text-transform: uppercase;
+	font-size: 20px;
+}
+
+.call {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.call a {
+	text-decoration: none !important;
+  color: black !important;
+}
+
+.call-card {
+  border-color: #DDD;
+  border-width: 2px;
+  border-style: solid;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px  !important;
+  border-radius: 4px  !important;
+	border-left-width: 16px;
+	padding: 3px;
+  position: relative;
+}
+
+.call-card-cat {
+	text-transform: uppercase;
+	font-size:12px;
+	font-weight: normal;
+}
+
+.call-card-date {
+	float: right;
+	font-size:16px;
+}
+
+.call-card h4 {
+	padding-left: 10px;
+}
+
+.call-card-abstract {
+  padding-left: 10px;
+}
+
+.calls .empty-results {
+	font-size: 16px;
+	margin-top: 10px !important;
+	display: block;
+	font-weight: bold;
+}
+
+.call-paging {
+  padding-top: 10px; 
+  font-size: 20px;
+}
+
+.call-paging a:focus, .call-paging a {
+  color: #F1453D !important;
+}
+
+.call-card-ideas {
+	float: right;
+	font-size: 24px;
+}
+.call-card-ideas::after {
+  font-family: fontawesome-alloy;
+  content: "\f0eb";
+  font-size: 28px;
+  padding-left: 10px !important;
+}
+
+.call-card-footer {
+	min-height: 20px;
+}
+
