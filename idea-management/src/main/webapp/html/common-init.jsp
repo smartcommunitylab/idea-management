@@ -18,6 +18,7 @@
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
+<%@page import="java.text.SimpleDateFormat"%>
 
 <%@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil"%>
 <%@ page import="com.liferay.portlet.asset.model.AssetEntry"%>
@@ -32,5 +33,5 @@
 <theme:defineObjects/>
 
 <%
-DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT, locale);
+DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy", locale);
 %>
