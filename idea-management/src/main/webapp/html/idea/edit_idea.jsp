@@ -71,7 +71,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		<liferay-ui:input-editor name="longDesc"
 			toolbarSet="liferay-article" initMethod="initEditor2" width="200" />
 		<script type="text/javascript">
-        function <portlet:namespace />initEditor2() { return document.getElementById('_<%=Constants.IDEA_PORTLET_ID%>_ldesc').value; }
+        function <portlet:namespace />initEditor2() { return document.getElementById('<%=renderResponse.getNamespace()%>ldesc').value; }
     </script>
 	</aui:field-wrapper>
 	
