@@ -30,13 +30,15 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
 
-<portlet:renderURL var="viewURL">
-	<portlet:param name="mvcPath" value="/html/callmanagement/view.jsp"></portlet:param>
+<portlet:renderURL var="viewURL"  windowState="normal">
+	<portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp"></portlet:param>
 </portlet:renderURL>
 
 <portlet:actionURL
 	name='<%=entry == null ? "addEntry" : "updateEntry"%>'
-	var="editEntryURL"></portlet:actionURL>
+	var="editEntryURL"  windowState="normal">
+  <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp"></portlet:param>
+</portlet:actionURL>
 
 <aui:form action="<%=editEntryURL%>" name="call">
 <aui:model-context bean="<%= entry %>" model="<%= Call.class %>" />
