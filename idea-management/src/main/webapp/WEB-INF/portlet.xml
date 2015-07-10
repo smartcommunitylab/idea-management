@@ -64,10 +64,10 @@
 			<name>view-template</name>
 			<value>/html/callmanagement/view.jsp</value>
 		</init-param>
-		<init-param>
-			<name>edit-template</name>
-			<value>/html/callmanagement/edit.jsp</value>
-		</init-param>
+<!-- 		<init-param> -->
+<!-- 			<name>edit-template</name> -->
+<!-- 			<value>/html/callmanagement/edit.jsp</value> -->
+<!-- 		</init-param> -->
     <init-param>
          <name>config-template</name>
          <value>/html/callmanagement/configuration.jsp</value>
@@ -76,7 +76,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
-			<portlet-mode>edit</portlet-mode>
+<!-- 			<portlet-mode>edit</portlet-mode> -->
 		</supports>
     <supported-locale>en</supported-locale>
     <supported-locale>it</supported-locale>

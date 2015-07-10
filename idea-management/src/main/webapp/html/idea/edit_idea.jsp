@@ -1,8 +1,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@ page
-	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -15,6 +18,18 @@
         }
         
         String categoryId = ParamUtil.getString(request, "categoryId");
+        
+        Long callId = ParamUtil.getLong(request, "callId");
+        if(callId > 0) {
+            AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+            	      Call.class.getName(), callId);
+            List<AssetCategory> categories = assetEntry.getCategories();   
+            if (categories != null && categories.size() > 0) {
+            	categoryId = ""+ categories.get(0).getCategoryId();
+            }
+        }
+        
+
         String tagNames = "";
         
         if(!categoryId.isEmpty()) {
@@ -24,7 +39,6 @@
         	}
         }
         
-        String callId = ParamUtil.getString(request, "callId");
 %>
 
 <%
@@ -33,12 +47,14 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
 <portlet:renderURL var="viewURL">
-	<portlet:param name="mvcPath" value="/html/idea/view.jsp"></portlet:param>
+	<portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp"></portlet:param>
 </portlet:renderURL>
 
 <portlet:actionURL
 	name='<%=idea == null ? "addNewIdea" : "updateIdea"%>'
-	var="addIdeaURL"></portlet:actionURL>
+	var="addIdeaURL">
+  <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp"></portlet:param>
+</portlet:actionURL>
 
 <aui:form action="<%=addIdeaURL%>" name="<portlet:namespace />idea">
 <aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
@@ -55,7 +71,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		<liferay-ui:input-editor name="longDesc"
 			toolbarSet="liferay-article" initMethod="initEditor2" width="200" />
 		<script type="text/javascript">
-        function <portlet:namespace />initEditor2() { return document.getElementById('_<%=Constants.IDEA_PORTLET_ID%>_ldesc').value; }
+        function <portlet:namespace />initEditor2() { return document.getElementById('<%=renderResponse.getNamespace()%>ldesc').value; }
     </script>
 	</aui:field-wrapper>
 	

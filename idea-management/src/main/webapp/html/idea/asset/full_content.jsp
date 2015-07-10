@@ -68,21 +68,22 @@
   
 %>
 <div class="row-fluid">
-  <span class="span8 idea-view-title"><%=HtmlUtil.unescape(idea.getTitle())%></span>
-  <span class="span4 idea-creator text-right">
-    <liferay-ui:message key="lbl_createdWhenWho" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.getCreateDate()),owner.getScreenName()}%>" />  
-	  
-	  <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
-	    <portlet:renderURL var="editIdea" windowState="maximized">
-	      <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
-	      <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-	    </portlet:renderURL>
+  <span class="span8 idea-view-title">
+  <%=HtmlUtil.unescape(idea.getTitle())%>
+      <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
+      <portlet:renderURL var="editIdea" windowState="maximized">
+        <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
+        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+      </portlet:renderURL>
       <portlet:actionURL var="deleteURL" name="deleteEntry">
         <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
       </portlet:actionURL>
-	    <a href="<%=editIdea.toString()%>"><i class="icon-pencil"></i></a>
+      <a href="<%=editIdea.toString()%>"><i class="icon-pencil"></i></a>
       <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
-	  </c:if>
+    </c:if>
+  </span>
+  <span class="span4 idea-creator text-right">
+    <liferay-ui:message key="lbl_createdWhenWho" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.getCreateDate()),owner.getScreenName()}%>" />  
   </span>
 </div>
 
