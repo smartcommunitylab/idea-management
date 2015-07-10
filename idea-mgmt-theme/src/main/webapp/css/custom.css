@@ -241,6 +241,11 @@ header#banner {
 	text-transform: uppercase;
 }
 
+.ambito-details .cover {
+	height: 300px;
+	background-size: cover;
+}
+
 .ambito-details .title {
 	text-transform: uppercase;
 	font-weight: bold;
