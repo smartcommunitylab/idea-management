@@ -48,7 +48,18 @@
 
 
 <div class="row-fluid idea-cards">
-    <% for(Idea idea : results) {%>
+  <div class="span12">
+    <%
+    int rowCount = 0;
+    for(Idea idea : results) {
+    %>
+    <%
+      if ((rowCount % 3) == 0) {
+    %>
+    <div class="row-fluid">
+    <%
+      }
+    %>
         <portlet:renderURL var="viewIdea" windowState="maximized">
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
           <portlet:param name="redirect" value="<%=redirectURL.toString() %>" />
@@ -101,13 +112,20 @@
                 </div>
         </div>
         
-        
+    <%
+      if ((rowCount++ % 3) == 2) {
+    %>
+    </div>
+    <%
+      }
+    %>
     <% } %>
 		<c:if test="<%= currentPage == 1 && results.size() == 0%>">
 		  <div class="row-fluid">
 		  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
 		  </div>
 		</c:if>
+	</div>	
 </div>
 <div class="idea-paging row-fluid">
   <div class="span6">
