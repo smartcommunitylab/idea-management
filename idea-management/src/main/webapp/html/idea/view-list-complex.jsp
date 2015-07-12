@@ -9,6 +9,9 @@
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="javax.portlet.WindowState" %>
+<%@ page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@ page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -37,10 +40,20 @@
   
   String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 	String color = "#DDD";
-	if (categoryId > 0) {
-	   color = CC.get(""+categoryId);
+	if (callId > 0 && categoryId == 0) {
+	    Call call = CallLocalServiceUtil.getCall(callId);
+        AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+                Call.class.getName(), call.getCallId());
+          List<AssetCategory> categories = assetEntry.getCategories();
+          AssetCategory category = null;
+          if (categories != null && categories.size() > 0) {
+            category = categories.get(0);
+            categoryId = category.getCategoryId();
+          }
 	}
-	
+	if (categoryId > 0) {
+	     color = CC.get(""+categoryId);
+	}  
 	PortletURL redirectURL = renderResponse.createRenderURL();
 	redirectURL.setParameter("ideaId", "0");
 	redirectURL.setWindowState(WindowState.NORMAL);

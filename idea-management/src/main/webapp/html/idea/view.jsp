@@ -63,16 +63,13 @@ if (categoryId > 0) {
 
 long[] tagSelected = (long[]) request.getAttribute("tagSelected");
 
+boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") ;
+
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
 
-<c:if test='<%= 
-IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && 
-!hideAddIdea_view && 
-!callExpired
-%>'>
-
+<c:if test='<%=!hideAddIdea_view && !callExpired %>'>
 <aui:button-row cssClass="idea-button-row" >
 <%-- 	<portlet:renderURL var="addIdea">
 		<portlet:param name="categoryId" value="<%=  String.valueOf(categoryId) %>" />
@@ -87,12 +84,9 @@ IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") &&
 //   portletURL.setWindowState(WindowState.MAXIMIZED);
   String addIdea = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
 	%>
-	<aui:button cssClass="addidea-button" name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
+	<aui:button disabled="<%=!addEnabled %>" cssClass="addidea-button" name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
-
 </c:if>
-
-
 <script type="text/javascript">
     function <portlet:namespace/>doSearch() {
     	document.<portlet:namespace />filter.submit();

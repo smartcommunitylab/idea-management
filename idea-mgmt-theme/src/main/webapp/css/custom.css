@@ -283,14 +283,24 @@ header#banner {
 	padding-bottom: 20px;
 }
 
+.accordion-group {
+  margin-bottom: 5px !important;
+  border: none !important;
+}
+
+.toggler-header {
+  font-weight: bold;
+	font-size: 18px;
+  padding-top: 5px !important;  
+  padding-bottom: 5px !important;  
+}
+
 .toggler-header-expanded {
 	background-color: #BCBCBC;
-	font-weight: bold;
 }
 
 .toggler-header-collapsed {
 	background-color: #EDEDED;
-	font-weight: bold;
 }
 
 .info-meta {
@@ -555,6 +565,13 @@ header#banner {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
+
+.addidea-button:disabled {
+  color: #BDBDBD !important;
+  background-color: #EDEDED !important;
+  background-image: linear-gradient(to bottom, #EDEDED, #EDEDED)
+    !important;
+  }
 
 .addidea-button {
 	font-size: 18px !important;
