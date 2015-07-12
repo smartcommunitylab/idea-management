@@ -46,14 +46,10 @@
 pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
-<portlet:renderURL var="viewURL">
-	<portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp"></portlet:param>
-</portlet:renderURL>
-
 <portlet:actionURL
 	name='<%=idea == null ? "addNewIdea" : "updateIdea"%>'
 	var="addIdeaURL">
-  <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp"></portlet:param>
+<%--   <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp"></portlet:param> --%>
 </portlet:actionURL>
 
 <aui:form action="<%=addIdeaURL%>" name="<portlet:namespace />idea">
@@ -100,6 +96,6 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 
 	<aui:button-row>
 		<aui:button type="submit"></aui:button>
-		<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+		<aui:button type="cancel" onClick="javascript: window.history.go(-1);"></aui:button>
 	</aui:button-row>
 </aui:form>

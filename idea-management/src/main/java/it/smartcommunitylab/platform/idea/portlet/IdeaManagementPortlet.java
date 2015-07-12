@@ -17,7 +17,6 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -34,130 +33,145 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 public class IdeaManagementPortlet extends MVCPortlet {
 
 	@Override
-	public void render(RenderRequest req, RenderResponse res)
-			throws PortletException, IOException {
-
-		int begin = -1, end = -1;
-
-		PortletPreferences preferences = req.getPreferences();
-		boolean pagination = GetterUtil.getBoolean(preferences.getValue(
-				"activatePagination", StringPool.TRUE));
-		int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",
-				String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
-		String listType = preferences.getValue("listType",
-				Constants.PREF_LISTTYPE_RECENT);
-
-		if (pagination) {
-			if (req.getParameter("begin") != null
-					&& req.getParameter("end") != null) {
-				begin = ParamUtil.getInteger(req, "begin");
-				end = ParamUtil.getInteger(req, "end");
-			} else {
-				int currentPage = ParamUtil.getInteger(req, "cur", 1);
-				begin = (currentPage - 1) * delta;
-				end = begin + delta;
-			}
+	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+		long ideaId = ParamUtil.getLong(renderRequest, "ideaId", 0);
+		if (ideaId > 0) {
+//			Utils.clearPublicRenderParameter(renderRequest, "ideaId");
+			include("/html/idea/asset/full_content.jsp", renderRequest, renderResponse);
+		} else { 
+			super.doView(renderRequest, renderResponse);
 		}
-		if (req.getAttribute("listType") != null) {
-			listType = (String) req.getAttribute("listType");
-		}
-		if (req.getParameter("listType") != null) {
-			listType = ParamUtil.getString(req, "listType");
-		}
-		req.setAttribute("listType", listType);
+	}
 
-		// System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]",
-		// listType, begin, end));
+	
+	@Override
+	public void render(RenderRequest req, RenderResponse res) throws PortletException, IOException {
+		long ideaId = ParamUtil.getLong(req, "ideaId", 0);
+		if (ideaId > 0) {
+			super.render(req, res);
+		} else { 
 
-		/*
-		 * Enumeration<String> f = req.getAttributeNames(); while
-		 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
-		 */
+			int begin = -1, end = -1;
 
-		// search by category
-		Long categoryId = ParamUtil.getLong(req, "categoryId");
-		boolean searchByCat = categoryId > 0;
-		req.setAttribute("categoryId", categoryId);
+			PortletPreferences preferences = req.getPreferences();
+			boolean pagination = GetterUtil.getBoolean(preferences.getValue(
+					"activatePagination", StringPool.TRUE));
+			int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",
+					String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
+			String listType = preferences.getValue("listType",
+					Constants.PREF_LISTTYPE_RECENT);
 
-		// search by call
-		Long callId = ParamUtil.getLong(req, "callId");
-		boolean searchByCall = callId > 0;
-		req.setAttribute("callId", callId);
-
-		// filter by tags
-		long[] tagIds = new long[0];
-		try {
-			List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(
-					new long[] { categoryId }, PortalUtil.getScopeGroupId(req));
-			for (AssetTag tags : categoryTags) {
-				long tagSel = ParamUtil.getLong(req,
-						"filterByTags" + tags.getTagId() + "Checkbox");
-				if (tagSel > 0) {
-					tagIds = ArrayUtil.append(tagIds, tags.getTagId());
-				}
-			}
-		} catch (SystemException e1) {
-			e1.printStackTrace();
-		} catch (PortalException e) {
-			e.printStackTrace();
-		}
-
-		boolean searchByTags = tagIds.length > 0;
-		req.setAttribute("tagSelected", tagIds);
-
-		try {
-			List<Idea> ideas = new ArrayList<Idea>();
-			// result already ordered by creation date DESC for default
-			switch (listType) {
-			case Constants.PREF_LISTTYPE_RECENT:
-				if (searchByCat) {
-					if (searchByTags) {
-						ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
-								tagIds, begin, end);
-					} else {
-						ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
-								begin, end);
-					}
-				} else if (searchByCall) {
-					ideas = IdeaLocalServiceUtil.getIdeasByCall(callId, begin,
-							end);
-
+			if (pagination) {
+				if (req.getParameter("begin") != null
+						&& req.getParameter("end") != null) {
+					begin = ParamUtil.getInteger(req, "begin");
+					end = ParamUtil.getInteger(req, "end");
 				} else {
-					ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
+					int currentPage = ParamUtil.getInteger(req, "cur", 1);
+					begin = (currentPage - 1) * delta;
+					end = begin + delta;
 				}
-				break;
-			case Constants.PREF_LISTTYPE_POPULAR:
-				if (searchByCat) {
-					if (searchByTags) {
-						ideas = IdeaLocalServiceUtil.getIdeasByRating(
-								categoryId, tagIds, begin, end);
-					} else {
-						ideas = IdeaLocalServiceUtil.getIdeasByRating(
-								categoryId, begin, end);
-					}
-				} else if (searchByCall) {
-					ideas = IdeaLocalServiceUtil.getIdeasByCallAndRating(
-							callId, begin, end);
-				} else {
-					ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
-				}
-				break;
-			default:
-				break;
 			}
-			req.setAttribute("ideas", ideas);
-			req.setAttribute("ideaCount", ideas.size());
-		} catch (SystemException e) {
+			if (req.getAttribute("listType") != null) {
+				listType = (String) req.getAttribute("listType");
+			}
+			if (req.getParameter("listType") != null) {
+				listType = ParamUtil.getString(req, "listType");
+			}
+			req.setAttribute("listType", listType);
 
+			// System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]",
+			// listType, begin, end));
+
+			/*
+			 * Enumeration<String> f = req.getAttributeNames(); while
+			 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
+			 */
+
+			// search by category
+			Long categoryId = ParamUtil.getLong(req, "categoryId");
+			boolean searchByCat = categoryId > 0;
+			req.setAttribute("categoryId", categoryId);
+
+			// search by call
+			Long callId = ParamUtil.getLong(req, "callId");
+			boolean searchByCall = callId > 0;
+			req.setAttribute("callId", callId);
+
+			// filter by tags
+			long[] tagIds = new long[0];
+			try {
+				List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(
+						new long[] { categoryId }, PortalUtil.getScopeGroupId(req));
+				for (AssetTag tags : categoryTags) {
+					long tagSel = ParamUtil.getLong(req,
+							"filterByTags" + tags.getTagId() + "Checkbox");
+					if (tagSel > 0) {
+						tagIds = ArrayUtil.append(tagIds, tags.getTagId());
+					}
+				}
+			} catch (SystemException e1) {
+				e1.printStackTrace();
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
+
+			boolean searchByTags = tagIds.length > 0;
+			req.setAttribute("tagSelected", tagIds);
+
+			try {
+				List<Idea> ideas = new ArrayList<Idea>();
+				// result already ordered by creation date DESC for default
+				switch (listType) {
+				case Constants.PREF_LISTTYPE_RECENT:
+					if (searchByCat) {
+						if (searchByTags) {
+							ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
+									tagIds, begin, end);
+						} else {
+							ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
+									begin, end);
+						}
+					} else if (searchByCall) {
+						ideas = IdeaLocalServiceUtil.getIdeasByCall(callId, begin,
+								end);
+
+					} else {
+						ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
+					}
+					break;
+				case Constants.PREF_LISTTYPE_POPULAR:
+					if (searchByCat) {
+						if (searchByTags) {
+							ideas = IdeaLocalServiceUtil.getIdeasByRating(
+									categoryId, tagIds, begin, end);
+						} else {
+							ideas = IdeaLocalServiceUtil.getIdeasByRating(
+									categoryId, begin, end);
+						}
+					} else if (searchByCall) {
+						ideas = IdeaLocalServiceUtil.getIdeasByCallAndRating(
+								callId, begin, end);
+					} else {
+						ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
+					}
+					break;
+				default:
+					break;
+				}
+				req.setAttribute("ideas", ideas);
+				req.setAttribute("ideaCount", ideas.size());
+			} catch (SystemException e) {
+
+			}
+			super.render(req, res);
 		}
-		super.render(req, res);
 	}
 
 	public void filter(ActionRequest req, ActionResponse res) {
 		// only to perform action
 		String fType = req.getParameter("listType");
 		res.setRenderParameter("listType", fType);
-
 	}
 
 	public void addComment(ActionRequest req, ActionResponse res) {
@@ -168,10 +182,14 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		}
 	}
 
+
+	public void showIdea(ActionRequest req, ActionResponse res) throws PortalException, SystemException {
+	}
+
 	public void addNewIdea(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+ 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Idea.class.getName(), req);
 
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
@@ -186,9 +204,9 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setLongDesc(longDesc);
 		ideaBean.setCategoryId(categoryId);
 		ideaBean.setCallId(callId);
-		IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
+		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
-		SessionMessages.add(req, "addedIdea");
+		req.setAttribute("idea", idea);
 	}
 
 	public void deleteEntry(ActionRequest req, ActionResponse res)
@@ -196,7 +214,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 		long ideaId = ParamUtil.getLong(req, "entryId");
 		IdeaLocalServiceUtil.deleteIdea(ideaId);
-		SessionMessages.add(req, "deleteIdea");
 	}
 
 	public void toggleUserParticipation(ActionRequest req, ActionResponse res)
@@ -224,6 +241,5 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setLongDesc(longDesc);
 		IdeaLocalServiceUtil.updateIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
-		SessionMessages.add(req, "editedIdea");
 	}
 }

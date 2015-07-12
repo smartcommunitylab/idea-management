@@ -1,10 +1,16 @@
-<%@page import="java.util.Arrays"%>
-<%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
-<%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
+<%@ page import="java.util.Arrays"%>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
+<%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.IdeaModelPermission" %>
 <%@ page import="javax.portlet.WindowState" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
+<%@ page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@ page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="com.liferay.portal.kernel.util.DateUtil"%>
+<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -16,8 +22,6 @@ boolean pagination_view = GetterUtil.getBoolean(portletPreferences.getValue("act
 Long categoryId = (Long) request.getAttribute("categoryId");
 String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_VIEWTYPE_SIMPLE));
 String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
-List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
-long[] tagSelected = (long[]) request.getAttribute("tagSelected");
 
 if (pagination_view) {
 	int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
@@ -28,22 +32,61 @@ if (pagination_view) {
 	request.setAttribute("_delta", delta);
 }		
 
+java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+
+Long callId = ParamUtil.getLong(request, "callId");
+boolean callExpired = false;
+List<AssetTag> categoryTags = java.util.Collections.emptyList();
+
+if(callId > 0) {
+    Call call = CallLocalServiceUtil.getCall(callId);
+    callExpired = DateUtil.compareTo(DateUtil.newDate(), call.getDeadline()) > 0;   
+    categoryTags = AssetTagLocalServiceUtil.getTags(Call.class.getName(), call.getCallId());
+    if (categoryId==0) {
+    	  AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+    		      Call.class.getName(), call.getCallId());
+    	  List<AssetCategory> categories = assetEntry.getCategories();
+    	  AssetCategory category = null;
+    	  if (categories != null && categories.size() > 0) {
+    	    category = categories.get(0);
+    	    categoryId = category.getCategoryId();
+    	  }
+    }
+} else {
+	categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
+}
+
 String categoryColor = "#DDD";
 if (categoryId > 0) {
-	 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-	 categoryColor = CC.get(""+categoryId);
+   categoryColor = CC.get(""+categoryId);
 }
+
+long[] tagSelected = (long[]) request.getAttribute("tagSelected");
+
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
 
-<c:if test='<%= IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && !hideAddIdea_view %>'>
+<c:if test='<%= 
+IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") && 
+!hideAddIdea_view && 
+!callExpired
+%>'>
 
 <aui:button-row cssClass="idea-button-row" >
-	<portlet:renderURL var="addIdea" windowState="maximized">
-		<portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
+<%-- 	<portlet:renderURL var="addIdea">
 		<portlet:param name="categoryId" value="<%=  String.valueOf(categoryId) %>" />
 	</portlet:renderURL>
+ --%>	
+  <%
+	String baseUrl = (String) request.getAttribute("_baseUrl");
+	PortletURL portletURL = renderResponse.createRenderURL();
+	portletURL.setParameter("categoryId", String.valueOf(categoryId)); 
+	portletURL.setParameter("callId", String.valueOf(callId));
+  portletURL.setParameter("mvcPath", "/html/idea/edit_idea.jsp");
+//   portletURL.setWindowState(WindowState.MAXIMIZED);
+  String addIdea = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+	%>
 	<aui:button cssClass="addidea-button" name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
 
@@ -69,7 +112,12 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
 
 <portlet:actionURL
 	name='filter'
-	var="filterURL"></portlet:actionURL>
+	var="filterURL">
+    <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
+    <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
+    <!-- reset idea id to clear in navigation -->	
+    <portlet:param name="ideaId" value="0" />
+</portlet:actionURL>
 
 <c:if test='<%= !hideFilters_view %>'>
 <aui:form cssClass="filter-panel" id="filter" name="filter" action="<%=filterURL.toString() %>">

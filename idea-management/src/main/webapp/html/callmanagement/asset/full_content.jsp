@@ -63,6 +63,7 @@
   int distance = 
 		    DateUtil.getDaysBetween(today,call.getDeadline())
 		  * (DateUtil.compareTo(today, call.getDeadline()) <=0 ? 1: -1);
+  
 %>
 
 <div class="row-fluid">
@@ -75,7 +76,7 @@
         <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
       </portlet:renderURL>
       <portlet:actionURL var="deleteURL" name="deleteEntry">
-        <portlet:param name="entryId" value="<%=String.valueOf(call.getCallId()) %>" />
+        <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
       </portlet:actionURL>
       <a href="<%=editCall.toString()%>"><i class="icon-pencil"></i></a>
       <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>

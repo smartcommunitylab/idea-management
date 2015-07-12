@@ -1,7 +1,6 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.NumberFormat"%>
-<%@ include file="/html/common-init.jsp" %>
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="javax.portlet.ActionRequest" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
@@ -15,6 +14,7 @@
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 
+<%@ include file="/html/common-init.jsp" %>
 
 <%
   List<Idea> results = (List)request.getAttribute("ideas");
@@ -25,6 +25,10 @@
   
   String baseUrl = (String) request.getAttribute("_baseUrl");
   PortletURL portletURL = renderResponse.createRenderURL();
+  Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");
+  Long callId = ParamUtil.getLong(renderRequest,"callId");
+  portletURL.setParameter("categoryId", String.valueOf(categoryId));
+  portletURL.setParameter("callId", String.valueOf(callId));
 	int offset = delta - results.size();
 	String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
 	java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
@@ -59,7 +63,7 @@
 
     <% for(Idea idea : results) {%>
         <portlet:renderURL var="viewIdea" windowState="maximized">
-          <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
+<%--           <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" /> --%>
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
         </portlet:renderURL>
         

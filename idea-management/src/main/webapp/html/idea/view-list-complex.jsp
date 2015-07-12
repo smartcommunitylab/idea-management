@@ -8,6 +8,7 @@
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
+<%@ page import="javax.portlet.WindowState" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -20,6 +21,7 @@
   
   String baseUrl = (String) request.getAttribute("_baseUrl");
   PortletURL portletURL = renderResponse.createRenderURL();
+  
   int offset = delta - results.size();
   String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
@@ -28,19 +30,28 @@
   numberFormat.setMaximumFractionDigits(1);
   numberFormat.setMinimumFractionDigits(0);
 
-  Long categoryId = (Long) request.getAttribute("categoryId");
+  Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");//(Long) request.getAttribute("categoryId");
+  Long callId = ParamUtil.getLong(renderRequest,"callId");
+  portletURL.setParameter("categoryId", String.valueOf(categoryId));
+  portletURL.setParameter("callId", String.valueOf(callId));
+  
   String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 	String color = "#DDD";
 	if (categoryId > 0) {
 	   color = CC.get(""+categoryId);
 	}
+	
+	PortletURL redirectURL = renderResponse.createRenderURL();
+	redirectURL.setParameter("ideaId", "0");
+	redirectURL.setWindowState(WindowState.NORMAL);
 %>
+
 
 <div class="row-fluid idea-cards">
     <% for(Idea idea : results) {%>
         <portlet:renderURL var="viewIdea" windowState="maximized">
-          <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+          <portlet:param name="redirect" value="<%=redirectURL.toString() %>" />
         </portlet:renderURL>
         
         <% 
@@ -54,7 +65,11 @@
                 <div class="idea-card" style="border-color: <%=color %>;">
                   <div class="idea-card-header">
                     <div class="span6"><c:if test="<%=idea.getCallId() > 0 %>"><span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> </c:if></div>
-                    <div class="span6"><span class="idea-card-date"><%=dateFormatter.format(idea.getCreateDate()) %></span></div>
+                    <div class="span6">
+                      <span class="idea-card-date">
+                        <%=dateFormatter.format(idea.getCreateDate()) %>
+                      </span>
+                    </div>
                   </div>
                   <h4><%=idea.getTitle() %></h4>
                   <div class="idea-card-abstract">
@@ -106,26 +121,3 @@
    </c:if>  
   </div>
 </div>
-<%-- <liferay-ui:search-container> --%>
-<%--     <liferay-ui:search-container-results --%>
-<%--     results='<%= (List) request.getAttribute("ideas") %>' /> --%>
-
-<%--     <liferay-ui:search-container-row --%>
-<%--         className="it.smartcommunitylab.platform.idea.model.Idea" --%>
-<%--         modelVar="entry" --%>
-<%--     > --%>
-<%--   <portlet:renderURL var="viewIdea" windowState="maximized"> --%>
-<%--     <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" /> --%>
-<%--     <portlet:param name="ideaId" value="<%=String.valueOf(entry.getIdeaId()) %>" /> --%>
-<%--   </portlet:renderURL> --%>
-
-<%--         <liferay-ui:search-container-column-text property="title" href="<%=viewIdea.toString() %>"> --%>
-        
-<%--         </liferay-ui:search-container-column-text> --%>
-
-<%--         <liferay-ui:search-container-column-text property="longDesc" /> --%>
-<%--         <liferay-ui:search-container-column-text value='<%= String.valueOf(MBMessageLocalServiceUtil.getDiscussionMessagesCount(Idea.class.getName(), entry.getIdeaId(), WorkflowConstants.STATUS_APPROVED))%>'></liferay-ui:search-container-column-text> --%>
-<%--     </liferay-ui:search-container-row> --%>
-
-<%--     <liferay-ui:search-iterator /> --%>
-<%-- </liferay-ui:search-container> --%>

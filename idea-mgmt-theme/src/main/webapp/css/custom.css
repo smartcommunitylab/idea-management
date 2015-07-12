@@ -666,6 +666,9 @@ header#banner {
 	min-height: 20px !important;
 }
 
+.idea-card-header .taglib-icon {
+	float: right;
+}
 .idea-card-date {
 	float: right;
 }

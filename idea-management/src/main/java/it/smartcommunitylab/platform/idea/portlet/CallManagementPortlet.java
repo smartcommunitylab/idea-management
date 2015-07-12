@@ -12,13 +12,12 @@ import java.util.Date;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -33,11 +32,13 @@ public class CallManagementPortlet extends MVCPortlet {
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		long callId = ParamUtil.getLong(renderRequest, "callId", 0);
 		if (callId > 0) {
+//			Utils.clearPublicRenderParameter(renderRequest, "callId");
 			include("/html/callmanagement/asset/full_content.jsp", renderRequest, renderResponse);
 		} else { 
 			super.doView(renderRequest, renderResponse);
 		}
 	}
+	
 	
 	public void addEntry(ActionRequest req, ActionResponse res)
 			throws SystemException, PortalException {
@@ -54,11 +55,15 @@ public class CallManagementPortlet extends MVCPortlet {
 		bean.setDeadline(calculateDeadline(req, "d"));
 		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
 
-		CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
+		Call call = CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
 				serviceContext);
-
+		req.setAttribute("call", call);
 	}
 
+	public void showEntry(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException {
+	}
+	
 	public void updateEntry(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -83,7 +88,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Call.class.getName(), req);
 
-		long id = ParamUtil.getLong(req, "entryId");
+		long id = ParamUtil.getLong(req, "callId");
 		CallLocalServiceUtil.deleteCall(id, serviceContext);
 
 	}

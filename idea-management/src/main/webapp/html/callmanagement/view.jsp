@@ -12,6 +12,7 @@
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.WindowState" %>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -34,9 +35,15 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
   String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
 %>
 
-<portlet:renderURL var="addCallUrl">
-	<portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp"/>
-</portlet:renderURL>
+<%-- <portlet:renderURL var="addCallUrl" windowState="maximized"> --%>
+<%-- 	<portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp"/> --%>
+<%-- </portlet:renderURL> --%>
+  <%
+  PortletURL portletURL = renderResponse.createRenderURL();
+  portletURL.setParameter("mvcPath", "/html/callmanagement/edit_call.jsp");
+  portletURL.setWindowState(WindowState.MAXIMIZED);
+  String addCallUrl = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+  %>
 
 <c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
 
@@ -54,7 +61,6 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 <div class="calls">
 <% for(Call call : list) {%>
         <portlet:renderURL var="viewCall">
-          <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp" />
           <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
         </portlet:renderURL>
         <% 
@@ -88,7 +94,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
   <div class="row-fluid call-paging">
     <div class="span12">
       <% 
-      PortletURL portletURL = renderResponse.createRenderURL();
+      portletURL = renderResponse.createRenderURL();
       portletURL.setParameter("viewAll", "true"); 
       String showAllURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
       %>

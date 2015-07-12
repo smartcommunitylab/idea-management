@@ -6,10 +6,10 @@
 
 <%@ page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@ page
-	import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@ page import="com.liferay.portal.theme.ThemeDisplay"%>
+<%@ page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 
 
 
@@ -21,7 +21,8 @@
         if (callId > 0) {
                 entry = CallLocalServiceUtil.getCall(callId);
         }
-        
+
+    Utils.clearPublicRenderParameter(renderRequest, "mvcPath");
 %>
 
 <%
@@ -37,7 +38,8 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 <portlet:actionURL
 	name='<%=entry == null ? "addEntry" : "updateEntry"%>'
 	var="editEntryURL"  windowState="normal">
-  <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp"></portlet:param>
+<%--   <portlet:param name="redirect" value='<%=ParamUtil.getString(request, "redirect") %>'></portlet:param> --%>
+<%--   <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp"></portlet:param> --%>
 </portlet:actionURL>
 
 <aui:form action="<%=editEntryURL%>" name="call">
@@ -115,7 +117,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<aui:button-row>
 
 		<aui:button type="submit"></aui:button>
-		<aui:button type="cancel" onClick="<%= viewURL.toString() %>"></aui:button>
+		<aui:button type="cancel" onClick="javascript: window.history.go(-1);"></aui:button>
 
 	</aui:button-row>
 </aui:form>

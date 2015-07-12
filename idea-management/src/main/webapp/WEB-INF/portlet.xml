@@ -18,6 +18,10 @@
 		     <name>config-template</name>
 		     <value>/html/idea/configuration.jsp</value>
 		 </init-param>
+<!--     <init-param> -->
+<!--          <name>edit-template</name> -->
+<!--          <value>/html/idea/edit_idea.jsp</value> -->
+<!--      </init-param> -->
      <init-param>
       <name>copy-request-parameters</name>
       <value>true</value>
@@ -26,6 +30,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
+<!--       <portlet-mode>edit</portlet-mode> -->
 		</supports>
 		<supported-locale>en</supported-locale>
 		<supported-locale>it</supported-locale>
@@ -66,12 +71,16 @@
 		</init-param>
 <!-- 		<init-param> -->
 <!-- 			<name>edit-template</name> -->
-<!-- 			<value>/html/callmanagement/edit.jsp</value> -->
+<!-- 			<value>/html/callmanagement/edit_call.jsp</value> -->
 <!-- 		</init-param> -->
     <init-param>
          <name>config-template</name>
          <value>/html/callmanagement/configuration.jsp</value>
      </init-param>
+     <init-param>
+      <name>copy-request-parameters</name>
+      <value>true</value>
+    </init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -94,6 +103,9 @@
     </security-role-ref>
     <security-role-ref>
       <role-name>manager</role-name>
+    </security-role-ref>
+    <security-role-ref>
+      <role-name>moderator</role-name>
     </security-role-ref>
     <security-role-ref>
       <role-name>user</role-name>

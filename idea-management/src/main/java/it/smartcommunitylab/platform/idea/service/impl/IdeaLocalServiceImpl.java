@@ -84,7 +84,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		Idea idea = ideaPersistence.create(pkId);
 
 		Group group = GroupLocalServiceUtil.addGroup(userId, 0L, null, 0L, 0L,
-				ideaBean.getTitle(), null, GroupConstants.TYPE_SITE_OPEN,
+				ideaBean.getTitle()+" - "+pkId, null, GroupConstants.TYPE_SITE_OPEN,
 				false, 0, null, true, true, serviceContext);
 		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
 

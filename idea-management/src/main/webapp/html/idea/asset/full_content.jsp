@@ -10,6 +10,8 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="java.util.Map" %>
+
 <%@ include file="/html/common-init.jsp" %>
 
 <%
@@ -65,20 +67,22 @@
 
   String state = idea.getState();
   if (state == null || state.equals("")) state = Constants.IDEA_STATE_PROPOSED;
-  
+
 %>
 <div class="row-fluid">
   <span class="span8 idea-view-title">
   <%=HtmlUtil.unescape(idea.getTitle())%>
       <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
-      <portlet:renderURL var="editIdea" windowState="maximized">
+      <portlet:renderURL var="editIdea">
         <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
         <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+<%--         <portlet:param name="redirect" value="<%=currentURL %>"/> --%>
       </portlet:renderURL>
+      <a href="<%=editIdea.toString()%>"><i class="icon-pencil"></i></a>
       <portlet:actionURL var="deleteURL" name="deleteEntry">
         <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+        <portlet:param name="redirect" value='<%=renderRequest.getParameter("redirect") %>'/>
       </portlet:actionURL>
-      <a href="<%=editIdea.toString()%>"><i class="icon-pencil"></i></a>
       <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
     </c:if>
   </span>
