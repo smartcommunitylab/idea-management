@@ -76,9 +76,18 @@
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         %>
         <span class="span2">
-            <a class="idea" href="<%=viewIdea.toString() %>">
-                <div class="thumbnail" style="border-left-color: <%=color %>;">
-                    <h6 class="idea-cat" style="color: <%=color %>;"><%=catTitle %></h6>
+                <div onClick="javascript:window.location = '<%=viewIdea.toString() %>';" class="thumbnail" style="border-left-color: <%=color %>;">
+                     <div class="idea-cat" style="color: <%=color %>;">
+                       <%=catTitle %>
+                      <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
+                        <portlet:actionURL var="deleteURL" name="deleteEntry">
+                          <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+                          <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
+                          <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
+                        </portlet:actionURL>
+                        <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
+                      </c:if>
+                    </div>
                     <h4><%=idea.getTitle() %></h4>
                     <div class="thumbnail-bottom">
 	                    <div class="pull-left">
@@ -98,7 +107,6 @@
 	   		              </div>
    		            </div>
                 </div>
-            </a>
         </span>
         
         

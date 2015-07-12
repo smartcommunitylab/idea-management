@@ -61,11 +61,20 @@
         String scoreString = numberFormat.format(stat.getAverageScore());
         %>
         <div class="span4">
-            <a class="idea" href="<%=viewIdea.toString() %>">
-                <div class="idea-card" style="border-color: <%=color %>;">
+                <div onClick="javascript:window.location='<%=viewIdea.toString() %>';" class="idea-card" style="border-color: <%=color %>;">
                   <div class="idea-card-header">
-                    <div class="span6"><c:if test="<%=idea.getCallId() > 0 %>"><span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> </c:if></div>
                     <div class="span6">
+	                    <c:if test="<%=idea.getCallId() > 0 %>"><span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> </c:if>
+                    </div>
+                    <div class="span6">
+	                    <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
+	                      <portlet:actionURL var="deleteURL" name="deleteEntry">
+	                        <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+	                        <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
+	                        <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
+	                      </portlet:actionURL>
+	                      <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
+	                    </c:if>
                       <span class="idea-card-date">
                         <%=dateFormatter.format(idea.getCreateDate()) %>
                       </span>
@@ -90,7 +99,6 @@
                       </div>
                   </div>
                 </div>
-            </a>
         </div>
         
         

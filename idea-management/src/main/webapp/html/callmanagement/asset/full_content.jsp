@@ -75,11 +75,7 @@
         <portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp" />
         <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
       </portlet:renderURL>
-      <portlet:actionURL var="deleteURL" name="deleteEntry">
-        <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
-      </portlet:actionURL>
       <a href="<%=editCall.toString()%>"><i class="icon-pencil"></i></a>
-      <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
     </c:if>
     </div>
     <div class="call-cattitle" style="background-color: <%=categoryColor %>;">

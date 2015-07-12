@@ -152,12 +152,13 @@ header#banner {
 	line-height: 120px;
 }
 
-.idea-slider .idea {
+.idea-slider {
 	text-decoration: none !important;
 	color: black !important;
 }
 
-.idea-slider .idea .thumbnail {
+.idea-slider .thumbnail {
+	cursor: pointer;
 	border-left-width: 16px;
 	height: 120px;
 	position: relative;
@@ -170,8 +171,12 @@ header#banner {
   text-overflow: ellipsis;
 }
 */
-.idea-slider .idea .thumbnail .idea-cat {
+.idea-slider .thumbnail .idea-cat {
 	text-transform: uppercase;
+	font-size: 11.9px;
+}
+.idea-slider .thumbnail .idea-cat .taglib-icon {
+	float: right;
 }
 
 .idea-cat {
@@ -636,6 +641,7 @@ header#banner {
 }
 
 .idea-card {
+	cursor: pointer;
 	padding: 8px;
 	margin: 16px;
 	border-width: 2px;
@@ -706,12 +712,8 @@ header#banner {
 	margin-bottom: 10px;
 }
 
-.call a {
-	text-decoration: none !important;
-	color: black !important;
-}
-
 .call-card {
+	cursor: pointer;
 	border-color: #DDD;
 	border-width: 2px;
 	border-style: solid;
@@ -721,6 +723,10 @@ header#banner {
 	border-left-width: 16px;
 	padding: 3px;
 	position: relative;
+}
+
+.call-card-header .taglib-icon {
+	float: right;
 }
 
 .call-card-cat {

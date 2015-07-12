@@ -88,7 +88,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Call.class.getName(), req);
 
-		long id = ParamUtil.getLong(req, "callId");
+		long id = ParamUtil.getLong(req, "entryId");
 		CallLocalServiceUtil.deleteCall(id, serviceContext);
 
 	}

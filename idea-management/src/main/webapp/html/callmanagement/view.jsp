@@ -73,11 +73,18 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
         %>
   <div class="row-fluid">
     <div class="call">
-      <a href="<%=viewCall.toString()%>">
-          <div class="call-card" style="border-left-color: <%=color %>;">
+          <div onClick="javascript:window.location = '<%=viewCall.toString()%>';" class="call-card" style="border-left-color: <%=color %>;">
               <div class="call-card-header">
                 <div class="span6"><span class="call-card-cat" style="color: <%=color %>;"><%=catTitle %></span></div>
-                <div class="span6"><span class="call-card-date"><liferay-ui:message key="lbl_call_card_deadline" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/></span></div>
+                <div class="span6">
+                  <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
+                    <portlet:actionURL var="deleteURL" name="deleteEntry">
+                      <portlet:param name="entryId" value="<%=String.valueOf(call.getCallId()) %>" />
+                    </portlet:actionURL>
+                    <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
+                  </c:if>
+                  <span class="call-card-date"><liferay-ui:message key="lbl_call_card_deadline" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/></span>
+	              </div>
               </div>
               <h4><%=call.getTitle() %></h4>
               <div class="call-card-abstract"><%=call.getDescription() %></div>
@@ -85,7 +92,6 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
                 <div class="span12"><span class="call-card-ideas"><%=countIdeaByCall %></span></div>
               </div>
           </div>
-      </a>
     </div>
   </div>
 <% } %>

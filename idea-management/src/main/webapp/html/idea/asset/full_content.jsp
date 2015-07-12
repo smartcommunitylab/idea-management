@@ -76,14 +76,8 @@
       <portlet:renderURL var="editIdea">
         <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
         <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-<%--         <portlet:param name="redirect" value="<%=currentURL %>"/> --%>
       </portlet:renderURL>
       <a href="<%=editIdea.toString()%>"><i class="icon-pencil"></i></a>
-      <portlet:actionURL var="deleteURL" name="deleteEntry">
-        <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-        <portlet:param name="redirect" value='<%=renderRequest.getParameter("redirect") %>'/>
-      </portlet:actionURL>
-      <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
     </c:if>
   </span>
   <span class="span4 idea-creator text-right">
