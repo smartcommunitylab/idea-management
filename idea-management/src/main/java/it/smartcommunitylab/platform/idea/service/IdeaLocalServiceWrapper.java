@@ -414,13 +414,15 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
 
     @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
-        long catId, long[] tagIds) {
+        long catId, long[] tagIds)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeasByRating(catId, tagIds);
     }
 
     @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
-        long catId, long[] tagIds, int begin, int end) {
+        long catId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeasByRating(catId, tagIds, begin, end);
     }
 
@@ -499,6 +501,22 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getCategoryTags(categoryIds, groupId);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchByCallAndCategoryAndTags(
+        long categoryId, long callId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.searchByCallAndCategoryAndTags(categoryId,
+            callId, tagIds, begin, end);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchPopularByCallAndCategoryAndTags(
+        long categoryId, long callId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.searchPopularByCallAndCategoryAndTags(categoryId,
+            callId, tagIds, begin, end);
     }
 
     /**

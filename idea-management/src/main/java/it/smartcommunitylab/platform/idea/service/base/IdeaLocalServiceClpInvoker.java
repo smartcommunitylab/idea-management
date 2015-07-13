@@ -103,6 +103,10 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes81;
     private String _methodName82;
     private String[] _methodParameterTypes82;
+    private String _methodName84;
+    private String[] _methodParameterTypes84;
+    private String _methodName85;
+    private String[] _methodParameterTypes85;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -319,6 +323,18 @@ public class IdeaLocalServiceClpInvoker {
         _methodName82 = "getCategoryTags";
 
         _methodParameterTypes82 = new String[] { "long[][]", "long" };
+
+        _methodName84 = "searchByCallAndCategoryAndTags";
+
+        _methodParameterTypes84 = new String[] {
+                "long", "long", "long[][]", "int", "int"
+            };
+
+        _methodName85 = "searchPopularByCallAndCategoryAndTags";
+
+        _methodParameterTypes85 = new String[] {
+                "long", "long", "long[][]", "int", "int"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -605,6 +621,22 @@ public class IdeaLocalServiceClpInvoker {
                 Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
                 ((Long) arguments[1]).longValue());
+        }
+
+        if (_methodName84.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
+            return IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(), (long[]) arguments[2],
+                ((Integer) arguments[3]).intValue(),
+                ((Integer) arguments[4]).intValue());
+        }
+
+        if (_methodName85.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+            return IdeaLocalServiceUtil.searchPopularByCallAndCategoryAndTags(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(), (long[]) arguments[2],
+                ((Integer) arguments[3]).intValue(),
+                ((Integer) arguments[4]).intValue());
         }
 
         throw new UnsupportedOperationException();

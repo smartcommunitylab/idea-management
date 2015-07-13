@@ -84,8 +84,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		Idea idea = ideaPersistence.create(pkId);
 
 		Group group = GroupLocalServiceUtil.addGroup(userId, 0L, null, 0L, 0L,
-				ideaBean.getTitle()+" - "+pkId, null, GroupConstants.TYPE_SITE_OPEN,
-				false, 0, null, true, true, serviceContext);
+				ideaBean.getTitle() + " - " + pkId, null,
+				GroupConstants.TYPE_SITE_OPEN, false, 0, null, true, true,
+				serviceContext);
 		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
 
 		idea.setUuid(serviceContext.getUuid());
@@ -202,7 +203,11 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	public List<Idea> getIdeasByCat(long catId, long[] tagIds, int begin,
 			int end) throws SystemException {
-		return IdeaFinderUtil.findByCatAndTags(catId, tagIds, begin, end);
+		if (tagIds != null && tagIds.length > 0) {
+			return IdeaFinderUtil.findByCatAndTags(catId, tagIds, begin, end);
+		} else {
+			return IdeaFinderUtil.findByCat(catId, begin, end);
+		}
 	}
 
 	public List<Idea> getIdeasByCat(long catId) throws SystemException {
@@ -232,14 +237,23 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return IdeaFinderUtil.findByCatAndRating(catId, begin, end);
 	}
 
-	public List<Idea> getIdeasByRating(long catId, long[] tagIds) {
-		return IdeaFinderUtil.findByCatAndRatingAndTags(catId, tagIds);
+	public List<Idea> getIdeasByRating(long catId, long[] tagIds)
+			throws SystemException {
+		if (tagIds != null && tagIds.length > 0) {
+			return IdeaFinderUtil.findByCatAndRatingAndTags(catId, tagIds);
+		} else {
+			return getIdeasByRating(catId);
+		}
 	}
 
 	public List<Idea> getIdeasByRating(long catId, long[] tagIds, int begin,
-			int end) {
-		return IdeaFinderUtil.findByCatAndRatingAndTags(catId, tagIds, begin,
-				end);
+			int end) throws SystemException {
+		if (tagIds != null && tagIds.length > 0) {
+			return IdeaFinderUtil.findByCatAndRatingAndTags(catId, tagIds,
+					begin, end);
+		} else {
+			return getIdeasByRating(catId, begin, end);
+		}
 	}
 
 	public List<Idea> getIdeasByCall(long callId, int begin, int end)
@@ -253,10 +267,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	public List<Idea> getIdeasByCall(long callId, long[] tagIds, int begin,
 			int end) throws SystemException {
-		if (begin <= 0 && end <= 0) {
-			return IdeaFinderUtil.findByCallAndTags(callId, tagIds);
+		if (tagIds == null || tagIds.length == 0) {
+			return getIdeasByCall(callId, begin, end);
 		} else {
-			return IdeaFinderUtil.findByCallAndTags(callId, tagIds, begin, end);
+			if (begin <= 0 && end <= 0) {
+				return IdeaFinderUtil.findByCallAndTags(callId, tagIds);
+			} else {
+				return IdeaFinderUtil.findByCallAndTags(callId, tagIds, begin,
+						end);
+			}
 		}
 	}
 
@@ -276,11 +295,16 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	public List<Idea> getIdeasByCallAndRating(long callId, long[] tagIds,
 			int begin, int end) throws SystemException {
-		if (begin <= 0 && end <= 0) {
-			return IdeaFinderUtil.findByCallAndRatingAndTags(callId, tagIds);
+		if (tagIds == null || tagIds.length == 0) {
+			return getIdeasByCallAndRating(callId, begin, end);
 		} else {
-			return IdeaFinderUtil.findByCallAndRatingAndTags(callId, tagIds,
-					begin, end);
+			if (begin <= 0 && end <= 0) {
+				return IdeaFinderUtil
+						.findByCallAndRatingAndTags(callId, tagIds);
+			} else {
+				return IdeaFinderUtil.findByCallAndRatingAndTags(callId,
+						tagIds, begin, end);
+			}
 		}
 	}
 
@@ -388,5 +412,41 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			}
 		}
 		return -1;
+	}
+
+	public List<Idea> searchByCallAndCategoryAndTags(long categoryId,
+			long callId, long[] tagIds, int begin, int end)
+			throws SystemException {
+		boolean searchByCat = categoryId > 0;
+		boolean searchByCall = callId > 0;
+
+		List<Idea> ideas = null;
+		if (searchByCall) {
+			ideas = getIdeasByCall(callId, tagIds, begin, end);
+		} else if (searchByCat) {
+			ideas = getIdeasByCat(categoryId, tagIds, begin, end);
+		} else {
+			ideas = getIdeas(begin, end);
+		}
+
+		return ideas;
+	}
+
+	public List<Idea> searchPopularByCallAndCategoryAndTags(long categoryId,
+			long callId, long[] tagIds, int begin, int end)
+			throws SystemException {
+		boolean searchByCat = categoryId > 0;
+		boolean searchByCall = callId > 0;
+
+		List<Idea> ideas = null;
+		if (searchByCall) {
+			ideas = getIdeasByCallAndRating(callId, tagIds, begin, end);
+		} else if (searchByCat) {
+			ideas = getIdeasByRating(categoryId, tagIds, begin, end);
+		} else {
+			ideas = getIdeasByRating(begin, end);
+		}
+
+		return ideas;
 	}
 }
