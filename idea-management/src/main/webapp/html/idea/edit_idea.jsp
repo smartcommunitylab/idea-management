@@ -5,11 +5,13 @@
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 
 <%@ include file="/html/common-init.jsp" %>
 
 <%
-	Idea idea = null;
+        String baseUrl = Utils.getBaseURL(request);
+        Idea idea = null;
 
         long ideaId = ParamUtil.getLong(request, "ideaId");
 
@@ -46,13 +48,22 @@
 pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
-<portlet:actionURL
-	name='<%=idea == null ? "addNewIdea" : "updateIdea"%>'
-	var="addIdeaURL">
-<%--   <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp"></portlet:param> --%>
+<portlet:renderURL var="redirect">
+  <c:if test="<%=idea != null %>">
+  <portlet:param name="ideaId" value='<%=String.valueOf(idea.getIdeaId()) %>'></portlet:param>
+  </c:if>
+  <portlet:param name="mvcPath" value='<%=(idea == null ? "/html/idea/view.jsp" : "/html/idea/asset/full_content.jsp")%>' />
+</portlet:renderURL>
+
+
+<portlet:actionURL name='<%= idea == null ? "addNewIdea" : "updateIdea"%>' var="addIdeaURL">
+  <c:if test='<%=idea != null %>'>
+  <portlet:param name="ideaId" value='<%= String.valueOf(idea.getIdeaId()) %>'></portlet:param>
+  </c:if>
+  <portlet:param name="redirect" value='<%=Utils.generateRenderURL(baseUrl, redirect.toString()) %>'></portlet:param>
 </portlet:actionURL>
 
-<aui:form action="<%=addIdeaURL%>" name="<portlet:namespace />idea">
+<aui:form action="<%=addIdeaURL.toString()%>" name="<portlet:namespace />idea">
 <aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
 	
 	<aui:fieldset>

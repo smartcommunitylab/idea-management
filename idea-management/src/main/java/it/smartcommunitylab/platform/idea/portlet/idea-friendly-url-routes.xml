@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.2.0//EN"
+"http://www.liferay.com/dtd/liferay-friendly-url-routes_6_2_0.dtd">
+
+<routes>
+    <route>
+        <pattern>/{instanceId}</pattern>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/idea/view.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{instanceId}</pattern>
+        <ignored-parameter name="javax.portlet.action"/>
+        <implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/idea/view.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{instanceId}/add</pattern>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/idea/add_idea.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{instanceId}/{ideaId}/view</pattern>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/idea/asset/full_content.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{instanceId}/{ideaId}/view</pattern>
+        <ignored-parameter name="javax.portlet.action"/>
+        <implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/idea/asset/full_content.jsp</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{instanceId}/{ideaId}/edit</pattern>
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="mvcPath">/html/idea/edit_idea.jsp</implicit-parameter>
+    </route>
+</routes>
