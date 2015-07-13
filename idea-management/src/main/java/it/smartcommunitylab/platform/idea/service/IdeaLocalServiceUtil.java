@@ -393,12 +393,14 @@ public class IdeaLocalServiceUtil {
     }
 
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
-        long catId, long[] tagIds) {
+        long catId, long[] tagIds)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getIdeasByRating(catId, tagIds);
     }
 
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
-        long catId, long[] tagIds, int begin, int end) {
+        long catId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getIdeasByRating(catId, tagIds, begin, end);
     }
 
@@ -461,10 +463,33 @@ public class IdeaLocalServiceUtil {
         return getService().getCategoryColors(groupId);
     }
 
+    public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getCallTags(
+        long callId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().getCallTags(callId);
+    }
+
     public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getCategoryTags(categoryIds, groupId);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchByCallAndCategoryAndTags(
+        long categoryId, long callId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .searchByCallAndCategoryAndTags(categoryId, callId, tagIds,
+            begin, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchPopularByCallAndCategoryAndTags(
+        long categoryId, long callId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService()
+                   .searchPopularByCallAndCategoryAndTags(categoryId, callId,
+            tagIds, begin, end);
     }
 
     public static void clearService() {

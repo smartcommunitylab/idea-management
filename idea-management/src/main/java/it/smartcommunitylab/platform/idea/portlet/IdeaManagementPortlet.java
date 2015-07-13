@@ -6,6 +6,7 @@ import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -33,30 +34,33 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 public class IdeaManagementPortlet extends MVCPortlet {
 
 	@Override
-	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+	public void doView(RenderRequest renderRequest,
+			RenderResponse renderResponse) throws IOException, PortletException {
 		long ideaId = ParamUtil.getLong(renderRequest, "ideaId", 0);
 		if (ideaId > 0) {
-//			Utils.clearPublicRenderParameter(renderRequest, "ideaId");
-			include("/html/idea/asset/full_content.jsp", renderRequest, renderResponse);
-		} else { 
+			// Utils.clearPublicRenderParameter(renderRequest, "ideaId");
+			include("/html/idea/asset/full_content.jsp", renderRequest,
+					renderResponse);
+		} else {
 			super.doView(renderRequest, renderResponse);
 		}
 	}
 
-	
 	@Override
-	public void render(RenderRequest req, RenderResponse res) throws PortletException, IOException {
+	public void render(RenderRequest req, RenderResponse res)
+			throws PortletException, IOException {
 		long ideaId = ParamUtil.getLong(req, "ideaId", 0);
 		if (ideaId > 0) {
 			super.render(req, res);
-		} else { 
+		} else {
 
 			int begin = -1, end = -1;
 
 			PortletPreferences preferences = req.getPreferences();
 			boolean pagination = GetterUtil.getBoolean(preferences.getValue(
 					"activatePagination", StringPool.TRUE));
-			int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",
+			int delta = GetterUtil.getInteger(preferences.getValue(
+					"elementInPage",
 					String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
 			String listType = preferences.getValue("listType",
 					Constants.PREF_LISTTYPE_RECENT);
@@ -90,24 +94,29 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 			// search by category
 			Long categoryId = ParamUtil.getLong(req, "categoryId");
-			boolean searchByCat = categoryId > 0;
 			req.setAttribute("categoryId", categoryId);
 
 			// search by call
 			Long callId = ParamUtil.getLong(req, "callId");
-			boolean searchByCall = callId > 0;
 			req.setAttribute("callId", callId);
 
 			// filter by tags
 			long[] tagIds = new long[0];
 			try {
-				List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(
-						new long[] { categoryId }, PortalUtil.getScopeGroupId(req));
-				for (AssetTag tags : categoryTags) {
+				List<AssetTag> tags = Collections.emptyList();
+				if (callId != null && callId > 0) {
+					tags = IdeaLocalServiceUtil.getCallTags(callId);
+				} else {
+					if (categoryId != null && categoryId > 0)
+						tags = IdeaLocalServiceUtil.getCategoryTags(
+								new long[] { categoryId },
+								PortalUtil.getScopeGroupId(req));
+				}
+				for (AssetTag tag : tags) {
 					long tagSel = ParamUtil.getLong(req,
-							"filterByTags" + tags.getTagId() + "Checkbox");
+							"filterByTags" + tag.getTagId() + "Checkbox");
 					if (tagSel > 0) {
-						tagIds = ArrayUtil.append(tagIds, tags.getTagId());
+						tagIds = ArrayUtil.append(tagIds, tag.getTagId());
 					}
 				}
 			} catch (SystemException e1) {
@@ -116,7 +125,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				e.printStackTrace();
 			}
 
-			boolean searchByTags = tagIds.length > 0;
 			req.setAttribute("tagSelected", tagIds);
 
 			try {
@@ -124,37 +132,14 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				// result already ordered by creation date DESC for default
 				switch (listType) {
 				case Constants.PREF_LISTTYPE_RECENT:
-					if (searchByCat) {
-						if (searchByTags) {
-							ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
+					ideas = IdeaLocalServiceUtil
+							.searchByCallAndCategoryAndTags(categoryId, callId,
 									tagIds, begin, end);
-						} else {
-							ideas = IdeaLocalServiceUtil.getIdeasByCat(categoryId,
-									begin, end);
-						}
-					} else if (searchByCall) {
-						ideas = IdeaLocalServiceUtil.getIdeasByCall(callId, begin,
-								end);
-
-					} else {
-						ideas = IdeaLocalServiceUtil.getIdeas(begin, end);
-					}
 					break;
 				case Constants.PREF_LISTTYPE_POPULAR:
-					if (searchByCat) {
-						if (searchByTags) {
-							ideas = IdeaLocalServiceUtil.getIdeasByRating(
-									categoryId, tagIds, begin, end);
-						} else {
-							ideas = IdeaLocalServiceUtil.getIdeasByRating(
-									categoryId, begin, end);
-						}
-					} else if (searchByCall) {
-						ideas = IdeaLocalServiceUtil.getIdeasByCallAndRating(
-								callId, begin, end);
-					} else {
-						ideas = IdeaLocalServiceUtil.getIdeasByRating(begin, end);
-					}
+					ideas = IdeaLocalServiceUtil
+							.searchPopularByCallAndCategoryAndTags(categoryId,
+									callId, tagIds, begin, end);
 					break;
 				default:
 					break;
@@ -182,14 +167,14 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		}
 	}
 
-
-	public void showIdea(ActionRequest req, ActionResponse res) throws PortalException, SystemException {
+	public void showIdea(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException {
 	}
 
 	public void addNewIdea(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 
- 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Idea.class.getName(), req);
 
 		Long categoryId = ParamUtil.getLong(req, "categoryId");
@@ -204,8 +189,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setLongDesc(longDesc);
 		ideaBean.setCategoryId(categoryId);
 		ideaBean.setCallId(callId);
-		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(), ideaBean,
-				serviceContext);
+		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(),
+				ideaBean, serviceContext);
 		req.setAttribute("idea", idea);
 	}
 

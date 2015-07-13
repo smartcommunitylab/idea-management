@@ -350,11 +350,13 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
-        long catId, long[] tagIds);
+        long catId, long[] tagIds)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByRating(
-        long catId, long[] tagIds, int begin, int end);
+        long catId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCall(
@@ -405,7 +407,23 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
             com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCallTags(
+        long callId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchByCallAndCategoryAndTags(
+        long categoryId, long callId, long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchPopularByCallAndCategoryAndTags(
+        long categoryId, long callId, long[] tagIds, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
 }

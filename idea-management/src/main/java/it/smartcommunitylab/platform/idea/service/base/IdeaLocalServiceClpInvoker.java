@@ -103,6 +103,12 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes81;
     private String _methodName82;
     private String[] _methodParameterTypes82;
+    private String _methodName83;
+    private String[] _methodParameterTypes83;
+    private String _methodName85;
+    private String[] _methodParameterTypes85;
+    private String _methodName86;
+    private String[] _methodParameterTypes86;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -316,9 +322,25 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodParameterTypes81 = new String[] { "long" };
 
-        _methodName82 = "getCategoryTags";
+        _methodName82 = "getCallTags";
 
-        _methodParameterTypes82 = new String[] { "long[][]", "long" };
+        _methodParameterTypes82 = new String[] { "long" };
+
+        _methodName83 = "getCategoryTags";
+
+        _methodParameterTypes83 = new String[] { "long[][]", "long" };
+
+        _methodName85 = "searchByCallAndCategoryAndTags";
+
+        _methodParameterTypes85 = new String[] {
+                "long", "long", "long[][]", "int", "int"
+            };
+
+        _methodName86 = "searchPopularByCallAndCategoryAndTags";
+
+        _methodParameterTypes86 = new String[] {
+                "long", "long", "long[][]", "int", "int"
+            };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -603,8 +625,29 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName82.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+            return IdeaLocalServiceUtil.getCallTags(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName83.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
                 ((Long) arguments[1]).longValue());
+        }
+
+        if (_methodName85.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+            return IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(), (long[]) arguments[2],
+                ((Integer) arguments[3]).intValue(),
+                ((Integer) arguments[4]).intValue());
+        }
+
+        if (_methodName86.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
+            return IdeaLocalServiceUtil.searchPopularByCallAndCategoryAndTags(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(), (long[]) arguments[2],
+                ((Integer) arguments[3]).intValue(),
+                ((Integer) arguments[4]).intValue());
         }
 
         throw new UnsupportedOperationException();
