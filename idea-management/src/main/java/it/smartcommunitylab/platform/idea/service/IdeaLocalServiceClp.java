@@ -104,6 +104,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     private String[] _methodParameterTypes47;
     private String _methodName48;
     private String[] _methodParameterTypes48;
+    private String _methodName49;
+    private String[] _methodParameterTypes49;
 
     public IdeaLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -315,19 +317,23 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
 
         _methodParameterTypes45 = new String[] { "long" };
 
-        _methodName46 = "getCategoryTags";
+        _methodName46 = "getCallTags";
 
-        _methodParameterTypes46 = new String[] { "long[][]", "long" };
+        _methodParameterTypes46 = new String[] { "long" };
 
-        _methodName47 = "searchByCallAndCategoryAndTags";
+        _methodName47 = "getCategoryTags";
 
-        _methodParameterTypes47 = new String[] {
+        _methodParameterTypes47 = new String[] { "long[][]", "long" };
+
+        _methodName48 = "searchByCallAndCategoryAndTags";
+
+        _methodParameterTypes48 = new String[] {
                 "long", "long", "long[][]", "int", "int"
             };
 
-        _methodName48 = "searchPopularByCallAndCategoryAndTags";
+        _methodName49 = "searchPopularByCallAndCategoryAndTags";
 
-        _methodParameterTypes48 = new String[] {
+        _methodParameterTypes49 = new String[] {
                 "long", "long", "long[][]", "int", "int"
             };
     }
@@ -1656,14 +1662,46 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
+    public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCallTags(
+        long callId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName46,
+                    _methodParameterTypes46, new Object[] { callId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<com.liferay.portlet.asset.model.AssetTag>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
     public java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName46,
-                    _methodParameterTypes46,
+            returnObj = _invokableLocalService.invokeMethod(_methodName47,
+                    _methodParameterTypes47,
                     new Object[] {
                         ClpSerializer.translateInput(categoryIds),
                         
@@ -1694,8 +1732,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName47,
-                    _methodParameterTypes47,
+            returnObj = _invokableLocalService.invokeMethod(_methodName48,
+                    _methodParameterTypes48,
                     new Object[] {
                         categoryId,
                         
@@ -1732,8 +1770,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         Object returnObj = null;
 
         try {
-            returnObj = _invokableLocalService.invokeMethod(_methodName48,
-                    _methodParameterTypes48,
+            returnObj = _invokableLocalService.invokeMethod(_methodName49,
+                    _methodParameterTypes49,
                     new Object[] {
                         categoryId,
                         

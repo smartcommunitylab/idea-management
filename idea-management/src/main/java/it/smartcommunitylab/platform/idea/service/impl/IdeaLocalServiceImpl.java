@@ -2,6 +2,7 @@ package it.smartcommunitylab.platform.idea.service.impl;
 
 import it.smartcommunitylab.platform.idea.NoSuchIdeaException;
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
+import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.portlet.Constants;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
@@ -381,6 +382,16 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			}
 		}
 		return res;
+	}
+
+	public List<AssetTag> getCallTags(long callId) throws SystemException,
+			PortalException {
+
+		AssetEntryQuery query = new AssetEntryQuery();
+		query.setAttribute("clasPK", callId);
+		AssetEntry e = AssetEntryLocalServiceUtil.getEntry(
+				Call.class.getName(), callId);
+		return e.getTags();
 	}
 
 	public List<AssetTag> getCategoryTags(long[] categoryIds, long groupId)

@@ -463,6 +463,13 @@ public class IdeaLocalServiceUtil {
         return getService().getCategoryColors(groupId);
     }
 
+    public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getCallTags(
+        long callId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().getCallTags(callId);
+    }
+
     public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getCategoryTags(
         long[] categoryIds, long groupId)
         throws com.liferay.portal.kernel.exception.SystemException {

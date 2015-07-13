@@ -6,6 +6,7 @@ import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -102,14 +103,20 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			// filter by tags
 			long[] tagIds = new long[0];
 			try {
-				List<AssetTag> categoryTags = IdeaLocalServiceUtil
-						.getCategoryTags(new long[] { categoryId },
+				List<AssetTag> tags = Collections.emptyList();
+				if (callId != null && callId > 0) {
+					tags = IdeaLocalServiceUtil.getCallTags(callId);
+				} else {
+					if (categoryId != null && categoryId > 0)
+						tags = IdeaLocalServiceUtil.getCategoryTags(
+								new long[] { categoryId },
 								PortalUtil.getScopeGroupId(req));
-				for (AssetTag tags : categoryTags) {
+				}
+				for (AssetTag tag : tags) {
 					long tagSel = ParamUtil.getLong(req,
-							"filterByTags" + tags.getTagId() + "Checkbox");
+							"filterByTags" + tag.getTagId() + "Checkbox");
 					if (tagSel > 0) {
-						tagIds = ArrayUtil.append(tagIds, tags.getTagId());
+						tagIds = ArrayUtil.append(tagIds, tag.getTagId());
 					}
 				}
 			} catch (SystemException e1) {
