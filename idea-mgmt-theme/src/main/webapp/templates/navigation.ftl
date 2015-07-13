@@ -1,6 +1,7 @@
 <#assign liferay_util = PortalJspTagLibs["/WEB-INF/tld/liferay-util.tld"] />
 <#assign liferay_ui = PortalJspTagLibs["/WEB-INF/tld/liferay-ui.tld"] />
 <#assign aui = PortalJspTagLibs["/WEB-INF/tld/liferay-aui.tld"] />
+<#assign portlet = PortalJspTagLibs["http://java.sun.com/portlet_2_0"] />
 
 <nav class="${nav_css_class} navbar" id="navigation" role="navigation">
 	<div class="navbar-inner">
@@ -50,7 +51,7 @@
 			<ul id="user-menu">
 				<#if !is_signed_in>
 					<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
-					<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="Accedi" />
+					<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" anchorCssClass="use-dialog" title="Accedi" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="Accedi" />
 				<#else>
 					<#assign id = themeDisplay.getPortletDisplay().getId() />
 					<#assign plid = themeDisplay.getPlid() />
