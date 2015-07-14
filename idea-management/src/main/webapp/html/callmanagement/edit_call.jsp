@@ -14,7 +14,8 @@
 
 
 <%
-	 Call entry = null;
+    String baseUrl = Utils.getBaseURL(request);
+	  Call entry = null;
 
     long callId = ParamUtil.getLong(request, "callId");
 
@@ -35,11 +36,20 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp"></portlet:param>
 </portlet:renderURL>
 
+<portlet:renderURL var="redirect" windowState="normal">
+  <c:if test="<%=entry != null %>">
+  <portlet:param name="callId" value='<%=String.valueOf(entry.getCallId()) %>'></portlet:param>
+  </c:if>
+  <portlet:param name="mvcPath" value='<%=(entry == null ? "/html/callmanagement/view.jsp" : "/html/callmanagement/asset/full_content.jsp")%>' />
+</portlet:renderURL>
+
 <portlet:actionURL
 	name='<%=entry == null ? "addEntry" : "updateEntry"%>'
 	var="editEntryURL"  windowState="normal">
-<%--   <portlet:param name="redirect" value='<%=ParamUtil.getString(request, "redirect") %>'></portlet:param> --%>
-<%--   <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp"></portlet:param> --%>
+	<c:if test="<%=entry != null %>">
+  <portlet:param name="callId" value='<%=String.valueOf(entry.getCallId()) %>'></portlet:param>
+  </c:if>
+  <portlet:param name="redirect" value='<%=Utils.generateRenderURL(baseUrl, redirect.toString()) %>'></portlet:param>
 </portlet:actionURL>
 
 <aui:form action="<%=editEntryURL%>" name="call">

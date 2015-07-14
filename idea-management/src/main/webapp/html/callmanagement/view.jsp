@@ -13,6 +13,7 @@
 <%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="javax.portlet.WindowState" %>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -32,17 +33,20 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 }
   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   
-  String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
+  String baseUrl = Utils.getBaseURL(request);
 %>
 
 <%-- <portlet:renderURL var="addCallUrl" windowState="maximized"> --%>
 <%-- 	<portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp"/> --%>
 <%-- </portlet:renderURL> --%>
   <%
-  PortletURL portletURL = renderResponse.createRenderURL();
-  portletURL.setParameter("mvcPath", "/html/callmanagement/edit_call.jsp");
-  portletURL.setWindowState(WindowState.MAXIMIZED);
-  String addCallUrl = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+//   PortletURL portletURL = renderResponse.createRenderURL();
+//   portletURL.setParameter("mvcPath", "/html/callmanagement/edit_call.jsp");
+//   portletURL.setWindowState(WindowState.MAXIMIZED);
+//   String addCallUrl = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+	  Map<String,Object> params = new HashMap<String,Object>();
+	  params.put("mvcPath", "/html/callmanagement/add_call.jsp");
+  String addCallUrl = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
   %>
 
 <c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
@@ -62,6 +66,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 <% for(Call call : list) {%>
         <portlet:renderURL var="viewCall">
           <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
+          <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp" />
         </portlet:renderURL>
         <% 
         long classPK = call.getCallId();
@@ -100,9 +105,12 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
   <div class="row-fluid call-paging">
     <div class="span12">
       <% 
-      portletURL = renderResponse.createRenderURL();
-      portletURL.setParameter("viewAll", "true"); 
-      String showAllURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+      params.put("mvcPath", "/html/callmanagement/view.jsp");
+      params.put("viewAll", "true"); 
+      String showAllURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
+//       portletURL = renderResponse.createRenderURL();
+//       portletURL.setParameter("viewAll", "true"); 
+//       String showAllURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
       %>
       <a href="<%=showAllURL%>"><liferay-ui:message key="lbl_showAll"/></a>
     </div>

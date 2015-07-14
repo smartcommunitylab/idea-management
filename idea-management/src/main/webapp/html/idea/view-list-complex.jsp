@@ -12,6 +12,7 @@
 <%@ page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -24,7 +25,8 @@
   
   String baseUrl = (String) request.getAttribute("_baseUrl");
   PortletURL portletURL = renderResponse.createRenderURL();
-  
+  portletURL.setParameter("mvcPath", "/html/idea/view.jsp");
+
   int offset = delta - results.size();
   String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
@@ -35,8 +37,12 @@
 
   Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");//(Long) request.getAttribute("categoryId");
   Long callId = ParamUtil.getLong(renderRequest,"callId");
-  portletURL.setParameter("categoryId", String.valueOf(categoryId));
-  portletURL.setParameter("callId", String.valueOf(callId));
+//   portletURL.setParameter("categoryId", String.valueOf(categoryId));
+//   portletURL.setParameter("callId", String.valueOf(callId));
+  Map<String,Object> params = new HashMap<String,Object>();
+  params.put("categoryId", categoryId);
+  params.put("callId", callId);
+  params.put("mvcPath", "/html/idea/view.jsp");
   
   String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 	String color = "#DDD";
@@ -75,7 +81,8 @@
     %>
         <portlet:renderURL var="viewIdea" windowState="maximized">
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-          <portlet:param name="redirect" value="<%=redirectURL.toString() %>" />
+          <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
+<%--           <portlet:param name="redirect" value="<%=redirectURL.toString() %>" /> --%>
         </portlet:renderURL>
         
         <% 
@@ -144,8 +151,10 @@
   <div class="span6">
     <c:if test="<%=currentPage > 1 %>">
     <% 
-    portletURL.setParameter("cur", StringUtil.valueOf(currentPage - 1)); 
-    String prevURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+//     portletURL.setParameter("cur", StringUtil.valueOf(currentPage - 1)); 
+//     String prevURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+       params.put("cur", currentPage - 1);
+       String prevURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
     %>
     <a class="idea-paging-prev" href="<%= HtmlUtil.escape(prevURL) %>"><liferay-ui:message key="prev_page"/></a>
     </c:if>
@@ -153,8 +162,10 @@
   <div class="span6">
    <c:if test="<%=(results.size() >= delta) %>">
        <%
-       portletURL.setParameter("cur", StringUtil.valueOf(currentPage + 1));
-       String nextURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+//        portletURL.setParameter("cur", StringUtil.valueOf(currentPage + 1));
+//        String nextURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+		      params.put("cur", currentPage + 1);
+		      String nextURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
        %>
        <a class="idea-paging-next" href="<%=HtmlUtil.escape(nextURL)%>"><liferay-ui:message key="next_page"/></a>
    </c:if>  

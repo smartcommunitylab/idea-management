@@ -11,6 +11,7 @@
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 
 <%@ include file="/html/common-init.jsp" %>
 
@@ -20,13 +21,14 @@ boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hi
 boolean hideFilters_view = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
 boolean pagination_view = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", StringPool.TRUE));
 Long categoryId = (Long) request.getAttribute("categoryId");
+if (categoryId == null) categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_VIEWTYPE_SIMPLE));
 String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 
 if (pagination_view) {
 	int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
 	int currentPage = ParamUtil.getInteger(request, "cur", 1);
-	String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
+	String baseUrl = Utils.getBaseURL(request);
 	request.setAttribute("_baseUrl", baseUrl);
 	request.setAttribute("_currentPage", currentPage);
 	request.setAttribute("_delta", delta);
@@ -77,12 +79,18 @@ boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupI
  --%>	
   <%
 	String baseUrl = (String) request.getAttribute("_baseUrl");
-	PortletURL portletURL = renderResponse.createRenderURL();
-	portletURL.setParameter("categoryId", String.valueOf(categoryId)); 
-	portletURL.setParameter("callId", String.valueOf(callId));
-  portletURL.setParameter("mvcPath", "/html/idea/edit_idea.jsp");
+  Map<String,Object> params = new HashMap<String,Object>();
+  params.put("categoryId", categoryId);
+  params.put("callId", callId);
+  params.put("mvcPath", "/html/idea/add_idea.jsp");
+// 	PortletURL portletURL = renderResponse.createRenderURL();
+// 	portletURL.setParameter("categoryId", String.valueOf(categoryId)); 
+// 	portletURL.setParameter("callId", String.valueOf(callId));
+//   portletURL.setParameter("mvcPath", "/html/idea/edit_idea.jsp");
 //   portletURL.setWindowState(WindowState.MAXIMIZED);
-  String addIdea = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+//   String addIdea = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
+  String addIdea = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
+
 	%>
 	<aui:button disabled="<%=!addEnabled %>" cssClass="addidea-button" name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
@@ -110,6 +118,7 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
     <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
     <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
     <!-- reset idea id to clear in navigation -->	
+    <portlet:param name="mvcPath" value="/html/idea/view.jsp" />
     <portlet:param name="ideaId" value="0" />
 </portlet:actionURL>
 
