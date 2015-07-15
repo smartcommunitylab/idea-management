@@ -20,6 +20,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="deadline" type="org.hibernate.type.TimestampType" />
 		<property name="publicationDeadline" type="org.hibernate.type.TimestampType" />
+		<property name="realizationDeadline" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="it.smartcommunitylab.platform.idea.model.impl.IdeaImpl" table="IM_Idea">
 		<cache usage="read-write" />

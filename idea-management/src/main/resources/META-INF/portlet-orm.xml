@@ -31,6 +31,9 @@
 			<basic name="publicationDeadline">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="realizationDeadline">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

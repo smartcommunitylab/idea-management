@@ -59,9 +59,10 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
             { "modifiedDate", Types.TIMESTAMP },
             { "description", Types.CLOB },
             { "deadline", Types.TIMESTAMP },
-            { "publicationDeadline", Types.TIMESTAMP }
+            { "publicationDeadline", Types.TIMESTAMP },
+            { "realizationDeadline", Types.TIMESTAMP }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Call (uuid_ VARCHAR(75) null,title VARCHAR(75) null,callId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,deadline DATE null,publicationDeadline DATE null)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Call (uuid_ VARCHAR(75) null,title VARCHAR(75) null,callId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,deadline DATE null,publicationDeadline DATE null,realizationDeadline DATE null)";
     public static final String TABLE_SQL_DROP = "drop table IM_Call";
     public static final String ORDER_BY_JPQL = " ORDER BY call.createDate DESC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Call.createDate DESC";
@@ -106,6 +107,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
     private String _description;
     private Date _deadline;
     private Date _publicationDeadline;
+    private Date _realizationDeadline;
     private long _columnBitmask;
     private Call _escapedModel;
 
@@ -158,6 +160,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         attributes.put("description", getDescription());
         attributes.put("deadline", getDeadline());
         attributes.put("publicationDeadline", getPublicationDeadline());
+        attributes.put("realizationDeadline", getRealizationDeadline());
 
         return attributes;
     }
@@ -234,6 +237,12 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
 
         if (publicationDeadline != null) {
             setPublicationDeadline(publicationDeadline);
+        }
+
+        Date realizationDeadline = (Date) attributes.get("realizationDeadline");
+
+        if (realizationDeadline != null) {
+            setRealizationDeadline(realizationDeadline);
         }
     }
 
@@ -430,6 +439,16 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
     }
 
     @Override
+    public Date getRealizationDeadline() {
+        return _realizationDeadline;
+    }
+
+    @Override
+    public void setRealizationDeadline(Date realizationDeadline) {
+        _realizationDeadline = realizationDeadline;
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Call.class.getName()));
@@ -478,6 +497,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         callImpl.setDescription(getDescription());
         callImpl.setDeadline(getDeadline());
         callImpl.setPublicationDeadline(getPublicationDeadline());
+        callImpl.setRealizationDeadline(getRealizationDeadline());
 
         callImpl.resetOriginalValues();
 
@@ -622,12 +642,20 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
             callCacheModel.publicationDeadline = Long.MIN_VALUE;
         }
 
+        Date realizationDeadline = getRealizationDeadline();
+
+        if (realizationDeadline != null) {
+            callCacheModel.realizationDeadline = realizationDeadline.getTime();
+        } else {
+            callCacheModel.realizationDeadline = Long.MIN_VALUE;
+        }
+
         return callCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(27);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -653,6 +681,8 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         sb.append(getDeadline());
         sb.append(", publicationDeadline=");
         sb.append(getPublicationDeadline());
+        sb.append(", realizationDeadline=");
+        sb.append(getRealizationDeadline());
         sb.append("}");
 
         return sb.toString();
@@ -660,7 +690,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Call");
@@ -713,6 +743,10 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         sb.append(
             "<column><column-name>publicationDeadline</column-name><column-value><![CDATA[");
         sb.append(getPublicationDeadline());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>realizationDeadline</column-name><column-value><![CDATA[");
+        sb.append(getRealizationDeadline());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

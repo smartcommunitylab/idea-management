@@ -16,6 +16,7 @@
 		</field>
 		<field name="deadline" type="Date" />
 		<field name="publicationDeadline" type="Date" />
+		<field name="realizationDeadline" type="Date" />
 	</model>
 	<model name="it.smartcommunitylab.platform.idea.model.Idea">
 		<field name="uuid" type="String" />
