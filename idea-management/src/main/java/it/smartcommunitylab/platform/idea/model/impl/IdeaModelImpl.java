@@ -61,9 +61,12 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
             { "shortDesc", Types.VARCHAR },
             { "userGroupId", Types.BIGINT },
             { "callId", Types.BIGINT },
-            { "state_", Types.VARCHAR }
+            { "state_", Types.VARCHAR },
+            { "status", Types.INTEGER },
+            { "statusByUserId", Types.BIGINT },
+            { "statusByUserName", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG,callId LONG,state_ VARCHAR(75) null)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG,callId LONG,state_ VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table IM_Idea";
     public static final String ORDER_BY_JPQL = " ORDER BY idea.createDate DESC, idea.title ASC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Idea.createDate DESC, IM_Idea.title ASC";
@@ -111,6 +114,10 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     private long _originalCallId;
     private boolean _setOriginalCallId;
     private String _state;
+    private int _status;
+    private long _statusByUserId;
+    private String _statusByUserUuid;
+    private String _statusByUserName;
     private long _columnBitmask;
     private Idea _escapedModel;
 
@@ -165,6 +172,9 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         attributes.put("userGroupId", getUserGroupId());
         attributes.put("callId", getCallId());
         attributes.put("state", getState());
+        attributes.put("status", getStatus());
+        attributes.put("statusByUserId", getStatusByUserId());
+        attributes.put("statusByUserName", getStatusByUserName());
 
         return attributes;
     }
@@ -253,6 +263,24 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
         if (state != null) {
             setState(state);
+        }
+
+        Integer status = (Integer) attributes.get("status");
+
+        if (status != null) {
+            setStatus(status);
+        }
+
+        Long statusByUserId = (Long) attributes.get("statusByUserId");
+
+        if (statusByUserId != null) {
+            setStatusByUserId(statusByUserId);
+        }
+
+        String statusByUserName = (String) attributes.get("statusByUserName");
+
+        if (statusByUserName != null) {
+            setStatusByUserName(statusByUserName);
         }
     }
 
@@ -479,6 +507,51 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
     }
 
     @Override
+    public int getStatus() {
+        return _status;
+    }
+
+    @Override
+    public void setStatus(int status) {
+        _status = status;
+    }
+
+    @Override
+    public long getStatusByUserId() {
+        return _statusByUserId;
+    }
+
+    @Override
+    public void setStatusByUserId(long statusByUserId) {
+        _statusByUserId = statusByUserId;
+    }
+
+    @Override
+    public String getStatusByUserUuid() throws SystemException {
+        return PortalUtil.getUserValue(getStatusByUserId(), "uuid",
+            _statusByUserUuid);
+    }
+
+    @Override
+    public void setStatusByUserUuid(String statusByUserUuid) {
+        _statusByUserUuid = statusByUserUuid;
+    }
+
+    @Override
+    public String getStatusByUserName() {
+        if (_statusByUserName == null) {
+            return StringPool.BLANK;
+        } else {
+            return _statusByUserName;
+        }
+    }
+
+    @Override
+    public void setStatusByUserName(String statusByUserName) {
+        _statusByUserName = statusByUserName;
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Idea.class.getName()));
@@ -529,6 +602,9 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         ideaImpl.setUserGroupId(getUserGroupId());
         ideaImpl.setCallId(getCallId());
         ideaImpl.setState(getState());
+        ideaImpl.setStatus(getStatus());
+        ideaImpl.setStatusByUserId(getStatusByUserId());
+        ideaImpl.setStatusByUserName(getStatusByUserName());
 
         ideaImpl.resetOriginalValues();
 
@@ -683,12 +759,24 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
             ideaCacheModel.state = null;
         }
 
+        ideaCacheModel.status = getStatus();
+
+        ideaCacheModel.statusByUserId = getStatusByUserId();
+
+        ideaCacheModel.statusByUserName = getStatusByUserName();
+
+        String statusByUserName = ideaCacheModel.statusByUserName;
+
+        if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+            ideaCacheModel.statusByUserName = null;
+        }
+
         return ideaCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(29);
+        StringBundler sb = new StringBundler(35);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -718,6 +806,12 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         sb.append(getCallId());
         sb.append(", state=");
         sb.append(getState());
+        sb.append(", status=");
+        sb.append(getStatus());
+        sb.append(", statusByUserId=");
+        sb.append(getStatusByUserId());
+        sb.append(", statusByUserName=");
+        sb.append(getStatusByUserName());
         sb.append("}");
 
         return sb.toString();
@@ -725,7 +819,7 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(46);
+        StringBundler sb = new StringBundler(55);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -786,6 +880,18 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
         sb.append(
             "<column><column-name>state</column-name><column-value><![CDATA[");
         sb.append(getState());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>status</column-name><column-value><![CDATA[");
+        sb.append(getStatus());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+        sb.append(getStatusByUserId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+        sb.append(getStatusByUserName());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

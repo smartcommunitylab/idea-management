@@ -44,9 +44,14 @@
 		<column name="title" type="String"></column>
 		<column name="longDesc" type="String"></column>
 		<column name="shortDesc" type="String"></column>
-        <column name="userGroupId" type="long"></column>
-        <column name="callId" type="long"></column>
-        <column name="state" type="String"></column>
+		<column name="userGroupId" type="long"></column>
+		<column name="callId" type="long"></column>
+		<column name="state" type="String"></column>
+
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" /> 
+		<!-- <column name="statusDate" type="Date" /> -->
 
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
@@ -58,9 +63,9 @@
 		</finder>
 
 		<!-- References -->
-        <finder name="CallId" return-type="Collection">
-            <finder-column name="callId"></finder-column>
-        </finder>
+		<finder name="CallId" return-type="Collection">
+			<finder-column name="callId"></finder-column>
+		</finder>
 
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
@@ -90,7 +95,7 @@
 		<column name="modifiedDate" type="Date"></column>
 		<column name="description" type="String"></column>
 		<column name="deadline" type="Date"></column>
-        <column name="publicationDeadline" type="Date"></column>
+		<column name="publicationDeadline" type="Date"></column>
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
 		</order>

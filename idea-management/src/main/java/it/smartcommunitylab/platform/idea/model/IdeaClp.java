@@ -38,6 +38,10 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     private long _userGroupId;
     private long _callId;
     private String _state;
+    private int _status;
+    private long _statusByUserId;
+    private String _statusByUserUuid;
+    private String _statusByUserName;
     private BaseModel<?> _ideaRemoteModel;
     private Class<?> _clpSerializerClass = it.smartcommunitylab.platform.idea.service.ClpSerializer.class;
 
@@ -92,6 +96,9 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         attributes.put("userGroupId", getUserGroupId());
         attributes.put("callId", getCallId());
         attributes.put("state", getState());
+        attributes.put("status", getStatus());
+        attributes.put("statusByUserId", getStatusByUserId());
+        attributes.put("statusByUserName", getStatusByUserName());
 
         return attributes;
     }
@@ -180,6 +187,24 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
         if (state != null) {
             setState(state);
+        }
+
+        Integer status = (Integer) attributes.get("status");
+
+        if (status != null) {
+            setStatus(status);
+        }
+
+        Long statusByUserId = (Long) attributes.get("statusByUserId");
+
+        if (statusByUserId != null) {
+            setStatusByUserId(statusByUserId);
+        }
+
+        String statusByUserName = (String) attributes.get("statusByUserName");
+
+        if (statusByUserName != null) {
+            setStatusByUserName(statusByUserName);
         }
     }
 
@@ -502,6 +527,84 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     }
 
     @Override
+    public int getStatus() {
+        return _status;
+    }
+
+    @Override
+    public void setStatus(int status) {
+        _status = status;
+
+        if (_ideaRemoteModel != null) {
+            try {
+                Class<?> clazz = _ideaRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setStatus", int.class);
+
+                method.invoke(_ideaRemoteModel, status);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getStatusByUserId() {
+        return _statusByUserId;
+    }
+
+    @Override
+    public void setStatusByUserId(long statusByUserId) {
+        _statusByUserId = statusByUserId;
+
+        if (_ideaRemoteModel != null) {
+            try {
+                Class<?> clazz = _ideaRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setStatusByUserId", long.class);
+
+                method.invoke(_ideaRemoteModel, statusByUserId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public String getStatusByUserUuid() throws SystemException {
+        return PortalUtil.getUserValue(getStatusByUserId(), "uuid",
+            _statusByUserUuid);
+    }
+
+    @Override
+    public void setStatusByUserUuid(String statusByUserUuid) {
+        _statusByUserUuid = statusByUserUuid;
+    }
+
+    @Override
+    public String getStatusByUserName() {
+        return _statusByUserName;
+    }
+
+    @Override
+    public void setStatusByUserName(String statusByUserName) {
+        _statusByUserName = statusByUserName;
+
+        if (_ideaRemoteModel != null) {
+            try {
+                Class<?> clazz = _ideaRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setStatusByUserName",
+                        String.class);
+
+                method.invoke(_ideaRemoteModel, statusByUserName);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public java.util.Date discussionDeadline() {
         try {
             String methodName = "discussionDeadline";
@@ -606,6 +709,9 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         clone.setUserGroupId(getUserGroupId());
         clone.setCallId(getCallId());
         clone.setState(getState());
+        clone.setStatus(getStatus());
+        clone.setStatusByUserId(getStatusByUserId());
+        clone.setStatusByUserName(getStatusByUserName());
 
         return clone;
     }
@@ -663,7 +769,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(29);
+        StringBundler sb = new StringBundler(35);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -693,6 +799,12 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(getCallId());
         sb.append(", state=");
         sb.append(getState());
+        sb.append(", status=");
+        sb.append(getStatus());
+        sb.append(", statusByUserId=");
+        sb.append(getStatusByUserId());
+        sb.append(", statusByUserName=");
+        sb.append(getStatusByUserName());
         sb.append("}");
 
         return sb.toString();
@@ -700,7 +812,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(46);
+        StringBundler sb = new StringBundler(55);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -761,6 +873,18 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(
             "<column><column-name>state</column-name><column-value><![CDATA[");
         sb.append(getState());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>status</column-name><column-value><![CDATA[");
+        sb.append(getStatus());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+        sb.append(getStatusByUserId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+        sb.append(getStatusByUserName());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

@@ -3053,6 +3053,9 @@ public class IdeaPersistenceImpl extends BasePersistenceImpl<Idea>
         ideaImpl.setUserGroupId(idea.getUserGroupId());
         ideaImpl.setCallId(idea.getCallId());
         ideaImpl.setState(idea.getState());
+        ideaImpl.setStatus(idea.getStatus());
+        ideaImpl.setStatusByUserId(idea.getStatusByUserId());
+        ideaImpl.setStatusByUserName(idea.getStatusByUserName());
 
         return ideaImpl;
     }

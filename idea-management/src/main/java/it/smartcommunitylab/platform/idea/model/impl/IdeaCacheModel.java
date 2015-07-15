@@ -35,10 +35,13 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
     public long userGroupId;
     public long callId;
     public String state;
+    public int status;
+    public long statusByUserId;
+    public String statusByUserName;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(29);
+        StringBundler sb = new StringBundler(35);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -68,6 +71,12 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         sb.append(callId);
         sb.append(", state=");
         sb.append(state);
+        sb.append(", status=");
+        sb.append(status);
+        sb.append(", statusByUserId=");
+        sb.append(statusByUserId);
+        sb.append(", statusByUserName=");
+        sb.append(statusByUserName);
         sb.append("}");
 
         return sb.toString();
@@ -133,6 +142,15 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
             ideaImpl.setState(state);
         }
 
+        ideaImpl.setStatus(status);
+        ideaImpl.setStatusByUserId(statusByUserId);
+
+        if (statusByUserName == null) {
+            ideaImpl.setStatusByUserName(StringPool.BLANK);
+        } else {
+            ideaImpl.setStatusByUserName(statusByUserName);
+        }
+
         ideaImpl.resetOriginalValues();
 
         return ideaImpl;
@@ -154,6 +172,9 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         userGroupId = objectInput.readLong();
         callId = objectInput.readLong();
         state = objectInput.readUTF();
+        status = objectInput.readInt();
+        statusByUserId = objectInput.readLong();
+        statusByUserName = objectInput.readUTF();
     }
 
     @Override
@@ -204,6 +225,15 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
             objectOutput.writeUTF(state);
+        }
+
+        objectOutput.writeInt(status);
+        objectOutput.writeLong(statusByUserId);
+
+        if (statusByUserName == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(statusByUserName);
         }
     }
 }

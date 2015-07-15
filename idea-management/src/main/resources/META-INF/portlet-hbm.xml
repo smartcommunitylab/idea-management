@@ -39,5 +39,8 @@
 		<property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="callId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" column="state_" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

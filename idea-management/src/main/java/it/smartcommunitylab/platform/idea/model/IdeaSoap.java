@@ -27,6 +27,9 @@ public class IdeaSoap implements Serializable {
     private long _userGroupId;
     private long _callId;
     private String _state;
+    private int _status;
+    private long _statusByUserId;
+    private String _statusByUserName;
 
     public IdeaSoap() {
     }
@@ -48,6 +51,9 @@ public class IdeaSoap implements Serializable {
         soapModel.setUserGroupId(model.getUserGroupId());
         soapModel.setCallId(model.getCallId());
         soapModel.setState(model.getState());
+        soapModel.setStatus(model.getStatus());
+        soapModel.setStatusByUserId(model.getStatusByUserId());
+        soapModel.setStatusByUserName(model.getStatusByUserName());
 
         return soapModel;
     }
@@ -206,5 +212,29 @@ public class IdeaSoap implements Serializable {
 
     public void setState(String state) {
         _state = state;
+    }
+
+    public int getStatus() {
+        return _status;
+    }
+
+    public void setStatus(int status) {
+        _status = status;
+    }
+
+    public long getStatusByUserId() {
+        return _statusByUserId;
+    }
+
+    public void setStatusByUserId(long statusByUserId) {
+        _statusByUserId = statusByUserId;
+    }
+
+    public String getStatusByUserName() {
+        return _statusByUserName;
+    }
+
+    public void setStatusByUserName(String statusByUserName) {
+        _statusByUserName = statusByUserName;
     }
 }

@@ -109,6 +109,8 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes85;
     private String _methodName86;
     private String[] _methodParameterTypes86;
+    private String _methodName87;
+    private String[] _methodParameterTypes87;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -340,6 +342,13 @@ public class IdeaLocalServiceClpInvoker {
 
         _methodParameterTypes86 = new String[] {
                 "long", "long", "long[][]", "int", "int"
+            };
+
+        _methodName87 = "updateStatus";
+
+        _methodParameterTypes87 = new String[] {
+                "long", "long", "int",
+                "com.liferay.portal.service.ServiceContext"
             };
     }
 
@@ -648,6 +657,14 @@ public class IdeaLocalServiceClpInvoker {
                 ((Long) arguments[1]).longValue(), (long[]) arguments[2],
                 ((Integer) arguments[3]).intValue(),
                 ((Integer) arguments[4]).intValue());
+        }
+
+        if (_methodName87.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
+            return IdeaLocalServiceUtil.updateStatus(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue(),
+                ((Integer) arguments[2]).intValue(),
+                (com.liferay.portal.service.ServiceContext) arguments[3]);
         }
 
         throw new UnsupportedOperationException();

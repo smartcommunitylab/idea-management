@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
@@ -105,6 +107,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setLongDesc(ideaBean.getLongDesc());
 		idea.setCallId(ideaBean.getCallId());
 
+		idea.setStatus(WorkflowConstants.STATUS_DRAFT);
+
 		ideaPersistence.update(idea);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
@@ -129,6 +133,10 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class);
 
 		indexer.reindex(idea);
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(idea.getCompanyId(),
+				idea.getGroupId(), idea.getUserId(), Idea.class.getName(),
+				idea.getPrimaryKey(), idea, serviceContext);
 		return idea;
 	}
 
@@ -459,5 +467,31 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 
 		return ideas;
+	}
+
+	public Idea updateStatus(long userId, long ideaId, int status,
+			ServiceContext serviceContext) throws PortalException,
+			SystemException {
+
+		User user = userLocalService.getUser(userId);
+		Idea i = getIdea(ideaId);
+
+		i.setStatus(status);
+		i.setStatusByUserId(userId);
+		i.setStatusByUserName(user.getFullName());
+		// i.setStatusDate(new Date());
+
+		ideaPersistence.update(i);
+
+		if (status == WorkflowConstants.STATUS_PENDING
+				|| status == WorkflowConstants.STATUS_APPROVED) {
+			assetEntryLocalService.updateVisible(Idea.class.getName(), ideaId,
+					true);
+		} else {
+			assetEntryLocalService.updateVisible(Idea.class.getName(), ideaId,
+					false);
+		}
+
+		return i;
 	}
 }

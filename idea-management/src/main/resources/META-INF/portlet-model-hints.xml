@@ -34,5 +34,8 @@
 		<field name="userGroupId" type="long" />
 		<field name="callId" type="long" />
 		<field name="state" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
 	</model>
 </model-hints>
