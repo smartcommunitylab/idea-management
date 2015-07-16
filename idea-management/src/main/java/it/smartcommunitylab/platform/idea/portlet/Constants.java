@@ -32,16 +32,16 @@ public class Constants {
 	public static final String IDEA_STATE_EXEC = "exec";
 	public static final String IDEA_STATE_COMPLETE = "complete";
 	public static final String IDEA_STATE_REJECTED = "rejected";
-	public static final String IDEA_STATE_DUPLICATED = "duplicated";
-	public static final String IDEA_STATE_ABUSIVE = "abusive";
+	public static final String IDEA_STATE_BLOCKED_DUPLICATED = "duplicated";
+	public static final String IDEA_STATE_BLOCKED_ABUSIVE = "abusive";
 
 	public static final String BLACKLIST_ROLE_NAME = "Blacklisted";
 
 	public static Map<Integer, String> STATE_MAPPING = new HashMap<Integer, String>();
 
 	static {
-		STATE_MAPPING.put(100, IDEA_STATE_DUPLICATED);
-		STATE_MAPPING.put(101, IDEA_STATE_ABUSIVE);
+		STATE_MAPPING.put(100, IDEA_STATE_BLOCKED_DUPLICATED);
+		STATE_MAPPING.put(101, IDEA_STATE_BLOCKED_ABUSIVE);
 		STATE_MAPPING.put(WorkflowConstants.STATUS_APPROVED,
 				IDEA_STATE_ACCEPTED);
 		STATE_MAPPING.put(WorkflowConstants.STATUS_PENDING, "PUBLISHED");
