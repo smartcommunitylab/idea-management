@@ -34,7 +34,7 @@
 </portlet:renderURL>
 
 <div id="eventList" class="eventListClass">
-	<label class="main"><liferay-ui:message key="evento-eventi" /> <%=titleData%></label>
+	<label class="main"><liferay-ui:message key="evento_title_eventi" /> <%=titleData%></label>
 	<input type="button" class="prevButton"  value="prevDate" 
 		onClick="location.href = '<%= viewPrev %>';" />
 	<input type="button" class="nextButton"  value="nextDate" 
