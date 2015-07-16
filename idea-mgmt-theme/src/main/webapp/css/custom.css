@@ -633,7 +633,7 @@ header#banner {
   padding-bottom: 5px;
 }
 
-.addidea-button:disabled, .formbutton-cancel, .tagselector:not(.categoriesselector) .btn {
+.addidea-button:disabled, .formbutton-cancel, .tagselector .btn {
   font-size: 18px !important;
   text-transform: uppercase !important;
   padding: 8px 24px !important;
@@ -649,7 +649,7 @@ header#banner {
   text-shadow: 0 !important;
   }
 
-.addidea-button, .formbutton-primary, .tagselector:not(.categoriesselector)  .btn {
+.addidea-button, .formbutton-primary, .tagselector  .btn {
   font-size: 18px !important;
   text-transform: uppercase !important;
   padding: 8px 24px !important;
@@ -937,37 +937,37 @@ header#banner {
   margin-left:5px;
 }
 
-.tagselector:not(.categoriesselector) ul{
+.tagselector ul{
   border: none !important;
 }
 
-.tagselector:not(.categoriesselector)  .tagselector-content {
+.tagselector  .tagselector-content {
   position: relative;
   padding: 5px 0 5px 0;
 }
 
-.tagselector:not(.categoriesselector)  .textboxlistentry {
+.tagselector  .textboxlistentry {
   background-color: #999999 !important;
   font-weight: bold !important;
   color: white;
   border: none;
 }
 
-.tagselector:not(.categoriesselector)  .btn:first-child {
+.tagselector:not(.categoriesselector) .btn:first-child {
   display:none !important;
 }
-.tagselector:not(.categoriesselector)  .textboxlistentry-holder {
+.tagselector  .textboxlistentry-holder {
   position:absolute;
   left:60px;
   padding: 0px;
 }
 
-.tagselector:not(.categoriesselector)  .btn i {
+.tagselector  .btn i {
   display:none;
   color: trasparent !important;
 }
 
-.tagselector:not(.categoriesselector)  .btn {
+.tagselector  .btn {
   font-size: 0 !important;
   padding: 8px 8px 4px 8px !important;
 }
@@ -975,6 +975,12 @@ header#banner {
   font-family: fontawesome-alloy;
   font-size: 20px;
   content: "\f02c";
+}
+
+.categoriesselector  .btn:last-child::before {
+  font-family: fontawesome-alloy;
+  font-size: 20px;
+  content: "\f046";
 }
 
 .edit-assetlinks-button {
@@ -996,4 +1002,23 @@ header#banner {
 	display: inline !important;
 	margin-right: 10px !important;
   color: #F1453D !important;
+}
+
+.idea-form .tagselector-focused, .idea-form .categoriesselector-focused {
+	outline: none !important;
+}
+
+.idea-form .fieldset-legend {
+	border-bottom: none !important;
+	font-size: 14px;
+	margin-bottom: 10px !important;
+	font-weight: normal;
+}
+
+.categoriesselector-content .btn {
+	margin-top: 0 !important;
+}
+
+.categoriesselector-wrapper .field-content label {
+	display: none;
 }

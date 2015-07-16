@@ -149,11 +149,14 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					idea.getIdeaId(), serviceContext.getGroupPermissions(),
 					serviceContext.getGuestPermissions());
 
+			AssetEntry oldEntry = assetEntryLocalService.fetchEntry(
+					Idea.class.getName(), idea.getIdeaId());
+
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 					idea.getUserId(), idea.getGroupId(), idea.getCreateDate(),
 					idea.getModifiedDate(), Idea.class.getName(),
 					idea.getIdeaId(), idea.getUuid(), 0,
-					serviceContext.getAssetCategoryIds(),
+					oldEntry.getCategoryIds(),
 					serviceContext.getAssetTagNames(), true, null, null, null,
 					ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
 					null, 0, 0, null, false);

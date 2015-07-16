@@ -2,7 +2,6 @@ package it.smartcommunitylab.platform.idea.service.impl;
 
 import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
-import it.smartcommunitylab.platform.idea.model.impl.CallModelImpl;
 import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -17,8 +16,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -92,6 +89,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		call.setTitle(callBean.getTitle());
 		call.setDeadline(callBean.getDeadline());
 		call.setPublicationDeadline(callBean.getPublicationDeadline());
+		call.setRealizationDeadline(callBean.getRealizationDeadline());
 		call.setDescription(callBean.getDescription());
 
 		call = callPersistence.update(call);
@@ -125,6 +123,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 			call.setDescription(callBean.getDescription());
 			call.setDeadline(callBean.getDeadline());
 			call.setPublicationDeadline(callBean.getPublicationDeadline());
+			call.setRealizationDeadline(callBean.getRealizationDeadline());
 
 			callPersistence.update(call);
 

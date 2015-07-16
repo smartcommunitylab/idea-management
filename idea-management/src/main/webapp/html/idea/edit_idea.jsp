@@ -79,9 +79,10 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<aui:field-wrapper label="lbl_longDesc">
     <aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
 		<liferay-ui:input-editor name="longDesc" 
-			toolbarSet="liferay-article" initMethod="initEditor2" width="200" />
+			toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="200" />
 		<script type="text/javascript">
         function <portlet:namespace />initEditor2() { return document.getElementById('<%=renderResponse.getNamespace()%>ldesc').value; }
+        function <portlet:namespace />onChange2() { document.getElementById('<portlet:namespace />ldesc').value = window['<portlet:namespace />longDesc'].getHTML(); }
     </script>
     
 	</aui:field-wrapper>
@@ -96,15 +97,10 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		classPK="<%=ideaId%>">
 	</liferay-ui:asset-tags-selector>
 
-<%-- 	<aui:fieldset label=""> --%>
-<%-- 		<liferay-ui:input-asset-links className="<%=Idea.class.getName()%>" --%>
-<%-- 			classPK="<%=ideaId%>" /> --%>
-<%-- 	</aui:fieldset> --%>
-
   <aui:fieldset label="">
   <%
   request.setAttribute("liferay-ui:input-asset-links:className",Idea.class.getName());
-  request.setAttribute("liferay-ui:input-asset-links:assetEntryId",String.valueOf(assetEntry.getEntryId()));
+  request.setAttribute("liferay-ui:input-asset-links:assetEntryId",String.valueOf(assetEntry == null ? 0 : assetEntry.getEntryId()));
   %>
   <%@ include file="/html/common/asset-links.jsp" %>
   </aui:fieldset>
