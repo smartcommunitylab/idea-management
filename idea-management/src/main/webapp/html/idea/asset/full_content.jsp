@@ -206,9 +206,15 @@
         <%} %>
   </liferay-ui:panel>
   <liferay-ui:panel state="closed" collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-proposed<%=Constants.IDEA_STATE_PROPOSED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_proposed"/></div></div>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_accepted"/></div></div>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-proposed<%=Constants.IDEA_STATE_PROPOSED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_proposed"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-waiting<%=Constants.IDEA_STATE_WAIT_FOR_EVAL.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_waiting"/></div></div>
+    <% if (Constants.IDEA_STATE_REJECTED.equals(state)) {%>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-rejectedactive'></a></div><div><liferay-ui:message key="lbl_state_rejected"/></div></div>
+    <% } else {%>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_accepted"/></div></div>
+    <% } %>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-signed<%=Constants.IDEA_STATE_SIGNED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_signed"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
   </liferay-ui:panel>
 </liferay-ui:panel-container>

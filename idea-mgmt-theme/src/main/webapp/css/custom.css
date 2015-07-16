@@ -584,12 +584,12 @@ header#banner {
 }
 
 .state-proposed {
-  background-image: url(../images/Proposta_disabled.png) !important;
+  background-image: url(../images/Discussione_disabled.png) !important;
   background-size: 100% 100%;
 }
 
 .state-proposedactive {
-  background-image: url(../images/Proposta_enabled.png) !important;
+  background-image: url(../images/Discussione_enabled.png) !important;
   background-size: 100% 100%;
 }
 
@@ -600,6 +600,15 @@ header#banner {
 
 .state-acceptedactive {
   background-image: url(../images/accettata_enabled.png) !important;
+  background-size: 100% 100%;
+}
+.state-rejected {
+  background-image: url(../images/rifiutata_disabled.png) !important;
+  background-size: 100% 100%;
+}
+
+.state-rejectedactive {
+  background-image: url(../images/rifiutata_enabled.png) !important;
   background-size: 100% 100%;
 }
 
@@ -620,6 +629,24 @@ header#banner {
 
 .state-completeactive {
   background-image: url(../images/Eseguita_enabled.png) !important;
+  background-size: 100% 100%;
+}
+
+.state-signed {
+  background-image: url(../images/Firmata_disabled.png) !important;
+  background-size: 100% 100%;
+}
+.state-signedactive {
+  background-image: url(../images/Firmata_enabled.png) !important;
+  background-size: 100% 100%;
+}
+.state-waiting {
+  background-image: url(../images/Proposta_disabled.png) !important;
+  background-size: 100% 100%;
+}
+
+.state-waitingactive {
+  background-image: url(../images/Proposta_enabled.png) !important;
   background-size: 100% 100%;
 }
 

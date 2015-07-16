@@ -657,6 +657,16 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     }
 
     @Override
+    public boolean discussionExpired() {
+        return _idea.discussionExpired();
+    }
+
+    @Override
+    public java.lang.String realState() {
+        return _idea.realState();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

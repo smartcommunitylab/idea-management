@@ -595,6 +595,24 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     }
 
     @Override
+    public boolean discussionExpired() {
+        try {
+            String methodName = "discussionExpired";
+
+            Class<?>[] parameterTypes = new Class<?>[] {  };
+
+            Object[] parameterValues = new Object[] {  };
+
+            Boolean returnObj = (Boolean) invokeOnRemoteModel(methodName,
+                    parameterTypes, parameterValues);
+
+            return returnObj;
+        } catch (Exception e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
+
+    @Override
     public java.util.Date discussionDeadline() {
         try {
             String methodName = "discussionDeadline";
@@ -604,6 +622,24 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
             Object[] parameterValues = new Object[] {  };
 
             java.util.Date returnObj = (java.util.Date) invokeOnRemoteModel(methodName,
+                    parameterTypes, parameterValues);
+
+            return returnObj;
+        } catch (Exception e) {
+            throw new UnsupportedOperationException(e);
+        }
+    }
+
+    @Override
+    public java.lang.String realState() {
+        try {
+            String methodName = "realState";
+
+            Class<?>[] parameterTypes = new Class<?>[] {  };
+
+            Object[] parameterValues = new Object[] {  };
+
+            java.lang.String returnObj = (java.lang.String) invokeOnRemoteModel(methodName,
                     parameterTypes, parameterValues);
 
             return returnObj;
