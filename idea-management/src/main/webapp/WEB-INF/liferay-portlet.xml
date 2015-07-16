@@ -41,6 +41,15 @@
 		<css-class-wrapper>call-management-portlet</css-class-wrapper>
     <add-default-resource>true</add-default-resource> 
 	</portlet>
+	<portlet>
+		<portlet-name>evento-management</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>evento-management-portlet</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Site Administrator</role-link>
