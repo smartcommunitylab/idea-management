@@ -24,7 +24,7 @@ public class IdeaImpl extends IdeaBaseImpl {
     public Date discussionDeadline() {
     	Calendar c = Calendar.getInstance();
     	c.setTimeInMillis(getCreateDate().getTime());
-    	c.add(Calendar.DATE, 30);
+    	c.add(Calendar.DATE, getDiscussionLimit());
     	return c.getTime();
     }
 }

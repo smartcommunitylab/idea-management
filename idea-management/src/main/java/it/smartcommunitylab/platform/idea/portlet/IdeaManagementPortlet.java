@@ -183,12 +183,20 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
+		String deadlineConstraints = ParamUtil.getString(req, "deadlineConstraints");
+		int discussionLimit = ParamUtil.getInteger(req, "discussionLimit");
 		IdeaBean ideaBean = new IdeaBean();
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
 		ideaBean.setCategoryId(categoryId);
 		ideaBean.setCallId(callId);
+		if (discussionLimit > 0) {
+			ideaBean.setDiscussionLimit(discussionLimit);
+		} else {
+			ideaBean.setDiscussionLimit(Constants.DEFAULT_DISCUSSION_LIMIT);
+		}
+		ideaBean.setDeadlineConstraints(deadlineConstraints);
 		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(),
 				ideaBean, serviceContext);
 		req.setAttribute("idea", idea);
@@ -219,11 +227,21 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
+		String deadlineConstraints = ParamUtil.getString(req, "deadlineConstraints");
+		int discussionLimit = ParamUtil.getInteger(req, "discussionLimit");
+
 		IdeaBean ideaBean = new IdeaBean();
 		ideaBean.setId(id);
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
+		if (discussionLimit > 0) {
+			ideaBean.setDiscussionLimit(discussionLimit);
+		} else {
+			ideaBean.setDiscussionLimit(Constants.DEFAULT_DISCUSSION_LIMIT);
+		}
+		ideaBean.setDeadlineConstraints(deadlineConstraints);
+		
 		IdeaLocalServiceUtil.updateIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 	}

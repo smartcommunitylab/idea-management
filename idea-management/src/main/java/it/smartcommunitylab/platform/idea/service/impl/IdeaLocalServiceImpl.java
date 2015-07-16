@@ -104,6 +104,10 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setShortDesc(ideaBean.getShortDesc());
 		idea.setLongDesc(ideaBean.getLongDesc());
 		idea.setCallId(ideaBean.getCallId());
+		
+		idea.setState(Constants.IDEA_STATE_PROPOSED);
+		idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
+		idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
 
 		ideaPersistence.update(idea);
 
@@ -142,6 +146,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			idea.setLongDesc(ideaBean.getLongDesc());
 			idea.setShortDesc(ideaBean.getShortDesc());
 
+			idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
+			idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
+			
 			ideaPersistence.update(idea);
 
 			resourceLocalService.updateResources(serviceContext.getCompanyId(),
@@ -200,6 +207,13 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	}
 
+	public void changeIdeaState(long ideaId, String state, String stateJudgement) throws SystemException, PortalException {
+		Idea idea = ideaPersistence.findByPrimaryKey(ideaId);
+		idea.setState(state);
+		idea.setStateJudgement(stateJudgement);
+		ideaPersistence.update(idea);
+	}
+	
 	public List<Idea> getIdeasByCat(long catId, long[] tagIds)
 			throws SystemException {
 		return IdeaFinderUtil.findByCatAndTags(catId, tagIds);

@@ -12,6 +12,10 @@ public class IdeaBean {
 	private String creatorUsername;
 	private long userGroupId;
 	private long callId;
+	private String state;
+	private String stateJudgement;
+	private String deadlineConstraints;
+	private int discussionLimit;
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -106,6 +110,62 @@ public class IdeaBean {
 
 	public void setCallId(long callId) {
 		this.callId = callId;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the stateJudgement
+	 */
+	public String getStateJudgement() {
+		return stateJudgement;
+	}
+
+	/**
+	 * @param stateJudgement the stateJudgement to set
+	 */
+	public void setStateJudgement(String stateJudgement) {
+		this.stateJudgement = stateJudgement;
+	}
+
+	/**
+	 * @return the deadlineConstraints
+	 */
+	public String getDeadlineConstraints() {
+		return deadlineConstraints;
+	}
+
+	/**
+	 * @param deadlineConstraints the deadlineConstraints to set
+	 */
+	public void setDeadlineConstraints(String deadlineConstraints) {
+		this.deadlineConstraints = deadlineConstraints;
+	}
+
+	/**
+	 * @return the discussionLimit
+	 */
+	public int getDiscussionLimit() {
+		return discussionLimit;
+	}
+
+	/**
+	 * @param discussionLimit the discussionLimit to set
+	 */
+	public void setDiscussionLimit(int discussionLimit) {
+		this.discussionLimit = discussionLimit;
 	}
 
 }

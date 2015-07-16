@@ -105,10 +105,12 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes82;
     private String _methodName83;
     private String[] _methodParameterTypes83;
-    private String _methodName85;
-    private String[] _methodParameterTypes85;
+    private String _methodName84;
+    private String[] _methodParameterTypes84;
     private String _methodName86;
     private String[] _methodParameterTypes86;
+    private String _methodName87;
+    private String[] _methodParameterTypes87;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -238,107 +240,113 @@ public class IdeaLocalServiceClpInvoker {
                 "com.liferay.portal.service.ServiceContext"
             };
 
-        _methodName61 = "getIdeasByCat";
+        _methodName61 = "changeIdeaState";
 
-        _methodParameterTypes61 = new String[] { "long", "long[][]" };
+        _methodParameterTypes61 = new String[] {
+                "long", "java.lang.String", "java.lang.String"
+            };
 
         _methodName62 = "getIdeasByCat";
 
-        _methodParameterTypes62 = new String[] { "long", "long[][]", "int", "int" };
+        _methodParameterTypes62 = new String[] { "long", "long[][]" };
 
         _methodName63 = "getIdeasByCat";
 
-        _methodParameterTypes63 = new String[] { "long" };
+        _methodParameterTypes63 = new String[] { "long", "long[][]", "int", "int" };
 
         _methodName64 = "getIdeasByCat";
 
-        _methodParameterTypes64 = new String[] { "long", "int", "int" };
+        _methodParameterTypes64 = new String[] { "long" };
 
-        _methodName65 = "getIdeasByRating";
+        _methodName65 = "getIdeasByCat";
 
-        _methodParameterTypes65 = new String[] {  };
+        _methodParameterTypes65 = new String[] { "long", "int", "int" };
 
         _methodName66 = "getIdeasByRating";
 
-        _methodParameterTypes66 = new String[] { "int", "int" };
+        _methodParameterTypes66 = new String[] {  };
 
         _methodName67 = "getIdeasByRating";
 
-        _methodParameterTypes67 = new String[] { "long" };
+        _methodParameterTypes67 = new String[] { "int", "int" };
 
         _methodName68 = "getIdeasByRating";
 
-        _methodParameterTypes68 = new String[] { "long", "int", "int" };
+        _methodParameterTypes68 = new String[] { "long" };
 
         _methodName69 = "getIdeasByRating";
 
-        _methodParameterTypes69 = new String[] { "long", "long[][]" };
+        _methodParameterTypes69 = new String[] { "long", "int", "int" };
 
         _methodName70 = "getIdeasByRating";
 
-        _methodParameterTypes70 = new String[] { "long", "long[][]", "int", "int" };
+        _methodParameterTypes70 = new String[] { "long", "long[][]" };
 
-        _methodName71 = "getIdeasByCall";
+        _methodName71 = "getIdeasByRating";
 
-        _methodParameterTypes71 = new String[] { "long", "int", "int" };
+        _methodParameterTypes71 = new String[] { "long", "long[][]", "int", "int" };
 
         _methodName72 = "getIdeasByCall";
 
-        _methodParameterTypes72 = new String[] { "long", "long[][]", "int", "int" };
+        _methodParameterTypes72 = new String[] { "long", "int", "int" };
 
-        _methodName73 = "getIdeasByCallAndRating";
+        _methodName73 = "getIdeasByCall";
 
-        _methodParameterTypes73 = new String[] { "long" };
+        _methodParameterTypes73 = new String[] { "long", "long[][]", "int", "int" };
 
         _methodName74 = "getIdeasByCallAndRating";
 
-        _methodParameterTypes74 = new String[] { "long", "int", "int" };
+        _methodParameterTypes74 = new String[] { "long" };
 
         _methodName75 = "getIdeasByCallAndRating";
 
-        _methodParameterTypes75 = new String[] { "long", "long[][]", "int", "int" };
+        _methodParameterTypes75 = new String[] { "long", "int", "int" };
 
-        _methodName76 = "getIdeas";
+        _methodName76 = "getIdeasByCallAndRating";
 
-        _methodParameterTypes76 = new String[] {  };
+        _methodParameterTypes76 = new String[] { "long", "long[][]", "int", "int" };
 
         _methodName77 = "getIdeas";
 
-        _methodParameterTypes77 = new String[] { "int", "int" };
+        _methodParameterTypes77 = new String[] {  };
 
         _methodName78 = "getIdeas";
 
-        _methodParameterTypes78 = new String[] { "long" };
+        _methodParameterTypes78 = new String[] { "int", "int" };
 
         _methodName79 = "getIdeas";
 
-        _methodParameterTypes79 = new String[] { "long", "int", "int" };
+        _methodParameterTypes79 = new String[] { "long" };
 
-        _methodName80 = "toggleUserParticipation";
+        _methodName80 = "getIdeas";
 
-        _methodParameterTypes80 = new String[] { "long", "long" };
+        _methodParameterTypes80 = new String[] { "long", "int", "int" };
 
-        _methodName81 = "getCategoryColors";
+        _methodName81 = "toggleUserParticipation";
 
-        _methodParameterTypes81 = new String[] { "long" };
+        _methodParameterTypes81 = new String[] { "long", "long" };
 
-        _methodName82 = "getCallTags";
+        _methodName82 = "getCategoryColors";
 
         _methodParameterTypes82 = new String[] { "long" };
 
-        _methodName83 = "getCategoryTags";
+        _methodName83 = "getCallTags";
 
-        _methodParameterTypes83 = new String[] { "long[][]", "long" };
+        _methodParameterTypes83 = new String[] { "long" };
 
-        _methodName85 = "searchByCallAndCategoryAndTags";
+        _methodName84 = "getCategoryTags";
 
-        _methodParameterTypes85 = new String[] {
+        _methodParameterTypes84 = new String[] { "long[][]", "long" };
+
+        _methodName86 = "searchByCallAndCategoryAndTags";
+
+        _methodParameterTypes86 = new String[] {
                 "long", "long", "long[][]", "int", "int"
             };
 
-        _methodName86 = "searchPopularByCallAndCategoryAndTags";
+        _methodName87 = "searchPopularByCallAndCategoryAndTags";
 
-        _methodParameterTypes86 = new String[] {
+        _methodParameterTypes87 = new String[] {
                 "long", "long", "long[][]", "int", "int"
             };
     }
@@ -495,155 +503,163 @@ public class IdeaLocalServiceClpInvoker {
 
         if (_methodName61.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue(),
-                (long[]) arguments[1]);
+            IdeaLocalServiceUtil.changeIdeaState(((Long) arguments[0]).longValue(),
+                (java.lang.String) arguments[1], (java.lang.String) arguments[2]);
+
+            return null;
         }
 
         if (_methodName62.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue(),
-                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
-                ((Integer) arguments[3]).intValue());
+                (long[]) arguments[1]);
         }
 
         if (_methodName63.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue(),
+                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
+                ((Integer) arguments[3]).intValue());
         }
 
         if (_methodName64.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName65.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeasByCat(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
-        if (_methodName65.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByRating();
-        }
-
         if (_methodName66.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByRating(((Integer) arguments[0]).intValue(),
-                ((Integer) arguments[1]).intValue());
+            return IdeaLocalServiceUtil.getIdeasByRating();
         }
 
         if (_methodName67.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeasByRating(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName68.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue(),
-                ((Integer) arguments[1]).intValue(),
-                ((Integer) arguments[2]).intValue());
+            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue());
         }
 
         if (_methodName69.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue(),
-                (long[]) arguments[1]);
+                ((Integer) arguments[1]).intValue(),
+                ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName70.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue(),
-                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
-                ((Integer) arguments[3]).intValue());
+                (long[]) arguments[1]);
         }
 
         if (_methodName71.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByCall(((Long) arguments[0]).longValue(),
-                ((Integer) arguments[1]).intValue(),
-                ((Integer) arguments[2]).intValue());
+            return IdeaLocalServiceUtil.getIdeasByRating(((Long) arguments[0]).longValue(),
+                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
+                ((Integer) arguments[3]).intValue());
         }
 
         if (_methodName72.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeasByCall(((Long) arguments[0]).longValue(),
-                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
-                ((Integer) arguments[3]).intValue());
+                ((Integer) arguments[1]).intValue(),
+                ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName73.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByCallAndRating(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeasByCall(((Long) arguments[0]).longValue(),
+                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
+                ((Integer) arguments[3]).intValue());
         }
 
         if (_methodName74.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeasByCallAndRating(((Long) arguments[0]).longValue(),
-                ((Integer) arguments[1]).intValue(),
-                ((Integer) arguments[2]).intValue());
+            return IdeaLocalServiceUtil.getIdeasByCallAndRating(((Long) arguments[0]).longValue());
         }
 
         if (_methodName75.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeasByCallAndRating(((Long) arguments[0]).longValue(),
-                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
-                ((Integer) arguments[3]).intValue());
+                ((Integer) arguments[1]).intValue(),
+                ((Integer) arguments[2]).intValue());
         }
 
         if (_methodName76.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas();
+            return IdeaLocalServiceUtil.getIdeasByCallAndRating(((Long) arguments[0]).longValue(),
+                (long[]) arguments[1], ((Integer) arguments[2]).intValue(),
+                ((Integer) arguments[3]).intValue());
         }
 
         if (_methodName77.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Integer) arguments[0]).intValue(),
-                ((Integer) arguments[1]).intValue());
+            return IdeaLocalServiceUtil.getIdeas();
         }
 
         if (_methodName78.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
-            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getIdeas(((Integer) arguments[0]).intValue(),
+                ((Integer) arguments[1]).intValue());
         }
 
         if (_methodName79.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
+            return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName80.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
             return IdeaLocalServiceUtil.getIdeas(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
         }
 
-        if (_methodName80.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
+        if (_methodName81.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
             IdeaLocalServiceUtil.toggleUserParticipation(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue());
 
             return null;
         }
 
-        if (_methodName81.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
-            return IdeaLocalServiceUtil.getCategoryColors(((Long) arguments[0]).longValue());
-        }
-
         if (_methodName82.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
-            return IdeaLocalServiceUtil.getCallTags(((Long) arguments[0]).longValue());
+            return IdeaLocalServiceUtil.getCategoryColors(((Long) arguments[0]).longValue());
         }
 
         if (_methodName83.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
+            return IdeaLocalServiceUtil.getCallTags(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName84.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes84, parameterTypes)) {
             return IdeaLocalServiceUtil.getCategoryTags((long[]) arguments[0],
                 ((Long) arguments[1]).longValue());
         }
 
-        if (_methodName85.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes85, parameterTypes)) {
+        if (_methodName86.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
             return IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(), (long[]) arguments[2],
                 ((Integer) arguments[3]).intValue(),
                 ((Integer) arguments[4]).intValue());
         }
 
-        if (_methodName86.equals(name) &&
-                Arrays.deepEquals(_methodParameterTypes86, parameterTypes)) {
+        if (_methodName87.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes87, parameterTypes)) {
             return IdeaLocalServiceUtil.searchPopularByCallAndCategoryAndTags(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(), (long[]) arguments[2],
                 ((Integer) arguments[3]).intValue(),

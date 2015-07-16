@@ -91,6 +91,18 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>"></aui:input>
 	<aui:input name="callId" type="hidden" value="<%= callId %>"></aui:input>
 
+  <aui:field-wrapper  label="lbl_discussionLimit">
+    <aui:select name="discussionLimit" label="">
+    <% for (int i : Constants.DISCUSSION_LIMITS) {%>    
+    <aui:option value="<%=i %>" label="<%= i %>"/>  
+    <% } %>
+    </aui:select>
+  </aui:field-wrapper>
+
+  <aui:field-wrapper>
+    <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints") %>' name="deadlineConstraints" type="textarea" label=""></aui:input>  
+  </aui:field-wrapper>
+
 	<liferay-ui:asset-tags-error />
 
 	<liferay-ui:asset-tags-selector  curTags='<%=tagNames %>' className="<%=Idea.class.getName()%>"

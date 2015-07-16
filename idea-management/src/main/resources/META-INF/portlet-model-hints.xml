@@ -35,5 +35,8 @@
 		<field name="userGroupId" type="long" />
 		<field name="callId" type="long" />
 		<field name="state" type="String" />
+		<field name="stateJudgement" type="String" />
+		<field name="deadlineConstraints" type="String" />
+		<field name="discussionLimit" type="int" />
 	</model>
 </model-hints>

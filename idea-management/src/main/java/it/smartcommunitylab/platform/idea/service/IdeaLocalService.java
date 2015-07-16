@@ -311,6 +311,11 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
 
+    public void changeIdeaState(long ideaId, java.lang.String state,
+        java.lang.String stateJudgement)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCat(
         long catId, long[] tagIds)

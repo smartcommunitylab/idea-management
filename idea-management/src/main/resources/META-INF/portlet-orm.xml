@@ -64,6 +64,9 @@
 			<basic name="state">
 				<column name="STATE_" />
 			</basic>
+			<basic name="stateJudgement" />
+			<basic name="deadlineConstraints" />
+			<basic name="discussionLimit" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

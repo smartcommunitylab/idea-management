@@ -40,5 +40,8 @@
 		<property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="callId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" column="state_" />
+		<property name="stateJudgement" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="deadlineConstraints" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="discussionLimit" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

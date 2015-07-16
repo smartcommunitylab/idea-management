@@ -28,5 +28,8 @@ create table IM_Idea (
 	shortDesc VARCHAR(75) null,
 	userGroupId LONG,
 	callId LONG,
-	state_ VARCHAR(75) null
+	state_ VARCHAR(75) null,
+	stateJudgement VARCHAR(75) null,
+	deadlineConstraints VARCHAR(75) null,
+	discussionLimit INTEGER
 );
