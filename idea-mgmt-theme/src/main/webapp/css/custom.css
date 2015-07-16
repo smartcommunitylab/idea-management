@@ -544,6 +544,25 @@ header#banner {
   display: none;
 }
 
+.discussion-container {
+	margin-top: 20px !important;
+	border-top-color: #DDD;
+	border-top-width: 1px;
+  border-top-style: solid;
+}
+
+.discussion-container-disabled .add-comment, .discussion-container-disabled .lfr-discussion-actions {
+	display: none !important;
+}
+
+.discussion-container .taglib-ratings {
+	min-width: 150px;
+	text-align: left;
+}
+.discussion-container .taglib-ratings .rating-content {
+	text-align: left;
+}
+
 .thumbrating-content .rating-label {
   font-size: 10px !important;
 }

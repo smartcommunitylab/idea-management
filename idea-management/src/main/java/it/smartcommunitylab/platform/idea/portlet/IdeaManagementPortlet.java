@@ -160,8 +160,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 	}
 
 	public void addComment(ActionRequest req, ActionResponse res) {
+		Long ideaId = ParamUtil.getLong(req, "classPK");
 		try {
-			invokeTaglibDiscussion(req, res);
+			Idea idea = IdeaLocalServiceUtil.fetchIdea(ideaId);
+			if (Utils.discussionEnabled(idea, req)) {
+				invokeTaglibDiscussion(req, res);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
