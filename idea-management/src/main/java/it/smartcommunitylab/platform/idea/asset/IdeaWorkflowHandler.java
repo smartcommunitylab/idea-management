@@ -41,8 +41,6 @@ public class IdeaWorkflowHandler extends BaseWorkflowHandler {
 
 		ServiceContext serviceContext = (ServiceContext) workflowContext
 				.get("serviceContext");
-		System.out.println(IdeaWorkflowHandler.CLASS_NAME + "  "
-				+ workflowContext.get("BLACK_ROLE_ID"));
 		return IdeaLocalServiceUtil.updateStatus(userId, entryId, status,
 				serviceContext);
 	}
