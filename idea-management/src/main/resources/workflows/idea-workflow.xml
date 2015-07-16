@@ -25,17 +25,17 @@
 				import com.liferay.portal.service.UserLocalServiceUtil; 
 				import com.liferay.portal.model.Role; 
 				import java.util.List; 
-				
+          	
 				String userId = (String) workflowContext.get(WorkflowConstants.CONTEXT_USER_ID); 
 				User user = UserLocalServiceUtil.getUser(Long.valueOf(userId)); 
-				returnValue = "gig robot"; 
+				returnValue = "published"; 
 				
 				List<Role> roles = user.getRoles(); 
 				for (Role r : roles) { 
 					println user.getFullName() + " @@" + r.getName(); 
 					if (r.getName().equalsIgnoreCase("blacklisted")) { 
 						println "Setting approve for user : " + user.getFirstName(); 
-						returnValue = "stage";
+						returnValue = "staged";
 						println "blacklisted user content in review"; 
 						break; 
 					} 
@@ -46,12 +46,12 @@
 		<script-language>groovy</script-language>
 		<transitions>
 			<transition>
-				<name>gig robot</name>
-				<target>gig robot</target>
+				<name>published</name>
+				<target>published</target>
 			</transition>
 			<transition>
-				<name>stage</name>
-				<target>stage</target>
+				<name>staged</name>
+				<target>staged</target>
 				<default>false</default>
 			</transition>
 		</transitions>
@@ -59,10 +59,10 @@
 
 	<!-- regular flow -->
 	<state>
-		<name>gig robot</name>
+		<name>published</name>
 		<actions>
 			<action>
-				<name>changeStatus</name>
+				<name>updateStatus</name>
 				<script>
 				<![CDATA[
 				import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
@@ -84,10 +84,10 @@
 
 	<!-- blacklisted flow -->
 	<state>
-		<name>stage</name>
+		<name>staged</name>
 		<actions>
 			<action>
-				<name>staged</name>
+				<name>updateStatus</name>
 				<script>
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
@@ -120,10 +120,10 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
-				<template>
+					<template>
 				  <![CDATA[
 				   <#switch transitionName>
-				   <#case "duplicate">
+				   <#case "duplicated">
 				   Sorry you have copied someone !!!
 				   comment: ${taskComments}
 				   <#break>
@@ -131,7 +131,7 @@
 				   YEAH Your ${entryType} has been accepted
 				   comment: ${taskComments}
 				   <#break>
-				   <#case "reject">
+				   <#case "abusive">
 				   Your ${entryType} has been rejected
 				   comment: ${taskComments}
 				   <#break>
@@ -158,8 +158,8 @@
 		</assignments>
 		<transitions>
 			<transition>
-				<name>duplicate</name>
-				<target>duplicate</target>
+				<name>duplicated</name>
+				<target>duplicated</target>
 				<default>false</default>
 			</transition>
 			<transition>
@@ -167,8 +167,8 @@
 				<target>accepted</target>
 			</transition>
 			<transition>
-				<name>reject</name>
-				<target>reject</target>
+				<name>abusive</name>
+				<target>abusive</target>
 				<default>false</default>
 			</transition>
 		</transitions>
@@ -178,16 +178,8 @@
 		<name>staged-evaluation</name>
 		<actions>
 			<notification>
-				<name>Moderator notification</name>
-				<template>User ${userName} has submitted a new ${entityType}</template>
-				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<execution-type>onAssignment</execution-type>
-			</notification>
-			<notification>
-				<name>user notification</name>
-				<template>your content have to be evaluate</template>
+				<name>User notification</name>
+				<template>Your idea need approvation by moderator. You will inform about your idea review</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -195,6 +187,43 @@
 					<user></user>
 				</recipients>
 				<execution-type>onEntry</execution-type>
+			</notification>
+			<notification>
+				<name>Moderator notification</name>
+				<template>User ${userName} has submitted a new ${entryType}</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>Review Completion Notification</name>
+				<template>
+				  <![CDATA[
+				   <#switch transitionName>
+				   <#case "duplicated">
+				   Sorry you have copied someone !!!
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "accepted">
+				   YEAH Your ${entryType} has been accepted
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "abusive">
+				   Your ${entryType} has been rejected
+				   comment: ${taskComments}
+				   <#break>
+				   <#default>
+					Default template
+				</#switch>
+          ]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<recipients>
+					<user />
+				</recipients>
+				<execution-type>onExit</execution-type>
 			</notification>
 		</actions>
 		<assignments>
@@ -207,30 +236,31 @@
 		</assignments>
 		<transitions>
 			<transition>
-				<name>duplicate</name>
-				<target>duplicate</target>
+				<name>duplicated</name>
+				<target>duplicated</target>
+				<default>false</default>
 			</transition>
 			<transition>
 				<name>accepted</name>
 				<target>accepted</target>
 			</transition>
 			<transition>
-				<name>reject</name>
-				<target>reject</target>
+				<name>abusive</name>
+				<target>abusive</target>
+				<default>false</default>
 			</transition>
 		</transitions>
 	</task>
 
 	<state>
-		<name>duplicate</name>
+		<name>duplicated</name>
 		<actions>
 			<action>
-				<name>reject</name>
+				<name>setStatus</name>
 				<script>
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
-          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
-          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext); 
+          WorkflowStatusManagerUtil.updateStatus(100, workflowContext); 
           ]]>
         </script>
 				<script-language>groovy</script-language>
@@ -242,7 +272,7 @@
 		<name>accepted</name>
 		<actions>
 			<action>
-				<name>staged</name>
+				<name>updateStatus</name>
 				<script>
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
@@ -256,16 +286,18 @@
 		</actions>
 	</state>
 	<state>
-		<name>reject</name>
+		<name>abusive</name>
 		<actions>
 			<action>
-				<name>staged</name>
+				<name>updateStatus</name>
 				<script>
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
-          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
-          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext); 
+          
+          WorkflowStatusManagerUtil.updateStatus(101, workflowContext); 
           ]]>
+          
+          
         </script>
 				<script-language>groovy</script-language>
 				<execution-type>onEntry</execution-type>

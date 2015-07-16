@@ -111,6 +111,8 @@ public class IdeaLocalServiceClpInvoker {
     private String[] _methodParameterTypes86;
     private String _methodName87;
     private String[] _methodParameterTypes87;
+    private String _methodName88;
+    private String[] _methodParameterTypes88;
 
     public IdeaLocalServiceClpInvoker() {
         _methodName0 = "addIdea";
@@ -350,6 +352,10 @@ public class IdeaLocalServiceClpInvoker {
                 "long", "long", "int",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName88 = "blacklistUser";
+
+        _methodParameterTypes88 = new String[] { "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -665,6 +671,13 @@ public class IdeaLocalServiceClpInvoker {
                 ((Long) arguments[1]).longValue(),
                 ((Integer) arguments[2]).intValue(),
                 (com.liferay.portal.service.ServiceContext) arguments[3]);
+        }
+
+        if (_methodName88.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
+            IdeaLocalServiceUtil.blacklistUser(((Long) arguments[0]).longValue());
+
+            return null;
         }
 
         throw new UnsupportedOperationException();

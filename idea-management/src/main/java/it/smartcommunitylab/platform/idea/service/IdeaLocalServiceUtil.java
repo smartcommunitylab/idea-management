@@ -500,6 +500,10 @@ public class IdeaLocalServiceUtil {
         return getService().updateStatus(userId, ideaId, status, serviceContext);
     }
 
+    public static void blacklistUser(long userId) {
+        getService().blacklistUser(userId);
+    }
+
     public static void clearService() {
         _service = null;
     }

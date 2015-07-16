@@ -537,6 +537,11 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
             serviceContext);
     }
 
+    @Override
+    public void blacklistUser(long userId) {
+        _ideaLocalService.blacklistUser(userId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

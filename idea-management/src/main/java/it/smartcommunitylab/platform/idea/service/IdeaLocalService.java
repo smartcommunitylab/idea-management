@@ -432,4 +432,6 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
+
+    public void blacklistUser(long userId);
 }

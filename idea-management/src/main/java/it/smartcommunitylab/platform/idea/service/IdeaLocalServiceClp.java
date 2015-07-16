@@ -108,6 +108,8 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     private String[] _methodParameterTypes49;
     private String _methodName50;
     private String[] _methodParameterTypes50;
+    private String _methodName51;
+    private String[] _methodParameterTypes51;
 
     public IdeaLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -345,6 +347,10 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
                 "long", "long", "int",
                 "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName51 = "blacklistUser";
+
+        _methodParameterTypes51 = new String[] { "long" };
     }
 
     @Override
@@ -1850,5 +1856,22 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         }
 
         return (it.smartcommunitylab.platform.idea.model.Idea) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void blacklistUser(long userId) {
+        try {
+            _invokableLocalService.invokeMethod(_methodName51,
+                _methodParameterTypes51, new Object[] { userId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

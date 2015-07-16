@@ -1,5 +1,10 @@
 package it.smartcommunitylab.platform.idea.portlet;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
 public class Constants {
 
 	public static final String IDEA_PORTLET_ID = "ideamanagement_WAR_ideamanagement";
@@ -12,7 +17,7 @@ public class Constants {
 
 	public static final String PREF_VIEWTYPE_SIMPLE = "simple";
 	public static final String PREF_VIEWTYPE_COMPLEX = "complex";
-	
+
 	public static final String PREF_LISTTYPE_POPULAR = "popular";
 	public static final String PREF_LISTTYPE_RECENT = "recent";
 	public static final String PREF_LISTTYPE_RELATED = "related";
@@ -21,10 +26,25 @@ public class Constants {
 	public static final String PREF_CALLLISTTYPE_OPEN = "open";
 	public static final String PREF_CALLLISTTYPE_INDISCUSSION = "discussion";
 	public static final String PREF_CALLLISTTYPE_CLOSED = "closed";
-	
+
 	public static final String IDEA_STATE_PROPOSED = "proposed";
 	public static final String IDEA_STATE_ACCEPTED = "accepted";
 	public static final String IDEA_STATE_EXEC = "exec";
 	public static final String IDEA_STATE_COMPLETE = "complete";
 	public static final String IDEA_STATE_REJECTED = "rejected";
+	public static final String IDEA_STATE_DUPLICATED = "duplicated";
+	public static final String IDEA_STATE_ABUSIVE = "abusive";
+
+	public static final String BLACKLIST_ROLE_NAME = "Blacklisted";
+
+	public static Map<Integer, String> STATE_MAPPING = new HashMap<Integer, String>();
+
+	static {
+		STATE_MAPPING.put(100, IDEA_STATE_DUPLICATED);
+		STATE_MAPPING.put(101, IDEA_STATE_ABUSIVE);
+		STATE_MAPPING.put(WorkflowConstants.STATUS_APPROVED,
+				IDEA_STATE_ACCEPTED);
+		STATE_MAPPING.put(WorkflowConstants.STATUS_PENDING, "PUBLISHED");
+		STATE_MAPPING.put(WorkflowConstants.STATUS_DRAFT, IDEA_STATE_PROPOSED);
+	}
 }

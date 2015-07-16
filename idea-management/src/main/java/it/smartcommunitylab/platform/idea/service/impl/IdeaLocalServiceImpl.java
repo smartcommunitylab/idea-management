@@ -7,6 +7,7 @@ import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.portlet.Constants;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
+import it.smartcommunitylab.platform.idea.workflow.WorkflowUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -27,8 +28,10 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -133,6 +136,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class);
 
 		indexer.reindex(idea);
+
+		serviceContext = WorkflowUtil.addWorkflowVars(serviceContext);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(idea.getCompanyId(),
 				idea.getGroupId(), idea.getUserId(), Idea.class.getName(),
@@ -476,13 +481,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		User user = userLocalService.getUser(userId);
 		Idea i = getIdea(ideaId);
 
-		i.setStatus(status);
-		i.setStatusByUserId(userId);
-		i.setStatusByUserName(user.getFullName());
-		// i.setStatusDate(new Date());
-
-		ideaPersistence.update(i);
-
+		// idea visibility
 		if (status == WorkflowConstants.STATUS_PENDING
 				|| status == WorkflowConstants.STATUS_APPROVED) {
 			assetEntryLocalService.updateVisible(Idea.class.getName(), ideaId,
@@ -492,6 +491,37 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					false);
 		}
 
+		// idea status
+		switch (status) {
+		case 100: // duplicated
+			break;
+		case 101: // abusive
+			blacklistUser(userId);
+			break;
+		default:
+			break;
+		}
+
+		i.setState(Constants.STATE_MAPPING.get(status));
+		i.setStatus(status);
+		i.setStatusByUserId(userId);
+		i.setStatusByUserName(user.getFullName());
+		// i.setStatusDate(new Date());
+
+		ideaPersistence.update(i);
+
 		return i;
+	}
+
+	public void blacklistUser(long userId) {
+		Role role = null;
+		try {
+			role = RoleLocalServiceUtil.getRole(
+					PortalUtil.getDefaultCompanyId(),
+					Constants.BLACKLIST_ROLE_NAME);
+			RoleLocalServiceUtil.addUserRole(userId, role);
+		} catch (PortalException | SystemException e) {
+			e.printStackTrace();
+		}
 	}
 }
