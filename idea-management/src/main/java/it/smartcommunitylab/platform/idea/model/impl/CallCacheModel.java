@@ -34,10 +34,11 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
     public long deadline;
     public long publicationDeadline;
     public long realizationDeadline;
+    public long userGroupId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(27);
+        StringBundler sb = new StringBundler(29);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -65,6 +66,8 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
         sb.append(publicationDeadline);
         sb.append(", realizationDeadline=");
         sb.append(realizationDeadline);
+        sb.append(", userGroupId=");
+        sb.append(userGroupId);
         sb.append("}");
 
         return sb.toString();
@@ -133,6 +136,8 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
             callImpl.setRealizationDeadline(new Date(realizationDeadline));
         }
 
+        callImpl.setUserGroupId(userGroupId);
+
         callImpl.resetOriginalValues();
 
         return callImpl;
@@ -153,6 +158,7 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
         deadline = objectInput.readLong();
         publicationDeadline = objectInput.readLong();
         realizationDeadline = objectInput.readLong();
+        userGroupId = objectInput.readLong();
     }
 
     @Override
@@ -193,5 +199,6 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
         objectOutput.writeLong(deadline);
         objectOutput.writeLong(publicationDeadline);
         objectOutput.writeLong(realizationDeadline);
+        objectOutput.writeLong(userGroupId);
     }
 }

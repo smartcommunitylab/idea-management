@@ -95,6 +95,8 @@
 		<column name="deadline" type="Date"></column>
     <column name="publicationDeadline" type="Date"></column>
     <column name="realizationDeadline" type="Date"></column>
+    <column name="userGroupId" type="long"></column>
+
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
 		</order>

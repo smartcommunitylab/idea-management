@@ -11,7 +11,8 @@ create table IM_Call (
 	description TEXT null,
 	deadline DATE null,
 	publicationDeadline DATE null,
-	realizationDeadline DATE null
+	realizationDeadline DATE null,
+	userGroupId LONG
 );
 
 create table IM_Idea (

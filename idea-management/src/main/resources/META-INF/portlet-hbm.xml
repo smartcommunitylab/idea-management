@@ -21,6 +21,7 @@
 		<property name="deadline" type="org.hibernate.type.TimestampType" />
 		<property name="publicationDeadline" type="org.hibernate.type.TimestampType" />
 		<property name="realizationDeadline" type="org.hibernate.type.TimestampType" />
+		<property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="it.smartcommunitylab.platform.idea.model.impl.IdeaImpl" table="IM_Idea">
 		<cache usage="read-write" />

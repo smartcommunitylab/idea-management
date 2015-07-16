@@ -51,6 +51,7 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
         attributes.put("deadline", getDeadline());
         attributes.put("publicationDeadline", getPublicationDeadline());
         attributes.put("realizationDeadline", getRealizationDeadline());
+        attributes.put("userGroupId", getUserGroupId());
 
         return attributes;
     }
@@ -133,6 +134,12 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
 
         if (realizationDeadline != null) {
             setRealizationDeadline(realizationDeadline);
+        }
+
+        Long userGroupId = (Long) attributes.get("userGroupId");
+
+        if (userGroupId != null) {
+            setUserGroupId(userGroupId);
         }
     }
 
@@ -436,6 +443,26 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
     @Override
     public void setRealizationDeadline(java.util.Date realizationDeadline) {
         _call.setRealizationDeadline(realizationDeadline);
+    }
+
+    /**
+    * Returns the user group ID of this call.
+    *
+    * @return the user group ID of this call
+    */
+    @Override
+    public long getUserGroupId() {
+        return _call.getUserGroupId();
+    }
+
+    /**
+    * Sets the user group ID of this call.
+    *
+    * @param userGroupId the user group ID of this call
+    */
+    @Override
+    public void setUserGroupId(long userGroupId) {
+        _call.setUserGroupId(userGroupId);
     }
 
     @Override

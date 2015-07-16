@@ -34,6 +34,7 @@
 			<basic name="realizationDeadline">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="userGroupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

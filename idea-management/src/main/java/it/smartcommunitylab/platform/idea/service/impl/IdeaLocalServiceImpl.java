@@ -86,7 +86,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 		Group group = GroupLocalServiceUtil.addGroup(userId, 0L, null, 0L, 0L,
 				ideaBean.getTitle() + " - " + pkId, null,
-				GroupConstants.TYPE_SITE_OPEN, false, 0, null, true, true,
+				GroupConstants.TYPE_SITE_PRIVATE, false, 0, null, true, true,
 				serviceContext);
 		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
 
@@ -191,7 +191,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					.getClass());
 			indexer.delete(idea);
 
-			GroupLocalServiceUtil.deleteUserGroup(userId, idea.getGroupId());
+			GroupLocalServiceUtil.deleteUserGroup(userId, idea.getUserGroupId());
+			GroupLocalServiceUtil.deleteGroup(idea.getUserGroupId());
 
 			resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 					Idea.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
