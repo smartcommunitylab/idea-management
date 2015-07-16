@@ -16,9 +16,12 @@
 
 package it.smartcommunitylab.platform.idea.portlet;
 
+import it.smartcommunitylab.platform.idea.model.Idea;
+
 import java.util.HashSet;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -38,6 +41,15 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class Utils {
 
+	public static boolean discussionEnabled(Idea idea, PortletRequest req) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)req.getAttribute(WebKeys.THEME_DISPLAY);
+		if (!themeDisplay.isSignedIn()) return false;
+		if (idea.discussionExpired()) return false;
+
+		// TODO check states
+		return true;
+	}
+	
 	public static String getBaseURL(HttpServletRequest request) {
 		String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
 		return baseUrl;

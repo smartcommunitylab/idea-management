@@ -1,6 +1,7 @@
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 
 <%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %>
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
@@ -103,7 +104,6 @@
  <liferay-ui:panel-container accordion="true" extended="true">
 	<liferay-ui:panel state="open" collapsible="true" id="info" title='<%= LanguageUtil.get(locale, "lbl_info") %>'>
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
-
     <c:if test="<%=parentTagSet.size() > 0 %>">
     <div class="row-fluid info-meta">
       <i class="icon-tags icon-white"></i>
@@ -182,18 +182,21 @@
               <liferay-ui:message key="lbl_discussionExpiration" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.discussionDeadline())}%>" />  
           </span>
         </div>
-      <div class="row-fluid">
-	      <portlet:actionURL name="addComment" var="discussionURL">
-	        <!-- workaround to invoke liferary class that manage comment/discussion -->
-	        <portlet:param name="struts_action"
-	          value="/asset_publisher/edit_entry_discussion" />
-	      </portlet:actionURL>
-      </div>		
-		  <liferay-ui:discussion className="<%=Idea.class.getName()%>" 
-		    classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
-		    formName="fm2" ratingsEnabled="<%=true%>" redirect="<%=currentURL%>"
-		    subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />
     </c:if>
+    <%
+    boolean discussionEnabled = Utils.discussionEnabled(idea, renderRequest);
+    %>
+    <div class='row-fluid discussion-container <%=discussionEnabled ? "" :"discussion-container-disabled" %>'>
+      <portlet:actionURL name="addComment" var="discussionURL">
+        <!-- workaround to invoke liferary class that manage comment/discussion -->
+        <portlet:param name="struts_action"
+          value="/asset_publisher/edit_entry_discussion" />
+      </portlet:actionURL>
+    <liferay-ui:discussion className="<%=Idea.class.getName()%>" 
+      classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
+      formName="discussionForm" ratingsEnabled="<%=true %>" redirect="<%=currentURL%>"
+      subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />
+    </div>    
   </liferay-ui:panel>
   <liferay-ui:panel state="closed" collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
         <% for (User participant: users) {%>
@@ -206,9 +209,24 @@
         <%} %>
   </liferay-ui:panel>
   <liferay-ui:panel state="closed" collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-proposed<%=Constants.IDEA_STATE_PROPOSED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_proposed"/></div></div>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_accepted"/></div></div>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
-    <div class="idea-state-container span3 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
+    <div class="row-fluid"> 
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-proposed<%=Constants.IDEA_STATE_PROPOSED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_proposed"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-waiting<%=Constants.IDEA_STATE_WAIT_FOR_EVAL.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_waiting"/></div></div>
+    <% if (Constants.IDEA_STATE_REJECTED.equals(state)) {%>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-rejectedactive'></a></div><div><liferay-ui:message key="lbl_state_rejected"/></div></div>
+    <% } else {%>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_accepted"/></div></div>
+    <% } %>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-signed<%=Constants.IDEA_STATE_SIGNED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_signed"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
+    </div>
+    <c:if test='<%=idea.getStateJudgement() != null %>'>
+    <div class="row-fluid">
+      <div class="state-judgement">
+      <%= idea.getStateJudgement() %>
+      </div>
+    </div>
+    </c:if>
   </liferay-ui:panel>
 </liferay-ui:panel-container>

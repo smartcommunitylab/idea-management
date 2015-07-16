@@ -1,5 +1,7 @@
 package it.smartcommunitylab.platform.idea.model.impl;
 
+import it.smartcommunitylab.platform.idea.portlet.Constants;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -24,7 +26,19 @@ public class IdeaImpl extends IdeaBaseImpl {
     public Date discussionDeadline() {
     	Calendar c = Calendar.getInstance();
     	c.setTimeInMillis(getCreateDate().getTime());
-    	c.add(Calendar.DATE, 30);
+    	c.add(Calendar.DATE, getDiscussionLimit() == 0 ? Constants.DEFAULT_DISCUSSION_LIMIT : getDiscussionLimit());
     	return c.getTime();
+    }
+    
+    public boolean discussionExpired() {
+    	return discussionDeadline().before(new Date());
+    }
+    
+    public String realState() {
+    	String currState = getState();
+    	if (Constants.IDEA_STATE_PROPOSED.equals(currState) && discussionExpired()) {
+    		return Constants.IDEA_STATE_WAIT_FOR_EVAL;
+    	}
+    	return currState;
     }
 }

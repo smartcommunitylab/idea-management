@@ -104,6 +104,10 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setShortDesc(ideaBean.getShortDesc());
 		idea.setLongDesc(ideaBean.getLongDesc());
 		idea.setCallId(ideaBean.getCallId());
+		
+		idea.setState(Constants.IDEA_STATE_PROPOSED);
+		idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
+		idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
 
 		ideaPersistence.update(idea);
 
@@ -142,6 +146,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			idea.setLongDesc(ideaBean.getLongDesc());
 			idea.setShortDesc(ideaBean.getShortDesc());
 
+			idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
+			idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
+			
 			ideaPersistence.update(idea);
 
 			resourceLocalService.updateResources(serviceContext.getCompanyId(),
@@ -149,11 +156,14 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					idea.getIdeaId(), serviceContext.getGroupPermissions(),
 					serviceContext.getGuestPermissions());
 
+			AssetEntry oldEntry = assetEntryLocalService.fetchEntry(
+					Idea.class.getName(), idea.getIdeaId());
+
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 					idea.getUserId(), idea.getGroupId(), idea.getCreateDate(),
 					idea.getModifiedDate(), Idea.class.getName(),
 					idea.getIdeaId(), idea.getUuid(), 0,
-					serviceContext.getAssetCategoryIds(),
+					oldEntry.getCategoryIds(),
 					serviceContext.getAssetTagNames(), true, null, null, null,
 					ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
 					null, 0, 0, null, false);
@@ -197,6 +207,13 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	}
 
+	public void changeIdeaState(long ideaId, String state, String stateJudgement) throws SystemException, PortalException {
+		Idea idea = ideaPersistence.findByPrimaryKey(ideaId);
+		idea.setState(state);
+		idea.setStateJudgement(stateJudgement);
+		ideaPersistence.update(idea);
+	}
+	
 	public List<Idea> getIdeasByCat(long catId, long[] tagIds)
 			throws SystemException {
 		return IdeaFinderUtil.findByCatAndTags(catId, tagIds);

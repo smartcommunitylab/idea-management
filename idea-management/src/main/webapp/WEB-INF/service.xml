@@ -44,9 +44,12 @@
 		<column name="title" type="String"></column>
 		<column name="longDesc" type="String"></column>
 		<column name="shortDesc" type="String"></column>
-        <column name="userGroupId" type="long"></column>
-        <column name="callId" type="long"></column>
-        <column name="state" type="String"></column>
+    <column name="userGroupId" type="long"></column>
+    <column name="callId" type="long"></column>
+    <column name="state" type="String"></column>
+    <column name="stateJudgement" type="String"></column>
+    <column name="deadlineConstraints" type="String"></column>
+    <column name="discussionLimit" type="int"></column>
 
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
@@ -90,7 +93,8 @@
 		<column name="modifiedDate" type="Date"></column>
 		<column name="description" type="String"></column>
 		<column name="deadline" type="Date"></column>
-        <column name="publicationDeadline" type="Date"></column>
+    <column name="publicationDeadline" type="Date"></column>
+    <column name="realizationDeadline" type="Date"></column>
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>
 		</order>

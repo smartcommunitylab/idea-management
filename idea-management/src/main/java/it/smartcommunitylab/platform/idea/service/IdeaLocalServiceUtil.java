@@ -347,6 +347,13 @@ public class IdeaLocalServiceUtil {
         getService().deleteIdea(userId, ideaBean, serviceContext);
     }
 
+    public static void changeIdeaState(long ideaId, java.lang.String state,
+        java.lang.String stateJudgement)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        getService().changeIdeaState(ideaId, state, stateJudgement);
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCat(
         long catId, long[] tagIds)
         throws com.liferay.portal.kernel.exception.SystemException {

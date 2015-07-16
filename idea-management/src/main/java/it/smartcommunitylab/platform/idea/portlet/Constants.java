@@ -27,4 +27,14 @@ public class Constants {
 	public static final String IDEA_STATE_EXEC = "exec";
 	public static final String IDEA_STATE_COMPLETE = "complete";
 	public static final String IDEA_STATE_REJECTED = "rejected";
+
+	public static final String IDEA_STATE_WAIT_FOR_EVAL = "waiting";
+	public static final String IDEA_STATE_SIGNED = "signed";
+	public static final String IDEA_STATE_REQUIRES_INTEGRATION = "integration_required";
+	public static final String IDEA_STATE_REQUIRES_VALIDATION = "validation_required";
+	
+	
+	public static final int DEFAULT_DISCUSSION_LIMIT = 30;
+	public static final int[] DISCUSSION_LIMITS = new int[]{30, 15, 7};
+	
 }

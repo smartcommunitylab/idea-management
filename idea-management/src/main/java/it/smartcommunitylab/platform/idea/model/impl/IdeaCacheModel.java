@@ -35,10 +35,13 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
     public long userGroupId;
     public long callId;
     public String state;
+    public String stateJudgement;
+    public String deadlineConstraints;
+    public int discussionLimit;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(29);
+        StringBundler sb = new StringBundler(35);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -68,6 +71,12 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         sb.append(callId);
         sb.append(", state=");
         sb.append(state);
+        sb.append(", stateJudgement=");
+        sb.append(stateJudgement);
+        sb.append(", deadlineConstraints=");
+        sb.append(deadlineConstraints);
+        sb.append(", discussionLimit=");
+        sb.append(discussionLimit);
         sb.append("}");
 
         return sb.toString();
@@ -133,6 +142,20 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
             ideaImpl.setState(state);
         }
 
+        if (stateJudgement == null) {
+            ideaImpl.setStateJudgement(StringPool.BLANK);
+        } else {
+            ideaImpl.setStateJudgement(stateJudgement);
+        }
+
+        if (deadlineConstraints == null) {
+            ideaImpl.setDeadlineConstraints(StringPool.BLANK);
+        } else {
+            ideaImpl.setDeadlineConstraints(deadlineConstraints);
+        }
+
+        ideaImpl.setDiscussionLimit(discussionLimit);
+
         ideaImpl.resetOriginalValues();
 
         return ideaImpl;
@@ -154,6 +177,9 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         userGroupId = objectInput.readLong();
         callId = objectInput.readLong();
         state = objectInput.readUTF();
+        stateJudgement = objectInput.readUTF();
+        deadlineConstraints = objectInput.readUTF();
+        discussionLimit = objectInput.readInt();
     }
 
     @Override
@@ -205,5 +231,19 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         } else {
             objectOutput.writeUTF(state);
         }
+
+        if (stateJudgement == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(stateJudgement);
+        }
+
+        if (deadlineConstraints == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(deadlineConstraints);
+        }
+
+        objectOutput.writeInt(discussionLimit);
     }
 }

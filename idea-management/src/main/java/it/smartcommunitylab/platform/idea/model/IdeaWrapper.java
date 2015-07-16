@@ -52,6 +52,9 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("userGroupId", getUserGroupId());
         attributes.put("callId", getCallId());
         attributes.put("state", getState());
+        attributes.put("stateJudgement", getStateJudgement());
+        attributes.put("deadlineConstraints", getDeadlineConstraints());
+        attributes.put("discussionLimit", getDiscussionLimit());
 
         return attributes;
     }
@@ -140,6 +143,25 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (state != null) {
             setState(state);
+        }
+
+        String stateJudgement = (String) attributes.get("stateJudgement");
+
+        if (stateJudgement != null) {
+            setStateJudgement(stateJudgement);
+        }
+
+        String deadlineConstraints = (String) attributes.get(
+                "deadlineConstraints");
+
+        if (deadlineConstraints != null) {
+            setDeadlineConstraints(deadlineConstraints);
+        }
+
+        Integer discussionLimit = (Integer) attributes.get("discussionLimit");
+
+        if (discussionLimit != null) {
+            setDiscussionLimit(discussionLimit);
         }
     }
 
@@ -465,6 +487,66 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         _idea.setState(state);
     }
 
+    /**
+    * Returns the state judgement of this idea.
+    *
+    * @return the state judgement of this idea
+    */
+    @Override
+    public java.lang.String getStateJudgement() {
+        return _idea.getStateJudgement();
+    }
+
+    /**
+    * Sets the state judgement of this idea.
+    *
+    * @param stateJudgement the state judgement of this idea
+    */
+    @Override
+    public void setStateJudgement(java.lang.String stateJudgement) {
+        _idea.setStateJudgement(stateJudgement);
+    }
+
+    /**
+    * Returns the deadline constraints of this idea.
+    *
+    * @return the deadline constraints of this idea
+    */
+    @Override
+    public java.lang.String getDeadlineConstraints() {
+        return _idea.getDeadlineConstraints();
+    }
+
+    /**
+    * Sets the deadline constraints of this idea.
+    *
+    * @param deadlineConstraints the deadline constraints of this idea
+    */
+    @Override
+    public void setDeadlineConstraints(java.lang.String deadlineConstraints) {
+        _idea.setDeadlineConstraints(deadlineConstraints);
+    }
+
+    /**
+    * Returns the discussion limit of this idea.
+    *
+    * @return the discussion limit of this idea
+    */
+    @Override
+    public int getDiscussionLimit() {
+        return _idea.getDiscussionLimit();
+    }
+
+    /**
+    * Sets the discussion limit of this idea.
+    *
+    * @param discussionLimit the discussion limit of this idea
+    */
+    @Override
+    public void setDiscussionLimit(int discussionLimit) {
+        _idea.setDiscussionLimit(discussionLimit);
+    }
+
     @Override
     public boolean isNew() {
         return _idea.isNew();
@@ -572,6 +654,16 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public java.util.Date discussionDeadline() {
         return _idea.discussionDeadline();
+    }
+
+    @Override
+    public boolean discussionExpired() {
+        return _idea.discussionExpired();
+    }
+
+    @Override
+    public java.lang.String realState() {
+        return _idea.realState();
     }
 
     @Override
