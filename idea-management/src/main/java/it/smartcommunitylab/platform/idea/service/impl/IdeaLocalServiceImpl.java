@@ -44,6 +44,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
+import com.liferay.util.portlet.PortletProps;
 
 /**
  * The implementation of the idea local service.
@@ -518,7 +519,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		try {
 			role = RoleLocalServiceUtil.getRole(
 					PortalUtil.getDefaultCompanyId(),
-					Constants.BLACKLIST_ROLE_NAME);
+					PortletProps.get("role.blacklist"));
 			RoleLocalServiceUtil.addUserRole(userId, role);
 		} catch (PortalException | SystemException e) {
 			e.printStackTrace();

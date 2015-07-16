@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.util.portlet.PortletProps;
 
 public class WorkflowUtil {
 	public static ServiceContext addWorkflowVars(ServiceContext ctx) {
@@ -11,9 +12,9 @@ public class WorkflowUtil {
 
 		workflowContext.put(
 				WorkflowConstants.CONTEXT_NOTIFICATION_SENDER_ADDRESS,
-				"no-reply@local.futuratrento.it");
+				PortletProps.get("noreply.email"));
 		workflowContext.put(WorkflowConstants.CONTEXT_NOTIFICATION_SENDER_NAME,
-				"FuturaTrento");
+				PortletProps.get("noreply.displayname"));
 
 		ctx.setAttribute("workflowContext", workflowContext);
 
