@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -203,6 +204,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setDeadlineConstraints(deadlineConstraints);
 		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(),
 				ideaBean, serviceContext);
+		SubscriptionLocalServiceUtil.addSubscription(serviceContext.getUserId(), idea.getGroupId(), Idea.class.getName(), idea.getIdeaId());
 		req.setAttribute("idea", idea);
 	}
 
@@ -249,4 +251,20 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		IdeaLocalServiceUtil.updateIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 	}
+	
+	public void followIdea(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException, IOException 
+	{
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(Idea.class.getName(), req);
+		Long ideaId = ParamUtil.getLong(req, "ideaId");
+		Idea idea = IdeaLocalServiceUtil.fetchIdea(ideaId);
+		boolean subscribed = ParamUtil.getBoolean(req, "subscribed");
+		// subscribe idea
+		if (!subscribed) {
+			SubscriptionLocalServiceUtil.addSubscription(serviceContext.getUserId(), idea.getGroupId(), Idea.class.getName(), ideaId);
+		} else {
+			SubscriptionLocalServiceUtil.deleteSubscription(serviceContext.getUserId(), Idea.class.getName(), ideaId);
+		}
+	}
+
 }

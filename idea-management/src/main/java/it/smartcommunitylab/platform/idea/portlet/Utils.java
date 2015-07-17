@@ -41,6 +41,18 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class Utils {
 
+	public static boolean ideaEditEnabled(Idea idea, PortletRequest req) {
+		//themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())
+		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			boolean hasRole = themeDisplay.getPermissionChecker().isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+			return hasRole;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public static boolean discussionEnabled(Idea idea, PortletRequest req) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)req.getAttribute(WebKeys.THEME_DISPLAY);
 		if (!themeDisplay.isSignedIn()) return false;

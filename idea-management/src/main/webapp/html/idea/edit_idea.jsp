@@ -67,7 +67,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 </portlet:actionURL>
 
 <aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>" name="idea">
-<aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
+<aui:model-context bean="<%= idea %>" model="<%= Idea.class.getName() %>" />
 	<aui:fieldset cssClass="simple-field">
 		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' first="true" label="" name="title"></aui:input>
 	</aui:fieldset>
@@ -148,4 +148,4 @@ AUI().use('aui-form-validator',
 		  }
 		);
 </aui:script>	 
-	         
+

@@ -5,7 +5,9 @@
 
 <%@ page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %>
 <%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.model.User" %>
+<%@ page import="com.liferay.portal.model.Subscription" %>
 <%@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
 
@@ -50,13 +52,17 @@
     if (categoryTagsSet.contains(tag.getName())) parentTagSet.add(tag.getName());
     else ownTagSet.add(tag.getName());
   }
-	
+	// participants
   List<User> users = UserLocalServiceUtil.getGroupUsers(idea.getUserGroupId());
   boolean isOwner = owner.getUserId() == user.getUserId();
   boolean participates = false;
   for (User u : users) {
 	  if (u.getUserId() == user.getUserId()) participates = true;
   }
+  // followers
+  List<Subscription> subs = SubscriptionLocalServiceUtil.getSubscriptions(themeDisplay.getCompanyId(), Idea.class.getName(), idea.getIdeaId());
+  boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), Idea.class.getName(), idea.getIdeaId());
+  
   
 	PortalUtil.setPageKeywords(ListUtil.toString(assetTags, "name"),
 			request);
@@ -73,7 +79,7 @@
 <div class="row-fluid">
   <span class="span8 idea-view-title">
   <%=HtmlUtil.unescape(idea.getTitle())%>
-      <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
+      <c:if test="<%= Utils.ideaEditEnabled(idea, renderRequest) %>">
       <portlet:renderURL var="editIdea">
         <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
         <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
@@ -144,7 +150,14 @@
             <i class="icon-user"></i>
           </div>
         </div>
-        <div class="span6 text-center"> 
+        <div class="span3 text-center"> 
+          <liferay-ui:message key="lbl_followercount"/> 
+          <div class="participation-details">
+            <span><%=subs.size() %></span>
+            <i class="icon-user"></i>
+          </div>
+        </div>
+        <div class="span3 text-center"> 
           <liferay-ui:message key="lbl_participationcount"/> 
           <div class="participation-details">
             <span><%=users.size() %></span>
@@ -162,19 +175,32 @@
 		    <div class="span6 text-center">
 				  <liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>" />
         </div>
-	      <div class="span6 text-center">
-		      <portlet:actionURL var="toggleURL" name="toggleUserParticipation">
+	      <div class="span3 text-center">
+		      <portlet:actionURL var="followIdea" name="followIdea">
             <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
 		        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-            <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
+            <portlet:param name="subscribed" value="<%=String.valueOf(subscribed) %>" />
 		      </portlet:actionURL>
-  	      <div><a class='idea-button idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
-          <div><span><% if (participates) {%><liferay-ui:message key="lbl_participating"/><% } %></span></div>
+  	      <div><a class='idea-button idea-button-follow-<%= subscribed ? "disabled" : "enabled" %>' href="<%=followIdea.toString() %>"></a></div>
+          <div><span><% if (subscribed) { %> <liferay-ui:message key="lbl_following"/><% } %></span></div>
           <div class="participation-details">
-	          <span><%=users.size() %></span>
+	          <span><%=subs.size() %></span>
 	          <i class="icon-user"></i>
           </div>
 	      </div>
+        <div class="span3 text-center">
+          <portlet:actionURL var="toggleURL" name="toggleUserParticipation">
+            <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
+            <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
+            <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
+          </portlet:actionURL>
+          <div><a class='idea-button idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
+          <div><span><% if (participates) {%><liferay-ui:message key="lbl_participating"/><% } %></span></div>
+          <div class="participation-details">
+            <span><%=users.size() %></span>
+            <i class="icon-user"></i>
+          </div>
+        </div>
       </div>
       <hr/>
         <div class="row-fluid">
@@ -186,13 +212,13 @@
     <%
     boolean discussionEnabled = Utils.discussionEnabled(idea, renderRequest);
     %>
-    <div class='row-fluid discussion-container <%=discussionEnabled ? "" :"discussion-container-disabled" %>'>
+    <div class='row-fluid discussion-container'>
       <portlet:actionURL name="addComment" var="discussionURL">
         <!-- workaround to invoke liferary class that manage comment/discussion -->
         <portlet:param name="struts_action"
           value="/asset_publisher/edit_entry_discussion" />
       </portlet:actionURL>
-    <liferay-ui:discussion className="<%=Idea.class.getName()%>" 
+    <liferay-ui:discussion hideControls="<%=!discussionEnabled %>" className="<%=Idea.class.getName()%>" 
       classPK="<%=idea.getIdeaId()%>" formAction="<%=discussionURL%>"
       formName="discussionForm" ratingsEnabled="<%=true %>" redirect="<%=currentURL%>"
       subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />

@@ -24,12 +24,12 @@
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
         <implicit-parameter name="mvcPath">/html/idea/asset/full_content.jsp</implicit-parameter>
     </route>
-    <route>
-        <pattern>/{instanceId}/{ideaId}/view</pattern>
-        <ignored-parameter name="javax.portlet.action"/>
-        <implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
-        <implicit-parameter name="mvcPath">/html/idea/asset/full_content.jsp</implicit-parameter>
-    </route>
+<!--     <route> -->
+<!--         <pattern>/{instanceId}/{ideaId}/view</pattern> -->
+<!--         <ignored-parameter name="javax.portlet.action"/> -->
+<!--         <implicit-parameter name="p_p_lifecycle">1</implicit-parameter> -->
+<!--         <implicit-parameter name="mvcPath">/html/idea/asset/full_content.jsp</implicit-parameter> -->
+<!--     </route> -->
     <route>
         <pattern>/{instanceId}/{ideaId}/edit</pattern>
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
