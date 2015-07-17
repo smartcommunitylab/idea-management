@@ -589,10 +589,19 @@ header#banner {
   background-image: url(../images/CiSto_enabled.png) !important;
   background-size: 100% 100%;
 }
-
 .idea-button-participate-disabled {
   background-color: white !important;
   background-image: url(../images/CiSto_disabled.png) !important;
+  background-size: 100% 100%;
+}
+.idea-button-follow-enabled {
+  background-color: #F1453D !important;
+  background-image: url(../images/seguo_enabled.png) !important;
+  background-size: 100% 100%;
+}
+.idea-button-follow-disabled {
+  background-color: white !important;
+  background-image: url(../images/seguo_disabled.png) !important;
   background-size: 100% 100%;
 }
 
