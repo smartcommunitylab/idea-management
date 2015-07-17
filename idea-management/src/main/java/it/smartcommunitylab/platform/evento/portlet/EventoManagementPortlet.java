@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -24,7 +26,10 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.CalendarImporterLocalServiceUtil;
+import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -37,6 +42,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -143,10 +151,11 @@ public class EventoManagementPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CalendarBooking> getEventsByCallId(Date queryDate, long callId) throws SystemException, PortalException {
 		List<CalendarBooking> eventList;
 		Call call = CallLocalServiceUtil.getCall(callId);
-		long groupId = call.getGroupId();
+		long groupId = call.getUserGroupId();
 		DynamicQuery dynamicQuery = CalendarBookingLocalServiceUtil.dynamicQuery();
 		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
 		Criterion criterionStatus = RestrictionsFactoryUtil.eq("status", WorkflowConstants.STATUS_APPROVED);
@@ -208,7 +217,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 	public List<CalendarBooking> getEventsByIdeaId(Date queryDate, long ideaId) throws SystemException, PortalException {
 		List<CalendarBooking> eventList;
 		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
-		long groupId = idea.getGroupId();
+		long groupId = idea.getUserGroupId();
 		DynamicQuery dynamicQuery = CalendarBookingLocalServiceUtil.dynamicQuery();
 		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
 		Criterion criterionStatus = RestrictionsFactoryUtil.eq("status", WorkflowConstants.STATUS_APPROVED);
@@ -247,6 +256,59 @@ public class EventoManagementPortlet extends MVCPortlet {
 		result[0] = calendarStart.getTimeInMillis();
 		result[1] = calendarEnd.getTimeInMillis();
 		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addEvent(ActionRequest request, ActionResponse response) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		Locale locale = themeDisplay.getLocale();
+		User user = themeDisplay.getUser();
+		long userId = user.getUserId();
+		long groupId = 0;
+		long categoryId = ParamUtil.getLong(request, "categoryId");
+		long ideaId = ParamUtil.getLong(request, "ideaId");
+		long callId = ParamUtil.getLong(request, "callId");
+		long[] categoryIds = null;
+		
+		//set groupId and categoryIds
+		if(categoryId > 0) {
+			groupId = themeDisplay.getScopeGroupId();
+			categoryIds = new long[] {categoryId};
+		} else if(ideaId > 0) {
+			Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
+			groupId = idea.getUserGroupId();
+			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(), idea.getIdeaId());
+			categoryIds = entry.getCategoryIds();
+		} else if(callId > 0) {
+			Call call = CallLocalServiceUtil.getCall(callId);
+			groupId = call.getUserGroupId();
+			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(), call.getCallId());
+			categoryIds = entry.getCategoryIds();
+		}
+		
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(CalendarBooking.class.getName(), request);
+		serviceContext.setScopeGroupId(groupId);
+		//get calendar by groupId
+		DynamicQuery dynamicQuery = CalendarLocalServiceUtil.dynamicQuery();
+		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
+		dynamicQuery.add(criterionGroup);
+		List<com.liferay.calendar.model.Calendar> calendarList = CalendarLocalServiceUtil.dynamicQuery(dynamicQuery);
+		if(!calendarList.isEmpty()) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+			Date actualTime = new Date();
+			Map<Locale, String> titleMap = new HashMap<>();
+			titleMap.put(locale, "test " + sdf.format(actualTime));
+			Map<Locale, String> descriptionMap = new HashMap<>();
+			descriptionMap.put(locale, "test");
+			com.liferay.calendar.model.Calendar calendar = calendarList.get(0);
+			CalendarBooking event = CalendarBookingLocalServiceUtil.addCalendarBooking(userId, calendar.getCalendarId(), 
+					new long[] {}, 0L, titleMap, descriptionMap, null, actualTime.getTime(), (actualTime.getTime() + 1000*60*60), 
+					false, null, 0L, null, 0L, null, serviceContext);
+			System.out.println("new event id:" + event.getCalendarBookingId());
+			AssetEntryLocalServiceUtil.updateEntry(userId, groupId, CalendarBooking.class.getName(), event.getCalendarBookingId(), 
+					categoryIds, new String[] {});
+		}
+		response.setRenderParameter("jspPage", "/html/eventomanagement/add.jsp");
 	}
 	
 	private boolean isNull(String string) {
