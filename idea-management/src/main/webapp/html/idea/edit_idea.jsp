@@ -51,7 +51,7 @@
 pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
-<portlet:renderURL var="redirect">
+<portlet:renderURL var="redirect" windowState="normal">
   <c:if test="<%=idea != null %>">
   <portlet:param name="ideaId" value='<%=String.valueOf(idea.getIdeaId()) %>'></portlet:param>
   </c:if>
@@ -67,7 +67,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 </portlet:actionURL>
 
 <aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>" name="idea">
-<aui:model-context bean="<%= idea %>" model="<%= Idea.class.getName() %>" />
+<aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
 	<aui:fieldset cssClass="simple-field">
 		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' first="true" label="" name="title"></aui:input>
 	</aui:fieldset>

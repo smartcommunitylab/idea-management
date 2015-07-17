@@ -80,7 +80,7 @@
   <span class="span8 idea-view-title">
   <%=HtmlUtil.unescape(idea.getTitle())%>
       <c:if test="<%= Utils.ideaEditEnabled(idea, renderRequest) %>">
-      <portlet:renderURL var="editIdea">
+      <portlet:renderURL var="editIdea" windowState="maximized">
         <portlet:param name="mvcPath" value="/html/idea/edit_idea.jsp" />
         <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
       </portlet:renderURL>
