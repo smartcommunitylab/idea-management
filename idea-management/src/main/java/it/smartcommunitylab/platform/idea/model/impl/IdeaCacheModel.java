@@ -38,10 +38,13 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
     public String stateJudgement;
     public String deadlineConstraints;
     public int discussionLimit;
+    public int status;
+    public long statusByUserId;
+    public String statusByUserName;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(35);
+        StringBundler sb = new StringBundler(41);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -77,6 +80,12 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         sb.append(deadlineConstraints);
         sb.append(", discussionLimit=");
         sb.append(discussionLimit);
+        sb.append(", status=");
+        sb.append(status);
+        sb.append(", statusByUserId=");
+        sb.append(statusByUserId);
+        sb.append(", statusByUserName=");
+        sb.append(statusByUserName);
         sb.append("}");
 
         return sb.toString();
@@ -155,6 +164,14 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         }
 
         ideaImpl.setDiscussionLimit(discussionLimit);
+        ideaImpl.setStatus(status);
+        ideaImpl.setStatusByUserId(statusByUserId);
+
+        if (statusByUserName == null) {
+            ideaImpl.setStatusByUserName(StringPool.BLANK);
+        } else {
+            ideaImpl.setStatusByUserName(statusByUserName);
+        }
 
         ideaImpl.resetOriginalValues();
 
@@ -180,6 +197,9 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         stateJudgement = objectInput.readUTF();
         deadlineConstraints = objectInput.readUTF();
         discussionLimit = objectInput.readInt();
+        status = objectInput.readInt();
+        statusByUserId = objectInput.readLong();
+        statusByUserName = objectInput.readUTF();
     }
 
     @Override
@@ -245,5 +265,13 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         }
 
         objectOutput.writeInt(discussionLimit);
+        objectOutput.writeInt(status);
+        objectOutput.writeLong(statusByUserId);
+
+        if (statusByUserName == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(statusByUserName);
+        }
     }
 }

@@ -55,6 +55,9 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("stateJudgement", getStateJudgement());
         attributes.put("deadlineConstraints", getDeadlineConstraints());
         attributes.put("discussionLimit", getDiscussionLimit());
+        attributes.put("status", getStatus());
+        attributes.put("statusByUserId", getStatusByUserId());
+        attributes.put("statusByUserName", getStatusByUserName());
 
         return attributes;
     }
@@ -162,6 +165,24 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (discussionLimit != null) {
             setDiscussionLimit(discussionLimit);
+        }
+
+        Integer status = (Integer) attributes.get("status");
+
+        if (status != null) {
+            setStatus(status);
+        }
+
+        Long statusByUserId = (Long) attributes.get("statusByUserId");
+
+        if (statusByUserId != null) {
+            setStatusByUserId(statusByUserId);
+        }
+
+        String statusByUserName = (String) attributes.get("statusByUserName");
+
+        if (statusByUserName != null) {
+            setStatusByUserName(statusByUserName);
         }
     }
 
@@ -545,6 +566,88 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public void setDiscussionLimit(int discussionLimit) {
         _idea.setDiscussionLimit(discussionLimit);
+    }
+
+    /**
+    * Returns the status of this idea.
+    *
+    * @return the status of this idea
+    */
+    @Override
+    public int getStatus() {
+        return _idea.getStatus();
+    }
+
+    /**
+    * Sets the status of this idea.
+    *
+    * @param status the status of this idea
+    */
+    @Override
+    public void setStatus(int status) {
+        _idea.setStatus(status);
+    }
+
+    /**
+    * Returns the status by user ID of this idea.
+    *
+    * @return the status by user ID of this idea
+    */
+    @Override
+    public long getStatusByUserId() {
+        return _idea.getStatusByUserId();
+    }
+
+    /**
+    * Sets the status by user ID of this idea.
+    *
+    * @param statusByUserId the status by user ID of this idea
+    */
+    @Override
+    public void setStatusByUserId(long statusByUserId) {
+        _idea.setStatusByUserId(statusByUserId);
+    }
+
+    /**
+    * Returns the status by user uuid of this idea.
+    *
+    * @return the status by user uuid of this idea
+    * @throws SystemException if a system exception occurred
+    */
+    @Override
+    public java.lang.String getStatusByUserUuid()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _idea.getStatusByUserUuid();
+    }
+
+    /**
+    * Sets the status by user uuid of this idea.
+    *
+    * @param statusByUserUuid the status by user uuid of this idea
+    */
+    @Override
+    public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+        _idea.setStatusByUserUuid(statusByUserUuid);
+    }
+
+    /**
+    * Returns the status by user name of this idea.
+    *
+    * @return the status by user name of this idea
+    */
+    @Override
+    public java.lang.String getStatusByUserName() {
+        return _idea.getStatusByUserName();
+    }
+
+    /**
+    * Sets the status by user name of this idea.
+    *
+    * @param statusByUserName the status by user name of this idea
+    */
+    @Override
+    public void setStatusByUserName(java.lang.String statusByUserName) {
+        _idea.setStatusByUserName(statusByUserName);
     }
 
     @Override

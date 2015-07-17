@@ -3056,6 +3056,9 @@ public class IdeaPersistenceImpl extends BasePersistenceImpl<Idea>
         ideaImpl.setStateJudgement(idea.getStateJudgement());
         ideaImpl.setDeadlineConstraints(idea.getDeadlineConstraints());
         ideaImpl.setDiscussionLimit(idea.getDiscussionLimit());
+        ideaImpl.setStatus(idea.getStatus());
+        ideaImpl.setStatusByUserId(idea.getStatusByUserId());
+        ideaImpl.setStatusByUserName(idea.getStatusByUserName());
 
         return ideaImpl;
     }

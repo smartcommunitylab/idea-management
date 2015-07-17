@@ -7,6 +7,7 @@ import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.portlet.Constants;
 import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
+import it.smartcommunitylab.platform.idea.workflow.WorkflowUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -19,14 +20,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -39,6 +44,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
+import com.liferay.util.portlet.PortletProps;
 
 /**
  * The implementation of the idea local service.
@@ -109,6 +115,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
 		idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
 
+		idea.setStatus(WorkflowConstants.STATUS_DRAFT);
+
 		ideaPersistence.update(idea);
 
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
@@ -133,6 +141,12 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class);
 
 		indexer.reindex(idea);
+
+		serviceContext = WorkflowUtil.addWorkflowVars(serviceContext);
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(idea.getCompanyId(),
+				idea.getGroupId(), idea.getUserId(), Idea.class.getName(),
+				idea.getPrimaryKey(), idea, serviceContext);
 		return idea;
 	}
 
@@ -477,5 +491,56 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 
 		return ideas;
+	}
+
+	public Idea updateStatus(long userId, long ideaId, int status,
+			ServiceContext serviceContext) throws PortalException,
+			SystemException {
+
+		User user = userLocalService.getUser(userId);
+		Idea i = getIdea(ideaId);
+
+		// idea visibility
+		if (status == WorkflowConstants.STATUS_PENDING
+				|| status == WorkflowConstants.STATUS_APPROVED) {
+			assetEntryLocalService.updateVisible(Idea.class.getName(), ideaId,
+					true);
+		} else {
+			assetEntryLocalService.updateVisible(Idea.class.getName(), ideaId,
+					false);
+		}
+
+		// idea status
+		switch (status) {
+		case 100: // duplicated
+			break;
+		case 101: // abusive
+			blacklistUser(userId);
+			break;
+		default:
+			break;
+		}
+
+		i.setState(Constants.STATE_MAPPING.get(status));
+		i.setStatus(status);
+		i.setStatusByUserId(userId);
+		i.setStatusByUserName(user.getFullName());
+		// i.setStatusDate(new Date());
+
+		ideaPersistence.update(i);
+
+		return i;
+	}
+
+	public void blacklistUser(long userId) {
+		Role role = null;
+		try {
+			role = RoleLocalServiceUtil.getRole(
+					PortalUtil.getDefaultCompanyId(),
+					PortletProps.get("role.blacklist"));
+			RoleLocalServiceUtil.addUserRole(userId, role);
+		} catch (PortalException | SystemException e) {
+			e.printStackTrace();
+		}
 	}
 }

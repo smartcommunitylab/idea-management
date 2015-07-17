@@ -44,5 +44,8 @@
 		<property name="stateJudgement" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="deadlineConstraints" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="discussionLimit" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

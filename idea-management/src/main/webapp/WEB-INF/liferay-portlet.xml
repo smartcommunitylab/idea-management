@@ -2,44 +2,44 @@
 <!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
-	
+
 	<portlet>
 		<portlet-name>idea-management</portlet-name>
 		<icon>/icon.png</icon>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-    <indexer-class>it.smartcommunitylab.platform.idea.search.IdeaIndexer</indexer-class>
-    <friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-    <friendly-url-mapping>idea</friendly-url-mapping>
-    <friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/idea-friendly-url-routes.xml</friendly-url-routes>
-    <asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.IdeaAssetRendererFactory</asset-renderer-factory>
-    <instanceable>true</instanceable>
+
+		<indexer-class>it.smartcommunitylab.platform.idea.search.IdeaIndexer</indexer-class>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>idea</friendly-url-mapping>
+		<friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/idea-friendly-url-routes.xml</friendly-url-routes>
+		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.IdeaAssetRendererFactory</asset-renderer-factory>
+		<workflow-handler>it.smartcommunitylab.platform.idea.asset.IdeaWorkflowHandler</workflow-handler>
+		<instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>idea management-portlet</css-class-wrapper>
-		<add-default-resource>true</add-default-resource> 
+		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>call-management</portlet-name>
 		<icon>/icon.png</icon>
-    <configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<indexer-class>it.smartcommunitylab.platform.idea.search.CallIndexer</indexer-class>
-    <friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-    <friendly-url-mapping>call</friendly-url-mapping>
-    <friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/call-friendly-url-routes.xml</friendly-url-routes>
-<!-- 		<control-panel-entry-category> -->
-<!-- 			site_administration.content -->
-<!-- 		</control-panel-entry-category> -->
-<!-- 		<control-panel-entry-weight>1.5</control-panel-entry-weight> -->
+		
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>call</friendly-url-mapping>
+		<friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/call-friendly-url-routes.xml</friendly-url-routes>
+		
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.CallAssetRendererFactory</asset-renderer-factory>
-    <instanceable>true</instanceable>
+		<instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>call-management-portlet</css-class-wrapper>
-    <add-default-resource>true</add-default-resource> 
+		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>evento-management</portlet-name>
@@ -62,10 +62,10 @@
 		<role-name>manager</role-name>
 		<role-link>Site Content Reviewer</role-link>
 	</role-mapper>
-  <role-mapper>
-    <role-name>moderator</role-name>
-    <role-link>Site Content Reviewer</role-link>
-  </role-mapper>
+	<role-mapper>
+		<role-name>moderator</role-name>
+		<role-link>Site Content Reviewer</role-link>
+	</role-mapper>
 	<role-mapper>
 		<role-name>user</role-name>
 		<role-link>User</role-link>

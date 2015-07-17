@@ -499,6 +499,18 @@ public class IdeaLocalServiceUtil {
             tagIds, begin, end);
     }
 
+    public static it.smartcommunitylab.platform.idea.model.Idea updateStatus(
+        long userId, long ideaId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().updateStatus(userId, ideaId, status, serviceContext);
+    }
+
+    public static void blacklistUser(long userId) {
+        getService().blacklistUser(userId);
+    }
+
     public static void clearService() {
         _service = null;
     }

@@ -1,6 +1,7 @@
 package it.smartcommunitylab.platform.idea.asset;
 
 import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -40,9 +41,8 @@ public class IdeaWorkflowHandler extends BaseWorkflowHandler {
 
 		ServiceContext serviceContext = (ServiceContext) workflowContext
 				.get("serviceContext");
-		return null;
-		// return IdeaLocalServiceUtil.updateStatus(userId, entryId, status,
-		// serviceContext);
+		return IdeaLocalServiceUtil.updateStatus(userId, entryId, status,
+				serviceContext);
 	}
 
 }

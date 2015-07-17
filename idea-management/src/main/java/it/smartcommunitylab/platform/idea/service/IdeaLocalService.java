@@ -431,4 +431,12 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> searchPopularByCallAndCategoryAndTags(
         long categoryId, long callId, long[] tagIds, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
+
+    public it.smartcommunitylab.platform.idea.model.Idea updateStatus(
+        long userId, long ideaId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
+
+    public void blacklistUser(long userId);
 }

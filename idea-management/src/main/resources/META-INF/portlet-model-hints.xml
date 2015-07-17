@@ -36,8 +36,13 @@
 		<field name="userGroupId" type="long" />
 		<field name="callId" type="long" />
 		<field name="state" type="String" />
-		<field name="stateJudgement" type="String" />
+		<field name="stateJudgement" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="deadlineConstraints" type="String" />
 		<field name="discussionLimit" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
 	</model>
 </model-hints>
