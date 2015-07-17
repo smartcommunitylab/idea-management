@@ -26,6 +26,7 @@
 	String nextDate = (String) request.getAttribute("nextDate");
 %>
 
+<portlet:actionURL name="addEvent" var="addEventURL" />
 <portlet:renderURL var="viewPrev">
 	<portlet:param name="date" value="<%= prevDate %>" />
 </portlet:renderURL>
@@ -39,6 +40,8 @@
 		onClick="location.href = '<%= viewPrev %>';" />
 	<input type="button" class="nextButton"  value="nextDate" 
 		onClick="location.href = '<%= viewNext %>';" />
+	<input type="button" class="addButton" value="add"
+		onClick="location.href = '<%= addEventURL.toString() %>';" />
 	<ul>
 		<%
 			for (Map<String, String> event : eventList) {
