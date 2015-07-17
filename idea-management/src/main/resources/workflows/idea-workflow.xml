@@ -163,8 +163,8 @@
 				<default>false</default>
 			</transition>
 			<transition>
-				<name>accepted</name>
-				<target>accepted</target>
+				<name>approved</name>
+				<target>approved</target>
 			</transition>
 			<transition>
 				<name>abusive</name>
@@ -241,8 +241,8 @@
 				<default>false</default>
 			</transition>
 			<transition>
-				<name>accepted</name>
-				<target>accepted</target>
+				<name>approved</name>
+				<target>approved</target>
 			</transition>
 			<transition>
 				<name>abusive</name>
@@ -269,7 +269,7 @@
 			</actions>
 	</state>
 	<state>
-		<name>accepted</name>
+		<name>approved</name>
 		<actions>
 			<action>
 				<name>updateStatus</name>
