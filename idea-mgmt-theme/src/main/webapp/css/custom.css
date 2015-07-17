@@ -9,8 +9,11 @@
 }
 
 #signinmodal {
+	color: black;
 	background-color: #70C6B0;
 	background-image: url("../images/bg_login.png");
+	background-size: cover;
+	background-repeat: no-repeat;
 	width: 50% !important;
 	/* height: 90% !important; */
 	top: auto;
@@ -42,6 +45,10 @@
 	-moz-border-radius: 0;
 	border-radius: 0;
 	width: 100%;
+}
+
+#signinmodal form .control-group input:-webkit-autofill {
+    background-color: transparent;
 }
 
 #signinmodal form .control-group.success .control-label, #signinmodal .control-group.success input {

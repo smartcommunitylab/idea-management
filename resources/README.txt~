@@ -1,5 +1,8 @@
 SITE LAYOUT
 
+#Install from Liferay Store:
+#- Social Office
+
 portal-ext.properties configurations:
 ---
 # User public page
@@ -7,11 +10,11 @@ layout.user.public.layouts.enabled=true
 layout.user.public.layouts.auto.create=true
 default.user.public.layout.regular.theme.id=ideamgmt_WAR_ideamgmttheme
 default.user.public.layout.friendly.url=/profile
-default.user.public.layout.template.id=1_column
-default.user.public.layout.column-1=userprofile_WAR_ideamanagement
-#default.user.public.layout.template.id=2_columns_ii
-#default.user.public.layout.column-1=82,3
-#default.user.public.layout.column-2=33
+#default.user.public.layout.template.id=1_column
+#default.user.public.layout.column-1=2_WAR_contactsportlet
+default.user.public.layout.template.id=2_columns_ii
+default.user.public.layout.column-1=82,3
+default.user.public.layout.column-2=33
 #default.user.public.layout.column-3=
 #default.user.public.layout.column-4=
 # User private page

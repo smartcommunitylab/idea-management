@@ -9,28 +9,29 @@
 		<portlet-name>idea-management</portlet-name>
 		<display-name>Idea Management</display-name>
 		<portlet-class>
-			it.smartcommunitylab.platform.idea.portlet.IdeaManagementPortlet</portlet-class>
+			it.smartcommunitylab.platform.idea.portlet.IdeaManagementPortlet
+		</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/idea/view.jsp</value>
 		</init-param>
 		<init-param>
-		     <name>config-template</name>
-		     <value>/html/idea/configuration.jsp</value>
-		 </init-param>
-<!--     <init-param> -->
-<!--          <name>edit-template</name> -->
-<!--          <value>/html/idea/edit_idea.jsp</value> -->
-<!--      </init-param> -->
-     <init-param>
-      <name>copy-request-parameters</name>
-      <value>true</value>
-    </init-param>
- 		<expiration-cache>0</expiration-cache>
+			<name>config-template</name>
+			<value>/html/idea/configuration.jsp</value>
+		</init-param>
+		<!-- <init-param> -->
+		<!-- <name>edit-template</name> -->
+		<!-- <value>/html/idea/edit_idea.jsp</value> -->
+		<!-- </init-param> -->
+		<init-param>
+			<name>copy-request-parameters</name>
+			<value>true</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
-<!--       <portlet-mode>edit</portlet-mode> -->
+			<!-- <portlet-mode>edit</portlet-mode> -->
 		</supports>
 		<supported-locale>en</supported-locale>
 		<supported-locale>it</supported-locale>
@@ -49,83 +50,116 @@
 		<security-role-ref>
 			<role-name>manager</role-name>
 		</security-role-ref>
-    <security-role-ref>
-      <role-name>moderator</role-name>
-    </security-role-ref>
+		<security-role-ref>
+			<role-name>moderator</role-name>
+		</security-role-ref>
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
-    <supported-public-render-parameter>tag</supported-public-render-parameter>
-    <supported-public-render-parameter>categoryId</supported-public-render-parameter>
-    <supported-public-render-parameter>ideaId</supported-public-render-parameter>
-    <supported-public-render-parameter>callId</supported-public-render-parameter>
+		<supported-public-render-parameter>tag</supported-public-render-parameter>
+		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>ideaId</supported-public-render-parameter>
+		<supported-public-render-parameter>callId</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>call-management</portlet-name>
 		<display-name>Call Management</display-name>
 		<portlet-class>
-			it.smartcommunitylab.platform.idea.portlet.CallManagementPortlet</portlet-class>
+			it.smartcommunitylab.platform.idea.portlet.CallManagementPortlet
+		</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/callmanagement/view.jsp</value>
 		</init-param>
-<!-- 		<init-param> -->
-<!-- 			<name>edit-template</name> -->
-<!-- 			<value>/html/callmanagement/edit_call.jsp</value> -->
-<!-- 		</init-param> -->
-    <init-param>
-         <name>config-template</name>
-         <value>/html/callmanagement/configuration.jsp</value>
-     </init-param>
-     <init-param>
-      <name>copy-request-parameters</name>
-      <value>true</value>
-    </init-param>
+		<!-- <init-param> -->
+		<!-- <name>edit-template</name> -->
+		<!-- <value>/html/callmanagement/edit_call.jsp</value> -->
+		<!-- </init-param> -->
+		<init-param>
+			<name>config-template</name>
+			<value>/html/callmanagement/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>copy-request-parameters</name>
+			<value>true</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
-<!-- 			<portlet-mode>edit</portlet-mode> -->
+			<!-- <portlet-mode>edit</portlet-mode> -->
 		</supports>
-    <supported-locale>en</supported-locale>
-    <supported-locale>it</supported-locale>
-    <resource-bundle>content.Language</resource-bundle>
+		<supported-locale>en</supported-locale>
+		<supported-locale>it</supported-locale>
+		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>Call Management</title>
 			<short-title>Call Management</short-title>
 			<keywords></keywords>
 		</portlet-info>
-    <security-role-ref>
-      <role-name>administrator</role-name>
-    </security-role-ref>
-    <security-role-ref>
-      <role-name>guest</role-name>
-    </security-role-ref>
-    <security-role-ref>
-      <role-name>manager</role-name>
-    </security-role-ref>
-    <security-role-ref>
-      <role-name>moderator</role-name>
-    </security-role-ref>
-    <security-role-ref>
-      <role-name>user</role-name>
-    </security-role-ref>
-    <supported-public-render-parameter>callId</supported-public-render-parameter>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>manager</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>moderator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+		<supported-public-render-parameter>callId</supported-public-render-parameter>
+	</portlet>
+	<portlet>
+		<portlet-name>user-profile</portlet-name>
+		<display-name>User Profile</display-name>
+		<portlet-class>it.smartcommunitylab.platform.userprofile.UserProfilePortlet</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/userprofile/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<portlet-info>
+			<title>User Profile</title>
+			<short-title>User Profile</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
 	</portlet>
 	<public-render-parameter>
 		<identifier>categoryId</identifier>
 		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:categoryId</qname>
 	</public-render-parameter>
-  <public-render-parameter>
-    <identifier>tag</identifier>
-    <qname xmlns:x="http://www.liferay.com/public-render-parameters">x:tag</qname>
-  </public-render-parameter>
-  <public-render-parameter>
-    <identifier>ideaId</identifier>
-    <qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:ideaId</qname>
-  </public-render-parameter>
-   <public-render-parameter>
-    <identifier>callId</identifier>
-    <qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:callId</qname>
-  </public-render-parameter>
+	<public-render-parameter>
+		<identifier>tag</identifier>
+		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:tag</qname>
+	</public-render-parameter>
+	<public-render-parameter>
+		<identifier>ideaId</identifier>
+		<qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:ideaId</qname>
+	</public-render-parameter>
+	<public-render-parameter>
+		<identifier>callId</identifier>
+		<qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:callId</qname>
+	</public-render-parameter>
+
 </portlet-app>

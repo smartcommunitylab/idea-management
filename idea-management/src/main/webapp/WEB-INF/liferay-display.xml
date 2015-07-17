@@ -9,4 +9,7 @@
 	<category name="category.journal">
 		<portlet id="call-management"></portlet>
 	</category>
+	<category name="category.community">
+		<portlet id="user-profile"></portlet>
+	</category>
 </display>
