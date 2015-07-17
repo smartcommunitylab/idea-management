@@ -38,9 +38,9 @@
   <div class="event-container-header">
     <span class="event-container-title"><liferay-ui:message key="evento_title_eventi" /> <%=titleData%></span>
     <div class="event-container-header-buttons">
-    <a  class="event-container-button event-container-button-add" href = '<%= addEventURL.toString() %>'></a>
-    <a  class="event-container-button event-container-button-prev" href = '<%= viewPrev %>'></a>
-    <a  class="event-container-button event-container-button-next" href = '<%= viewNext %>'></a>
+    <a  class="event-container-button event-container-button-add" href = '<%= addEventURL.toString() %>'><span>+</span></a>
+    <a  class="event-container-button event-container-button-prev" href = '<%= viewPrev %>'><span>&lt;</span></a>
+    <a  class="event-container-button event-container-button-next" href = '<%= viewNext %>'><span>&gt;</span></a>
     </div>
   </div>
 	<ul class="event-container-list">

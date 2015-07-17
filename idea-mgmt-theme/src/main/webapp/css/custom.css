@@ -1112,6 +1112,10 @@ header#banner {
   font-size: 16px;
 }
 
+.event-container-button span {
+	display: none;
+} 
+
 .event-container-button::before {
 	vertical-align: text-top;
 } 
