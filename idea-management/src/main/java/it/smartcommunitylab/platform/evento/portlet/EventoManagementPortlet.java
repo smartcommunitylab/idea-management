@@ -1,5 +1,10 @@
 package it.smartcommunitylab.platform.evento.portlet;
 
+import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -90,31 +95,35 @@ public class EventoManagementPortlet extends MVCPortlet {
 		renderRequest.setAttribute("titleData", titleData);
 		
 		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");
-		long groupId = ParamUtil.getLong(renderRequest, "groupId");
-		System.out.println("groupId param:" + groupId);
+		long ideaId = ParamUtil.getLong(renderRequest, "ideaId");
+		long callId = ParamUtil.getLong(renderRequest, "callId");
 //		if(groupId == 0) {
 //			groupId = themeDisplay.getScopeGroupId();
 //			System.out.println("groupId:" + groupId);
 //		}
 		List<CalendarBooking> eventList = new ArrayList<CalendarBooking>();
-		if(groupId > 0) {
+		if(ideaId > 0) {
 			try {
-				eventList = getEventsByGroupId(queryDate, groupId);
-			} catch (SystemException e) {
+				eventList = getEventsByIdeaId(queryDate, ideaId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (callId > 0) {
+			try {
+				eventList = getEventsByCallId(queryDate, callId);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else if(categoryId > 0) {
 			try {
 				eventList = getEventsByCategoryId(queryDate, categoryId);
-			} catch (SystemException e) {
-				e.printStackTrace();
-			} catch (PortalException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
 				eventList = getEventsByDate(queryDate);
-			} catch (SystemException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -132,6 +141,23 @@ public class EventoManagementPortlet extends MVCPortlet {
 		}
 		renderRequest.setAttribute("eventList", eventMapList);
 		super.doView(renderRequest, renderResponse);
+	}
+
+	public List<CalendarBooking> getEventsByCallId(Date queryDate, long callId) throws SystemException, PortalException {
+		List<CalendarBooking> eventList;
+		Call call = CallLocalServiceUtil.getCall(callId);
+		long groupId = call.getGroupId();
+		DynamicQuery dynamicQuery = CalendarBookingLocalServiceUtil.dynamicQuery();
+		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
+		Criterion criterionStatus = RestrictionsFactoryUtil.eq("status", WorkflowConstants.STATUS_APPROVED);
+		Long[] range = getTimeInterval(queryDate);
+		Criterion criterionTime = RestrictionsFactoryUtil.between("startTime", range[0], range[1]);
+		dynamicQuery.add(RestrictionsFactoryUtil.and(criterionTime, RestrictionsFactoryUtil.and(criterionGroup, criterionStatus)));
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
+		dynamicQuery.setLimit(0, 5);
+		eventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
+		System.out.println("event count:" + eventList.size());
+		return eventList;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -179,8 +205,10 @@ public class EventoManagementPortlet extends MVCPortlet {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<CalendarBooking> getEventsByGroupId(Date queryDate, long groupId) throws SystemException {
+	public List<CalendarBooking> getEventsByIdeaId(Date queryDate, long ideaId) throws SystemException, PortalException {
 		List<CalendarBooking> eventList;
+		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
+		long groupId = idea.getGroupId();
 		DynamicQuery dynamicQuery = CalendarBookingLocalServiceUtil.dynamicQuery();
 		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
 		Criterion criterionStatus = RestrictionsFactoryUtil.eq("status", WorkflowConstants.STATUS_APPROVED);
