@@ -1,6 +1,7 @@
 SITE LAYOUT
 
-portal-ext.properties configurations:
+INSTRUCTION FOR USER PUBLIC PAGE CREATION
+- portal-ext.properties configurations:
 ---
 # User public page
 layout.user.public.layouts.enabled=true
@@ -19,6 +20,16 @@ layout.user.private.layouts.enabled=false
 layout.user.private.layouts.auto.create=false
 #default.user.private.layout.regular.theme.id=idea-mgmt-theme_WAR_idea-mgmt-theme
 ---
+- Set the first 2 lines to false
+- restart the server
+- logout or login and logout
+- login again
+- set the first 2 lines to true
+- restart the server
+- logout
+- login
+
+
 
 Define the following structures:
 - Create a Web content structure
