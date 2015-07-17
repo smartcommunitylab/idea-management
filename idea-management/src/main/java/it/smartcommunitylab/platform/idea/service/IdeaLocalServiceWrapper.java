@@ -360,6 +360,14 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public void changeIdeaState(long ideaId, java.lang.String state,
+        java.lang.String stateJudgement)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        _ideaLocalService.changeIdeaState(ideaId, state, stateJudgement);
+    }
+
+    @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCat(
         long catId, long[] tagIds)
         throws com.liferay.portal.kernel.exception.SystemException {
@@ -525,6 +533,21 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
         throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.searchPopularByCallAndCategoryAndTags(categoryId,
             callId, tagIds, begin, end);
+    }
+
+    @Override
+    public it.smartcommunitylab.platform.idea.model.Idea updateStatus(
+        long userId, long ideaId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.updateStatus(userId, ideaId, status,
+            serviceContext);
+    }
+
+    @Override
+    public void blacklistUser(long userId) {
+        _ideaLocalService.blacklistUser(userId);
     }
 
     /**

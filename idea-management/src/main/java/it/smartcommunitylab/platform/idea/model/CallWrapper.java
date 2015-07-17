@@ -50,6 +50,8 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
         attributes.put("description", getDescription());
         attributes.put("deadline", getDeadline());
         attributes.put("publicationDeadline", getPublicationDeadline());
+        attributes.put("realizationDeadline", getRealizationDeadline());
+        attributes.put("userGroupId", getUserGroupId());
 
         return attributes;
     }
@@ -126,6 +128,18 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
 
         if (publicationDeadline != null) {
             setPublicationDeadline(publicationDeadline);
+        }
+
+        Date realizationDeadline = (Date) attributes.get("realizationDeadline");
+
+        if (realizationDeadline != null) {
+            setRealizationDeadline(realizationDeadline);
+        }
+
+        Long userGroupId = (Long) attributes.get("userGroupId");
+
+        if (userGroupId != null) {
+            setUserGroupId(userGroupId);
         }
     }
 
@@ -409,6 +423,46 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
     @Override
     public void setPublicationDeadline(java.util.Date publicationDeadline) {
         _call.setPublicationDeadline(publicationDeadline);
+    }
+
+    /**
+    * Returns the realization deadline of this call.
+    *
+    * @return the realization deadline of this call
+    */
+    @Override
+    public java.util.Date getRealizationDeadline() {
+        return _call.getRealizationDeadline();
+    }
+
+    /**
+    * Sets the realization deadline of this call.
+    *
+    * @param realizationDeadline the realization deadline of this call
+    */
+    @Override
+    public void setRealizationDeadline(java.util.Date realizationDeadline) {
+        _call.setRealizationDeadline(realizationDeadline);
+    }
+
+    /**
+    * Returns the user group ID of this call.
+    *
+    * @return the user group ID of this call
+    */
+    @Override
+    public long getUserGroupId() {
+        return _call.getUserGroupId();
+    }
+
+    /**
+    * Sets the user group ID of this call.
+    *
+    * @param userGroupId the user group ID of this call
+    */
+    @Override
+    public void setUserGroupId(long userGroupId) {
+        _call.setUserGroupId(userGroupId);
     }
 
     @Override

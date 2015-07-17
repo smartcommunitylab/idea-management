@@ -2,7 +2,6 @@ package it.smartcommunitylab.platform.idea.service.impl;
 
 import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
-import it.smartcommunitylab.platform.idea.model.impl.CallModelImpl;
 import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -17,10 +16,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -84,6 +84,12 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		long id = counterLocalService.increment();
 		Call call = createCall(id);
 
+		Group group = GroupLocalServiceUtil.addGroup(userId, 0L, null, 0L, 0L,
+				callBean.getTitle() + " - " + id, null,
+				GroupConstants.TYPE_SITE_PRIVATE, false, 0, null, true, true,
+				serviceContext);
+		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
+
 		call.setGroupId(groupId);
 		call.setCreateDate(now);
 		call.setUserId(userId);
@@ -92,7 +98,9 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		call.setTitle(callBean.getTitle());
 		call.setDeadline(callBean.getDeadline());
 		call.setPublicationDeadline(callBean.getPublicationDeadline());
+		call.setRealizationDeadline(callBean.getRealizationDeadline());
 		call.setDescription(callBean.getDescription());
+		call.setUserGroupId(group.getGroupId());
 
 		call = callPersistence.update(call);
 
@@ -125,6 +133,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 			call.setDescription(callBean.getDescription());
 			call.setDeadline(callBean.getDeadline());
 			call.setPublicationDeadline(callBean.getPublicationDeadline());
+			call.setRealizationDeadline(callBean.getRealizationDeadline());
 
 			callPersistence.update(call);
 
@@ -159,6 +168,9 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Call.class);
 		indexer.delete(del);
+
+		GroupLocalServiceUtil.deleteUserGroup(serviceContext.getUserId(), del.getUserGroupId());
+		GroupLocalServiceUtil.deleteGroup(del.getUserGroupId());
 
 		resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 				Call.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,

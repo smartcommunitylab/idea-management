@@ -2,29 +2,29 @@
 <custom-sql>
 <!-- FIND BY CATEGORY -->
    <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCat">
-    	<![CDATA[select i.*from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  WHERE (ec.categoryId=?) ORDER BY i.createDate DESC]]>
+    	<![CDATA[select i.*from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  WHERE (ec.categoryId=?) AND a.visible=1 ORDER BY i.createDate DESC]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndRating">
-    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId= ?) GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>
+    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId= ?) AND a.visible=1 GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByRating">
-    	<![CDATA[select idea.*, AVG(r.score) AS media from AssetEntry a, RatingsEntry r, IM_Idea idea WHERE a.classPK=r.classPK AND idea.ideaId=a.classPK GROUP BY r.classPK ORDER BY media DESC, idea.createDate DESC ]]>
+    	<![CDATA[select idea.*, AVG(r.score) AS media from AssetEntry a, RatingsEntry r, IM_Idea idea WHERE a.classPK=r.classPK AND idea.ideaId=a.classPK AND a.visible=1 GROUP BY r.classPK ORDER BY media DESC, idea.createDate DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndRatingAndTags">
-    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  INNER JOIN AssetEntries_AssetTags et ON et.entryId=a.entryId LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId=?) AND et.tagId IN (?) GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>
+    	<![CDATA[select i.*, AVG(r.score) AS media from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  INNER JOIN AssetEntries_AssetTags et ON et.entryId=a.entryId LEFT JOIN RatingsEntry r ON r.classPK=a.classPK WHERE (ec.categoryId=?) AND et.tagId IN (?) AND a.visible=1 GROUP BY r.classPK ORDER BY media DESC, i.createDate DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCatAndTags">
-    	<![CDATA[select DISTINCT i.* from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  INNER JOIN AssetEntries_AssetTags et ON et.entryId=a.entryId WHERE (ec.categoryId=?) AND et.tagId IN (?) ORDER BY i.createDate DESC]]>
+    	<![CDATA[select DISTINCT i.* from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  INNER JOIN AssetEntries_AssetTags et ON et.entryId=a.entryId WHERE (ec.categoryId=?) AND et.tagId IN (?) AND a.visible=1 ORDER BY i.createDate DESC]]>
     </sql>
     
 <!-- FIND BY CALL -->
 	<sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndRating">
-    	<![CDATA[select i.*, AVG(r.score) AS media FROM IM_Idea i LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) GROUP BY i.ideaId ORDER BY media DESC, i.createDate DESC ]]>
+    	<![CDATA[select i.*, AVG(r.score) AS media FROM IM_Idea i INNER JOIN AssetEntry a ON i.ideaId=a.classPK LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) AND a.visible=1 GROUP BY i.ideaId ORDER BY media DESC, i.createDate DESC ]]>
     </sql>
     <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndRatingAndTags">
-    	<![CDATA[select i.*, AVG(r.score) AS media FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) AND et.tagId IN (?) GROUP BY i.ideaId ORDER BY media DESC, i.createDate DESC ]]>
+    	<![CDATA[select i.*, AVG(r.score) AS media FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK LEFT JOIN RatingsEntry r ON  i.ideaId=r.classPK WHERE (i.callId=?) AND et.tagId IN (?) AND a.visible=1 GROUP BY i.ideaId ORDER BY media DESC, i.createDate DESC ]]>
     </sql>
      <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndTags">
-    	<![CDATA[select i.* FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK WHERE (i.callId=?) AND et.tagId IN (?) ORDER BY i.createDate DESC ]]>
+    	<![CDATA[select i.* FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK WHERE (i.callId=?) AND et.tagId IN (?) AND a.visible=1 ORDER BY i.createDate DESC ]]>
     </sql>
 </custom-sql>

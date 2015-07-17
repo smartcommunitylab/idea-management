@@ -33,10 +33,12 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
     public String description;
     public long deadline;
     public long publicationDeadline;
+    public long realizationDeadline;
+    public long userGroupId;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(29);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -62,6 +64,10 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
         sb.append(deadline);
         sb.append(", publicationDeadline=");
         sb.append(publicationDeadline);
+        sb.append(", realizationDeadline=");
+        sb.append(realizationDeadline);
+        sb.append(", userGroupId=");
+        sb.append(userGroupId);
         sb.append("}");
 
         return sb.toString();
@@ -124,6 +130,14 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
             callImpl.setPublicationDeadline(new Date(publicationDeadline));
         }
 
+        if (realizationDeadline == Long.MIN_VALUE) {
+            callImpl.setRealizationDeadline(null);
+        } else {
+            callImpl.setRealizationDeadline(new Date(realizationDeadline));
+        }
+
+        callImpl.setUserGroupId(userGroupId);
+
         callImpl.resetOriginalValues();
 
         return callImpl;
@@ -143,6 +157,8 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
         description = objectInput.readUTF();
         deadline = objectInput.readLong();
         publicationDeadline = objectInput.readLong();
+        realizationDeadline = objectInput.readLong();
+        userGroupId = objectInput.readLong();
     }
 
     @Override
@@ -182,5 +198,7 @@ public class CallCacheModel implements CacheModel<Call>, Externalizable {
 
         objectOutput.writeLong(deadline);
         objectOutput.writeLong(publicationDeadline);
+        objectOutput.writeLong(realizationDeadline);
+        objectOutput.writeLong(userGroupId);
     }
 }

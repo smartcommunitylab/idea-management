@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -160,8 +161,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 	}
 
 	public void addComment(ActionRequest req, ActionResponse res) {
+		Long ideaId = ParamUtil.getLong(req, "classPK");
 		try {
-			invokeTaglibDiscussion(req, res);
+			Idea idea = IdeaLocalServiceUtil.fetchIdea(ideaId);
+			if (Utils.discussionEnabled(idea, req)) {
+				invokeTaglibDiscussion(req, res);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -183,14 +188,23 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
+		String deadlineConstraints = ParamUtil.getString(req, "deadlineConstraints");
+		int discussionLimit = ParamUtil.getInteger(req, "discussionLimit");
 		IdeaBean ideaBean = new IdeaBean();
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
 		ideaBean.setCategoryId(categoryId);
 		ideaBean.setCallId(callId);
+		if (discussionLimit > 0) {
+			ideaBean.setDiscussionLimit(discussionLimit);
+		} else {
+			ideaBean.setDiscussionLimit(Constants.DEFAULT_DISCUSSION_LIMIT);
+		}
+		ideaBean.setDeadlineConstraints(deadlineConstraints);
 		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(),
 				ideaBean, serviceContext);
+		SubscriptionLocalServiceUtil.addSubscription(serviceContext.getUserId(), idea.getGroupId(), Idea.class.getName(), idea.getIdeaId());
 		req.setAttribute("idea", idea);
 	}
 
@@ -219,12 +233,38 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
+		String deadlineConstraints = ParamUtil.getString(req, "deadlineConstraints");
+		int discussionLimit = ParamUtil.getInteger(req, "discussionLimit");
+
 		IdeaBean ideaBean = new IdeaBean();
 		ideaBean.setId(id);
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
+		if (discussionLimit > 0) {
+			ideaBean.setDiscussionLimit(discussionLimit);
+		} else {
+			ideaBean.setDiscussionLimit(Constants.DEFAULT_DISCUSSION_LIMIT);
+		}
+		ideaBean.setDeadlineConstraints(deadlineConstraints);
+		
 		IdeaLocalServiceUtil.updateIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 	}
+	
+	public void followIdea(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException, IOException 
+	{
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(Idea.class.getName(), req);
+		Long ideaId = ParamUtil.getLong(req, "ideaId");
+		Idea idea = IdeaLocalServiceUtil.fetchIdea(ideaId);
+		boolean subscribed = ParamUtil.getBoolean(req, "subscribed");
+		// subscribe idea
+		if (!subscribed) {
+			SubscriptionLocalServiceUtil.addSubscription(serviceContext.getUserId(), idea.getGroupId(), Idea.class.getName(), ideaId);
+		} else {
+			SubscriptionLocalServiceUtil.deleteSubscription(serviceContext.getUserId(), Idea.class.getName(), ideaId);
+		}
+	}
+
 }

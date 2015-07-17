@@ -12,6 +12,7 @@
 		<friendly-url-mapping>idea</friendly-url-mapping>
 		<friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/idea-friendly-url-routes.xml</friendly-url-routes>
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.IdeaAssetRendererFactory</asset-renderer-factory>
+		<workflow-handler>it.smartcommunitylab.platform.idea.asset.IdeaWorkflowHandler</workflow-handler>
 		<instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>
@@ -28,10 +29,6 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>call</friendly-url-mapping>
 		<friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/call-friendly-url-routes.xml</friendly-url-routes>
-		<!-- <control-panel-entry-category> -->
-		<!-- site_administration.content -->
-		<!-- </control-panel-entry-category> -->
-		<!-- <control-panel-entry-weight>1.5</control-panel-entry-weight> -->
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.CallAssetRendererFactory</asset-renderer-factory>
 		<instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -40,6 +37,15 @@
 		</footer-portlet-javascript>
 		<css-class-wrapper>call-management-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
+	</portlet>
+	<portlet>
+		<portlet-name>evento-management</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>evento-management-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>user-profile</portlet-name>

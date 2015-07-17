@@ -36,6 +36,8 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
     private String _description;
     private Date _deadline;
     private Date _publicationDeadline;
+    private Date _realizationDeadline;
+    private long _userGroupId;
     private BaseModel<?> _callRemoteModel;
     private Class<?> _clpSerializerClass = it.smartcommunitylab.platform.idea.service.ClpSerializer.class;
 
@@ -88,6 +90,8 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
         attributes.put("description", getDescription());
         attributes.put("deadline", getDeadline());
         attributes.put("publicationDeadline", getPublicationDeadline());
+        attributes.put("realizationDeadline", getRealizationDeadline());
+        attributes.put("userGroupId", getUserGroupId());
 
         return attributes;
     }
@@ -164,6 +168,18 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
 
         if (publicationDeadline != null) {
             setPublicationDeadline(publicationDeadline);
+        }
+
+        Date realizationDeadline = (Date) attributes.get("realizationDeadline");
+
+        if (realizationDeadline != null) {
+            setRealizationDeadline(realizationDeadline);
+        }
+
+        Long userGroupId = (Long) attributes.get("userGroupId");
+
+        if (userGroupId != null) {
+            setUserGroupId(userGroupId);
         }
     }
 
@@ -443,6 +459,51 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
     }
 
     @Override
+    public Date getRealizationDeadline() {
+        return _realizationDeadline;
+    }
+
+    @Override
+    public void setRealizationDeadline(Date realizationDeadline) {
+        _realizationDeadline = realizationDeadline;
+
+        if (_callRemoteModel != null) {
+            try {
+                Class<?> clazz = _callRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setRealizationDeadline",
+                        Date.class);
+
+                method.invoke(_callRemoteModel, realizationDeadline);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
+    public long getUserGroupId() {
+        return _userGroupId;
+    }
+
+    @Override
+    public void setUserGroupId(long userGroupId) {
+        _userGroupId = userGroupId;
+
+        if (_callRemoteModel != null) {
+            try {
+                Class<?> clazz = _callRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setUserGroupId", long.class);
+
+                method.invoke(_callRemoteModel, userGroupId);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Call.class.getName()));
@@ -527,6 +588,8 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
         clone.setDescription(getDescription());
         clone.setDeadline(getDeadline());
         clone.setPublicationDeadline(getPublicationDeadline());
+        clone.setRealizationDeadline(getRealizationDeadline());
+        clone.setUserGroupId(getUserGroupId());
 
         return clone;
     }
@@ -578,7 +641,7 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(25);
+        StringBundler sb = new StringBundler(29);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -604,6 +667,10 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
         sb.append(getDeadline());
         sb.append(", publicationDeadline=");
         sb.append(getPublicationDeadline());
+        sb.append(", realizationDeadline=");
+        sb.append(getRealizationDeadline());
+        sb.append(", userGroupId=");
+        sb.append(getUserGroupId());
         sb.append("}");
 
         return sb.toString();
@@ -611,7 +678,7 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(40);
+        StringBundler sb = new StringBundler(46);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Call");
@@ -664,6 +731,14 @@ public class CallClp extends BaseModelImpl<Call> implements Call {
         sb.append(
             "<column><column-name>publicationDeadline</column-name><column-value><![CDATA[");
         sb.append(getPublicationDeadline());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>realizationDeadline</column-name><column-value><![CDATA[");
+        sb.append(getRealizationDeadline());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>userGroupId</column-name><column-value><![CDATA[");
+        sb.append(getUserGroupId());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

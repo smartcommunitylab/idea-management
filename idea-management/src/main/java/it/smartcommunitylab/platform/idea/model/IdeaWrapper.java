@@ -52,6 +52,12 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("userGroupId", getUserGroupId());
         attributes.put("callId", getCallId());
         attributes.put("state", getState());
+        attributes.put("stateJudgement", getStateJudgement());
+        attributes.put("deadlineConstraints", getDeadlineConstraints());
+        attributes.put("discussionLimit", getDiscussionLimit());
+        attributes.put("status", getStatus());
+        attributes.put("statusByUserId", getStatusByUserId());
+        attributes.put("statusByUserName", getStatusByUserName());
 
         return attributes;
     }
@@ -140,6 +146,43 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (state != null) {
             setState(state);
+        }
+
+        String stateJudgement = (String) attributes.get("stateJudgement");
+
+        if (stateJudgement != null) {
+            setStateJudgement(stateJudgement);
+        }
+
+        String deadlineConstraints = (String) attributes.get(
+                "deadlineConstraints");
+
+        if (deadlineConstraints != null) {
+            setDeadlineConstraints(deadlineConstraints);
+        }
+
+        Integer discussionLimit = (Integer) attributes.get("discussionLimit");
+
+        if (discussionLimit != null) {
+            setDiscussionLimit(discussionLimit);
+        }
+
+        Integer status = (Integer) attributes.get("status");
+
+        if (status != null) {
+            setStatus(status);
+        }
+
+        Long statusByUserId = (Long) attributes.get("statusByUserId");
+
+        if (statusByUserId != null) {
+            setStatusByUserId(statusByUserId);
+        }
+
+        String statusByUserName = (String) attributes.get("statusByUserName");
+
+        if (statusByUserName != null) {
+            setStatusByUserName(statusByUserName);
         }
     }
 
@@ -465,6 +508,148 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         _idea.setState(state);
     }
 
+    /**
+    * Returns the state judgement of this idea.
+    *
+    * @return the state judgement of this idea
+    */
+    @Override
+    public java.lang.String getStateJudgement() {
+        return _idea.getStateJudgement();
+    }
+
+    /**
+    * Sets the state judgement of this idea.
+    *
+    * @param stateJudgement the state judgement of this idea
+    */
+    @Override
+    public void setStateJudgement(java.lang.String stateJudgement) {
+        _idea.setStateJudgement(stateJudgement);
+    }
+
+    /**
+    * Returns the deadline constraints of this idea.
+    *
+    * @return the deadline constraints of this idea
+    */
+    @Override
+    public java.lang.String getDeadlineConstraints() {
+        return _idea.getDeadlineConstraints();
+    }
+
+    /**
+    * Sets the deadline constraints of this idea.
+    *
+    * @param deadlineConstraints the deadline constraints of this idea
+    */
+    @Override
+    public void setDeadlineConstraints(java.lang.String deadlineConstraints) {
+        _idea.setDeadlineConstraints(deadlineConstraints);
+    }
+
+    /**
+    * Returns the discussion limit of this idea.
+    *
+    * @return the discussion limit of this idea
+    */
+    @Override
+    public int getDiscussionLimit() {
+        return _idea.getDiscussionLimit();
+    }
+
+    /**
+    * Sets the discussion limit of this idea.
+    *
+    * @param discussionLimit the discussion limit of this idea
+    */
+    @Override
+    public void setDiscussionLimit(int discussionLimit) {
+        _idea.setDiscussionLimit(discussionLimit);
+    }
+
+    /**
+    * Returns the status of this idea.
+    *
+    * @return the status of this idea
+    */
+    @Override
+    public int getStatus() {
+        return _idea.getStatus();
+    }
+
+    /**
+    * Sets the status of this idea.
+    *
+    * @param status the status of this idea
+    */
+    @Override
+    public void setStatus(int status) {
+        _idea.setStatus(status);
+    }
+
+    /**
+    * Returns the status by user ID of this idea.
+    *
+    * @return the status by user ID of this idea
+    */
+    @Override
+    public long getStatusByUserId() {
+        return _idea.getStatusByUserId();
+    }
+
+    /**
+    * Sets the status by user ID of this idea.
+    *
+    * @param statusByUserId the status by user ID of this idea
+    */
+    @Override
+    public void setStatusByUserId(long statusByUserId) {
+        _idea.setStatusByUserId(statusByUserId);
+    }
+
+    /**
+    * Returns the status by user uuid of this idea.
+    *
+    * @return the status by user uuid of this idea
+    * @throws SystemException if a system exception occurred
+    */
+    @Override
+    public java.lang.String getStatusByUserUuid()
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _idea.getStatusByUserUuid();
+    }
+
+    /**
+    * Sets the status by user uuid of this idea.
+    *
+    * @param statusByUserUuid the status by user uuid of this idea
+    */
+    @Override
+    public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+        _idea.setStatusByUserUuid(statusByUserUuid);
+    }
+
+    /**
+    * Returns the status by user name of this idea.
+    *
+    * @return the status by user name of this idea
+    */
+    @Override
+    public java.lang.String getStatusByUserName() {
+        return _idea.getStatusByUserName();
+    }
+
+    /**
+    * Sets the status by user name of this idea.
+    *
+    * @param statusByUserName the status by user name of this idea
+    */
+    @Override
+    public void setStatusByUserName(java.lang.String statusByUserName) {
+        _idea.setStatusByUserName(statusByUserName);
+    }
+
     @Override
     public boolean isNew() {
         return _idea.isNew();
@@ -572,6 +757,16 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public java.util.Date discussionDeadline() {
         return _idea.discussionDeadline();
+    }
+
+    @Override
+    public boolean discussionExpired() {
+        return _idea.discussionExpired();
+    }
+
+    @Override
+    public java.lang.String realState() {
+        return _idea.realState();
     }
 
     @Override

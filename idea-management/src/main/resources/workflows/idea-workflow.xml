@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+<workflow-definition xmlns="urn:liferay.com:liferay-workflow_6.2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_6.2.0 http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd">
+	<name>Idea workflow</name>
+	<description>Workflow for idea</description>
+	<version>1</version>
+	<state>
+		<name>created</name>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>checkuser</name>
+				<target>checkuser</target>
+			</transition>
+		</transitions>
+	</state>
+	<condition>
+		<name>checkuser</name>
+		<description>Checking whether the user has specific role</description>
+		<script> 
+			<![CDATA[
+				import com.liferay.portal.model.User; 
+				import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+				import com.liferay.portal.service.UserLocalServiceUtil; 
+				import com.liferay.portal.model.Role; 
+				import java.util.List; 
+          	
+				String userId = (String) workflowContext.get(WorkflowConstants.CONTEXT_USER_ID); 
+				User user = UserLocalServiceUtil.getUser(Long.valueOf(userId)); 
+				returnValue = "published"; 
+				
+				List<Role> roles = user.getRoles(); 
+				for (Role r : roles) { 
+					println user.getFullName() + " @@" + r.getName(); 
+					if (r.getName().equalsIgnoreCase("blacklisted")) { 
+						println "Setting approve for user : " + user.getFirstName(); 
+						returnValue = "staged";
+						println "blacklisted user content in review"; 
+						break; 
+					} 
+				} 
+				return returnValue; 
+			]]> 
+		</script>
+		<script-language>groovy</script-language>
+		<transitions>
+			<transition>
+				<name>published</name>
+				<target>published</target>
+			</transition>
+			<transition>
+				<name>staged</name>
+				<target>staged</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</condition>
+
+	<!-- regular flow -->
+	<state>
+		<name>published</name>
+		<actions>
+			<action>
+				<name>updateStatus</name>
+				<script>
+				<![CDATA[
+				import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+				import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+				WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("pending"), workflowContext);
+				]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<transitions>
+			<transition>
+				<name>evaluation</name>
+				<target>evaluation</target>
+			</transition>
+		</transitions>
+	</state>
+
+	<!-- blacklisted flow -->
+	<state>
+		<name>staged</name>
+		<actions>
+			<action>
+				<name>updateStatus</name>
+				<script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("draft"), workflowContext); 
+          ]]>
+        </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<transitions>
+			<transition>
+				<name>staged-evaluation</name>
+				<target>staged-evaluation</target>
+			</transition>
+		</transitions>
+	</state>
+
+	<task>
+		<name>evaluation</name>
+		<actions>
+			<notification>
+				<name>Moderator notification</name>
+				<template>User ${userName} has submitted a new ${entryType}</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>Review Completion Notification</name>
+				<template>
+				  <![CDATA[
+				   <#switch transitionName>
+				   <#case "duplicated">
+				   Sorry you have copied someone !!!
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "accepted">
+				   YEAH Your ${entryType} has been accepted
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "abusive">
+				   Your ${entryType} has been rejected
+				   comment: ${taskComments}
+				   <#break>
+				   <#default>
+					Default template
+				</#switch>
+          ]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<recipients>
+					<user />
+				</recipients>
+				<execution-type>onExit</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>site</role-type>
+					<name>Moderator</name>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>duplicated</name>
+				<target>duplicated</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<name>approved</name>
+				<target>approved</target>
+			</transition>
+			<transition>
+				<name>abusive</name>
+				<target>abusive</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+
+	<task>
+		<name>staged-evaluation</name>
+		<actions>
+			<notification>
+				<name>User notification</name>
+				<template>Your idea need approvation by moderator. You will inform about your idea review</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<recipients>
+					<user></user>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+			<notification>
+				<name>Moderator notification</name>
+				<template>User ${userName} has submitted a new ${entryType}</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>Review Completion Notification</name>
+				<template>
+				  <![CDATA[
+				   <#switch transitionName>
+				   <#case "duplicated">
+				   Sorry you have copied someone !!!
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "accepted">
+				   YEAH Your ${entryType} has been accepted
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "abusive">
+				   Your ${entryType} has been rejected
+				   comment: ${taskComments}
+				   <#break>
+				   <#default>
+					Default template
+				</#switch>
+          ]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<recipients>
+					<user />
+				</recipients>
+				<execution-type>onExit</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>site</role-type>
+					<name>Moderator</name>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>duplicated</name>
+				<target>duplicated</target>
+				<default>false</default>
+			</transition>
+			<transition>
+				<name>approved</name>
+				<target>approved</target>
+			</transition>
+			<transition>
+				<name>abusive</name>
+				<target>abusive</target>
+				<default>false</default>
+			</transition>
+		</transitions>
+	</task>
+
+	<state>
+		<name>duplicated</name>
+		<actions>
+			<action>
+				<name>setStatus</name>
+				<script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          WorkflowStatusManagerUtil.updateStatus(100, workflowContext); 
+          ]]>
+        </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<state>
+		<name>approved</name>
+		<actions>
+			<action>
+				<name>updateStatus</name>
+				<script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
+          ]]>
+        </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	<state>
+		<name>abusive</name>
+		<actions>
+			<action>
+				<name>updateStatus</name>
+				<script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          
+          WorkflowStatusManagerUtil.updateStatus(101, workflowContext); 
+          ]]>
+          
+          
+        </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+
+</workflow-definition>

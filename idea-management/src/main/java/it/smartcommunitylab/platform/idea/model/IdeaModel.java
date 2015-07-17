@@ -280,6 +280,108 @@ public interface IdeaModel extends BaseModel<Idea>, StagedGroupedModel {
      */
     public void setState(String state);
 
+    /**
+     * Returns the state judgement of this idea.
+     *
+     * @return the state judgement of this idea
+     */
+    @AutoEscape
+    public String getStateJudgement();
+
+    /**
+     * Sets the state judgement of this idea.
+     *
+     * @param stateJudgement the state judgement of this idea
+     */
+    public void setStateJudgement(String stateJudgement);
+
+    /**
+     * Returns the deadline constraints of this idea.
+     *
+     * @return the deadline constraints of this idea
+     */
+    @AutoEscape
+    public String getDeadlineConstraints();
+
+    /**
+     * Sets the deadline constraints of this idea.
+     *
+     * @param deadlineConstraints the deadline constraints of this idea
+     */
+    public void setDeadlineConstraints(String deadlineConstraints);
+
+    /**
+     * Returns the discussion limit of this idea.
+     *
+     * @return the discussion limit of this idea
+     */
+    public int getDiscussionLimit();
+
+    /**
+     * Sets the discussion limit of this idea.
+     *
+     * @param discussionLimit the discussion limit of this idea
+     */
+    public void setDiscussionLimit(int discussionLimit);
+
+    /**
+     * Returns the status of this idea.
+     *
+     * @return the status of this idea
+     */
+    public int getStatus();
+
+    /**
+     * Sets the status of this idea.
+     *
+     * @param status the status of this idea
+     */
+    public void setStatus(int status);
+
+    /**
+     * Returns the status by user ID of this idea.
+     *
+     * @return the status by user ID of this idea
+     */
+    public long getStatusByUserId();
+
+    /**
+     * Sets the status by user ID of this idea.
+     *
+     * @param statusByUserId the status by user ID of this idea
+     */
+    public void setStatusByUserId(long statusByUserId);
+
+    /**
+     * Returns the status by user uuid of this idea.
+     *
+     * @return the status by user uuid of this idea
+     * @throws SystemException if a system exception occurred
+     */
+    public String getStatusByUserUuid() throws SystemException;
+
+    /**
+     * Sets the status by user uuid of this idea.
+     *
+     * @param statusByUserUuid the status by user uuid of this idea
+     */
+    public void setStatusByUserUuid(String statusByUserUuid);
+
+    /**
+     * Returns the status by user name of this idea.
+     *
+     * @return the status by user name of this idea
+     */
+    @AutoEscape
+    public String getStatusByUserName();
+
+    /**
+     * Sets the status by user name of this idea.
+     *
+     * @param statusByUserName the status by user name of this idea
+     */
+    public void setStatusByUserName(String statusByUserName);
+
     @Override
     public boolean isNew();
 

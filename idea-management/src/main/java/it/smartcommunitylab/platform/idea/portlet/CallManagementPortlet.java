@@ -12,7 +12,6 @@ import java.util.Date;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -54,6 +53,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		bean.setDescription(desc);
 		bean.setDeadline(calculateDeadline(req, "d"));
 		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
+		bean.setRealizationDeadline(calculateDeadline(req, "ed"));
 
 		Call call = CallLocalServiceUtil.createCall(serviceContext.getUserId(), bean,
 				serviceContext);
@@ -79,6 +79,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		bean.setDescription(desc);
 		bean.setDeadline(calculateDeadline(req, "d"));
 		bean.setPublicationDeadline(calculateDeadline(req, "pd"));
+		bean.setRealizationDeadline(calculateDeadline(req, "ed"));
 
 		CallLocalServiceUtil.updateCall(bean, serviceContext);
 	}

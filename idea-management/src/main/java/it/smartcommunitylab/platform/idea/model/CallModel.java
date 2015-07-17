@@ -250,6 +250,34 @@ public interface CallModel extends BaseModel<Call>, StagedGroupedModel {
      */
     public void setPublicationDeadline(Date publicationDeadline);
 
+    /**
+     * Returns the realization deadline of this call.
+     *
+     * @return the realization deadline of this call
+     */
+    public Date getRealizationDeadline();
+
+    /**
+     * Sets the realization deadline of this call.
+     *
+     * @param realizationDeadline the realization deadline of this call
+     */
+    public void setRealizationDeadline(Date realizationDeadline);
+
+    /**
+     * Returns the user group ID of this call.
+     *
+     * @return the user group ID of this call
+     */
+    public long getUserGroupId();
+
+    /**
+     * Sets the user group ID of this call.
+     *
+     * @param userGroupId the user group ID of this call
+     */
+    public void setUserGroupId(long userGroupId);
+
     @Override
     public boolean isNew();
 

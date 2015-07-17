@@ -23,12 +23,12 @@
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
         <implicit-parameter name="mvcPath">/html/callmanagement/asset/full_content.jsp</implicit-parameter>
     </route>
-    <route>
-        <pattern>/{instanceId}/{callId}/view</pattern>
-        <ignored-parameter name="javax.portlet.action"/>
-        <implicit-parameter name="p_p_lifecycle">1</implicit-parameter>
-        <implicit-parameter name="mvcPath">/html/callmanagement/asset/full_content.jsp</implicit-parameter>
-    </route>
+<!--     <route> -->
+<!--         <pattern>/{instanceId}/{callId}/view</pattern> -->
+<!--         <ignored-parameter name="javax.portlet.action"/> -->
+<!--         <implicit-parameter name="p_p_lifecycle">1</implicit-parameter> -->
+<!--         <implicit-parameter name="mvcPath">/html/callmanagement/asset/full_content.jsp</implicit-parameter> -->
+<!--     </route> -->
     <route>
         <pattern>/{instanceId}/{callId}/edit</pattern>
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>

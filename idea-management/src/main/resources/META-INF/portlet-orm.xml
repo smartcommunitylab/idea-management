@@ -31,6 +31,10 @@
 			<basic name="publicationDeadline">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="realizationDeadline">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="userGroupId" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -61,9 +65,16 @@
 			<basic name="state">
 				<column name="STATE_" />
 			</basic>
+			<basic name="stateJudgement" />
+			<basic name="deadlineConstraints" />
+			<basic name="discussionLimit" />
+			<basic name="status" />
+			<basic name="statusByUserId" />
+			<basic name="statusByUserName" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
+			<transient name="statusByUserUuid" />
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>

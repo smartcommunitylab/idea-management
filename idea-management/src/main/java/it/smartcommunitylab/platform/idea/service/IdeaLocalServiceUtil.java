@@ -347,6 +347,13 @@ public class IdeaLocalServiceUtil {
         getService().deleteIdea(userId, ideaBean, serviceContext);
     }
 
+    public static void changeIdeaState(long ideaId, java.lang.String state,
+        java.lang.String stateJudgement)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        getService().changeIdeaState(ideaId, state, stateJudgement);
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCat(
         long catId, long[] tagIds)
         throws com.liferay.portal.kernel.exception.SystemException {
@@ -490,6 +497,18 @@ public class IdeaLocalServiceUtil {
         return getService()
                    .searchPopularByCallAndCategoryAndTags(categoryId, callId,
             tagIds, begin, end);
+    }
+
+    public static it.smartcommunitylab.platform.idea.model.Idea updateStatus(
+        long userId, long ideaId, int status,
+        com.liferay.portal.service.ServiceContext serviceContext)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().updateStatus(userId, ideaId, status, serviceContext);
+    }
+
+    public static void blacklistUser(long userId) {
+        getService().blacklistUser(userId);
     }
 
     public static void clearService() {

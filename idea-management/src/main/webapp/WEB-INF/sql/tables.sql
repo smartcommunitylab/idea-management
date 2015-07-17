@@ -10,7 +10,9 @@ create table IM_Call (
 	modifiedDate DATE null,
 	description TEXT null,
 	deadline DATE null,
-	publicationDeadline DATE null
+	publicationDeadline DATE null,
+	realizationDeadline DATE null,
+	userGroupId LONG
 );
 
 create table IM_Idea (
@@ -27,5 +29,11 @@ create table IM_Idea (
 	shortDesc VARCHAR(75) null,
 	userGroupId LONG,
 	callId LONG,
-	state_ VARCHAR(75) null
+	state_ VARCHAR(75) null,
+	stateJudgement TEXT null,
+	deadlineConstraints VARCHAR(75) null,
+	discussionLimit INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null
 );

@@ -98,7 +98,7 @@
 	                    <c:if test="<%=idea.getCallId() > 0 %>"><span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> </c:if>
                     </div>
                     <div class="span6">
-	                    <c:if test="<%= themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())%>">
+	                    <c:if test="<%= false %>">
 	                      <portlet:actionURL var="deleteURL" name="deleteEntry">
 	                        <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
 	                        <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />

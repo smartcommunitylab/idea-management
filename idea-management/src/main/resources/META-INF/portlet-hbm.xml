@@ -20,6 +20,8 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="deadline" type="org.hibernate.type.TimestampType" />
 		<property name="publicationDeadline" type="org.hibernate.type.TimestampType" />
+		<property name="realizationDeadline" type="org.hibernate.type.TimestampType" />
+		<property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="it.smartcommunitylab.platform.idea.model.impl.IdeaImpl" table="IM_Idea">
 		<cache usage="read-write" />
@@ -39,5 +41,11 @@
 		<property name="userGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="callId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="state" type="com.liferay.portal.dao.orm.hibernate.StringType" column="state_" />
+		<property name="stateJudgement" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="deadlineConstraints" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="discussionLimit" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

@@ -9,8 +9,7 @@
 		<portlet-name>idea-management</portlet-name>
 		<display-name>Idea Management</display-name>
 		<portlet-class>
-			it.smartcommunitylab.platform.idea.portlet.IdeaManagementPortlet
-		</portlet-class>
+			it.smartcommunitylab.platform.idea.portlet.IdeaManagementPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/idea/view.jsp</value>
@@ -65,8 +64,7 @@
 		<portlet-name>call-management</portlet-name>
 		<display-name>Call Management</display-name>
 		<portlet-class>
-			it.smartcommunitylab.platform.idea.portlet.CallManagementPortlet
-		</portlet-class>
+			it.smartcommunitylab.platform.idea.portlet.CallManagementPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/callmanagement/view.jsp</value>
@@ -112,6 +110,47 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-public-render-parameter>callId</supported-public-render-parameter>
+	</portlet>
+	<portlet>
+		<portlet-name>evento-management</portlet-name>
+		<display-name>Evento Management</display-name>
+		<portlet-class>
+			it.smartcommunitylab.platform.evento.portlet.EventoManagementPortlet</portlet-class>
+		<init-param>
+			<name>view-template</name>
+			<value>/html/eventomanagement/view.jsp</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>it</supported-locale>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Evento Management</title>
+			<short-title>Evento Management</short-title>
+			<keywords></keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>manager</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>moderator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
+		<supported-public-render-parameter>ideaId</supported-public-render-parameter>
 		<supported-public-render-parameter>callId</supported-public-render-parameter>
 	</portlet>
 	<portlet>
@@ -161,5 +200,8 @@
 		<identifier>callId</identifier>
 		<qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:callId</qname>
 	</public-render-parameter>
-
+	<public-render-parameter>
+		<identifier>groupId</identifier>
+		<qname xmlns:x="http://im.smartcommunitylab.it/public-render-parameters">x:groupId</qname>
+	</public-render-parameter>
 </portlet-app>
