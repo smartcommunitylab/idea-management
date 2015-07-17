@@ -72,7 +72,7 @@
     </span>
 
     <% for(Idea idea : results) {%>
-        <portlet:renderURL var="viewIdea" windowState="maximized">
+        <portlet:renderURL var="viewIdea">
           <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
         </portlet:renderURL>
