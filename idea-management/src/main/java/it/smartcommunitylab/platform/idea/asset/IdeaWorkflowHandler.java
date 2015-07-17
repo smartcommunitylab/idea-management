@@ -41,6 +41,11 @@ public class IdeaWorkflowHandler extends BaseWorkflowHandler {
 
 		ServiceContext serviceContext = (ServiceContext) workflowContext
 				.get("serviceContext");
+
+		String comments = (String) workflowContext
+				.get(WorkflowConstants.CONTEXT_TASK_COMMENTS);
+		serviceContext.setAttribute(WorkflowConstants.CONTEXT_TASK_COMMENTS,
+				comments);
 		return IdeaLocalServiceUtil.updateStatus(userId, entryId, status,
 				serviceContext);
 	}

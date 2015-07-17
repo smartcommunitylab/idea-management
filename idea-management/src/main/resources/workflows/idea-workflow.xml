@@ -120,7 +120,7 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
-					<template>
+				<template>
 				  <![CDATA[
 				   <#switch transitionName>
 				   <#case "duplicated">
@@ -266,7 +266,7 @@
 				<script-language>groovy</script-language>
 				<execution-type>onEntry</execution-type>
 			</action>
-			</actions>
+		</actions>
 	</state>
 	<state>
 		<name>approved</name>

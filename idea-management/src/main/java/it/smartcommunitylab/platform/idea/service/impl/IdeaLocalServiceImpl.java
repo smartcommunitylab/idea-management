@@ -110,7 +110,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setShortDesc(ideaBean.getShortDesc());
 		idea.setLongDesc(ideaBean.getLongDesc());
 		idea.setCallId(ideaBean.getCallId());
-		
+
 		idea.setState(Constants.IDEA_STATE_PROPOSED);
 		idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
 		idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
@@ -162,7 +162,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 			idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
 			idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
-			
+
 			ideaPersistence.update(idea);
 
 			resourceLocalService.updateResources(serviceContext.getCompanyId(),
@@ -205,7 +205,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					.getClass());
 			indexer.delete(idea);
 
-			GroupLocalServiceUtil.deleteUserGroup(userId, idea.getUserGroupId());
+			GroupLocalServiceUtil
+					.deleteUserGroup(userId, idea.getUserGroupId());
 			GroupLocalServiceUtil.deleteGroup(idea.getUserGroupId());
 
 			resourceLocalService.deleteResource(serviceContext.getCompanyId(),
@@ -222,13 +223,14 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	}
 
-	public void changeIdeaState(long ideaId, String state, String stateJudgement) throws SystemException, PortalException {
+	public void changeIdeaState(long ideaId, String state, String stateJudgement)
+			throws SystemException, PortalException {
 		Idea idea = ideaPersistence.findByPrimaryKey(ideaId);
 		idea.setState(state);
 		idea.setStateJudgement(stateJudgement);
 		ideaPersistence.update(idea);
 	}
-	
+
 	public List<Idea> getIdeasByCat(long catId, long[] tagIds)
 			throws SystemException {
 		return IdeaFinderUtil.findByCatAndTags(catId, tagIds);
@@ -525,6 +527,12 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		i.setStatus(status);
 		i.setStatusByUserId(userId);
 		i.setStatusByUserName(user.getFullName());
+		String comments = (String) serviceContext
+				.getAttribute(WorkflowConstants.CONTEXT_TASK_COMMENTS);
+		// System.out.println("comments: " + comments);
+		if (comments != null) {
+			i.setStateJudgement(comments);
+		}
 		// i.setStatusDate(new Date());
 
 		ideaPersistence.update(i);
