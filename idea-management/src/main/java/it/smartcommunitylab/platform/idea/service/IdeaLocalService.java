@@ -383,6 +383,16 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
         throws com.liferay.portal.kernel.exception.SystemException;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTagsAndRating(
+        long[] tagIds)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTagsAndRating(
+        long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
         long callId, long[] tagIds, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
@@ -399,6 +409,15 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeas(
         long groupId, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTags(
+        long[] tags) throws com.liferay.portal.kernel.exception.SystemException;
+
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTags(
+        long[] tags, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public void toggleUserParticipation(long ideaId, long userId)

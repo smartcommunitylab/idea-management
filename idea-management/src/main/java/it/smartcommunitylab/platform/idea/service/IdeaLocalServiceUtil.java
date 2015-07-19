@@ -434,6 +434,18 @@ public class IdeaLocalServiceUtil {
         return getService().getIdeasByCallAndRating(callId, begin, end);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTagsAndRating(
+        long[] tagIds)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByTagsAndRating(tagIds);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTagsAndRating(
+        long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByTagsAndRating(tagIds, begin, end);
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
         long callId, long[] tagIds, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
@@ -455,6 +467,17 @@ public class IdeaLocalServiceUtil {
         long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return getService().getIdeas(groupId, start, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTags(
+        long[] tags) throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByTags(tags);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTags(
+        long[] tags, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getIdeasByTags(tags, start, end);
     }
 
     public static void toggleUserParticipation(long ideaId, long userId)

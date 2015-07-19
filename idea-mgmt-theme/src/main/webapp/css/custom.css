@@ -1151,3 +1151,96 @@ header#banner {
 	font-size: 16px;
 	color: #BBB;
 }
+
+.tagcloud-row .tagcloud-node {
+	display: inline-block;
+}
+
+.tagcloud-left .tagcloud-node {
+	float: right;
+}
+.tagcloud-row .tagcloud-node {
+	padding: 5px 10px 5px 10px;
+}
+.tagcloud-left .span{
+	float: right;
+}
+
+.tagcloud-left .tagcloud-wrapper {
+	float: right;
+	position: relative;
+}
+.tagcloud-right .tagcloud-wrapper {
+  float: left;
+}
+
+.tagcloud-row {
+	margin-bottom: 10px;
+}
+
+.tagcloud-wrapper {
+  min-width: 150px;
+  background-color: #75c6b6;
+  cursor: pointer;
+}
+
+.tagcloud-right:after {
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-left-color: #75c6b6;
+  border-width: 15px;
+}
+.tagcloud-left .tagcloud-wrapper::before {
+	left: -30px;
+  border: solid transparent;
+  float: left;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: relative;
+  pointer-events: none;
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #75c6b6;
+  border-width: 15.5px;
+  margin-top: 0px;
+}
+
+.tagcloud-name {
+	text-transform: uppercase;
+	color: white;
+}
+
+.tagcloud-count {
+	min-width: 20px;
+	margin-left: 5px;
+	margin-right:5px;
+	display: inline-block;
+	text-align: center;
+	  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+	background-color: white;
+	color: #75c6b6;
+	font-size: 12px;
+	font-weight: bolder;
+}
+
+.tagcloud-dot {
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.tagcloud-left .tagcloud-dot {
+	float: left;
+	position: absolute;
+	left: 0px;
+}
+
+.tagcloud-right .tagcloud-dot {
+	float: right;
+}

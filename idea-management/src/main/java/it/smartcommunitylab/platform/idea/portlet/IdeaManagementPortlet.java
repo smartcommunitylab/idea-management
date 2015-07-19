@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -107,17 +108,24 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				List<AssetTag> tags = Collections.emptyList();
 				if (callId != null && callId > 0) {
 					tags = IdeaLocalServiceUtil.getCallTags(callId);
-				} else {
-					if (categoryId != null && categoryId > 0)
+				} else if (categoryId != null && categoryId > 0) {
 						tags = IdeaLocalServiceUtil.getCategoryTags(
 								new long[] { categoryId },
 								PortalUtil.getScopeGroupId(req));
 				}
-				for (AssetTag tag : tags) {
-					long tagSel = ParamUtil.getLong(req,
-							"filterByTags" + tag.getTagId() + "Checkbox");
-					if (tagSel > 0) {
-						tagIds = ArrayUtil.append(tagIds, tag.getTagId());
+				
+				String[] passed = ParamUtil.getParameterValues(req, "tag");
+				if (passed != null && passed.length > 0) {
+					ServiceContext serviceContext = ServiceContextFactory.getInstance(
+							Idea.class.getName(), req);
+					tagIds = AssetTagLocalServiceUtil.getTagIds(serviceContext.getScopeGroupId(), passed);
+				} else {
+					for (AssetTag tag : tags) {
+						long tagSel = ParamUtil.getLong(req,
+								"filterByTags" + tag.getTagId() + "Checkbox");
+						if (tagSel > 0) {
+							tagIds = ArrayUtil.append(tagIds, tag.getTagId());
+						}
 					}
 				}
 			} catch (SystemException e1) {
@@ -158,6 +166,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		// only to perform action
 		String fType = req.getParameter("listType");
 		res.setRenderParameter("listType", fType);
+		res.setRenderParameter("tag", "");
 	}
 
 	public void addComment(ActionRequest req, ActionResponse res) {

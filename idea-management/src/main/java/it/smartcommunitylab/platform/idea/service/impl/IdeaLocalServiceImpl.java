@@ -127,12 +127,31 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			cats = new long[] { ideaBean.getCategoryId() };
 		}
 
-		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
-				groupId, idea.getCreateDate(), idea.getModifiedDate(),
-				Idea.class.getName(), pkId, idea.getUuid(), 0, cats,
-				serviceContext.getAssetTagNames(), true, null, null, null,
-				ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
-				null, 0, 0, null, false);
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
+				userId,
+				groupId, 
+				idea.getCreateDate(), 
+				idea.getModifiedDate(),
+				Idea.class.getName(), 
+				pkId, 
+				idea.getUuid(), 
+				0, 
+				cats,
+				serviceContext.getAssetTagNames(), 
+				true, 
+				null, 
+				null, 
+				null,
+				ContentTypes.TEXT_HTML, 
+				idea.getTitle(), 
+				idea.getLongDesc(), 
+				idea.getShortDesc(), 
+				null,
+				null, 
+				0, 
+				0, 
+				null, 
+				false);
 
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
 				serviceContext.getAssetLinkEntryIds(),
@@ -179,7 +198,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					idea.getIdeaId(), idea.getUuid(), 0,
 					oldEntry.getCategoryIds(),
 					serviceContext.getAssetTagNames(), true, null, null, null,
-					ContentTypes.TEXT_HTML, idea.getTitle(), null, null, null,
+					ContentTypes.TEXT_HTML, idea.getTitle(), idea.getLongDesc(), idea.getShortDesc(), null,
 					null, 0, 0, null, false);
 
 			assetLinkLocalService.updateLinks(serviceContext.getUserId(),
@@ -328,6 +347,20 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 	}
 
+	public List<Idea> getIdeasByTagsAndRating(long[] tagIds)
+			throws SystemException {
+		return getIdeasByTagsAndRating(tagIds, -1, -1);
+	}
+
+	public List<Idea> getIdeasByTagsAndRating(long[] tagIds, int begin, int end)
+			throws SystemException {
+		if (begin <= 0 && end <= 0) {
+			return IdeaFinderUtil.findByTagsAndRating(tagIds);
+		} else {
+			return IdeaFinderUtil.findByTagsAndRating(tagIds, begin, end);
+		}
+	}
+
 	public List<Idea> getIdeasByCallAndRating(long callId, long[] tagIds,
 			int begin, int end) throws SystemException {
 		if (tagIds == null || tagIds.length == 0) {
@@ -364,6 +397,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return ideaPersistence.findByGroupId(groupId, start, end);
 	}
 
+	public List<Idea> getIdeasByTags(long[] tags) throws SystemException {
+		return IdeaFinderUtil.findByTags(tags);
+	}
+
+	public List<Idea> getIdeasByTags(long[] tags, int start, int end) throws SystemException {
+		return IdeaFinderUtil.findByTags(tags, start, end);
+	}
+
+	
 	public void toggleUserParticipation(long ideaId, long userId)
 			throws SystemException, PortalException {
 		List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(userId);
@@ -464,12 +506,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			throws SystemException {
 		boolean searchByCat = categoryId > 0;
 		boolean searchByCall = callId > 0;
+		boolean searchByTags = tagIds != null && tagIds.length > 0;
 
 		List<Idea> ideas = null;
 		if (searchByCall) {
 			ideas = getIdeasByCall(callId, tagIds, begin, end);
 		} else if (searchByCat) {
 			ideas = getIdeasByCat(categoryId, tagIds, begin, end);
+		} else if (searchByTags) {
+			ideas = getIdeasByTags(tagIds, begin, end);
 		} else {
 			ideas = getIdeas(begin, end);
 		}
@@ -482,12 +527,15 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			throws SystemException {
 		boolean searchByCat = categoryId > 0;
 		boolean searchByCall = callId > 0;
+		boolean searchByTags = tagIds != null && tagIds.length > 0;
 
 		List<Idea> ideas = null;
 		if (searchByCall) {
 			ideas = getIdeasByCallAndRating(callId, tagIds, begin, end);
 		} else if (searchByCat) {
 			ideas = getIdeasByRating(categoryId, tagIds, begin, end);
+		} else if (searchByTags) {
+			ideas = getIdeasByTagsAndRating(tagIds, begin, end);
 		} else {
 			ideas = getIdeasByRating(begin, end);
 		}

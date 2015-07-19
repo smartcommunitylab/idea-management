@@ -89,7 +89,7 @@
                 <div onClick="javascript:window.location = '<%=viewIdea.toString() %>';" class="thumbnail" style="border-left-color: <%=color %>;">
                      <div class="idea-cat" style="color: <%=color %>;">
                        <%=catTitle %>
-                      <c:if test="<%= false%>">
+                      <c:if test="<%= Utils.ideaDeleteEnabled(idea, renderRequest) %>">
                         <portlet:actionURL var="deleteURL" name="deleteEntry">
                           <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
                           <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />

@@ -45,7 +45,6 @@
   params.put("mvcPath", "/html/idea/view.jsp");
   
   String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
-	String color = "#DDD";
 	if (callId > 0 && categoryId == 0) {
 	    Call call = CallLocalServiceUtil.getCall(callId);
         AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
@@ -57,9 +56,6 @@
             categoryId = category.getCategoryId();
           }
 	}
-	if (categoryId > 0) {
-	     color = CC.get(""+categoryId);
-	}  
 	PortletURL redirectURL = renderResponse.createRenderURL();
 	redirectURL.setParameter("ideaId", "0");
 	redirectURL.setWindowState(WindowState.NORMAL);
@@ -90,6 +86,10 @@
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(),classPK);
         RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),classPK);
         String scoreString = numberFormat.format(stat.getAverageScore());
+        List<AssetCategory> categories = curEntry.getCategories();   
+        String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "#DDD";
+        String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
+
         %>
         <div class="span4">
                 <div onClick="javascript:window.location='<%=viewIdea.toString() %>';" class="idea-card" style="border-color: <%=color %>;">
@@ -98,7 +98,7 @@
 	                    <c:if test="<%=idea.getCallId() > 0 %>"><span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> </c:if>
                     </div>
                     <div class="span6">
-	                    <c:if test="<%= false %>">
+                      <c:if test="<%= Utils.ideaDeleteEnabled(idea, renderRequest) %>">
 	                      <portlet:actionURL var="deleteURL" name="deleteEntry">
 	                        <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
 	                        <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
