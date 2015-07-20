@@ -1082,3 +1082,16 @@ header#banner {
 .categoriesselector-wrapper .field-content label {
 	display: none;
 }
+
+.userprofile .avatar {
+	display: block;
+	margin: auto;
+}
+
+.userprofile .entry .field {
+	text-transform: uppercase;
+}
+
+.userprofile .entry .value {
+	font-size: larger;
+}
