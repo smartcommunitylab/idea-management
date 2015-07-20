@@ -191,7 +191,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Idea.class.getName(), req);
 
-		Long categoryId = ParamUtil.getLong(req, "categoryId");
 		Long callId = ParamUtil.getLong(req, "callId");
 
 		String name = ParamUtil.getString(req, "title");
@@ -203,7 +202,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setTitle(name);
 		ideaBean.setShortDesc(shortDesc);
 		ideaBean.setLongDesc(longDesc);
-		ideaBean.setCategoryId(categoryId);
 		ideaBean.setCallId(callId);
 		if (discussionLimit > 0) {
 			ideaBean.setDiscussionLimit(discussionLimit);

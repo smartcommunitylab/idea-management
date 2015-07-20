@@ -45,6 +45,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     private long _statusByUserId;
     private String _statusByUserUuid;
     private String _statusByUserName;
+    private String _categoryIds;
     private BaseModel<?> _ideaRemoteModel;
     private Class<?> _clpSerializerClass = it.smartcommunitylab.platform.idea.service.ClpSerializer.class;
 
@@ -105,6 +106,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         attributes.put("status", getStatus());
         attributes.put("statusByUserId", getStatusByUserId());
         attributes.put("statusByUserName", getStatusByUserName());
+        attributes.put("categoryIds", getCategoryIds());
 
         return attributes;
     }
@@ -230,6 +232,12 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
         if (statusByUserName != null) {
             setStatusByUserName(statusByUserName);
+        }
+
+        String categoryIds = (String) attributes.get("categoryIds");
+
+        if (categoryIds != null) {
+            setCategoryIds(categoryIds);
         }
     }
 
@@ -698,6 +706,28 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
     }
 
     @Override
+    public String getCategoryIds() {
+        return _categoryIds;
+    }
+
+    @Override
+    public void setCategoryIds(String categoryIds) {
+        _categoryIds = categoryIds;
+
+        if (_ideaRemoteModel != null) {
+            try {
+                Class<?> clazz = _ideaRemoteModel.getClass();
+
+                Method method = clazz.getMethod("setCategoryIds", String.class);
+
+                method.invoke(_ideaRemoteModel, categoryIds);
+            } catch (Exception e) {
+                throw new UnsupportedOperationException(e);
+            }
+        }
+    }
+
+    @Override
     public boolean discussionExpired() {
         try {
             String methodName = "discussionExpired";
@@ -844,6 +874,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         clone.setStatus(getStatus());
         clone.setStatusByUserId(getStatusByUserId());
         clone.setStatusByUserName(getStatusByUserName());
+        clone.setCategoryIds(getCategoryIds());
 
         return clone;
     }
@@ -901,7 +932,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(41);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -943,6 +974,8 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(getStatusByUserId());
         sb.append(", statusByUserName=");
         sb.append(getStatusByUserName());
+        sb.append(", categoryIds=");
+        sb.append(getCategoryIds());
         sb.append("}");
 
         return sb.toString();
@@ -950,7 +983,7 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(64);
+        StringBundler sb = new StringBundler(67);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Idea");
@@ -1035,6 +1068,10 @@ public class IdeaClp extends BaseModelImpl<Idea> implements Idea {
         sb.append(
             "<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
         sb.append(getStatusByUserName());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>categoryIds</column-name><column-value><![CDATA[");
+        sb.append(getCategoryIds());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

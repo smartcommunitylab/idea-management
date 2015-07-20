@@ -10,6 +10,7 @@
 <%@ page import="com.liferay.portal.model.Subscription" %>
 <%@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
@@ -38,10 +39,14 @@
 	PortalUtil.setPageSubtitle(idea.getTitle(), request);
 	PortalUtil.setPageDescription(idea.getTitle(), request);
 
+  List<AssetCategory> categories = Utils.getOrderedCategories(idea.getCategoryIds(), assetEntry);
+  java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+
 	List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
 			Idea.class.getName(), idea.getIdeaId());
 	
 	List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(assetEntry.getCategoryIds(), assetEntry.getGroupId());  
+
 	java.util.Set<String> categoryTagsSet = new java.util.HashSet<String>();
 	java.util.Set<String> parentTagSet = new java.util.HashSet<String>();
 	java.util.Set<String> ownTagSet = new java.util.HashSet<String>();
@@ -99,7 +104,16 @@
 </div>
  --%>
 <div class="row-fluid">
-  <div class="span12 text-right">
+  <div class="span6">
+    <% for (AssetCategory ac : categories) {
+      String categoryColor = CC.get(""+ac.getCategoryId());
+    %>
+    <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
+    <%=ac.getTitle(locale) %>  
+    </div>
+    <% } %>
+  </div>
+  <div class="span6 text-right">
       <span class="share-on-label"><liferay-ui:message key="lbl_share"/></span>
       <a class="share-on-link share-on-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=<%=htmlTitle %>&url=<%=canonicalURL%>"></a>
       <a class="share-on-link share-on-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%=canonicalURL%>"></a>

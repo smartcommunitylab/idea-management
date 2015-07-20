@@ -4,6 +4,7 @@ import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -11,19 +12,23 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 /**
  * The implementation of the call local service.
@@ -54,15 +59,16 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	 */
 
 	public List<Call> getOpenCalls(int begin, int end) throws SystemException {
+		// TODO consider null values also
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
-				.add(PropertyFactoryUtil.forName("deadline").ge(new Date()))
+				.add(RestrictionsFactoryUtil.or(PropertyFactoryUtil.forName("deadline").ge(new Date()),PropertyFactoryUtil.forName("deadline").isNull()))
 				.addOrder(OrderFactoryUtil.desc("deadline"));
 		return end > 0 ? callPersistence.findWithDynamicQuery(query, begin, end) : callPersistence.findWithDynamicQuery(query);
 	}
 	public List<Call> getInDiscussionCalls(int begin, int end) throws SystemException {
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
 				.add(PropertyFactoryUtil.forName("deadline").lt(new Date()))
-				.add(PropertyFactoryUtil.forName("publicationDeadline").ge(new Date()))
+				.add(RestrictionsFactoryUtil.or(PropertyFactoryUtil.forName("publicationDeadline").ge(new Date()),PropertyFactoryUtil.forName("publicationDeadline").isNull()))
 				.addOrder(OrderFactoryUtil.desc("deadline"));
 		return end > 0 ? callPersistence.findWithDynamicQuery(query, begin, end) : callPersistence.findWithDynamicQuery(query);
 	}
@@ -90,6 +96,8 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 				serviceContext);
 		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
 
+		long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+		
 		call.setGroupId(groupId);
 		call.setCreateDate(now);
 		call.setUserId(userId);
@@ -101,6 +109,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		call.setRealizationDeadline(callBean.getRealizationDeadline());
 		call.setDescription(callBean.getDescription());
 		call.setUserGroupId(group.getGroupId());
+		call.setCategoryIds(StringUtil.merge(assetCategoryIds));
 
 		call = callPersistence.update(call);
 
@@ -110,7 +119,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
 				groupId, call.getCreateDate(), call.getModifiedDate(),
 				Call.class.getName(), id, call.getUuid(), 0,
-				serviceContext.getAssetCategoryIds(),
+				assetCategoryIds,
 				serviceContext.getAssetTagNames(), true, null, null, null,
 				ContentTypes.TEXT_HTML, call.getTitle(), null, null, null,
 				null, 0, 0, null, false);
@@ -128,12 +137,15 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	public void updateCall(CallBean callBean, ServiceContext serviceContext)
 			throws SystemException, PortalException {
 		if (callBean != null) {
+			long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+
 			Call call = callPersistence.fetchByPrimaryKey(callBean.getId());
 			call.setTitle(callBean.getTitle());
 			call.setDescription(callBean.getDescription());
 			call.setDeadline(callBean.getDeadline());
 			call.setPublicationDeadline(callBean.getPublicationDeadline());
 			call.setRealizationDeadline(callBean.getRealizationDeadline());
+			call.setCategoryIds(StringUtil.merge(assetCategoryIds));
 
 			callPersistence.update(call);
 
@@ -141,12 +153,11 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 					serviceContext.getScopeGroupId(), Call.class.getName(),
 					call.getCallId(), serviceContext.getGroupPermissions(),
 					serviceContext.getGuestPermissions());
-
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 					serviceContext.getUserId(), call.getGroupId(),
 					call.getCreateDate(), call.getModifiedDate(),
 					Call.class.getName(), callBean.getId(), call.getUuid(), 0,
-					serviceContext.getAssetCategoryIds(),
+					assetCategoryIds,
 					serviceContext.getAssetTagNames(), true, null, null, null,
 					ContentTypes.TEXT_HTML, call.getTitle(), null, null, null,
 					null, 0, 0, null, false);

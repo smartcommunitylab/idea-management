@@ -23,15 +23,19 @@
         }
         
         String categoryId = ParamUtil.getString(request, "categoryId");
+        String categoryIds = categoryId;
         
         Long callId = ParamUtil.getLong(request, "callId");
         if(callId > 0) {
-            AssetEntry callEntry = AssetEntryLocalServiceUtil.getEntry(
-            	      Call.class.getName(), callId);
-            List<AssetCategory> categories = callEntry.getCategories();   
-            if (categories != null && categories.size() > 0) {
-            	categoryId = ""+ categories.get(0).getCategoryId();
-            }
+        	Call call = CallLocalServiceUtil.getCall(callId);
+        	if (call != null) categoryIds = call.getCategoryIds();
+//             AssetEntry callEntry = AssetEntryLocalServiceUtil.getEntry(
+//             	      Call.class.getName(), callId);
+//             List<AssetCategory> categories = callEntry.getCategories();   
+//             if (categories != null && categories.size() > 0) {
+//             	categoryId = ""+ categories.get(0).getCategoryId();
+//             	categoryIds = call.
+//             }
         }
         
 
@@ -43,7 +47,8 @@
         		tagNames+= (tagNames.isEmpty() ? "" : ",") + t.getName();
         	}
         }
-        
+
+        String curCategoryIds = idea == null ? (""+categoryIds) : idea.getCategoryIds();
 %>
 
 <%
@@ -103,8 +108,14 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
     <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints") %>' name="deadlineConstraints" type="textarea" label=""></aui:input>  
   </aui:field-wrapper>
 
-	<liferay-ui:asset-tags-error />
+  <liferay-ui:asset-categories-error />
+  <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat">
+  <aui:input name="catId" type="hidden"></aui:input>
+  <liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>">
+  </liferay-ui:asset-categories-selector>
+  </aui:field-wrapper>
 
+	<liferay-ui:asset-tags-error />
 	<liferay-ui:asset-tags-selector  curTags='<%=tagNames %>' className="<%=Idea.class.getName()%>"
 		classPK="<%=ideaId%>">
 	</liferay-ui:asset-tags-selector>
