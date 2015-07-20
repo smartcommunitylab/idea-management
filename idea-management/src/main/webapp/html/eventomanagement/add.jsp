@@ -26,6 +26,7 @@
 <c:choose>
 	<c:when test='<%=SessionMessages.contains(renderRequest, "requestProcessed")%>'>
 		<aui:script>
+			Liferay.Util.getOpener().refreshPortlet();
 			// Mandatory to close the dialog
 			Liferay.Util.getWindow().hide();
 		</aui:script>

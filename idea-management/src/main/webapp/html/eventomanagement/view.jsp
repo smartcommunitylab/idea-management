@@ -107,4 +107,12 @@
 		},
 		['liferay-util-window']
 	);
+	
+	Liferay.provide(window, 'refreshPortlet', 
+		function() {
+			var curPortlet = '#p_p_id<portlet:namespace/>';
+			Liferay.Portlet.refresh(curPortlet);
+		},
+		['aui-dialog','aui-dialog-iframe']
+	);
 	</aui:script>
