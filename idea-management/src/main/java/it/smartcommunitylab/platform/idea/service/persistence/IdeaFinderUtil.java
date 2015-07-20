@@ -77,6 +77,26 @@ public class IdeaFinderUtil {
         return getFinder().findByCallAndTags(callId, tagIds, begin, end);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTags(
+        long[] tagIds) {
+        return getFinder().findByTags(tagIds);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTags(
+        long[] tagIds, int begin, int end) {
+        return getFinder().findByTags(tagIds, begin, end);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTagsAndRating(
+        long[] tagIds) {
+        return getFinder().findByTagsAndRating(tagIds);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTagsAndRating(
+        long[] tagIds, int begin, int end) {
+        return getFinder().findByTagsAndRating(tagIds, begin, end);
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndRatingAndTags(
         long callId, long[] tagIds) {
         return getFinder().findByCallAndRatingAndTags(callId, tagIds);

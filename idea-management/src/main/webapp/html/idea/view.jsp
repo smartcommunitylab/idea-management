@@ -54,9 +54,7 @@ if(callId > 0) {
     	    categoryId = category.getCategoryId();
     	  }
     }
-} else {
-	categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
-}
+} 
 
 String categoryColor = "#DDD";
 if (categoryId > 0) {
@@ -64,6 +62,19 @@ if (categoryId > 0) {
 }
 
 long[] tagSelected = (long[]) request.getAttribute("tagSelected");
+
+if (categoryId > 0) {
+	  categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{categoryId}, scopeGroupId);  
+	} else {
+	  String[] publicParamTagNames = ParamUtil.getParameterValues(renderRequest, "tag");
+	  if (publicParamTagNames != null && publicParamTagNames.length > 0){
+	      long[] ids = AssetTagLocalServiceUtil.getTagIds(scopeGroupId, publicParamTagNames);
+	      categoryTags = new java.util.ArrayList<AssetTag>();
+	      for (long id : ids) {
+	        categoryTags.add(AssetTagLocalServiceUtil.getAssetTag(id));
+	      }
+	  }
+	}
 
 boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") ;
 
@@ -83,12 +94,6 @@ boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupI
   params.put("categoryId", categoryId);
   params.put("callId", callId);
   params.put("mvcPath", "/html/idea/add_idea.jsp");
-// 	PortletURL portletURL = renderResponse.createRenderURL();
-// 	portletURL.setParameter("categoryId", String.valueOf(categoryId)); 
-// 	portletURL.setParameter("callId", String.valueOf(callId));
-//   portletURL.setParameter("mvcPath", "/html/idea/edit_idea.jsp");
-//   portletURL.setWindowState(WindowState.MAXIMIZED);
-//   String addIdea = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
   String addIdea = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
 
 	%>

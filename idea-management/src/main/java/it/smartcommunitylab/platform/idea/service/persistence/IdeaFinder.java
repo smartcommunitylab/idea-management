@@ -42,6 +42,18 @@ public interface IdeaFinder {
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndTags(
         long callId, long[] tagIds, int begin, int end);
 
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTags(
+        long[] tagIds);
+
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTags(
+        long[] tagIds, int begin, int end);
+
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTagsAndRating(
+        long[] tagIds);
+
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByTagsAndRating(
+        long[] tagIds, int begin, int end);
+
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCallAndRatingAndTags(
         long callId, long[] tagIds);
 

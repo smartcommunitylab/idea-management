@@ -41,6 +41,9 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class Utils {
 
+	public static boolean ideaDeleteEnabled(Idea idea, PortletRequest req) {
+		return ideaEditEnabled(idea, req);
+	}
 	public static boolean ideaEditEnabled(Idea idea, PortletRequest req) {
 		//themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())
 		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);

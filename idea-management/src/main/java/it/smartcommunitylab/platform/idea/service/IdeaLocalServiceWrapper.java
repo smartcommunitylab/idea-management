@@ -462,6 +462,20 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTagsAndRating(
+        long[] tagIds)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByTagsAndRating(tagIds);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTagsAndRating(
+        long[] tagIds, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByTagsAndRating(tagIds, begin, end);
+    }
+
+    @Override
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByCallAndRating(
         long callId, long[] tagIds, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
@@ -487,6 +501,19 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
         long groupId, int start, int end)
         throws com.liferay.portal.kernel.exception.SystemException {
         return _ideaLocalService.getIdeas(groupId, start, end);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTags(
+        long[] tags) throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByTags(tags);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> getIdeasByTags(
+        long[] tags, int start, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _ideaLocalService.getIdeasByTags(tags, start, end);
     }
 
     @Override

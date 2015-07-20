@@ -1,5 +1,36 @@
 SITE LAYOUT
 
+INSTRUCTION FOR USER PUBLIC PAGE CREATION
+- portal-ext.properties configurations:
+---
+# User public page
+layout.user.public.layouts.enabled=true
+layout.user.public.layouts.auto.create=true
+default.user.public.layout.regular.theme.id=ideamgmt_WAR_ideamgmttheme
+default.user.public.layout.friendly.url=/profile
+default.user.public.layout.template.id=1_column
+default.user.public.layout.column-1=userprofile_WAR_ideamanagement
+#default.user.public.layout.template.id=2_columns_ii
+#default.user.public.layout.column-1=82,3
+#default.user.public.layout.column-2=33
+#default.user.public.layout.column-3=
+#default.user.public.layout.column-4=
+# User private page
+layout.user.private.layouts.enabled=false
+layout.user.private.layouts.auto.create=false
+#default.user.private.layout.regular.theme.id=idea-mgmt-theme_WAR_idea-mgmt-theme
+---
+- Set the first 2 lines to false
+- restart the server
+- logout or login and logout
+- login again
+- set the first 2 lines to true
+- restart the server
+- logout
+- login
+
+
+
 Define the following structures:
 - Create a Web content structure
 - call it `Idea category`

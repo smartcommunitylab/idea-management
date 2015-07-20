@@ -55,12 +55,15 @@
 				<#else>
 					<#assign id = themeDisplay.getPortletDisplay().getId() />
 					<#assign plid = themeDisplay.getPlid() />
-					<#assign portletURL = portletURLFactory.create(request, "49", plid, "ACTION_PHASE") />
-					${portletURL.setParameter("struts_action", "/my_sites/view")}
-					${portletURL.setParameter("groupId", "" + themeDisplay.getUser().getGroupId())}
-					${portletURL.setParameter("privateLayout", "false")}
-					${portletURL.setPortletMode("VIEW")}
-					${portletURL.setWindowState("NORMAL")}
+					<#assign profileURL = portletURLFactory.create(request, "49", plid, "ACTION_PHASE") />
+					${profileURL.setParameter("struts_action", "/my_sites/view")}
+					${profileURL.setParameter("groupId", "" + themeDisplay.getUser().getGroupId())}
+					${profileURL.setParameter("privateLayout", "false")}
+					${profileURL.setPortletMode("VIEW")}
+					${profileURL.setWindowState("NORMAL")}
+					
+					<#assign myAccountURL = themeDisplay.getURLMyAccount().toString() + "?controlPanelCategory=my"/>
+					<#-- <#assign myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY); -->
 				
 					<#--  ${themeDisplay.isImpersonated()?string("impersonating-user", "")} -->
 					<@liferay_util["buffer"] var="userprofile">
@@ -72,7 +75,7 @@
 					<@aui["nav-item"] cssClass="user-avatar" dropdown=false id="userAvatar" label="${userprofile}">
 						<li class="my-sites-menu public-site">
 							<#-- <a href="<%= myProfileURL.toString() %>"> ->
-							<a href="${portletURL.toString()}">
+							<a href="${profileURL.toString()}">
 								<span class="site-name"><@liferay_ui["message"] key="my-profile" /></span> 
 							</a>
 						</li>
@@ -84,9 +87,11 @@
 					</@>
 					-->
 					
-					<@aui["nav-item"] href="${portletURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
+					<@aui["nav-item"] href="${profileURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
+					<#-- <@aui["nav-item"] href="${myAccountURL}" id="userAvatar" label="${userprofile}" useDialog=false title="${user.getFullName()}" /> -->
+					<#-- useDialog="<%= PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>"-->
 					
-					<@aui["nav-item"] href="${portletURL.toString()}" id="userNotifications" iconCssClass="icon-bell" />
+					<@aui["nav-item"] href="${profileURL.toString()}" id="userNotifications" iconCssClass="icon-bell" />
 					
 					<#if themeDisplay.isShowSignOutIcon()>
 						<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="icon-off" />

@@ -41,22 +41,24 @@
 	<portlet:param name="date" value="<%= nextDate %>" />
 </portlet:renderURL>
 
-<div id="eventList" class="eventListClass">
-	<label class="main"><liferay-ui:message key="evento_title_eventi" /> <%=titleData%></label>
-	<input type="button" class="prevButton"  value="prevDate" 
-		onClick="location.href = '<%= viewPrevURL %>';" />
-	<input type="button" class="nextButton"  value="nextDate" 
-		onClick="location.href = '<%= viewNextURL %>';" />
-	<input type="button" class="addButton" value="add"
-		onClick="location.href = '<%= addEventURL %>';" />
-	<ul>
+<div class="event-container">
+  <div class="event-container-header">
+    <span class="event-container-title"><liferay-ui:message key="evento_title_eventi" /> <%=titleData%></span>
+    <div class="event-container-header-buttons">
+    <a  class="event-container-button event-container-button-add" href = '<%= addEventURL %>'><span>+</span></a>
+    <a  class="event-container-button event-container-button-prev" href = '<%= viewPrevURL %>'><span>&lt;</span></a>
+    <a  class="event-container-button event-container-button-next" href = '<%= viewNextURL %>'><span>&gt;</span></a>
+    </div>
+  </div>
+	<ul class="event-container-list">
+
 		<%
 			for (Map<String, String> event : eventList) {
 		%>
-		<li>
-			<div class="startDate"><%=event.get("startDate")%></div>
-			<div class="title"><%=event.get("title")%></div>
-			<div class="description"><%=event.get("description")%></div>
+		<li  class="event-container-element">
+			<div class="element-start"><%=event.get("startDate")%></div>
+			<div class="element-title"><%=event.get("title")%></div>
+			<div class="element-description"><%=event.get("description")%></div>
 		</li>
 		<%
 			}

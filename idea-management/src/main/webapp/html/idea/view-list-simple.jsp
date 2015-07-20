@@ -72,7 +72,7 @@
     </span>
 
     <% for(Idea idea : results) {%>
-        <portlet:renderURL var="viewIdea" windowState="maximized">
+        <portlet:renderURL var="viewIdea">
           <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
         </portlet:renderURL>
@@ -89,7 +89,7 @@
                 <div onClick="javascript:window.location = '<%=viewIdea.toString() %>';" class="thumbnail" style="border-left-color: <%=color %>;">
                      <div class="idea-cat" style="color: <%=color %>;">
                        <%=catTitle %>
-                      <c:if test="<%= false%>">
+                      <c:if test="<%= Utils.ideaDeleteEnabled(idea, renderRequest) %>">
                         <portlet:actionURL var="deleteURL" name="deleteEntry">
                           <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
                           <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />

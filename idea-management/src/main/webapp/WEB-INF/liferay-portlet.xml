@@ -7,7 +7,6 @@
 		<portlet-name>idea-management</portlet-name>
 		<icon>/icon.png</icon>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-
 		<indexer-class>it.smartcommunitylab.platform.idea.search.IdeaIndexer</indexer-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>idea</friendly-url-mapping>
@@ -27,11 +26,9 @@
 		<icon>/icon.png</icon>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<indexer-class>it.smartcommunitylab.platform.idea.search.CallIndexer</indexer-class>
-		
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>call</friendly-url-mapping>
 		<friendly-url-routes>it/smartcommunitylab/platform/idea/portlet/call-friendly-url-routes.xml</friendly-url-routes>
-		
 		<asset-renderer-factory>it.smartcommunitylab.platform.idea.asset.CallAssetRendererFactory</asset-renderer-factory>
 		<instanceable>true</instanceable>
 		<header-portlet-css>/css/main.css</header-portlet-css>
@@ -49,6 +46,15 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>evento-management-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>user-profile</portlet-name>
+		<icon>/icon.png</icon>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>
+			/js/main.js
+		</footer-portlet-javascript>
+		<css-class-wrapper>user-profile-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
