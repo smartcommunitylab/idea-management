@@ -105,10 +105,10 @@ public class EventoManagementPortlet extends MVCPortlet {
 		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 		long ideaId = ParamUtil.getLong(renderRequest, "ideaId");
 		long callId = ParamUtil.getLong(renderRequest, "callId");
-//		if(groupId == 0) {
-//			groupId = themeDisplay.getScopeGroupId();
-//			System.out.println("groupId:" + groupId);
-//		}
+		renderRequest.setAttribute("categoryId", Long.toString(categoryId));
+		renderRequest.setAttribute("ideaId", Long.toString(ideaId));
+		renderRequest.setAttribute("callId", Long.toString(callId));
+		
 		List<CalendarBooking> eventList = new ArrayList<CalendarBooking>();
 		if(ideaId > 0) {
 			try {
