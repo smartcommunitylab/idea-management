@@ -98,7 +98,8 @@ public class CallManagementPortlet extends MVCPortlet {
 		String day = ParamUtil.getString(req, prefix + "day");
 		String month = ParamUtil.getString(req, prefix + "month");
 		String year = ParamUtil.getString(req, prefix + "year");
-
+		if (day == null || day.trim().isEmpty()) return null;
+		
 		month = String.valueOf(Integer.valueOf(month) + 1);
 
 		String datePattern = "ddMMyyyyHm";
@@ -108,7 +109,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		try {
 			return new SimpleDateFormat(datePattern).parse(dateString);
 		} catch (ParseException e) {
-			return new Date();
+			return null;
 		}
 	}
 

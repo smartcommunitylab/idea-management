@@ -58,6 +58,7 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
         attributes.put("status", getStatus());
         attributes.put("statusByUserId", getStatusByUserId());
         attributes.put("statusByUserName", getStatusByUserName());
+        attributes.put("categoryIds", getCategoryIds());
 
         return attributes;
     }
@@ -183,6 +184,12 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
 
         if (statusByUserName != null) {
             setStatusByUserName(statusByUserName);
+        }
+
+        String categoryIds = (String) attributes.get("categoryIds");
+
+        if (categoryIds != null) {
+            setCategoryIds(categoryIds);
         }
     }
 
@@ -648,6 +655,26 @@ public class IdeaWrapper implements Idea, ModelWrapper<Idea> {
     @Override
     public void setStatusByUserName(java.lang.String statusByUserName) {
         _idea.setStatusByUserName(statusByUserName);
+    }
+
+    /**
+    * Returns the category IDs of this idea.
+    *
+    * @return the category IDs of this idea
+    */
+    @Override
+    public java.lang.String getCategoryIds() {
+        return _idea.getCategoryIds();
+    }
+
+    /**
+    * Sets the category IDs of this idea.
+    *
+    * @param categoryIds the category IDs of this idea
+    */
+    @Override
+    public void setCategoryIds(java.lang.String categoryIds) {
+        _idea.setCategoryIds(categoryIds);
     }
 
     @Override

@@ -6,6 +6,7 @@
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="com.liferay.portal.kernel.util.StringUtil"%>
 <%@page import="com.liferay.portal.util.PortalUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
@@ -71,16 +72,24 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
         <% 
         long classPK = call.getCallId();
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(),classPK);
-        List<AssetCategory> categories = curEntry.getCategories();   
-        String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "";
-        String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
+        List<AssetCategory> categories = Utils.getOrderedCategories(call.getCategoryIds(), curEntry);   
+        String primaryColor = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()): ""; 
+
+//         categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
         %>
   <div class="row-fluid">
     <div class="call">
-          <div onClick="javascript:window.location = '<%=viewCall.toString()%>';" class="call-card" style="border-left-color: <%=color %>;">
+          <div onClick="javascript:window.location = '<%=viewCall.toString()%>';" class="call-card" style="border-left-color: <%=primaryColor %>;">
               <div class="call-card-header">
-                <div class="span6"><span class="call-card-cat" style="color: <%=color %>;"><%=catTitle %></span></div>
+                <div class="span6">
+                  <% for (AssetCategory ac : categories) { 
+                	  String color = CC.get(""+ac.getCategoryId()); 
+                	  String catTitle = ac.getTitle(locale);
+                	%>  
+                  <span class="call-card-cat" style="color: <%=color %>;"><%=catTitle %></span>
+                  <% } %>
+                </div>
                 <div class="span6">
                   <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
                     <portlet:actionURL var="deleteURL" name="deleteEntry">
@@ -88,7 +97,11 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
                     </portlet:actionURL>
                     <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
                   </c:if>
-                  <span class="call-card-date"><liferay-ui:message key="lbl_call_card_deadline" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/></span>
+                  <span class="call-card-date">
+                  <c:if test='<%=call.getDeadline() != null %>'>
+                  <liferay-ui:message key="lbl_call_card_deadline" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/>
+                  </c:if>
+                  </span>
 	              </div>
               </div>
               <h4><%=call.getTitle() %></h4>

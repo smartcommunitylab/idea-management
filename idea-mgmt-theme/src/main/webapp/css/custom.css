@@ -1004,6 +1004,7 @@ header#banner {
 .tagselector  .tagselector-content {
   position: relative;
   padding: 5px 0 5px 0;
+  z-index: -999;
 }
 
 .tagselector  .textboxlistentry {
@@ -1243,4 +1244,17 @@ header#banner {
 
 .tagcloud-right .tagcloud-dot {
 	float: right;
+}
+
+.userprofile .avatar {
+	display: block;
+	margin: auto;
+}
+
+.userprofile .entry .field {
+	text-transform: uppercase;
+}
+
+.userprofile .entry .value {
+	font-size: larger;
 }

@@ -84,9 +84,9 @@
         <% 
         long classPK = idea.getIdeaId();
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(),classPK);
+        List<AssetCategory> categories = Utils.getOrderedCategories(idea.getCategoryIds(), curEntry);   
         RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),classPK);
         String scoreString = numberFormat.format(stat.getAverageScore());
-        List<AssetCategory> categories = curEntry.getCategories();   
         String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "#DDD";
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
 

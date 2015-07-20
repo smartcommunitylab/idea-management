@@ -9,10 +9,12 @@ import it.smartcommunitylab.platform.idea.service.base.IdeaLocalServiceBaseImpl;
 import it.smartcommunitylab.platform.idea.service.persistence.IdeaFinderUtil;
 import it.smartcommunitylab.platform.idea.workflow.WorkflowUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -96,6 +99,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				serviceContext);
 		GroupLocalServiceUtil.addUserGroup(userId, group.getGroupId());
 
+		long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+
 		idea.setUuid(serviceContext.getUuid());
 		idea.setUserId(userId);
 		idea.setGroupId(groupId);
@@ -105,6 +110,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		idea.setModifiedDate(serviceContext.getModifiedDate(now));
 		idea.setExpandoBridgeAttributes(serviceContext);
 		idea.setUserGroupId(group.getGroupId());
+		idea.setCategoryIds(StringUtil.merge(assetCategoryIds));
 
 		idea.setTitle(ideaBean.getTitle());
 		idea.setShortDesc(ideaBean.getShortDesc());
@@ -122,11 +128,6 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 				Idea.class.getName(), pkId, false, true, true);
 
-		long[] cats = null;
-		if (ideaBean.getCategoryId() > 0) {
-			cats = new long[] { ideaBean.getCategoryId() };
-		}
-
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 				userId,
 				groupId, 
@@ -136,7 +137,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				pkId, 
 				idea.getUuid(), 
 				0, 
-				cats,
+				assetCategoryIds,
 				serviceContext.getAssetTagNames(), 
 				true, 
 				null, 
@@ -174,6 +175,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			PortalException {
 
 		try {
+			long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+
 			Idea idea = ideaPersistence.findByPrimaryKey(ideaBean.getId());
 			idea.setTitle(ideaBean.getTitle());
 			idea.setLongDesc(ideaBean.getLongDesc());
@@ -181,6 +184,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 			idea.setDiscussionLimit(ideaBean.getDiscussionLimit());
 			idea.setDeadlineConstraints(ideaBean.getDeadlineConstraints());
+			idea.setCategoryIds(StringUtil.merge(assetCategoryIds));
 
 			ideaPersistence.update(idea);
 
@@ -189,14 +193,11 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					idea.getIdeaId(), serviceContext.getGroupPermissions(),
 					serviceContext.getGuestPermissions());
 
-			AssetEntry oldEntry = assetEntryLocalService.fetchEntry(
-					Idea.class.getName(), idea.getIdeaId());
-
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 					idea.getUserId(), idea.getGroupId(), idea.getCreateDate(),
 					idea.getModifiedDate(), Idea.class.getName(),
 					idea.getIdeaId(), idea.getUuid(), 0,
-					oldEntry.getCategoryIds(),
+					assetCategoryIds,
 					serviceContext.getAssetTagNames(), true, null, null, null,
 					ContentTypes.TEXT_HTML, idea.getTitle(), idea.getLongDesc(), idea.getShortDesc(), null,
 					null, 0, 0, null, false);
@@ -425,6 +426,20 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		GroupLocalServiceUtil.addUserGroup(userId, groupId);
 	}
 
+	public List<AssetEntry> getCategoryObjects(long groupId) throws SystemException, PortalException {
+		AssetEntryQuery entryQuery = new AssetEntryQuery();
+		entryQuery.setClassNameIds(new long[] { PortalUtil
+				.getClassNameId(JournalArticle.class) });
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(
+				groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil
+				.getEntries(entryQuery);
+		if (entries != null && entries.size() > 0) {
+			return entries;
+		}
+		return Collections.emptyList();
+	}
+
 	public Map<String, String> getCategoryColors(long groupId)
 			throws SystemException, PortalException {
 		Map<String, String> res = new HashMap<String, String>();
@@ -474,7 +489,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			throws SystemException {
 
 		AssetEntryQuery entryQuery = new AssetEntryQuery();
-		entryQuery.setAllCategoryIds(categoryIds);
+		entryQuery.setAnyCategoryIds(categoryIds);
 		entryQuery.setClassNameIds(new long[] { PortalUtil
 				.getClassNameId(JournalArticle.class) });
 		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(
@@ -482,8 +497,11 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		List<AssetEntry> entries = AssetEntryLocalServiceUtil
 				.getEntries(entryQuery);
 		if (entries != null && entries.size() > 0) {
-			AssetEntry entry = entries.get(0);
-			return entry.getTags();
+			List<AssetTag> tags = new ArrayList<AssetTag>();
+			for (AssetEntry entry : entries) {
+				tags.addAll(entry.getTags());
+			}
+			return tags;
 		}
 		return Collections.emptyList();
 	}

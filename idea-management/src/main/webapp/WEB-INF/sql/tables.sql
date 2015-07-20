@@ -12,7 +12,8 @@ create table IM_Call (
 	deadline DATE null,
 	publicationDeadline DATE null,
 	realizationDeadline DATE null,
-	userGroupId LONG
+	userGroupId LONG,
+	categoryIds VARCHAR(75) null
 );
 
 create table IM_Idea (
@@ -35,5 +36,6 @@ create table IM_Idea (
 	discussionLimit INTEGER,
 	status INTEGER,
 	statusByUserId LONG,
-	statusByUserName VARCHAR(75) null
+	statusByUserName VARCHAR(75) null,
+	categoryIds VARCHAR(75) null
 );

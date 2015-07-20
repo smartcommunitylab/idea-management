@@ -27,6 +27,9 @@
     }
 
     Utils.clearPublicRenderParameter(renderRequest, "mvcPath");
+    String curCategoryIds = entry == null ? "" : entry.getCategoryIds();
+    PortletResponse portletRes = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 %>
 
 <%
@@ -71,38 +74,13 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
         function <portlet:namespace />onChange1() { document.getElementById('<portlet:namespace />hdesc').value = window['<portlet:namespace />desc'].getHTML(); }
     </script>
 	</aui:field-wrapper>
-
-	<%
-	%>
-
-  <%
-    GregorianCalendar pcal = new GregorianCalendar();
-    if(entry != null && entry.getPublicationDeadline() != null) {
-      pcal.setTime(entry.getPublicationDeadline());
-    }
-    int initPDay = pcal.get(Calendar.DAY_OF_MONTH);
-    int initPMonth = pcal.get(Calendar.MONTH); 
-    int initPYear  = pcal.get(Calendar.YEAR);
-  %>
-
-  <%
-    GregorianCalendar ecal = new GregorianCalendar();
-    if(entry != null && entry.getRealizationDeadline() != null) {
-      ecal.setTime(entry.getRealizationDeadline());
-    }
-    int initEDay = ecal.get(Calendar.DAY_OF_MONTH);
-    int initEMonth = ecal.get(Calendar.MONTH); 
-    int initEYear  = ecal.get(Calendar.YEAR);
-  %>
 	
 	<div class="row-fluid">
 	  <div class="span4">
 			<aui:fieldset label="lbl_deadline">
 			  <% if (entry != null && entry.getDeadline() != null) {
   			    GregorianCalendar cal = new GregorianCalendar();
-            if(entry != null && entry.getDeadline() != null) {
-              cal.setTime(entry.getDeadline());
-				    }
+            cal.setTime(entry.getDeadline());
 				    int initDay = cal.get(Calendar.DAY_OF_MONTH);
 				    int initMonth = cal.get(Calendar.MONTH); 
 				    int initYear  = cal.get(Calendar.YEAR);
@@ -115,28 +93,56 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
     </div>
     <div class="span4">
 		  <aui:fieldset label="lbl_publicationdeadline">
+        <% if (entry != null && entry.getPublicationDeadline() != null) {
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setTime(entry.getPublicationDeadline());
+            int initPDay = cal.get(Calendar.DAY_OF_MONTH);
+            int initPMonth = cal.get(Calendar.MONTH); 
+            int initPYear  = cal.get(Calendar.YEAR);
+        %>
 		    <liferay-ui:input-date name="publicationdeadline" dayParam="pdday" monthParam="pdmonth" yearParam="pdyear" dayValue="<%=initPDay %>" monthValue="<%=initPMonth %>" yearValue="<%=initPYear %>"></liferay-ui:input-date>
+        <% } else { %>
+        <liferay-ui:input-date nullable="true" name="publicationdeadline" dayParam="pdday" monthParam="pdmonth" yearParam="pdyear"></liferay-ui:input-date>
+        <%  } %>
 		  </aui:fieldset>
     </div>
     <div class="span4">
 		  <aui:fieldset label="lbl_realizationdeadline">
-		    <liferay-ui:input-date name="realizationdeadline" dayParam="edday" monthParam="edmonth" yearParam="edyear" dayValue="<%=initEDay %>" monthValue="<%=initEMonth %>" yearValue="<%=initEYear %>"></liferay-ui:input-date>
+        <% if (entry != null && entry.getRealizationDeadline() != null) {
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setTime(entry.getRealizationDeadline());
+            int initEDay = cal.get(Calendar.DAY_OF_MONTH);
+            int initEMonth = cal.get(Calendar.MONTH); 
+            int initEYear  = cal.get(Calendar.YEAR);
+        %>
+        <liferay-ui:input-date name="realizationdeadline" dayParam="edday" monthParam="edmonth" yearParam="edyear" dayValue="<%=initEDay %>" monthValue="<%=initEMonth %>" yearValue="<%=initEYear %>"></liferay-ui:input-date>
+        <% } else { %>
+        <liferay-ui:input-date nullable="true" name="realizationdeadline" dayParam="edday" monthParam="edmonth" yearParam="edyear"></liferay-ui:input-date>
+        <%  } %>
 		  </aui:fieldset>
 		</div>
 	</div>
 	<aui:input name="callId" type="hidden"></aui:input>
 
 	<liferay-ui:asset-categories-error />
-	<liferay-ui:asset-tags-error />
+<%--   <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat"> --%>
+<%--   <aui:input name="catId" type="hidden"></aui:input> --%>
+<%-- 	<liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>"> --%>
+<%-- 	</liferay-ui:asset-categories-selector> --%>
+  <%
+//   request.setAttribute("im-acs:single-select",false);
+//   request.setAttribute("im-acs:curCategories",curCategoryIds);
+  %>
+<%--   <%@ include file="/html/common/asset-categories.jsp" %> --%>
+<%-- 	</aui:field-wrapper> --%>
 
   <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat">
   <aui:input name="catId" type="hidden"></aui:input>
-	<liferay-ui:asset-categories-selector
-		className="<%=Call.class.getName()%>" classPK="<%=callId%>">
-	</liferay-ui:asset-categories-selector>
-	</aui:field-wrapper>
+ <liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>">
+ </liferay-ui:asset-categories-selector>
+  </aui:field-wrapper>
 
-
+  <liferay-ui:asset-tags-error />
 	<liferay-ui:asset-tags-selector className="<%=Call.class.getName()%>"
 		classPK="<%= callId%>">
 	</liferay-ui:asset-tags-selector>

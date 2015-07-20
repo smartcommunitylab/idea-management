@@ -486,6 +486,13 @@ public class IdeaLocalServiceUtil {
         getService().toggleUserParticipation(ideaId, userId);
     }
 
+    public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> getCategoryObjects(
+        long groupId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        return getService().getCategoryObjects(groupId);
+    }
+
     public static java.util.Map<java.lang.String, java.lang.String> getCategoryColors(
         long groupId)
         throws com.liferay.portal.kernel.exception.PortalException,

@@ -22,33 +22,40 @@
 				<div class="container">
 					<div class="row">
 						<div class="span12">
-							<img class="avatar" src="<%=selUser.getPortraitURL(themeDisplay).toString()%>" />
+							<img class="avatar"
+								src="<%=selUser.getPortraitURL(themeDisplay).toString()%>" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="span6">
-							<h4>Nome e cognome</h4>
-							<p><%=selUser.getFullName()%></p>
-							<h4>Email</h4>
-							<p><%=selUser.getEmailAddress()%></p>
-							<h4>Genere</h4>
-							<p>
-								<c:choose>
-									<c:when test="<%=selUser.getMale()%>">
+							<div class="entry">
+								<h5 class="field">Nome e cognome</h5>
+								<p class="value"><%=selUser.getFullName()%></p>
+							</div>
+							<div class="entry">
+								<h5 class="field">Email</h5>
+								<p class="value"><%=selUser.getEmailAddress()%></p>
+							</div>
+							<div class="entry">
+								<h5 class="field">Genere</h5>
+								<p class="value">
+									<c:choose>
+										<c:when test="<%=selUser.getMale()%>">
 									Maschio
 								</c:when>
-									<c:when test="<%=selUser.getFemale()%>">
+										<c:when test="<%=selUser.getFemale()%>">
 									Femmina
 								</c:when>
-									<c:otherwise>
+										<c:otherwise>
 									Non specificato
 								</c:otherwise>
-								</c:choose>
-							</p>
+									</c:choose>
+								</p>
+							</div>
 						</div>
 						<div class="span6">
-							<h4>Lavoro</h4>
-							<p><%=selUser.getJobTitle()%></p>
+							<h5 class="field">Lavoro</h5>
+							<p class="value"><%=selUser.getJobTitle()%></p>
 						</div>
 					</div>
 				</div>

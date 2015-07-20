@@ -55,6 +55,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<!-- <column name="statusDate" type="Date" /> -->
+        <column name="categoryIds" type="String"></column>
 
 
 		<order by="desc">
@@ -103,6 +104,7 @@
 		<column name="publicationDeadline" type="Date"></column>
 		<column name="realizationDeadline" type="Date"></column>
 		<column name="userGroupId" type="long"></column>
+        <column name="categoryIds" type="String"></column>
 
 		<order by="desc">
 			<order-column name="createDate" order-by="desc"></order-column>

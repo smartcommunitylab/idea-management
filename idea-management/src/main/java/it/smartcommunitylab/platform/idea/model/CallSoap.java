@@ -27,6 +27,7 @@ public class CallSoap implements Serializable {
     private Date _publicationDeadline;
     private Date _realizationDeadline;
     private long _userGroupId;
+    private String _categoryIds;
 
     public CallSoap() {
     }
@@ -48,6 +49,7 @@ public class CallSoap implements Serializable {
         soapModel.setPublicationDeadline(model.getPublicationDeadline());
         soapModel.setRealizationDeadline(model.getRealizationDeadline());
         soapModel.setUserGroupId(model.getUserGroupId());
+        soapModel.setCategoryIds(model.getCategoryIds());
 
         return soapModel;
     }
@@ -206,5 +208,13 @@ public class CallSoap implements Serializable {
 
     public void setUserGroupId(long userGroupId) {
         _userGroupId = userGroupId;
+    }
+
+    public String getCategoryIds() {
+        return _categoryIds;
+    }
+
+    public void setCategoryIds(String categoryIds) {
+        _categoryIds = categoryIds;
     }
 }

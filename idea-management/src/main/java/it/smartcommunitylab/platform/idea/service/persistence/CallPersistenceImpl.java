@@ -2221,6 +2221,7 @@ public class CallPersistenceImpl extends BasePersistenceImpl<Call>
         callImpl.setPublicationDeadline(call.getPublicationDeadline());
         callImpl.setRealizationDeadline(call.getRealizationDeadline());
         callImpl.setUserGroupId(call.getUserGroupId());
+        callImpl.setCategoryIds(call.getCategoryIds());
 
         return callImpl;
     }
