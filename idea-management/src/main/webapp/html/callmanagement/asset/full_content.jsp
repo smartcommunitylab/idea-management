@@ -14,6 +14,7 @@
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
+<%@page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallPermission"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallModelPermission"%>
@@ -39,18 +40,8 @@
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			Call.class.getName(), call.getCallId());
 
-  List<AssetCategory> categories = assetEntry.getCategories();
-  AssetCategory category = null;
-  long categoryId = 0;
-  if (categories != null && categories.size() > 0) {
-	  category = categories.get(0);
-	  categoryId = category.getCategoryId();
-  }
-	String categoryColor = "#DDD";
-	if (categoryId > 0) {
-	   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-	   categoryColor = CC.get(""+categoryId);
-	}
+  List<AssetCategory> categories = Utils.getOrderedCategories(call.getCategoryIds(), assetEntry);
+  java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
 
   List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(Call.class.getName(), call.getCallId());
 
@@ -60,7 +51,8 @@
   }
 
   java.util.Date today = DateUtil.newDate();
-  int distance = 
+  int distance = Integer.MAX_VALUE;
+  if (call.getDeadline() != null) distance = 
 		    DateUtil.getDaysBetween(today,call.getDeadline())
 		  * (DateUtil.compareTo(today, call.getDeadline()) <=0 ? 1: -1);
   
@@ -78,13 +70,18 @@
       <a href="<%=editCall.toString()%>"><i class="icon-pencil"></i></a>
     </c:if>
     </div>
+    <% for (AssetCategory ac : categories) {
+    	String categoryColor = CC.get(""+ac.getCategoryId());
+    %>
     <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
-    <%=category != null ? category.getTitle(locale) : "" %>  
+    <%=ac.getTitle(locale) %>  
     </div>
+    <% } %>
   </div>
   <div class="span4 call-deadlines">
     <div class="call-deadline-remains">
-    <% if (distance > 0) {%>
+    <% if (distance == Integer.MAX_VALUE) { %>
+    <% } else if (distance > 0) {%>
     <liferay-ui:message key="call_deadline_remains_many" arguments="<%=distance %>"/>
     <% } else if (distance ==0) { %>
     <liferay-ui:message key="call_deadline_remains_one"/>
@@ -92,7 +89,11 @@
     <liferay-ui:message key="call_deadline_remains_expired"/>
     <% } %>  
     </div>
-    <div class="call-deadline-date"><liferay-ui:message key="call_deadline_expireson" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/></div>
+    <div class="call-deadline-date">
+    <c:if test='<%= call.getDeadline() != null %>'>
+    <liferay-ui:message key="call_deadline_expireson" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/>
+    </c:if>
+    </div>
   </div>
 </div>
 

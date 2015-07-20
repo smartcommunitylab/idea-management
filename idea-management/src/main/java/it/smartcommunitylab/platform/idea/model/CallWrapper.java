@@ -52,6 +52,7 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
         attributes.put("publicationDeadline", getPublicationDeadline());
         attributes.put("realizationDeadline", getRealizationDeadline());
         attributes.put("userGroupId", getUserGroupId());
+        attributes.put("categoryIds", getCategoryIds());
 
         return attributes;
     }
@@ -140,6 +141,12 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
 
         if (userGroupId != null) {
             setUserGroupId(userGroupId);
+        }
+
+        String categoryIds = (String) attributes.get("categoryIds");
+
+        if (categoryIds != null) {
+            setCategoryIds(categoryIds);
         }
     }
 
@@ -463,6 +470,26 @@ public class CallWrapper implements Call, ModelWrapper<Call> {
     @Override
     public void setUserGroupId(long userGroupId) {
         _call.setUserGroupId(userGroupId);
+    }
+
+    /**
+    * Returns the category IDs of this call.
+    *
+    * @return the category IDs of this call
+    */
+    @Override
+    public java.lang.String getCategoryIds() {
+        return _call.getCategoryIds();
+    }
+
+    /**
+    * Sets the category IDs of this call.
+    *
+    * @param categoryIds the category IDs of this call
+    */
+    @Override
+    public void setCategoryIds(java.lang.String categoryIds) {
+        _call.setCategoryIds(categoryIds);
     }
 
     @Override

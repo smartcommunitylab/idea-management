@@ -18,7 +18,12 @@ package it.smartcommunitylab.platform.idea.portlet;
 
 import it.smartcommunitylab.platform.idea.model.Idea;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -30,10 +35,14 @@ import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
 
 /**
  * @author raman
@@ -41,6 +50,25 @@ import com.liferay.portal.util.PortalUtil;
  */
 public class Utils {
 
+	public static List<AssetCategory> getOrderedCategories(String categoryIds, AssetEntry entry) throws SystemException {
+		if (entry == null) return Collections.emptyList();
+		List<AssetCategory> unorderedList = entry.getCategories();
+		if (entry == null || unorderedList == null || unorderedList.isEmpty()) return Collections.emptyList();
+		if (categoryIds == null || categoryIds.isEmpty()) {
+			return unorderedList;
+		} else {
+			long[] ids = StringUtil.split(categoryIds, 0L);
+			List<AssetCategory> result = new ArrayList<AssetCategory>();
+			Map<Long, AssetCategory> map = new HashMap<Long, AssetCategory>();
+			for (AssetCategory ac : unorderedList) map.put(ac.getCategoryId(), ac);
+			for (long id : ids) if (map.containsKey(id)) result.add(map.get(id));
+			return result;
+		}
+	}
+	
+	public static boolean ideaDeleteEnabled(Idea idea, PortletRequest req) {
+		return ideaEditEnabled(idea, req);
+	}
 	public static boolean ideaEditEnabled(Idea idea, PortletRequest req) {
 		//themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())
 		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);

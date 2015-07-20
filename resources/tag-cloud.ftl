@@ -1,0 +1,37 @@
+<#if entries?has_content>
+    <#assign counter = 0 >
+    <#assign portletURL = renderResponse.createRenderURL() >
+	<#list entries?sort_by("assetCount")?reverse as curTag>
+	    ${portletURL.setParameter("resetCur", "true")}
+    	${portletURL.setParameter("tag", curTag.name)}
+	    <#if (counter % 2) == 0 >
+        <div class="row-fluid tagcloud-row">
+		  <div class="span6 tagcloud-left">
+		    <div class="tagcloud-wrapper" onClick="javascript:window.location='${htmlUtil.escape(portletURL.toString())}';">
+		      <span class="tagcloud-dot">.</span>
+		      <div class="tagcloud-node">
+		        <span class="tagcloud-name">${curTag.name}</span>
+		        <span class="tagcloud-count">${curTag.getAssetCount()}</span>
+		      </div>
+		    </div>
+		  </div>
+		<#else>
+		  <div class="span6 tagcloud-right">
+		    <div class="tagcloud-wrapper" onClick="javascript:window.location='${htmlUtil.escape(portletURL.toString())}';">
+		      <div class="tagcloud-node">
+		        <span class="tagcloud-count">${curTag.getAssetCount()}</span>
+		        <span class="tagcloud-name">${curTag.name}</span>
+		      </div>
+     		  <span class="tagcloud-dot">.</span>
+		    </div>
+		  </div>
+	    </#if>
+	    <#if (counter % 2) == 1 >
+        </div>
+	    </#if>
+	    <#assign counter = counter +1 >
+	</#list>
+	<#if (counter % 2) == 1>
+	    </div>
+	</#if>
+</#if>

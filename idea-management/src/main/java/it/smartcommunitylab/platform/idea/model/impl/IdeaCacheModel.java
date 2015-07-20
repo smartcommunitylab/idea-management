@@ -41,10 +41,11 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
     public int status;
     public long statusByUserId;
     public String statusByUserName;
+    public String categoryIds;
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(41);
+        StringBundler sb = new StringBundler(43);
 
         sb.append("{uuid=");
         sb.append(uuid);
@@ -86,6 +87,8 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         sb.append(statusByUserId);
         sb.append(", statusByUserName=");
         sb.append(statusByUserName);
+        sb.append(", categoryIds=");
+        sb.append(categoryIds);
         sb.append("}");
 
         return sb.toString();
@@ -173,6 +176,12 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
             ideaImpl.setStatusByUserName(statusByUserName);
         }
 
+        if (categoryIds == null) {
+            ideaImpl.setCategoryIds(StringPool.BLANK);
+        } else {
+            ideaImpl.setCategoryIds(categoryIds);
+        }
+
         ideaImpl.resetOriginalValues();
 
         return ideaImpl;
@@ -200,6 +209,7 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
         status = objectInput.readInt();
         statusByUserId = objectInput.readLong();
         statusByUserName = objectInput.readUTF();
+        categoryIds = objectInput.readUTF();
     }
 
     @Override
@@ -272,6 +282,12 @@ public class IdeaCacheModel implements CacheModel<Idea>, Externalizable {
             objectOutput.writeUTF(StringPool.BLANK);
         } else {
             objectOutput.writeUTF(statusByUserName);
+        }
+
+        if (categoryIds == null) {
+            objectOutput.writeUTF(StringPool.BLANK);
+        } else {
+            objectOutput.writeUTF(categoryIds);
         }
     }
 }

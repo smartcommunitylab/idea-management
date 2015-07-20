@@ -72,7 +72,7 @@
     </span>
 
     <% for(Idea idea : results) {%>
-        <portlet:renderURL var="viewIdea" windowState="maximized">
+        <portlet:renderURL var="viewIdea">
           <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
           <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
         </portlet:renderURL>
@@ -80,16 +80,21 @@
         <% 
         long classPK = idea.getIdeaId();
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(),classPK);
-        List<AssetCategory> categories = curEntry.getCategories();   
+        List<AssetCategory> categories = Utils.getOrderedCategories(idea.getCategoryIds(), curEntry);   
         RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),classPK);
         String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "";
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         %>
         <span class="span2">
                 <div onClick="javascript:window.location = '<%=viewIdea.toString() %>';" class="thumbnail" style="border-left-color: <%=color %>;">
-                     <div class="idea-cat" style="color: <%=color %>;">
-                       <%=catTitle %>
-                      <c:if test="<%= false%>">
+                       <div class="idea-cat">
+                      <% for (int i = 0; i < categories.size();i++) {
+                          color = CC.get(""+categories.get(i).getCategoryId());
+                          catTitle = categories.get(i).getTitle(locale);
+                      %>
+                         <span  style="color: <%=color %>;"><%=catTitle %></span>
+                      <% } %>
+                      <c:if test="<%= Utils.ideaDeleteEnabled(idea, renderRequest) %>">
                         <portlet:actionURL var="deleteURL" name="deleteEntry">
                           <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
                           <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />

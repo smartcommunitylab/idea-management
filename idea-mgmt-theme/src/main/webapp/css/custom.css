@@ -1083,6 +1083,168 @@ header#banner {
 	display: none;
 }
 
+.event-container-title {
+	text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.event-container-header {
+	margin-bottom: 10px;
+}
+
+.event-container-header-buttons {
+	display: inline;
+	float: right;
+}
+.event-container-button {
+	min-height: 24px;
+	min-width: 24px;
+	background-color: #F1453D;
+	 display: inline-block;
+  vertical-align: text-bottom;
+  margin-left: 5px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  color: white !important;
+  font-family: fontawesome-alloy;
+  font-size: 16px;
+}
+
+.event-container-button span {
+	display: none;
+} 
+
+.event-container-button::before {
+	vertical-align: text-top;
+} 
+
+.event-container-button-add::before {
+  content: "\f067";
+  padding-left: 5px;
+}
+.event-container-button-prev::before {
+  content: "\f053";
+  padding-left: 6px;
+}
+.event-container-button-next::before {
+  content: "\f054";
+  padding-left: 8px;
+}
+
+.event-container-list {
+	min-height: 250px;
+	border-left-width: 2px;
+	border-left-color: #F1453D;
+	border-left-style: solid;
+	list-style-type: none;
+  margin-left: 0px !important;
+}
+
+.event-container-element {
+	margin-left: 5px;
+	margin-bottom: 10px;
+}
+
+.event-container-element .element-start {
+	font-size: 16px;
+	color: #BBB;
+}
+
+.tagcloud-row .tagcloud-node {
+	display: inline-block;
+}
+
+.tagcloud-left .tagcloud-node {
+	float: right;
+}
+.tagcloud-row .tagcloud-node {
+	padding: 5px 10px 5px 10px;
+}
+.tagcloud-left .span{
+	float: right;
+}
+
+.tagcloud-left .tagcloud-wrapper {
+	float: right;
+	position: relative;
+}
+.tagcloud-right .tagcloud-wrapper {
+  float: left;
+}
+
+.tagcloud-row {
+	margin-bottom: 10px;
+}
+
+.tagcloud-wrapper {
+  min-width: 150px;
+  background-color: #75c6b6;
+  cursor: pointer;
+}
+
+.tagcloud-right:after {
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-left-color: #75c6b6;
+  border-width: 15px;
+}
+.tagcloud-left .tagcloud-wrapper::before {
+	left: -30px;
+  border: solid transparent;
+  float: left;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: relative;
+  pointer-events: none;
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #75c6b6;
+  border-width: 15.5px;
+  margin-top: 0px;
+}
+
+.tagcloud-name {
+	text-transform: uppercase;
+	color: white;
+}
+
+.tagcloud-count {
+	min-width: 20px;
+	margin-left: 5px;
+	margin-right:5px;
+	display: inline-block;
+	text-align: center;
+	  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+	background-color: white;
+	color: #75c6b6;
+	font-size: 12px;
+	font-weight: bolder;
+}
+
+.tagcloud-dot {
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.tagcloud-left .tagcloud-dot {
+	float: left;
+	position: absolute;
+	left: 0px;
+}
+
+.tagcloud-right .tagcloud-dot {
+	float: right;
+}
+
 .userprofile .avatar {
 	display: block;
 	margin: auto;

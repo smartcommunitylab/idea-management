@@ -18,6 +18,7 @@
 		<field name="publicationDeadline" type="Date" />
 		<field name="realizationDeadline" type="Date" />
 		<field name="userGroupId" type="long" />
+		<field name="categoryIds" type="String" />
 	</model>
 	<model name="it.smartcommunitylab.platform.idea.model.Idea">
 		<field name="uuid" type="String" />
@@ -44,5 +45,6 @@
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
+		<field name="categoryIds" type="String" />
 	</model>
 </model-hints>

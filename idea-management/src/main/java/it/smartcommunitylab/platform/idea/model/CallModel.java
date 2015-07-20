@@ -278,6 +278,21 @@ public interface CallModel extends BaseModel<Call>, StagedGroupedModel {
      */
     public void setUserGroupId(long userGroupId);
 
+    /**
+     * Returns the category IDs of this call.
+     *
+     * @return the category IDs of this call
+     */
+    @AutoEscape
+    public String getCategoryIds();
+
+    /**
+     * Sets the category IDs of this call.
+     *
+     * @param categoryIds the category IDs of this call
+     */
+    public void setCategoryIds(String categoryIds);
+
     @Override
     public boolean isNew();
 

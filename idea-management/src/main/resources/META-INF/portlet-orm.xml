@@ -35,6 +35,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="userGroupId" />
+			<basic name="categoryIds" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -71,6 +72,7 @@
 			<basic name="status" />
 			<basic name="statusByUserId" />
 			<basic name="statusByUserName" />
+			<basic name="categoryIds" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

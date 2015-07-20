@@ -61,9 +61,10 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
             { "deadline", Types.TIMESTAMP },
             { "publicationDeadline", Types.TIMESTAMP },
             { "realizationDeadline", Types.TIMESTAMP },
-            { "userGroupId", Types.BIGINT }
+            { "userGroupId", Types.BIGINT },
+            { "categoryIds", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Call (uuid_ VARCHAR(75) null,title VARCHAR(75) null,callId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,deadline DATE null,publicationDeadline DATE null,realizationDeadline DATE null,userGroupId LONG)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Call (uuid_ VARCHAR(75) null,title VARCHAR(75) null,callId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,deadline DATE null,publicationDeadline DATE null,realizationDeadline DATE null,userGroupId LONG,categoryIds VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table IM_Call";
     public static final String ORDER_BY_JPQL = " ORDER BY call.createDate DESC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Call.createDate DESC";
@@ -110,6 +111,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
     private Date _publicationDeadline;
     private Date _realizationDeadline;
     private long _userGroupId;
+    private String _categoryIds;
     private long _columnBitmask;
     private Call _escapedModel;
 
@@ -164,6 +166,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         attributes.put("publicationDeadline", getPublicationDeadline());
         attributes.put("realizationDeadline", getRealizationDeadline());
         attributes.put("userGroupId", getUserGroupId());
+        attributes.put("categoryIds", getCategoryIds());
 
         return attributes;
     }
@@ -252,6 +255,12 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
 
         if (userGroupId != null) {
             setUserGroupId(userGroupId);
+        }
+
+        String categoryIds = (String) attributes.get("categoryIds");
+
+        if (categoryIds != null) {
+            setCategoryIds(categoryIds);
         }
     }
 
@@ -468,6 +477,20 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
     }
 
     @Override
+    public String getCategoryIds() {
+        if (_categoryIds == null) {
+            return StringPool.BLANK;
+        } else {
+            return _categoryIds;
+        }
+    }
+
+    @Override
+    public void setCategoryIds(String categoryIds) {
+        _categoryIds = categoryIds;
+    }
+
+    @Override
     public StagedModelType getStagedModelType() {
         return new StagedModelType(PortalUtil.getClassNameId(
                 Call.class.getName()));
@@ -518,6 +541,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         callImpl.setPublicationDeadline(getPublicationDeadline());
         callImpl.setRealizationDeadline(getRealizationDeadline());
         callImpl.setUserGroupId(getUserGroupId());
+        callImpl.setCategoryIds(getCategoryIds());
 
         callImpl.resetOriginalValues();
 
@@ -672,12 +696,20 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
 
         callCacheModel.userGroupId = getUserGroupId();
 
+        callCacheModel.categoryIds = getCategoryIds();
+
+        String categoryIds = callCacheModel.categoryIds;
+
+        if ((categoryIds != null) && (categoryIds.length() == 0)) {
+            callCacheModel.categoryIds = null;
+        }
+
         return callCacheModel;
     }
 
     @Override
     public String toString() {
-        StringBundler sb = new StringBundler(29);
+        StringBundler sb = new StringBundler(31);
 
         sb.append("{uuid=");
         sb.append(getUuid());
@@ -707,6 +739,8 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         sb.append(getRealizationDeadline());
         sb.append(", userGroupId=");
         sb.append(getUserGroupId());
+        sb.append(", categoryIds=");
+        sb.append(getCategoryIds());
         sb.append("}");
 
         return sb.toString();
@@ -714,7 +748,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
 
     @Override
     public String toXmlString() {
-        StringBundler sb = new StringBundler(46);
+        StringBundler sb = new StringBundler(49);
 
         sb.append("<model><model-name>");
         sb.append("it.smartcommunitylab.platform.idea.model.Call");
@@ -775,6 +809,10 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
         sb.append(
             "<column><column-name>userGroupId</column-name><column-value><![CDATA[");
         sb.append(getUserGroupId());
+        sb.append("]]></column-value></column>");
+        sb.append(
+            "<column><column-name>categoryIds</column-name><column-value><![CDATA[");
+        sb.append(getCategoryIds());
         sb.append("]]></column-value></column>");
 
         sb.append("</model>");

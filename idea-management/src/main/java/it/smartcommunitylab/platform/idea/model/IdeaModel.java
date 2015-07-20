@@ -382,6 +382,21 @@ public interface IdeaModel extends BaseModel<Idea>, StagedGroupedModel {
      */
     public void setStatusByUserName(String statusByUserName);
 
+    /**
+     * Returns the category IDs of this idea.
+     *
+     * @return the category IDs of this idea
+     */
+    @AutoEscape
+    public String getCategoryIds();
+
+    /**
+     * Sets the category IDs of this idea.
+     *
+     * @param categoryIds the category IDs of this idea
+     */
+    public void setCategoryIds(String categoryIds);
+
     @Override
     public boolean isNew();
 
