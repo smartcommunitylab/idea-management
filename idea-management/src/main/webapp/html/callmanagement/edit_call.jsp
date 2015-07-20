@@ -28,6 +28,8 @@
 
     Utils.clearPublicRenderParameter(renderRequest, "mvcPath");
     String curCategoryIds = entry == null ? "" : entry.getCategoryIds();
+    PortletResponse portletRes = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 %>
 
 <%
@@ -123,12 +125,22 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<aui:input name="callId" type="hidden"></aui:input>
 
 	<liferay-ui:asset-categories-error />
+<%--   <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat"> --%>
+<%--   <aui:input name="catId" type="hidden"></aui:input> --%>
+<%-- 	<liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>"> --%>
+<%-- 	</liferay-ui:asset-categories-selector> --%>
+  <%
+//   request.setAttribute("im-acs:single-select",false);
+//   request.setAttribute("im-acs:curCategories",curCategoryIds);
+  %>
+<%--   <%@ include file="/html/common/asset-categories.jsp" %> --%>
+<%-- 	</aui:field-wrapper> --%>
+
   <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat">
   <aui:input name="catId" type="hidden"></aui:input>
-	<liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>">
-	</liferay-ui:asset-categories-selector>
-	</aui:field-wrapper>
-
+ <liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>">
+ </liferay-ui:asset-categories-selector>
+  </aui:field-wrapper>
 
   <liferay-ui:asset-tags-error />
 	<liferay-ui:asset-tags-selector className="<%=Call.class.getName()%>"

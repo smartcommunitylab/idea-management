@@ -1004,6 +1004,7 @@ header#banner {
 .tagselector  .tagselector-content {
   position: relative;
   padding: 5px 0 5px 0;
+  z-index: -999;
 }
 
 .tagselector  .textboxlistentry {

@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -423,6 +424,20 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			}
 		}
 		GroupLocalServiceUtil.addUserGroup(userId, groupId);
+	}
+
+	public List<AssetEntry> getCategoryObjects(long groupId) throws SystemException, PortalException {
+		AssetEntryQuery entryQuery = new AssetEntryQuery();
+		entryQuery.setClassNameIds(new long[] { PortalUtil
+				.getClassNameId(JournalArticle.class) });
+		entryQuery.setClassTypeIds(new long[] { getStructureIdByStructureName(
+				groupId, Constants.IDEA_CATEGORY_TYPE_NAME) });
+		List<AssetEntry> entries = AssetEntryLocalServiceUtil
+				.getEntries(entryQuery);
+		if (entries != null && entries.size() > 0) {
+			return entries;
+		}
+		return Collections.emptyList();
 	}
 
 	public Map<String, String> getCategoryColors(long groupId)
