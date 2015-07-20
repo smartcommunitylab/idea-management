@@ -232,7 +232,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 	}
 
 	private static Long[] getTimeInterval(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		
 		Calendar calendarStart = GregorianCalendar.getInstance();
 		calendarStart.setTime(date);
@@ -286,29 +286,66 @@ public class EventoManagementPortlet extends MVCPortlet {
 			categoryIds = entry.getCategoryIds();
 		}
 		
+		String title = ParamUtil.getString(request, "title");
+		String description = ParamUtil.getString(request, "description");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		int startYear = ParamUtil.getInteger(request, "sdyear");
+		int startMonth = ParamUtil.getInteger(request, "sdmonth");
+		int startDay = ParamUtil.getInteger(request, "sdday");
+		int startHour = ParamUtil.getInteger(request, "sdhour");
+		int startMinute = ParamUtil.getInteger(request, "sdmin");
+		int startAmpm = ParamUtil.getInteger(request, "sampm");
+		Calendar calendarStart = GregorianCalendar.getInstance();
+		calendarStart.clear();
+		calendarStart.set(Calendar.YEAR, startYear);
+		calendarStart.set(Calendar.MONTH, startMonth);
+		calendarStart.set(Calendar.DAY_OF_MONTH, startDay);
+		if(startAmpm == 1) {
+			calendarStart.set(Calendar.HOUR_OF_DAY, startHour + 12);
+		} else {
+			calendarStart.set(Calendar.HOUR_OF_DAY, startHour);
+		}
+		calendarStart.set(Calendar.MINUTE, startMinute);
+		System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
+		int endYear = ParamUtil.getInteger(request, "edyear");
+		int endMonth = ParamUtil.getInteger(request, "edmonth");
+		int endDay = ParamUtil.getInteger(request, "edday");
+		int endHour = ParamUtil.getInteger(request, "edhour");
+		int endMinute = ParamUtil.getInteger(request, "edmin");
+		int endAmpm = ParamUtil.getInteger(request, "eampm");
+		Calendar calendarEnd = GregorianCalendar.getInstance();
+		calendarEnd.clear();
+		calendarEnd.set(Calendar.YEAR, endYear);
+		calendarEnd.set(Calendar.MONTH, endMonth);
+		calendarEnd.set(Calendar.DAY_OF_MONTH, endDay);
+		if(endAmpm == 1) {
+			calendarEnd.set(Calendar.HOUR_OF_DAY, endHour + 12);
+		} else {
+			calendarEnd.set(Calendar.HOUR_OF_DAY, endHour);
+		}
+		calendarEnd.set(Calendar.MINUTE, endMinute);
+		System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
+		
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(CalendarBooking.class.getName(), request);
-		serviceContext.setScopeGroupId(groupId);
 		//get calendar by groupId
 		DynamicQuery dynamicQuery = CalendarLocalServiceUtil.dynamicQuery();
 		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
 		dynamicQuery.add(criterionGroup);
 		List<com.liferay.calendar.model.Calendar> calendarList = CalendarLocalServiceUtil.dynamicQuery(dynamicQuery);
 		if(!calendarList.isEmpty()) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-			Date actualTime = new Date();
 			Map<Locale, String> titleMap = new HashMap<>();
-			titleMap.put(locale, "test " + sdf.format(actualTime));
+			titleMap.put(locale, title);
 			Map<Locale, String> descriptionMap = new HashMap<>();
-			descriptionMap.put(locale, "test");
+			descriptionMap.put(locale, description);
 			com.liferay.calendar.model.Calendar calendar = calendarList.get(0);
 			CalendarBooking event = CalendarBookingLocalServiceUtil.addCalendarBooking(userId, calendar.getCalendarId(), 
-					new long[] {}, 0L, titleMap, descriptionMap, null, actualTime.getTime(), (actualTime.getTime() + 1000*60*60), 
+					new long[] {}, 0L, titleMap, descriptionMap, null, calendarStart.getTimeInMillis(), calendarEnd.getTimeInMillis(), 
 					false, null, 0L, null, 0L, null, serviceContext);
 			System.out.println("new event id:" + event.getCalendarBookingId());
 			AssetEntryLocalServiceUtil.updateEntry(userId, groupId, CalendarBooking.class.getName(), event.getCalendarBookingId(), 
 					categoryIds, new String[] {});
 		}
-		response.setRenderParameter("jspPage", "/html/eventomanagement/add.jsp");
 	}
 	
 	private boolean isNull(String string) {
