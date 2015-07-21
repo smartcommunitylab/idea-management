@@ -36,6 +36,13 @@ To change the theme for already created users:
   - logout
   - login
 
+####2. Portal Configuration
+- default language
+- default user associations
+- enable google/facebook login
+- configure mail server
+- configure workflow definitions
+
 ### Data Structures
 
 #### 2. Create category data structure
