@@ -17,9 +17,9 @@
 package it.smartcommunitylab.platform.idea.portlet;
 
 import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,10 +35,14 @@ import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -64,6 +68,47 @@ public class Utils {
 			for (long id : ids) if (map.containsKey(id)) result.add(map.get(id));
 			return result;
 		}
+	}
+	
+	public static boolean eventAddEnabled(PortletRequest req) {
+		long ideaId = ParamUtil.getLong(req, "ideaId");
+		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
+		if (ideaId > 0) {
+			// only idea owner can create idea events
+			try {
+				Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
+				return idea.getUserId() == themeDisplay.getUserId();
+			} catch (Exception e) {
+				return false;
+			}
+		} else {
+			// otherwise only site content reviewer can add events
+			boolean hasRole = themeDisplay.getPermissionChecker().isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+			return hasRole;
+		}
+	}
+	public static boolean eventEditEnabled(CalendarBooking event, PortletRequest req) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
+		long groupId = event.getGroupId();
+		try {
+			// owner can modify
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			if (group != null) {
+				if (group.getCreatorUserId() > 0 && group.getCreatorUserId() == themeDisplay.getUserId()) {
+					return true;
+				}
+				// site content reviewer can modify
+				boolean hasRole = themeDisplay.getPermissionChecker().isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+				return hasRole;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return false;
+	}
+	public static boolean eventDeleteEnabled(CalendarBooking event, PortletRequest req) {
+		return eventEditEnabled(event, req);
 	}
 	
 	public static boolean ideaDeleteEnabled(Idea idea, PortletRequest req) {

@@ -27,11 +27,10 @@
   visibility: hidden;
 }
 
-#signinmodal form, #signinmodal .navigation {
+#signinmodal form {
   width: 50%;
   margin: 0 auto;
 }
-
 #signinmodal form .control-group input.field[type="text"], #signinmodal input.field[type="password"] {
   background: none;
   border: none;
@@ -57,7 +56,11 @@
   display: block;
 }
 
-#signinmodal form .button-holder button {
+#portlet_58 .button-holder button {
+	display: inline-block !important;
+}
+
+#signinmodal form .button-holder button, #portlet_58 .button-holder button{
   margin: 0 auto;
   display: block;
   text-shadow: none;
@@ -71,12 +74,42 @@
   padding: 8px 32px;
 }
 
-#signinmodal .navigation a {
+
+#signinmodal .navigation, #portlet_58 .navigation {
+  text-align: center;
+  background-color: transparent;
+  border-top:none;
+}
+
+#signinmodal .navigation ul li a, #portlet_58 .navigation ul li a {
+  margin: 0 auto;
+  display: block;
+  text-shadow: none;
+  background-image: none;
+  background-color: #F44336;
+  border: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  color: white;
+}
+
+#signinmodal .navigation ul li, #portlet_58 .navigation ul li {
+	float: inherit;
+	display: inline-block;
+}
+
+#signinmodal .navigation ul li a img, #portlet_58 .navigation ul li a img {
+	display: none;
+}
+
+#signinmodal .navigation a, #portlet_58 .navigation a {
   color: inherit;
 }
 
-#signinmodal .navigation a:hover span {
-  color: #F44336;
+#signinmodal .navigation a:hover span, #portlet_58 .navigation a:hover span {
   text-decoration: none;
 }
 
@@ -971,7 +1004,7 @@ header#banner {
   text-align: right;
 }
 
-.idea-form input {
+.idea-form input, #_58_fm input {
   border-left-color:white !important;
   border-top-color: white !important;
   border-right-color: white !important;
@@ -1008,6 +1041,7 @@ header#banner {
 .tagselector .tagselector-content {
   position: relative;
   padding: 5px 0 5px 0;
+  z-index: -999;
 }
 
 .tagselector .textboxlistentry {
@@ -1089,6 +1123,187 @@ header#banner {
 	display: none;
 }
 
+.event-container-title {
+	text-transform: uppercase;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.event-container-header {
+	margin-bottom: 10px;
+}
+
+.event-container-header-buttons {
+	display: inline;
+	float: right;
+}
+.event-container-button {
+	min-height: 24px;
+	min-width: 24px;
+	background-color: #F1453D;
+	 display: inline-block;
+  vertical-align: text-bottom;
+  margin-left: 5px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  color: white !important;
+  font-family: fontawesome-alloy;
+  font-size: 16px;
+}
+
+.event-container-button span {
+	display: none;
+} 
+
+.event-container-button::before {
+	vertical-align: text-top;
+} 
+
+.event-container-button-add::before {
+  content: "\f067";
+  padding-left: 5px;
+}
+.event-container-button-prev::before {
+  content: "\f053";
+  padding-left: 6px;
+}
+.event-container-button-next::before {
+  content: "\f054";
+  padding-left: 8px;
+}
+
+.event-container-list {
+	min-height: 250px;
+	border-left-width: 2px;
+	border-left-color: #F1453D;
+	border-left-style: solid;
+	list-style-type: none;
+  margin-left: 0px !important;
+}
+
+.event-container-element {
+	margin-left: 5px;
+	margin-bottom: 10px;
+	display: flex;
+}
+
+.event-container .event-container-list {
+	min-height: 200px;
+	height: 200px;
+	overflow: auto;
+}
+
+.event-container-element .span10 {
+	cursor: pointer;
+}
+
+.event-container-element .element-start {
+	font-size: 16px;
+	color: #BBB;
+}
+.event-container-element .element-controls {
+	display: inline-block;
+  float: right;
+  text-align: right;
+}
+.event-container-element .element-controls a {
+/* 	color: #F1453D; */
+}
+
+.tagcloud-row .tagcloud-node {
+	display: inline-block;
+}
+
+.tagcloud-left .tagcloud-node {
+	float: right;
+}
+.tagcloud-row .tagcloud-node {
+	padding: 5px 10px 5px 10px;
+}
+.tagcloud-left .span{
+	float: right;
+}
+
+.tagcloud-left .tagcloud-wrapper {
+	float: right;
+	position: relative;
+}
+.tagcloud-right .tagcloud-wrapper {
+  float: left;
+}
+
+.tagcloud-row {
+	margin-bottom: 10px;
+}
+
+.tagcloud-wrapper {
+  min-width: 150px;
+  background-color: #75c6b6;
+  cursor: pointer;
+}
+
+.tagcloud-right:after {
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-left-color: #75c6b6;
+  border-width: 15px;
+}
+.tagcloud-left .tagcloud-wrapper::before {
+	left: -30px;
+  border: solid transparent;
+  float: left;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: relative;
+  pointer-events: none;
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #75c6b6;
+  border-width: 15.5px;
+  margin-top: 0px;
+}
+
+.tagcloud-name {
+	text-transform: uppercase;
+	color: white;
+}
+
+.tagcloud-count {
+	min-width: 20px;
+	margin-left: 5px;
+	margin-right:5px;
+	display: inline-block;
+	text-align: center;
+	  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+	background-color: white;
+	color: #75c6b6;
+	font-size: 12px;
+	font-weight: bolder;
+}
+
+.tagcloud-dot {
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.tagcloud-left .tagcloud-dot {
+	float: left;
+	position: absolute;
+	left: 0px;
+}
+
+.tagcloud-right .tagcloud-dot {
+	float: right;
+}
+
 .userprofile .avatar {
 	padding-bottom: 30px;
 	margin-bottom: 30px;
@@ -1120,4 +1335,38 @@ header#banner {
 
 .userprofile .entry .value {
 	font-size: 18px;
+}
+
+.event-view-category {
+	text-transform: uppercase;
+	font-size: 16px;
+	margin-bottom: 16px;
+}
+
+.event-view-context {
+	font-size: 16px;
+}
+
+.event-view-header {
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #F1453D;
+	margin-top: 8px;
+	padding-top: 8px;
+	font-size: 16px;
+	margin-bottom: 24px;
+}
+
+.event-viewd-date {
+	color: #BBB;
+	float: right;
+}
+
+.event-view-time {
+	text-transform: uppercase;
+}
+
+.event-view-description {
+	 margin-top: 32px;
+	 margin-bottom: 32px;
 }

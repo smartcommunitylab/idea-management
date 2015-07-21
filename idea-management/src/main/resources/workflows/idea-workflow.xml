@@ -127,7 +127,7 @@
 				   Sorry you have copied someone !!!
 				   comment: ${taskComments}
 				   <#break>
-				   <#case "accepted">
+				   <#case "approved">
 				   YEAH Your ${entryType} has been accepted
 				   comment: ${taskComments}
 				   <#break>
@@ -149,12 +149,44 @@
 			</notification>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-type>site</role-type>
-					<name>Moderator</name>
-				</role>
-			</roles>
+		    <scripted-assignment>
+		        <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.util.GetterUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+              
+              import com.liferay.portal.model.Role;
+              import com.liferay.portal.model.User;
+              import com.liferay.portal.model.UserGroupRole;
+              import com.liferay.portal.service.RoleLocalServiceUtil;
+              import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+              
+              long companyId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+              long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+				      users = new ArrayList<User>();
+				      Role role = RoleLocalServiceUtil.getRole(companyId, "Moderator");
+				      List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(groupId, role.getRoleId());
+				
+				      for (UserGroupRole ugr : userGroupRoles) {
+				        users.add(ugr.getUser());
+				      }
+				      if (users.size() > 0) {
+                roles = null;
+                user = users.get(0);		
+				      } else {
+				        roles = new ArrayList<Role>();
+				        roles.add(role);
+				      }
+            ]]>
+          </script>
+        <script-language>groovy</script-language>
+		    </scripted-assignment>
+<!-- 			<roles> -->
+<!-- 				<role> -->
+<!-- 					<role-type>site</role-type> -->
+<!-- 					<name>Moderator</name> -->
+<!-- 				</role> -->
+<!-- 			</roles> -->
 		</assignments>
 		<transitions>
 			<transition>
@@ -205,7 +237,7 @@
 				   Sorry you have copied someone !!!
 				   comment: ${taskComments}
 				   <#break>
-				   <#case "accepted">
+				   <#case "approved">
 				   YEAH Your ${entryType} has been accepted
 				   comment: ${taskComments}
 				   <#break>
@@ -227,12 +259,44 @@
 			</notification>
 		</actions>
 		<assignments>
-			<roles>
-				<role>
-					<role-type>site</role-type>
-					<name>Moderator</name>
-				</role>
-			</roles>
+        <scripted-assignment>
+            <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.util.GetterUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+              
+              import com.liferay.portal.model.Role;
+              import com.liferay.portal.model.User;
+              import com.liferay.portal.model.UserGroupRole;
+              import com.liferay.portal.service.RoleLocalServiceUtil;
+              import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+              
+              long companyId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+              long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+              users = new ArrayList<User>();
+              Role role = RoleLocalServiceUtil.getRole(companyId, "Moderator");
+              List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(groupId, role.getRoleId());
+        
+              for (UserGroupRole ugr : userGroupRoles) {
+                users.add(ugr.getUser());
+              }
+              if (users.size() > 0) {
+                roles = null;
+                user = users.get(0);    
+              } else {
+                roles = new ArrayList<Role>();
+                roles.add(role);
+              }
+            ]]>
+          </script>
+        <script-language>groovy</script-language>
+        </scripted-assignment>
+<!-- 			<roles> -->
+<!-- 				<role> -->
+<!-- 					<role-type>site</role-type> -->
+<!-- 					<name>Moderator</name> -->
+<!-- 				</role> -->
+<!-- 			</roles> -->
 		</assignments>
 		<transitions>
 			<transition>
