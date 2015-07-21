@@ -295,8 +295,12 @@ header#banner {
   padding: 100px;
 }
 
-.ambito:not(:first-child) {
+.ambito {
   margin-top: 10px;
+}
+
+.ambito:first-child {
+  margin-top: inherit;
 }
 
 .ambito .wrapper {
@@ -742,7 +746,7 @@ header#banner {
   text-shadow: 0 !important;
   }
 
-.addidea-button, .formbutton-primary, .tagselector  .btn {
+.addidea-button, .formbutton-primary, .tagselector .btn {
   font-size: 18px !important;
   text-transform: uppercase !important;
   padding: 8px 24px !important;
@@ -1034,13 +1038,13 @@ header#banner {
   border: none !important;
 }
 
-.tagselector  .tagselector-content {
+.tagselector .tagselector-content {
   position: relative;
   padding: 5px 0 5px 0;
   z-index: -999;
 }
 
-.tagselector  .textboxlistentry {
+.tagselector .textboxlistentry {
   background-color: #999999 !important;
   font-weight: bold !important;
   color: white;
@@ -1050,28 +1054,30 @@ header#banner {
 .tagselector:not(.categoriesselector) .btn:first-child {
   display:none !important;
 }
-.tagselector  .textboxlistentry-holder {
+
+.tagselector .textboxlistentry-holder {
   position:absolute;
   left:60px;
   padding: 0px;
 }
 
-.tagselector  .btn i {
+.tagselector .btn i {
   display:none;
   color: trasparent !important;
 }
 
-.tagselector  .btn {
+.tagselector .btn {
   font-size: 0 !important;
   padding: 8px 8px 4px 8px !important;
 }
-.tagselector:not(.categoriesselector)  .btn:last-child::before {
+
+.tagselector:not(.categoriesselector) .btn:last-child::before {
   font-family: fontawesome-alloy;
   font-size: 20px;
   content: "\f02c";
 }
 
-.categoriesselector  .btn:last-child::before {
+.categoriesselector .btn:last-child::before {
   font-family: fontawesome-alloy;
   font-size: 20px;
   content: "\f046";
@@ -1081,7 +1087,7 @@ header#banner {
 	padding: 8px !important;
 }
 
-.edit-assetlinks-button a{
+.edit-assetlinks-button a {
 	color:white !important;
 }
 
@@ -1299,8 +1305,28 @@ header#banner {
 }
 
 .userprofile .avatar {
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid #DDD;
+}
+
+.userprofile .avatar img {
 	display: block;
 	margin: auto;
+	width: 100px;
+	height: 100px;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	border: 1px solid #DDD;
+}
+
+.userprofile .entry {
+	margin-top: 20px;
+}
+
+.userprofile .entry:first-child {
+	margin-top: 0;
 }
 
 .userprofile .entry .field {
@@ -1308,7 +1334,7 @@ header#banner {
 }
 
 .userprofile .entry .value {
-	font-size: larger;
+	font-size: 18px;
 }
 
 .event-view-category {

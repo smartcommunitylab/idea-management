@@ -20,24 +20,27 @@
 			<c:when test="<%=selUserId != user.getUserId()%>">
 				<!-- READ ONLY -->
 				<div class="container">
-					<div class="row">
-						<div class="span12">
-							<img class="avatar"
-								src="<%=selUser.getPortraitURL(themeDisplay).toString()%>" />
+					<div class="row-fluid">
+						<div class="avatar span6 offset3">
+							<img src="<%=selUser.getPortraitURL(themeDisplay).toString()%>" />
 						</div>
 					</div>
-					<div class="row">
+					<div class="row-fluid">
 						<div class="span6">
 							<div class="entry">
-								<h5 class="field">Nome e cognome</h5>
-								<p class="value"><%=selUser.getFullName()%></p>
+								<h6 class="field">Nome</h6>
+								<p class="value"><%=selUser.getFirstName()%></p>
 							</div>
 							<div class="entry">
-								<h5 class="field">Email</h5>
+								<h6 class="field">Cognome</h6>
+								<p class="value"><%=selUser.getLastName()%></p>
+							</div>
+							<div class="entry">
+								<h6 class="field">Email</h6>
 								<p class="value"><%=selUser.getEmailAddress()%></p>
 							</div>
 							<div class="entry">
-								<h5 class="field">Genere</h5>
+								<h6 class="field">Genere</h6>
 								<p class="value">
 									<c:choose>
 										<c:when test="<%=selUser.getMale()%>">
@@ -54,15 +57,50 @@
 							</div>
 						</div>
 						<div class="span6">
-							<h5 class="field">Lavoro</h5>
-							<p class="value"><%=selUser.getJobTitle()%></p>
+							<div class="entry">
+								<h6 class="field">Professione</h6>
+								<p class="value"><%=selUser.getJobTitle()%></p>
+							</div>
+							<h4 class="field">Residenza</h4>
+							<div class="entry">
+								<h6 class="field">Via e numero</h6>
+								<p class="value">
+									<c:choose>
+										<c:when test="!selUser.getAddresses().isEmpty()">
+											<c:if test="selUser.getAddresses().get(0).getStreet1() != ''">
+												<%=selUser.getAddresses().get(0).getStreet1()%>
+											</c:if>
+											<c:if test="selUser.getAddresses().get(0).getStreet2() != ''">
+												<br />
+												<%=selUser.getAddresses().get(0).getStreet2()%>
+											</c:if>
+											<c:if test="selUser.getAddresses().get(0).getStreet3() != ''">
+												<br />
+												<%=selUser.getAddresses().get(0).getStreet3()%>
+											</c:if>
+										</c:when>
+										<c:otherwise>
+											...
+										</c:otherwise>
+									</c:choose>
+								</p>
+								<h6 class="field">Citt&agrave;</h6>
+								<p class="value">
+									<c:choose>
+										<c:when test="!selUser.getAddresses().isEmpty()">
+											<%=selUser.getAddresses().get(0).getCity()%>
+										</c:when>
+										<c:otherwise>
+											...
+										</c:otherwise>
+									</c:choose>
+								</p>
+							</div>
 						</div>
-					</div>
-				</div>
 			</c:when>
 			<c:otherwise>
 				<!-- FORM -->
-				<div class="container-fluid">
+				<div class="container">
 					<div class="row-fluid">
 						<div class="span12">
 							<img src="<%=selUser.getPortraitURL(themeDisplay).toString()%>" />
