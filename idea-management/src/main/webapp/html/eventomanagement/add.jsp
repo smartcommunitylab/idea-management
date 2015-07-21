@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.GregorianCalendar"%>
@@ -19,8 +20,19 @@
 
 <%
 	String categoryId = (String) request.getParameter("categoryId");
+	if(Validator.isNull(categoryId)) {
+		categoryId = (String) request.getAttribute("categoryId");
+	}
+	
 	String callId = (String) request.getParameter("callId");
+	if(Validator.isNull(callId)) {
+		callId = (String) request.getAttribute("callId");
+	}
+	
 	String ideaId = (String) request.getParameter("ideaId");
+	if(Validator.isNull(ideaId)) {
+		ideaId = (String) request.getAttribute("ideaId");
+	}
 %>
 
 <c:choose>
@@ -32,6 +44,7 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
+		<liferay-ui:error key="evento_form_check_date_error" message="evento_form_check_date_error"></liferay-ui:error>
 		<portlet:actionURL name="addEvent" var="addEventURL" />
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
@@ -126,7 +139,7 @@ AUI().use('aui-base','liferay-form','aui-form-validator',
 				  custom: false,
 				  fieldName: '<portlet:namespace/>endTime',
 					validatorName:'required'
-				},				
+				}				
 			]
 		});
 	}

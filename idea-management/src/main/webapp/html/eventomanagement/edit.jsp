@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
@@ -29,8 +30,12 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
+		<liferay-ui:error key="evento_form_check_date_error" message="evento_form_check_date_error"></liferay-ui:error>	
 		<%
 			long eventId = ParamUtil.getLong(request, "eventId");
+			if(Validator.isNull(eventId)) {
+				eventId = (Long) request.getAttribute("eventId");
+			}
 			CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
 			String title = event.getTitle(locale);
 			String description = event.getDescription(locale);
@@ -136,10 +141,10 @@ AUI().use('aui-base','liferay-form','aui-form-validator',
 				},				
 				{
 					body:'',
-				  custom: false,
-				  fieldName: '<portlet:namespace/>endTime',
+					custom: false,
+					fieldName: '<portlet:namespace/>endTime',
 					validatorName:'required'
-				},				
+				}				
 			]
 		});
 	}
