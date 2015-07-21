@@ -26,9 +26,7 @@ import javax.portlet.RenderResponse;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.calendar.service.CalendarImporterLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -138,16 +136,17 @@ public class EventoManagementPortlet extends MVCPortlet {
 //		getSearchIteratorData(renderRequest, renderResponse, eventList);
 		
 		//events as list of map attribute
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", locale);
-		List<Map<String, String>> eventMapList = new ArrayList<Map<String, String>>();
-		for(CalendarBooking event : eventList) {
-			Map<String, String> eventMap = new HashMap<String, String>();
-			eventMap.put("title", event.getTitle(locale));
-			eventMap.put("description", event.getDescription(locale));
-			eventMap.put("startDate", sdf.format(new Date(event.getStartTime())));
-			eventMapList.add(eventMap);
-		}
-		renderRequest.setAttribute("eventList", eventMapList);
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", locale);
+//		List<Map<String, String>> eventMapList = new ArrayList<Map<String, String>>();
+//		for(CalendarBooking event : eventList) {
+//			Map<String, String> eventMap = new HashMap<String, String>();
+//			eventMap.put("title", event.getTitle(locale));
+//			eventMap.put("description", event.getDescription(locale));
+//			eventMap.put("startDate", sdf.format(new Date(event.getStartTime())));
+//			eventMapList.add(eventMap);
+//		}
+//		renderRequest.setAttribute("eventList", eventMapList);
+		renderRequest.setAttribute("eventList", eventList);
 		super.doView(renderRequest, renderResponse);
 	}
 
@@ -257,6 +256,14 @@ public class EventoManagementPortlet extends MVCPortlet {
 		result[1] = calendarEnd.getTimeInMillis();
 		return result;
 	}
+	
+	public void deleteEvent(ActionRequest request, ActionResponse response) throws Exception {
+		// TODO
+	}
+	public void updateEvent(ActionRequest request, ActionResponse response) throws Exception {
+		// TODO
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public void addEvent(ActionRequest request, ActionResponse response) throws Exception {

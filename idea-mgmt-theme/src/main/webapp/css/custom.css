@@ -1179,11 +1179,30 @@ header#banner {
 .event-container-element {
 	margin-left: 5px;
 	margin-bottom: 10px;
+	display: flex;
+}
+
+.event-container .event-container-list {
+	min-height: 200px;
+	height: 200px;
+	overflow: auto;
+}
+
+.event-container-element .span10 {
+	cursor: pointer;
 }
 
 .event-container-element .element-start {
 	font-size: 16px;
 	color: #BBB;
+}
+.event-container-element .element-controls {
+	display: inline-block;
+  float: right;
+  text-align: right;
+}
+.event-container-element .element-controls a {
+/* 	color: #F1453D; */
 }
 
 .tagcloud-row .tagcloud-node {

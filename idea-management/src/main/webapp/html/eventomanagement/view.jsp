@@ -5,6 +5,8 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.liferay.calendar.model.CalendarBooking"%>
+<%@page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
+
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 <%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
@@ -27,7 +29,7 @@
 <br/> --%>
 
 <%
-	List<Map<String, String>> eventList = (List<Map<String, String>>) request.getAttribute("eventList");
+	List<CalendarBooking> eventList = (List<CalendarBooking>) request.getAttribute("eventList");
 	String titleData = (String) request.getAttribute("titleData");
 	String prevDate = (String) request.getAttribute("prevDate");
 	String nextDate = (String) request.getAttribute("nextDate");
@@ -35,6 +37,7 @@
 	String callId = (String) request.getAttribute("callId");
 	String ideaId = (String) request.getAttribute("ideaId");
 	String formTitle = LanguageUtil.get(locale, "evento_title_add_eventi");
+	java.text.SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", locale);
 %>
 
 <portlet:renderURL var="addEventURL" windowState="<%=LiferayWindowState.POP_UP.toString() %>">
@@ -54,20 +57,54 @@
   <div class="event-container-header">
     <span class="event-container-title"><liferay-ui:message key="evento_title_eventi" /> <%=titleData%></span>
     <div class="event-container-header-buttons">
-    <a class="event-container-button event-container-button-add" id="add-event-link"
-    	onClick="javascript:window.showAddEventForm()"><span>+</span></a>
+    <c:if test='<%=Utils.eventAddEnabled(renderRequest) %>'>
+	    <a class="event-container-button event-container-button-add" id="add-event-link"
+	      onClick="javascript:window.showPopup('<%=addEventURL.toString()%>','<liferay-ui:message key="evento_title_add_eventi"/>')"><span>+</span></a>
+    </c:if>
     <a class="event-container-button event-container-button-prev" href='<%= viewPrevURL %>'><span>&lt;</span></a>
     <a class="event-container-button event-container-button-next" href='<%= viewNextURL %>'><span>&gt;</span></a>
     </div>
   </div>
 	<ul class="event-container-list">
 		<%
-			for (Map<String, String> event : eventList) {
+			for (CalendarBooking event : eventList) {
 		%>
 		<li  class="event-container-element">
-			<div class="element-start"><%=event.get("startDate")%></div>
-			<div class="element-title"><%=event.get("title")%></div>
-			<div class="element-description"><%=event.get("description")%></div>
+			<portlet:renderURL var="viewEventURL" windowState="<%=LiferayWindowState.POP_UP.toString() %>">
+			  <portlet:param name="mvcPath" value="/html/eventomanagement/viewevent.jsp" />
+			  <portlet:param name="categoryId" value="<%= categoryId %>" />
+			  <portlet:param name="callId" value="<%= callId %>" />
+			  <portlet:param name="ideaId" value="<%= ideaId %>" />
+        <portlet:param name="eventId" value="<%= String.valueOf(event.getCalendarBookingId()) %>" />
+			</portlet:renderURL>
+		  <div class="span10"  onClick="javascript:window.showPopup('<%=viewEventURL.toString() %>','<liferay-ui:message key="evento_title_view_eventi"/>')">
+				<div class="element-start">
+				 <%=sdf.format(new java.util.Date(event.getStartTime())) %>
+				</div>
+	      <div class="element-title"><%=event.getTitle(locale)%></div>
+	      <div class="element-description"><%=event.getDescription(locale)%></div>
+			</div>	
+			<div class="span2 element-controls">
+       <c:if test='<%=Utils.eventEditEnabled(event, renderRequest) %>'>
+	      <portlet:renderURL var="editEventURL" windowState="<%=LiferayWindowState.POP_UP.toString() %>">
+	        <portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
+	        <portlet:param name="categoryId" value="<%= categoryId %>" />
+	        <portlet:param name="callId" value="<%= callId %>" />
+	        <portlet:param name="ideaId" value="<%= ideaId %>" />
+	        <portlet:param name="eventId" value="<%= String.valueOf(event.getCalendarBookingId()) %>" />
+	      </portlet:renderURL>
+         <a onClick="javascript:window.showPopup('<%=editEventURL.toString() %>','<liferay-ui:message key="evento_title_edit_eventi"/>')"><i class="icon-pencil"></i></a>
+       </c:if>
+       <c:if test='<%=Utils.eventDeleteEnabled(event, renderRequest) %>'>
+         <portlet:actionURL var="deleteURL" name="deleteEvent">
+           <portlet:param name="eventId" value="<%=String.valueOf(event.getCalendarBookingId()) %>" />
+           <portlet:param name="categoryId" value="<%= categoryId %>" />
+           <portlet:param name="callId" value="<%= callId %>" />
+           <portlet:param name="ideaId" value="<%= ideaId %>" />
+         </portlet:actionURL>
+         <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
+       </c:if>
+			</div>
 		</li>
 		<%
 			}
@@ -78,29 +115,32 @@
 <aui:script>
 	Liferay.provide(
 		window,
-		'showAddEventForm',
-		function() {
+		'showPopup',
+		function(url,title) {
 			var instance = this;
 
-			var url='<%= addEventURL.toString() %>';
+			//var url = '<%= addEventURL.toString() %>';
 
 				Liferay.Util.openWindow(
 					{
 						cache: false,
 						dialog: {
 							align: Liferay.Util.Window.ALIGN_CENTER,
-							after: {
-								render: function(event) {
-									this.set('y', this.get('y') + 50);
-								}
-							},
-							width: 820
+// 							after: {
+// 								render: function(event) {
+// 									this.set('y', this.get('y') + 50);
+// 								}
+// 							},
+							width: 820,
+							height: 500,
+							constrain2view: true,
+	            modal: true
 						},
 						dialogIframe: {
 							id: 'showAddEventFormIframe',
 							uri: url
 						},
-						title: '<%= formTitle.toString() %>',
+						title: title,
 						uri: url
 					}
 				);
