@@ -1,3 +1,13 @@
+<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil"%>
+<%@page import="com.liferay.portlet.asset.model.AssetEntry"%>
+<%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
+<%@page import="java.util.Map"%>
+<%@page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@page import="com.liferay.portlet.asset.model.AssetCategory"%>
+<%@page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil"%>
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -17,21 +27,53 @@
 	long eventId = ParamUtil.getLong(request, "eventId");
 	CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
 	
-	String titleData = (String) request.getAttribute("titleData");
-	String prevDate = (String) request.getAttribute("prevDate");
-	String nextDate = (String) request.getAttribute("nextDate");
-	String categoryId = (String) request.getAttribute("categoryId");
-	String callId = (String) request.getAttribute("callId");
-	String ideaId = (String) request.getAttribute("ideaId");
+	long categoryId = ParamUtil.getLong(request, "categoryId");
+	long callId = ParamUtil.getLong(request, "callId");
+	long ideaId = ParamUtil.getLong(request, "ideaId");
 	java.text.SimpleDateFormat dfDate = new SimpleDateFormat("dd MMMM yyyy", locale);
 	DateFormat dfTime =DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 	String startDate = dfDate.format(new Date(event.getStartTime()));
 	String startTime = dfTime.format(new Date(event.getStartTime()));
+	
+	String categoryName = null;
+	String categoryColor = null;
+	String contextName = null;
+	
+	if(Validator.isNotNull(categoryId)) {
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
+		categoryName = assetCategory.getTitle(locale);
+		Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+		categoryColor = CC.get(categoryId);
+	} else if (Validator.isNotNull(ideaId)) {
+		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
+		contextName = idea.getTitle();
+		long groupId = idea.getUserGroupId();
+		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(), idea.getIdeaId());
+		long[] categoryIds = entry.getCategoryIds();
+		categoryId = categoryIds[0];
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
+		categoryName = assetCategory.getTitle(locale);
+		Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+		categoryColor = CC.get(categoryId);
+	} else if (Validator.isNotNull(callId)) {
+		Call call = CallLocalServiceUtil.getCall(callId);
+		contextName = call.getTitle();
+		long groupId = call.getUserGroupId();
+		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(), call.getCallId());
+		long[] categoryIds = entry.getCategoryIds();
+		categoryId = categoryIds[0];
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
+		categoryName = assetCategory.getTitle(locale);
+		Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+		categoryColor = CC.get(categoryId);
+	}
 %>
 
 <div class="event-view-container">
-  <div class="event-view-category">Sostenibilita'</div>
-  <div class="event-view-context">Idea 1</div>
+  <div class="event-view-category" style="background-color: <%=categoryColor%>;"><%=categoryName%>'</div>
+  <c:if test='<%=Validator.isNotNull(contextName)%>'>
+  	<div class="event-view-context"><%=contextName%></div>
+  </c:if>
   <div class="event-view-header">
     <span class="event-view-title"><%=event.getTitle(locale)%></span>
     <span class="event-viewd-date"><%=startDate%></span>    
@@ -41,7 +83,7 @@
   <div>
   <aui:button-row  cssClass="formbutton-row">
     <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="Close"></aui:button>
-    <aui:button cssClass="formbutton-primary" type="button" value="Vedi idea"></aui:button>
+    <%-- <aui:button cssClass="formbutton-primary" type="button" value="Vedi idea"></aui:button> --%>
   </aui:button-row>
   </div>
 </div>
