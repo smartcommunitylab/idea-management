@@ -1,3 +1,5 @@
+<%@page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.GregorianCalendar"%>
@@ -17,11 +19,6 @@
 <portlet:defineObjects />
 <liferay-theme:defineObjects />
 
-<%
-	String categoryId = (String) request.getParameter("categoryId");
-	String callId = (String) request.getParameter("callId");
-	String ideaId = (String) request.getParameter("ideaId");
-%>
 
 <c:choose>
 	<c:when test='<%=SessionMessages.contains(renderRequest, "requestProcessed")%>'>
@@ -32,50 +29,66 @@
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="addEvent" var="addEventURL" />
+		<%
+			long eventId = ParamUtil.getLong(request, "eventId");
+			CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
+			String title = event.getTitle(locale);
+			String description = event.getDescription(locale);
+		%>
+		<portlet:actionURL name="updateEvent" var="updateEventURL" />
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
+			<portlet:param name="mvcPath" value="/html/eventomanagement/edit.jsp" />
 		</portlet:renderURL>
-		<aui:form cssClass="idea-form" id="addEvent" name="addEvent"
-			action="<%=addEventURL%>" method="post">
+		<aui:form cssClass="idea-form" id="updateEvent" name="updateEvent"
+			action="<%=updateEventURL%>" method="post">
 			<aui:fieldset cssClass="simple-field">
-        <aui:input placeholder='<%=LanguageUtil.get(locale, "evento_form_title") %>' label="" name="title"></aui:input>
+        <aui:input placeholder='<%=LanguageUtil.get(locale, "evento_form_title") %>' label="" name="title" 
+        value="<%=title%>"></aui:input>
       </aui:fieldset>
 
 		  <aui:field-wrapper>
-		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  
+		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" 
+		    type="textarea" label="" value="<%=description%>"></aui:input>  
 		  </aui:field-wrapper>
 			
         <%
-        GregorianCalendar cal = new GregorianCalendar(locale);
-        int initDay = cal.get(Calendar.DAY_OF_MONTH);
-        int initMonth = cal.get(Calendar.MONTH); 
-        int initYear = cal.get(Calendar.YEAR);
-        int initHour = cal.get(Calendar.HOUR_OF_DAY);
-        int initMinute = cal.get(Calendar.MINUTE);
-        int ampm = 0;
+        GregorianCalendar startCal = new GregorianCalendar(locale);
+        startCal.setTimeInMillis(event.getStartTime());
+        int startDay = startCal.get(Calendar.DAY_OF_MONTH);
+        int startMonth = startCal.get(Calendar.MONTH); 
+        int startYear = startCal.get(Calendar.YEAR);
+        int startHour = startCal.get(Calendar.HOUR_OF_DAY);
+        int startMinute = startCal.get(Calendar.MINUTE);
+        int startAmPm = 0;
+        
+        GregorianCalendar endCal = new GregorianCalendar(locale);
+        endCal.setTimeInMillis(event.getEndTime());
+        int endDay = endCal.get(Calendar.DAY_OF_MONTH);
+        int endMonth = endCal.get(Calendar.MONTH); 
+        int endYear = endCal.get(Calendar.YEAR);
+        int endHour = endCal.get(Calendar.HOUR_OF_DAY);
+        int endMinute = endCal.get(Calendar.MINUTE);
+        int endAmPm = 0;
         %>
       <div class="row-fluid">
         <div class="span6"> 
 					<aui:fieldset label="evento_form_startDate">
 						<liferay-ui:input-date name="startDate" dayParam="sdday" monthParam="sdmonth" yearParam="sdyear" 
-							dayValue="<%=initDay%>" monthValue="<%=initMonth%>" yearValue="<%=initYear%>"></liferay-ui:input-date>
+							dayValue="<%=startDay%>" monthValue="<%=startMonth%>" yearValue="<%=startYear%>"></liferay-ui:input-date>
 						<liferay-ui:input-time name="startTime" hourParam="sdhour" minuteParam="sdmin" amPmParam="sampm" 
-							hourValue="<%=initHour%>" minuteValue="<%=initMinute%>" amPmValue="<%=ampm%>"></liferay-ui:input-time>
+							hourValue="<%=startHour%>" minuteValue="<%=startMinute%>" amPmValue="<%=startAmPm%>"></liferay-ui:input-time>
 					</aui:fieldset>
         </div>
         <div class="span6"> 
 					<aui:fieldset label="evento_form_endDate">		
 						<liferay-ui:input-date name="endDate" dayParam="edday" monthParam="edmonth" yearParam="edyear" 
-							dayValue="<%=initDay%>" monthValue="<%=initMonth%>" yearValue="<%=initYear%>"></liferay-ui:input-date>
+							dayValue="<%=endDay%>" monthValue="<%=endMonth%>" yearValue="<%=endYear%>"></liferay-ui:input-date>
 						<liferay-ui:input-time name="endTime" hourParam="edhour" minuteParam="edmin" amPmParam="eampm" 
-							hourValue="<%=initHour%>" minuteValue="<%=initMinute%>" amPmValue="<%=ampm%>"></liferay-ui:input-time>
+							hourValue="<%=endHour%>" minuteValue="<%=endMinute%>" amPmValue="<%=endAmPm%>"></liferay-ui:input-time>
 		      </aui:fieldset>
 		    </div>
 		  </div>    
-			<aui:input name="categoryId" value="<%=categoryId%>" type="hidden" />
-			<aui:input name="callId" value="<%=callId%>" type="hidden" />
-			<aui:input name="ideaId" value="<%=ideaId%>" type="hidden" />
+			<aui:input name="eventId" value="<%=eventId%>" type="hidden" />
 			<aui:input name="redirect" value="<%=redirectURL%>" type="hidden" />
 			<aui:button-row  cssClass="formbutton-row">
 		    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();"></aui:button>
@@ -89,7 +102,7 @@
 AUI().use('aui-base','liferay-form','aui-form-validator',
 	function(A) {
 		Liferay.Form.register( {
-			id: '<portlet:namespace/>addEvent',
+			id: '<portlet:namespace/>updateEvent',
 			fieldRules: [
 				{
 	   	  	body:'',

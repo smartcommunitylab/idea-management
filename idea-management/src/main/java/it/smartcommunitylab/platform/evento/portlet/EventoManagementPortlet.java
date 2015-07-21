@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -258,10 +259,74 @@ public class EventoManagementPortlet extends MVCPortlet {
 	}
 	
 	public void deleteEvent(ActionRequest request, ActionResponse response) throws Exception {
-		// TODO
+		long eventId = ParamUtil.getLong(request, "eventId");
+		if (Validator.isNotNull(eventId)) {
+			CalendarBookingLocalServiceUtil.deleteCalendarBooking(eventId);
+			System.out.println("delete event:" + eventId);
+		}
 	}
+	
 	public void updateEvent(ActionRequest request, ActionResponse response) throws Exception {
-		// TODO
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		Locale locale = themeDisplay.getLocale();
+		long eventId = ParamUtil.getLong(request, "eventId");
+		if(Validator.isNotNull(eventId)) {
+			
+			String title = ParamUtil.getString(request, "title");
+			Map<Locale, String> titleMap = new HashMap<>();
+			titleMap.put(locale, title);
+			
+			String description = ParamUtil.getString(request, "description");
+			Map<Locale, String> descriptionMap = new HashMap<>();
+			descriptionMap.put(locale, description);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			int startYear = ParamUtil.getInteger(request, "sdyear");
+			int startMonth = ParamUtil.getInteger(request, "sdmonth");
+			int startDay = ParamUtil.getInteger(request, "sdday");
+			int startHour = ParamUtil.getInteger(request, "sdhour");
+			int startMinute = ParamUtil.getInteger(request, "sdmin");
+			int startAmpm = ParamUtil.getInteger(request, "sampm");
+			Calendar calendarStart = GregorianCalendar.getInstance();
+			calendarStart.clear();
+			calendarStart.set(Calendar.YEAR, startYear);
+			calendarStart.set(Calendar.MONTH, startMonth);
+			calendarStart.set(Calendar.DAY_OF_MONTH, startDay);
+			if(startAmpm == 1) {
+				calendarStart.set(Calendar.HOUR_OF_DAY, startHour + 12);
+			} else {
+				calendarStart.set(Calendar.HOUR_OF_DAY, startHour);
+			}
+			calendarStart.set(Calendar.MINUTE, startMinute);
+			System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
+			
+			int endYear = ParamUtil.getInteger(request, "edyear");
+			int endMonth = ParamUtil.getInteger(request, "edmonth");
+			int endDay = ParamUtil.getInteger(request, "edday");
+			int endHour = ParamUtil.getInteger(request, "edhour");
+			int endMinute = ParamUtil.getInteger(request, "edmin");
+			int endAmpm = ParamUtil.getInteger(request, "eampm");
+			Calendar calendarEnd = GregorianCalendar.getInstance();
+			calendarEnd.clear();
+			calendarEnd.set(Calendar.YEAR, endYear);
+			calendarEnd.set(Calendar.MONTH, endMonth);
+			calendarEnd.set(Calendar.DAY_OF_MONTH, endDay);
+			if(endAmpm == 1) {
+				calendarEnd.set(Calendar.HOUR_OF_DAY, endHour + 12);
+			} else {
+				calendarEnd.set(Calendar.HOUR_OF_DAY, endHour);
+			}
+			calendarEnd.set(Calendar.MINUTE, endMinute);
+			System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
+			
+			CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
+			event.setTitleMap(titleMap);
+			event.setDescriptionMap(descriptionMap);
+			event.setStartTime(calendarStart.getTimeInMillis());
+			event.setEndTime(calendarEnd.getTimeInMillis());
+			CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
+			System.out.println("update event:" + eventId);
+		}
 	}
 	
 	

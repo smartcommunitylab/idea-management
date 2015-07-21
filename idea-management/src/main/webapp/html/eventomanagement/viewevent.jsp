@@ -1,25 +1,43 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
+<%@page import="com.liferay.calendar.model.CalendarBooking"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<portlet:defineObjects />
+<liferay-theme:defineObjects />
+
+<%
+	long eventId = ParamUtil.getLong(request, "eventId");
+	CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
+	
+	String titleData = (String) request.getAttribute("titleData");
+	String prevDate = (String) request.getAttribute("prevDate");
+	String nextDate = (String) request.getAttribute("nextDate");
+	String categoryId = (String) request.getAttribute("categoryId");
+	String callId = (String) request.getAttribute("callId");
+	String ideaId = (String) request.getAttribute("ideaId");
+	java.text.SimpleDateFormat dfDate = new SimpleDateFormat("dd MMMM yyyy", locale);
+	DateFormat dfTime =DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+	String startDate = dfDate.format(new Date(event.getStartTime()));
+	String startTime = dfTime.format(new Date(event.getStartTime()));
+%>
 
 <div class="event-view-container">
   <div class="event-view-category">Sostenibilita'</div>
   <div class="event-view-context">Idea 1</div>
   <div class="event-view-header">
-    <span class="event-view-title">Evento 1</span>
-    <span class="event-viewd-date">9 Giugno 2015</span>    
+    <span class="event-view-title"><%=event.getTitle(locale)%></span>
+    <span class="event-viewd-date"><%=startDate%></span>    
   </div>
-  <div class="event-view-time">Orario: 10:00</div>
-  <div class="event-view-description">
-  ESCRIZIONE - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiu-
-smod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-SFIDE RECENTI
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-nulla pariatur. Excepteur sint oc
-  </div>
+  <div class="event-view-time"><liferay-ui:message key="evento_form_time" />: <%=startTime%></div>
+  <div class="event-view-description"><%=event.getDescription(locale)%></div>
   <div>
   <aui:button-row  cssClass="formbutton-row">
     <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="Close"></aui:button>
