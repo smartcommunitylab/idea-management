@@ -23,10 +23,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -44,16 +42,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserGroupGroupRole;
-import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -129,17 +118,6 @@ public class Utils {
 		//themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())
 		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
 		try {
-			Set<User> siteMembers = new HashSet<User>();
-			Role role = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), "Moderator");
-			System.err.println("ROLE = "+role);
-			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(themeDisplay.getScopeGroupId(), role.getRoleId());
-
-			for (UserGroupRole ugr : userGroupRoles) {
-				siteMembers.add(ugr.getUser());
-			}
-			
-			System.err.println("MODERATORS = "+siteMembers);
-			
 			boolean hasRole = themeDisplay.getPermissionChecker().isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
 			return hasRole;
 		} catch (Exception e) {
