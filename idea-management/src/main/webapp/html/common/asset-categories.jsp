@@ -4,20 +4,20 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
 
-<%-- <%@ include file="/html/common-init.jsp" %> --%>
+<%@ include file="/html/common-init.jsp" %>
 
 <%
   boolean singleSelect = GetterUtil.getBoolean(request.getAttribute("im-acs:single-select"), false);
   String className = GetterUtil.getString(request.getAttribute("im-acs:className"));
   String current = GetterUtil.getString(request.getAttribute("im-acs:curCategories"));
-  long[] curIds = StringUtil.split(current, 0L);
+  long[] curIds = null;;//StringUtil.split(current, 0L);
   java.util.Set<Long> selected = new java.util.HashSet<Long>();
   for (long curIdSel : curIds) {
 	  selected.add(curIdSel);
   }
   
   String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_categories_selector_page") + StringPool.UNDERLINE;
-  String namespace =  ((PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE)).getNamespace();
+  String namespace =  "";//((PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE)).getNamespace();
 
   List<AssetEntry> categoryEntries = IdeaLocalServiceUtil.getCategoryObjects(scopeGroupId);
   long[] catIds = new long[categoryEntries.size()];
