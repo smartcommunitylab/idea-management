@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -319,16 +320,21 @@ public class EventoManagementPortlet extends MVCPortlet {
 			calendarEnd.set(Calendar.MINUTE, endMinute);
 			System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
 			
-			CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
-			event.setTitleMap(titleMap);
-			event.setDescriptionMap(descriptionMap);
-			event.setStartTime(calendarStart.getTimeInMillis());
-			event.setEndTime(calendarEnd.getTimeInMillis());
-			CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
-			System.out.println("update event:" + eventId);
+			if(calendarStart.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
+				SessionErrors.add(request, "evento_form_check_date_error");
+				request.setAttribute("eventId", new Long(eventId));
+				response.setRenderParameter("jspPage", "/html/eventomanagement/edit.jsp");
+			} else {
+				CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
+				event.setTitleMap(titleMap);
+				event.setDescriptionMap(descriptionMap);
+				event.setStartTime(calendarStart.getTimeInMillis());
+				event.setEndTime(calendarEnd.getTimeInMillis());
+				CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
+				System.out.println("update event:" + eventId);
+			}
 		}
 	}
-	
 	
 	@SuppressWarnings("unchecked")
 	public void addEvent(ActionRequest request, ActionResponse response) throws Exception {
@@ -380,6 +386,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		}
 		calendarStart.set(Calendar.MINUTE, startMinute);
 		System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
+		
 		int endYear = ParamUtil.getInteger(request, "edyear");
 		int endMonth = ParamUtil.getInteger(request, "edmonth");
 		int endDay = ParamUtil.getInteger(request, "edday");
@@ -399,24 +406,32 @@ public class EventoManagementPortlet extends MVCPortlet {
 		calendarEnd.set(Calendar.MINUTE, endMinute);
 		System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
 		
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(CalendarBooking.class.getName(), request);
-		//get calendar by groupId
-		DynamicQuery dynamicQuery = CalendarLocalServiceUtil.dynamicQuery();
-		Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
-		dynamicQuery.add(criterionGroup);
-		List<com.liferay.calendar.model.Calendar> calendarList = CalendarLocalServiceUtil.dynamicQuery(dynamicQuery);
-		if(!calendarList.isEmpty()) {
-			Map<Locale, String> titleMap = new HashMap<>();
-			titleMap.put(locale, title);
-			Map<Locale, String> descriptionMap = new HashMap<>();
-			descriptionMap.put(locale, description);
-			com.liferay.calendar.model.Calendar calendar = calendarList.get(0);
-			CalendarBooking event = CalendarBookingLocalServiceUtil.addCalendarBooking(userId, calendar.getCalendarId(), 
-					new long[] {}, 0L, titleMap, descriptionMap, null, calendarStart.getTimeInMillis(), calendarEnd.getTimeInMillis(), 
-					false, null, 0L, null, 0L, null, serviceContext);
-			System.out.println("new event id:" + event.getCalendarBookingId());
-			AssetEntryLocalServiceUtil.updateEntry(userId, groupId, CalendarBooking.class.getName(), event.getCalendarBookingId(), 
-					categoryIds, new String[] {});
+		if(calendarStart.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
+			SessionErrors.add(request, "evento_form_check_date_error");
+			request.setAttribute("categoryId", String.valueOf(categoryId));
+			request.setAttribute("callId", String.valueOf(callId));
+			request.setAttribute("ideaId", String.valueOf(ideaId));
+			response.setRenderParameter("jspPage", "/html/eventomanagement/add.jsp");
+		} else {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CalendarBooking.class.getName(), request);
+			//get calendar by groupId
+			DynamicQuery dynamicQuery = CalendarLocalServiceUtil.dynamicQuery();
+			Criterion criterionGroup = RestrictionsFactoryUtil.eq("groupId", groupId);
+			dynamicQuery.add(criterionGroup);
+			List<com.liferay.calendar.model.Calendar> calendarList = CalendarLocalServiceUtil.dynamicQuery(dynamicQuery);
+			if(!calendarList.isEmpty()) {
+				Map<Locale, String> titleMap = new HashMap<>();
+				titleMap.put(locale, title);
+				Map<Locale, String> descriptionMap = new HashMap<>();
+				descriptionMap.put(locale, description);
+				com.liferay.calendar.model.Calendar calendar = calendarList.get(0);
+				CalendarBooking event = CalendarBookingLocalServiceUtil.addCalendarBooking(userId, calendar.getCalendarId(), 
+						new long[] {}, 0L, titleMap, descriptionMap, null, calendarStart.getTimeInMillis(), calendarEnd.getTimeInMillis(), 
+						false, null, 0L, null, 0L, null, serviceContext);
+				System.out.println("new event id:" + event.getCalendarBookingId());
+				AssetEntryLocalServiceUtil.updateEntry(userId, groupId, CalendarBooking.class.getName(), event.getCalendarBookingId(), 
+						categoryIds, new String[] {});
+			}
 		}
 	}
 	

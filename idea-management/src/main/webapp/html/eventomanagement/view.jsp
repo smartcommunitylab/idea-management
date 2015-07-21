@@ -123,6 +123,7 @@
 					{
 						cache: false,
 						dialog: {
+							destroyOnClose: true,
 							align: Liferay.Util.Window.ALIGN_CENTER,
 // 							after: {
 // 								render: function(event) {
