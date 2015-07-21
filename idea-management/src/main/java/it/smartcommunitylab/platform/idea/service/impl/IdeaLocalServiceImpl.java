@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -154,6 +153,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				null, 
 				false);
 
+		CalendarUtils.createCalendar(group.getGroupId(), userId, group.getName(), serviceContext, assetEntry.getClassTypeId(), assetEntry.getClassPK(), assetEntry.getClassUuid());
+
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
 				serviceContext.getAssetLinkEntryIds(),
 				AssetLinkConstants.TYPE_RELATED);
@@ -228,6 +229,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			GroupLocalServiceUtil
 					.deleteUserGroup(userId, idea.getUserGroupId());
 			GroupLocalServiceUtil.deleteGroup(idea.getUserGroupId());
+			CalendarUtils.deleteCalendar(idea.getUserGroupId());
 
 			resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 					Idea.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,

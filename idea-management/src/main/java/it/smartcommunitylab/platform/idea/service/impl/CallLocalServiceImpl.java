@@ -124,6 +124,8 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 				ContentTypes.TEXT_HTML, call.getTitle(), null, null, null,
 				null, 0, 0, null, false);
 
+		CalendarUtils.createCalendar(group.getGroupId(), userId, group.getName(), serviceContext, assetEntry.getClassTypeId(), assetEntry.getClassPK(), assetEntry.getClassUuid());
+
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
 				serviceContext.getAssetLinkEntryIds(),
 				AssetLinkConstants.TYPE_RELATED);
@@ -186,6 +188,8 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(serviceContext.getCompanyId(),
 				Call.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
 				callId);
+
+		CalendarUtils.deleteCalendar(del.getUserGroupId());
 
 		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 				Call.class.getName(), callId);
