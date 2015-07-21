@@ -127,7 +127,7 @@
 				   Sorry you have copied someone !!!
 				   comment: ${taskComments}
 				   <#break>
-				   <#case "accepted">
+				   <#case "approved">
 				   YEAH Your ${entryType} has been accepted
 				   comment: ${taskComments}
 				   <#break>
@@ -205,7 +205,7 @@
 				   Sorry you have copied someone !!!
 				   comment: ${taskComments}
 				   <#break>
-				   <#case "accepted">
+				   <#case "approved">
 				   YEAH Your ${entryType} has been accepted
 				   comment: ${taskComments}
 				   <#break>
