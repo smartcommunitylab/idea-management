@@ -1310,3 +1310,37 @@ header#banner {
 .userprofile .entry .value {
 	font-size: larger;
 }
+
+.event-view-category {
+	text-transform: uppercase;
+	font-size: 16px;
+	margin-bottom: 16px;
+}
+
+.event-view-context {
+	font-size: 16px;
+}
+
+.event-view-header {
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #F1453D;
+	margin-top: 8px;
+	padding-top: 8px;
+	font-size: 16px;
+	margin-bottom: 24px;
+}
+
+.event-viewd-date {
+	color: #BBB;
+	float: right;
+}
+
+.event-view-time {
+	text-transform: uppercase;
+}
+
+.event-view-description {
+	 margin-top: 32px;
+	 margin-bottom: 32px;
+}
