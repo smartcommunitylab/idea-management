@@ -40,12 +40,6 @@
 	java.text.SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", locale);
 %>
 
-<portlet:renderURL var="addEventURL" windowState="<%=LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
-	<portlet:param name="categoryId" value="<%= categoryId %>" />
-	<portlet:param name="callId" value="<%= callId %>" />
-	<portlet:param name="ideaId" value="<%= ideaId %>" />
-</portlet:renderURL>
 <portlet:renderURL var="viewPrevURL">
 	<portlet:param name="date" value="<%= prevDate %>" />
 </portlet:renderURL>
@@ -58,6 +52,12 @@
     <span class="event-container-title"><liferay-ui:message key="evento_title_eventi" /> <%=titleData%></span>
     <div class="event-container-header-buttons">
     <c:if test='<%=Utils.eventAddEnabled(renderRequest) %>'>
+    	<portlet:renderURL var="addEventURL" windowState="<%=LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
+				<portlet:param name="categoryId" value="<%= categoryId %>" />
+				<portlet:param name="callId" value="<%= callId %>" />
+				<portlet:param name="ideaId" value="<%= ideaId %>" />
+			</portlet:renderURL>
 	    <a class="event-container-button event-container-button-add" id="add-event-link"
 	      onClick="javascript:window.showPopup('<%=addEventURL.toString()%>','<liferay-ui:message key="evento_title_add_eventi"/>')"><span>+</span></a>
     </c:if>
@@ -87,7 +87,7 @@
 			<div class="span2 element-controls">
        <c:if test='<%=Utils.eventEditEnabled(event, renderRequest) %>'>
 	      <portlet:renderURL var="editEventURL" windowState="<%=LiferayWindowState.POP_UP.toString() %>">
-	        <portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
+	        <portlet:param name="mvcPath" value="/html/eventomanagement/edit.jsp" />
 	        <portlet:param name="categoryId" value="<%= categoryId %>" />
 	        <portlet:param name="callId" value="<%= callId %>" />
 	        <portlet:param name="ideaId" value="<%= ideaId %>" />
@@ -119,12 +119,11 @@
 		function(url,title) {
 			var instance = this;
 
-			//var url = '<%= addEventURL.toString() %>';
-
 				Liferay.Util.openWindow(
 					{
 						cache: false,
 						dialog: {
+							destroyOnClose: true,
 							align: Liferay.Util.Window.ALIGN_CENTER,
 // 							after: {
 // 								render: function(event) {
@@ -137,7 +136,7 @@
 	            modal: true
 						},
 						dialogIframe: {
-							id: 'showAddEventFormIframe',
+							id: 'showEventFormIframe',
 							uri: url
 						},
 						title: title,

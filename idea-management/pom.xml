@@ -99,26 +99,31 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+             <groupId>calendar-portlet-service</groupId>
+             <artifactId>calendar-portlet-service</artifactId>
+             <version>1</version>
+             <scope>system</scope>
+             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/calendar-portlet-service.jar</systemPath>
+		</dependency>
 	</dependencies>
-	<profiles>
-		<profile>
-			<id>v622</id>
-			<properties>
-				<liferay.version>6.2.2</liferay.version>
-				<liferay.maven.plugin.version>6.2.2</liferay.maven.plugin.version>
-				<liferay.auto.deploy.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/deploy</liferay.auto.deploy.dir>
-				<liferay.app.server.deploy.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps</liferay.app.server.deploy.dir>
-				<liferay.app.server.lib.global.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/lib/ext</liferay.app.server.lib.global.dir>
-				<liferay.app.server.portal.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps/ROOT</liferay.app.server.portal.dir>
-			</properties>
-		</profile>
-	</profiles>
+<!-- 	<profiles> -->
+<!-- 		<profile> -->
+<!-- 			<id>v622</id> -->
+<!-- 			<properties> -->
+<!-- 				<liferay.version>6.2.2</liferay.version> -->
+<!-- 				<liferay.maven.plugin.version>6.2.2</liferay.maven.plugin.version> -->
+<!-- 				<liferay.auto.deploy.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/deploy</liferay.auto.deploy.dir> -->
+<!-- 				<liferay.app.server.deploy.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps</liferay.app.server.deploy.dir> -->
+<!-- 				<liferay.app.server.lib.global.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/lib/ext</liferay.app.server.lib.global.dir> -->
+<!-- 				<liferay.app.server.portal.dir>/home/mirko/data/servers/liferay-portal-6.2-ce-ga4/tomcat-7.0.42/webapps/ROOT</liferay.app.server.portal.dir> -->
+<!-- 			</properties> -->
+<!-- 		</profile> -->
+<!-- 	</profiles> -->
 </project>
