@@ -65,7 +65,8 @@
         int initMonth = cal.get(Calendar.MONTH); 
         int initYear = cal.get(Calendar.YEAR);
         int initHour = cal.get(Calendar.HOUR_OF_DAY);
-        int initMinute = cal.get(Calendar.MINUTE);
+        // for convenience, reset minutes to simplify time setting
+        int initMinute = 0;//cal.get(Calendar.MINUTE);
         int ampm = 0;
         %>
       <div class="row-fluid">

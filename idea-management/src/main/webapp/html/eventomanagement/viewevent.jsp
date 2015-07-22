@@ -70,7 +70,7 @@
 %>
 
 <div class="event-view-container">
-  <div class="event-view-category" style="background-color: <%=categoryColor%>;"><%=categoryName%>'</div>
+  <div class="event-view-category" style='color: <%=Validator.isNotNull(categoryColor) ? categoryColor : "#DDD" %>;'><%=Validator.isNotNull(categoryName) ? categoryName : ""%></div>
   <c:if test='<%=Validator.isNotNull(contextName)%>'>
   	<div class="event-view-context"><%=contextName%></div>
   </c:if>

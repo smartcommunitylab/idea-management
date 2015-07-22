@@ -164,7 +164,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		Criterion criterionTime = RestrictionsFactoryUtil.between("startTime", range[0], range[1]);
 		dynamicQuery.add(RestrictionsFactoryUtil.and(criterionTime, RestrictionsFactoryUtil.and(criterionGroup, criterionStatus)));
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
-		dynamicQuery.setLimit(0, 5);
+//		dynamicQuery.setLimit(0, 5);
 		eventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
 		System.out.println("event count:" + eventList.size());
 		return eventList;
@@ -179,7 +179,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		Criterion criterionTime = RestrictionsFactoryUtil.between("startTime", range[0], range[1]);
 		dynamicQuery.add(RestrictionsFactoryUtil.and(criterionTime, criterionStatus));
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
-		dynamicQuery.setLimit(0, 5);
+//		dynamicQuery.setLimit(0, 5);
 		eventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
 		System.out.println("event count:" + eventList.size());
 		return eventList;
@@ -195,7 +195,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		Criterion criterionTime = RestrictionsFactoryUtil.between("startTime", range[0], range[1]);
 		dynamicQuery.add(RestrictionsFactoryUtil.and(criterionTime, criterionStatus));
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
-		dynamicQuery.setLimit(0, 100);
+//		dynamicQuery.setLimit(0, 100);
 		List<CalendarBooking> queryEventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
 		
 		int count = 0;
@@ -226,14 +226,14 @@ public class EventoManagementPortlet extends MVCPortlet {
 		Criterion criterionTime = RestrictionsFactoryUtil.between("startTime", range[0], range[1]);
 		dynamicQuery.add(RestrictionsFactoryUtil.and(criterionTime, RestrictionsFactoryUtil.and(criterionGroup, criterionStatus)));
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
-		dynamicQuery.setLimit(0, 5);
+//		dynamicQuery.setLimit(0, 5);
 		eventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
-		System.out.println("event count:" + eventList.size());
+//		System.out.println("event count:" + eventList.size());
 		return eventList;
 	}
 
 	private static Long[] getTimeInterval(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		
 		Calendar calendarStart = GregorianCalendar.getInstance();
 		calendarStart.setTime(date);
@@ -242,7 +242,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		calendarStart.clear(Calendar.SECOND);
 		calendarStart.clear(Calendar.MILLISECOND);
 		calendarStart.set(Calendar.DAY_OF_MONTH, 1);
-		System.out.println(sdf.format(calendarStart.getTime()));
+//		System.out.println(sdf.format(calendarStart.getTime()));
 		
 		Calendar calendarEnd = GregorianCalendar.getInstance();
 		calendarEnd.setTime(date);
@@ -251,7 +251,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		calendarEnd.set(Calendar.SECOND, 59);
 		calendarEnd.clear(Calendar.MILLISECOND);
 		calendarEnd.set(Calendar.DAY_OF_MONTH, calendarStart.getActualMaximum(Calendar.DAY_OF_MONTH));
-		System.out.println(sdf.format(calendarEnd.getTime()));
+//		System.out.println(sdf.format(calendarEnd.getTime()));
 		
 		Long[] result = new Long[2];
 		result[0] = calendarStart.getTimeInMillis();
@@ -263,7 +263,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		long eventId = ParamUtil.getLong(request, "eventId");
 		if (Validator.isNotNull(eventId)) {
 			CalendarBookingLocalServiceUtil.deleteCalendarBooking(eventId);
-			System.out.println("delete event:" + eventId);
+//			System.out.println("delete event:" + eventId);
 		}
 	}
 	
@@ -281,7 +281,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 			Map<Locale, String> descriptionMap = new HashMap<>();
 			descriptionMap.put(locale, description);
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			int startYear = ParamUtil.getInteger(request, "sdyear");
 			int startMonth = ParamUtil.getInteger(request, "sdmonth");
 			int startDay = ParamUtil.getInteger(request, "sdday");
@@ -299,7 +299,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 				calendarStart.set(Calendar.HOUR_OF_DAY, startHour);
 			}
 			calendarStart.set(Calendar.MINUTE, startMinute);
-			System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
+//			System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
 			
 			int endYear = ParamUtil.getInteger(request, "edyear");
 			int endMonth = ParamUtil.getInteger(request, "edmonth");
@@ -318,7 +318,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 				calendarEnd.set(Calendar.HOUR_OF_DAY, endHour);
 			}
 			calendarEnd.set(Calendar.MINUTE, endMinute);
-			System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
+//			System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
 			
 			if(calendarStart.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
 				SessionErrors.add(request, "evento_form_check_date_error");
@@ -331,7 +331,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 				event.setStartTime(calendarStart.getTimeInMillis());
 				event.setEndTime(calendarEnd.getTimeInMillis());
 				CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
-				System.out.println("update event:" + eventId);
+//				System.out.println("update event:" + eventId);
 			}
 		}
 	}
@@ -362,12 +362,14 @@ public class EventoManagementPortlet extends MVCPortlet {
 			groupId = call.getUserGroupId();
 			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(), call.getCallId());
 			categoryIds = entry.getCategoryIds();
+		} else {
+			groupId = themeDisplay.getScopeGroupId();
 		}
 		
 		String title = ParamUtil.getString(request, "title");
 		String description = ParamUtil.getString(request, "description");
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		int startYear = ParamUtil.getInteger(request, "sdyear");
 		int startMonth = ParamUtil.getInteger(request, "sdmonth");
 		int startDay = ParamUtil.getInteger(request, "sdday");
@@ -385,7 +387,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 			calendarStart.set(Calendar.HOUR_OF_DAY, startHour);
 		}
 		calendarStart.set(Calendar.MINUTE, startMinute);
-		System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
+//		System.out.println("startTime:" + sdf.format(calendarStart.getTime()));
 		
 		int endYear = ParamUtil.getInteger(request, "edyear");
 		int endMonth = ParamUtil.getInteger(request, "edmonth");
@@ -404,7 +406,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 			calendarEnd.set(Calendar.HOUR_OF_DAY, endHour);
 		}
 		calendarEnd.set(Calendar.MINUTE, endMinute);
-		System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
+//		System.out.println("endTime:" + sdf.format(calendarEnd.getTime()));
 		
 		if(calendarStart.getTimeInMillis() >= calendarEnd.getTimeInMillis()) {
 			SessionErrors.add(request, "evento_form_check_date_error");
@@ -428,6 +430,9 @@ public class EventoManagementPortlet extends MVCPortlet {
 				CalendarBooking event = CalendarBookingLocalServiceUtil.addCalendarBooking(userId, calendar.getCalendarId(), 
 						new long[] {}, 0L, titleMap, descriptionMap, null, calendarStart.getTimeInMillis(), calendarEnd.getTimeInMillis(), 
 						false, null, 0L, null, 0L, null, serviceContext);
+				event.setStatus(WorkflowConstants.STATUS_APPROVED);
+				CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
+				
 				System.out.println("new event id:" + event.getCalendarBookingId());
 				AssetEntryLocalServiceUtil.updateEntry(userId, groupId, CalendarBooking.class.getName(), event.getCalendarBookingId(), 
 						categoryIds, new String[] {});
