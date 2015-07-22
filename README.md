@@ -4,6 +4,11 @@ Idea management is a Liferay plugin for managing ideas, contests (calls for idea
 
 ##Setup
 
+### Required plugins
+- Calendar CE
+- Google Login
+- Cookie Notification Usage
+
 ### Required Liferay Configuration Properties
 
 ####1. In portal-ext.properties:
@@ -24,6 +29,8 @@ default.user.public.layout.column-1=userprofile_WAR_ideamanagement
 layout.user.private.layouts.enabled=false
 layout.user.private.layouts.auto.create=false
 #default.user.private.layout.regular.theme.id=idea-mgmt-theme_WAR_idea-mgmt-theme
+# Cookie Law
+layout.static.portlets.all=cookiesnotification_WAR_cookiesnotificationportlet
 ```
 To change the theme for already created users:
 
