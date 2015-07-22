@@ -14,6 +14,8 @@
 <%@page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
 <%@page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
@@ -38,6 +40,9 @@
 	String categoryName = null;
 	String categoryColor = null;
 	String contextName = null;
+	String contextLabel = null;
+	String contextUrl = null; 
+	
   Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   AssetEntry calAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBooking.class.getName(), event.getCalendarBookingId());
   java.util.List<AssetCategory> calCategories = calAssetEntry.getCategories();
@@ -45,9 +50,11 @@
 		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
 		contextName = idea.getTitle();
 		long groupId = idea.getUserGroupId();
+		contextLabel = LanguageUtil.get(locale, "event_context_idea");
 	} else if (Validator.isNotNull(callId)) {
 		Call call = CallLocalServiceUtil.getCall(callId);
 		contextName = call.getTitle();
+	  contextLabel = LanguageUtil.get(locale, "event_context_idea");
 	}
 %>
 

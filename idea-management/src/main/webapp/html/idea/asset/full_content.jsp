@@ -196,7 +196,7 @@
             <portlet:param name="subscribed" value="<%=String.valueOf(subscribed) %>" />
 		      </portlet:actionURL>
   	      <div><a class='idea-button idea-button-follow-<%= subscribed ? "disabled" : "enabled" %>' href="<%=followIdea.toString() %>"></a></div>
-          <div><span><% if (subscribed) { %> <liferay-ui:message key="lbl_following"/><% } %></span></div>
+          <div><span><liferay-ui:message key="lbl_following"/></span></div>
           <div class="participation-details">
 	          <span><%=subs.size() %></span>
 	          <i class="icon-user"></i>
@@ -209,7 +209,7 @@
             <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
           </portlet:actionURL>
           <div><a class='idea-button idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
-          <div><span><% if (participates) {%><liferay-ui:message key="lbl_participating"/><% } %></span></div>
+          <div><span><liferay-ui:message key="lbl_participating"/></span></div>
           <div class="participation-details">
             <span><%=users.size() %></span>
             <i class="icon-user"></i>
@@ -257,8 +257,8 @@
     <% } else {%>
     <div class="idea-state-container span2 text-center"><div><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_accepted"/></div></div>
     <% } %>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
     <div class="idea-state-container span2 text-center"><div><a class='idea-state state-signed<%=Constants.IDEA_STATE_SIGNED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_signed"/></div></div>
+    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
     <div class="idea-state-container span2 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
     </div>
     <c:if test='<%=idea.getStateJudgement() != null %>'>

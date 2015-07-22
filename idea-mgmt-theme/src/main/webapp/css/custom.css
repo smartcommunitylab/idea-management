@@ -534,9 +534,10 @@ header#banner {
 }
 
 .liferay-rating-vote .rating-label {
-  position: absolute;
-  top: 30px;
-  width: 100%;
+	display: none;
+/*   position: absolute; */
+/*   top: 30px; */
+/*   width: 100%; */
 }
 
 .liferay-rating-vote a:focus {
@@ -627,23 +628,23 @@ header#banner {
 }
 
 .idea-button-participate-enabled {
+  background-color: white !important;
+	background-image: url(../images/CiSto_disabled.png) !important;
+  background-size: 100% 100%;
+}
+.idea-button-participate-disabled {
   background-color: #F1453D !important;
   background-image: url(../images/CiSto_enabled.png) !important;
   background-size: 100% 100%;
 }
-.idea-button-participate-disabled {
-  background-color: white !important;
-  background-image: url(../images/CiSto_disabled.png) !important;
-  background-size: 100% 100%;
-}
 .idea-button-follow-enabled {
-  background-color: #F1453D !important;
-  background-image: url(../images/seguo_enabled.png) !important;
+  background-color: white !important;
+  background-image: url(../images/seguo_disabled.png) !important;
   background-size: 100% 100%;
 }
 .idea-button-follow-disabled {
-  background-color: white !important;
-  background-image: url(../images/seguo_disabled.png) !important;
+  background-color: #F1453D !important;
+  background-image: url(../images/seguo_enabled.png) !important;
   background-size: 100% 100%;
 }
 
@@ -1303,6 +1304,13 @@ header#banner {
 .tagcloud-right .tagcloud-dot {
 	float: right;
 }
+.tag-cloud-header {
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bolder;
+	margin-bottom: 10px;
+}
 
 .userprofile .avatar {
 	padding-bottom: 30px;
@@ -1369,4 +1377,8 @@ header#banner {
 .event-view-description {
 	 margin-top: 32px;
 	 margin-bottom: 32px;
+}
+
+.empty-events {
+	padding-left: 10px;
 }

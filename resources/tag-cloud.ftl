@@ -1,3 +1,4 @@
+<div class="tag-cloud-header">${languageUtil.get(locale, "tag_cloud_title")}</div>
 <#if entries?has_content>
     <#assign counter = 0 >
     <#assign portletURL = renderResponse.createRenderURL() >
