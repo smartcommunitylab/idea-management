@@ -29,8 +29,13 @@ default.user.public.layout.column-1=userprofile_WAR_ideamanagement
 layout.user.private.layouts.enabled=false
 layout.user.private.layouts.auto.create=false
 #default.user.private.layout.regular.theme.id=idea-mgmt-theme_WAR_idea-mgmt-theme
+# Terms of Use
+terms.of.use.journal.article.id=[web_content_id]
+terms.of.use.journal.article.group.id=[web_content_group_id]
 # Cookie Law
 layout.static.portlets.all=cookiesnotification_WAR_cookiesnotificationportlet
+cookies.accepted.journalarticle.id=[web_content_id]
+cookies.accepted.journalarticle.groupid=[web_content_group_id]
 ```
 To change the theme for already created users:
   - Set the first 2 lines to false
