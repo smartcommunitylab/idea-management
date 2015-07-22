@@ -33,7 +33,6 @@ layout.user.private.layouts.auto.create=false
 layout.static.portlets.all=cookiesnotification_WAR_cookiesnotificationportlet
 ```
 To change the theme for already created users:
-
   - Set the first 2 lines to false
   - restart the server
   - logout or login and logout
@@ -46,6 +45,10 @@ To change the theme for already created users:
 ####2. Portal Configuration
 - default language
 - default user associations
+  * create Site Manager role
+  * create Site Moderator role
+  * create Manager user, set Manager role
+  * create Moderator user, set Moderator role
 - enable google/facebook login
 - configure mail server
 - configure workflow definitions
