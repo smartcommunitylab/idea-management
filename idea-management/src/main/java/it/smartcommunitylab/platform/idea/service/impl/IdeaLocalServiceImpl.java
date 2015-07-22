@@ -560,23 +560,21 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 					false);
 		}
 
-		// idea status
-		switch (WFStatus) {
-		case 100: // duplicated
-			break;
-		case 101: // abusive
-			blacklistUser(userId);
-			break;
-		default:
-			break;
-		}
-
 		if (ideaStatus != null) {
+			// idea status
+			switch (ideaStatus) {
+			case Constants.IDEA_STATE_BLOCKED_DUPLICATED:
+				break;
+			case Constants.IDEA_STATE_BLOCKED_ABUSIVE:
+				blacklistUser(userId);
+				break;
+			default:
+				break;
+			}
 			i.setState(ideaStatus);
 
-		} else {
-			i.setState(Constants.STATE_MAPPING.get(WFStatus));
 		}
+
 		i.setStatus(WFStatus);
 		i.setStatusByUserId(userId);
 		i.setStatusByUserName(user.getFullName());

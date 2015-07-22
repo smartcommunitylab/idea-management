@@ -325,7 +325,9 @@
 				<script>
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
-          WorkflowStatusManagerUtil.updateStatus(100, workflowContext); 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+           workflowContext.put("ideaStatus","duplicated");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext);
           ]]>
         </script>
 				<script-language>groovy</script-language>
@@ -363,9 +365,10 @@
 				<name>updateStatus</name>
 				<script>
           <![CDATA[ 
-          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
-          
-          WorkflowStatusManagerUtil.updateStatus(101, workflowContext); 
+         import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+          workflowContext.put("ideaStatus","abusive");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext); 
           ]]>
           
           
