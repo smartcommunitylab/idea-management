@@ -387,7 +387,7 @@ public class IdeaLocalServiceClpInvoker {
         _methodName93 = "updateStatus";
 
         _methodParameterTypes93 = new String[] {
-                "long", "long", "int",
+                "long", "long", "int", "java.lang.String",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -745,7 +745,8 @@ public class IdeaLocalServiceClpInvoker {
             return IdeaLocalServiceUtil.updateStatus(((Long) arguments[0]).longValue(),
                 ((Long) arguments[1]).longValue(),
                 ((Integer) arguments[2]).intValue(),
-                (com.liferay.portal.service.ServiceContext) arguments[3]);
+                (java.lang.String) arguments[3],
+                (com.liferay.portal.service.ServiceContext) arguments[4]);
         }
 
         if (_methodName94.equals(name) &&

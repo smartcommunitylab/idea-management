@@ -382,7 +382,7 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         _methodName56 = "updateStatus";
 
         _methodParameterTypes56 = new String[] {
-                "long", "long", "int",
+                "long", "long", "int", "java.lang.String",
                 "com.liferay.portal.service.ServiceContext"
             };
 
@@ -2040,7 +2040,7 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
 
     @Override
     public it.smartcommunitylab.platform.idea.model.Idea updateStatus(
-        long userId, long ideaId, int status,
+        long userId, long ideaId, int WFStatus, java.lang.String ideaStatus,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
@@ -2054,7 +2054,9 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
                         
                     ideaId,
                         
-                    status,
+                    WFStatus,
+                        
+                    ClpSerializer.translateInput(ideaStatus),
                         
                     ClpSerializer.translateInput(serviceContext)
                     });
