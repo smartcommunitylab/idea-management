@@ -89,7 +89,7 @@
 					<#assign UGRS = staticUtil["com.liferay.portal.service.UserGroupRoleLocalServiceUtil"] />
 					 
 					<@aui["nav-item"] href="${profileURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
-					<#if UGRS.hasUserGroupRole(themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),"Moderator")>
+					<#if UGRS.hasUserGroupRole(themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),"Moderator") || UGRS.hasUserGroupRole(themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),"Manager")>
 					<@aui["nav-item"] href="${myAccountURL}" id="userAccount" label="Il mio account" useDialog=true title="Il mio account" />
 					</#if>
 					<#-- useDialog="<%= PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>"-->
