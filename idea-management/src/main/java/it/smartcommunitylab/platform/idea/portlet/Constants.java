@@ -39,6 +39,4 @@ public class Constants {
 	public static final int DEFAULT_DISCUSSION_LIMIT = 30;
 	public static final int[] DISCUSSION_LIMITS = new int[] { 30, 15, 7 };
 
-	public static final String BLACKLIST_ROLE_NAME = "Blacklisted";
-
 }
