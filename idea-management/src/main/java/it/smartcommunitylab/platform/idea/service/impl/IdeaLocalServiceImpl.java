@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -128,31 +127,13 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		resourceLocalService.addResources(user.getCompanyId(), groupId, userId,
 				Idea.class.getName(), pkId, false, true, true);
 
-		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
-				userId,
-				groupId, 
-				idea.getCreateDate(), 
-				idea.getModifiedDate(),
-				Idea.class.getName(), 
-				pkId, 
-				idea.getUuid(), 
-				0, 
-				assetCategoryIds,
-				serviceContext.getAssetTagNames(), 
-				true, 
-				null, 
-				null, 
-				null,
-				ContentTypes.TEXT_HTML, 
-				idea.getTitle(), 
-				idea.getLongDesc(), 
-				idea.getShortDesc(), 
-				null,
-				null, 
-				0, 
-				0, 
-				null, 
-				false);
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(userId,
+				groupId, idea.getCreateDate(), idea.getModifiedDate(),
+				Idea.class.getName(), pkId, idea.getUuid(), 0,
+				assetCategoryIds, serviceContext.getAssetTagNames(), true,
+				null, null, null, ContentTypes.TEXT_HTML, idea.getTitle(),
+				idea.getLongDesc(), idea.getShortDesc(), null, null, 0, 0,
+				null, false);
 
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
 				serviceContext.getAssetLinkEntryIds(),
@@ -196,11 +177,11 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 					idea.getUserId(), idea.getGroupId(), idea.getCreateDate(),
 					idea.getModifiedDate(), Idea.class.getName(),
-					idea.getIdeaId(), idea.getUuid(), 0,
-					assetCategoryIds,
+					idea.getIdeaId(), idea.getUuid(), 0, assetCategoryIds,
 					serviceContext.getAssetTagNames(), true, null, null, null,
-					ContentTypes.TEXT_HTML, idea.getTitle(), idea.getLongDesc(), idea.getShortDesc(), null,
-					null, 0, 0, null, false);
+					ContentTypes.TEXT_HTML, idea.getTitle(),
+					idea.getLongDesc(), idea.getShortDesc(), null, null, 0, 0,
+					null, false);
 
 			assetLinkLocalService.updateLinks(serviceContext.getUserId(),
 					assetEntry.getEntryId(),
@@ -402,11 +383,11 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return IdeaFinderUtil.findByTags(tags);
 	}
 
-	public List<Idea> getIdeasByTags(long[] tags, int start, int end) throws SystemException {
+	public List<Idea> getIdeasByTags(long[] tags, int start, int end)
+			throws SystemException {
 		return IdeaFinderUtil.findByTags(tags, start, end);
 	}
 
-	
 	public void toggleUserParticipation(long ideaId, long userId)
 			throws SystemException, PortalException {
 		List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(userId);
@@ -426,7 +407,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		GroupLocalServiceUtil.addUserGroup(userId, groupId);
 	}
 
-	public List<AssetEntry> getCategoryObjects(long groupId) throws SystemException, PortalException {
+	public List<AssetEntry> getCategoryObjects(long groupId)
+			throws SystemException, PortalException {
 		AssetEntryQuery entryQuery = new AssetEntryQuery();
 		entryQuery.setClassNameIds(new long[] { PortalUtil
 				.getClassNameId(JournalArticle.class) });
@@ -561,16 +543,16 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		return ideas;
 	}
 
-	public Idea updateStatus(long userId, long ideaId, int status,
-			ServiceContext serviceContext) throws PortalException,
-			SystemException {
+	public Idea updateStatus(long userId, long ideaId, int WFStatus,
+			String ideaStatus, ServiceContext serviceContext)
+			throws PortalException, SystemException {
 
 		User user = userLocalService.getUser(userId);
 		Idea i = getIdea(ideaId);
 
 		// idea visibility
-		if (status == WorkflowConstants.STATUS_PENDING
-				|| status == WorkflowConstants.STATUS_APPROVED) {
+		if (WFStatus == WorkflowConstants.STATUS_PENDING
+				|| WFStatus == WorkflowConstants.STATUS_APPROVED) {
 			assetEntryLocalService.updateVisible(Idea.class.getName(), ideaId,
 					true);
 		} else {
@@ -579,7 +561,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 
 		// idea status
-		switch (status) {
+		switch (WFStatus) {
 		case 100: // duplicated
 			break;
 		case 101: // abusive
@@ -589,8 +571,13 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 			break;
 		}
 
-		i.setState(Constants.STATE_MAPPING.get(status));
-		i.setStatus(status);
+		if (ideaStatus != null) {
+			i.setState(ideaStatus);
+
+		} else {
+			i.setState(Constants.STATE_MAPPING.get(WFStatus));
+		}
+		i.setStatus(WFStatus);
 		i.setStatusByUserId(userId);
 		i.setStatusByUserName(user.getFullName());
 		String comments = (String) serviceContext

@@ -458,7 +458,7 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
         throws com.liferay.portal.kernel.exception.SystemException;
 
     public it.smartcommunitylab.platform.idea.model.Idea updateStatus(
-        long userId, long ideaId, int status,
+        long userId, long ideaId, int WFStatus, java.lang.String ideaStatus,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
