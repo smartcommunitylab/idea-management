@@ -32,7 +32,7 @@
 				
 				List<Role> roles = user.getRoles(); 
 				for (Role r : roles) { 
-					println user.getFullName() + " @@" + r.getName(); 
+					// println user.getFullName() + " @@" + r.getName(); 
 					if (r.getName().equalsIgnoreCase("blacklisted")) { 
 						println "Setting approve for user : " + user.getFirstName(); 
 						returnValue = "staged";
@@ -67,6 +67,7 @@
 				<![CDATA[
 				import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
 				import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+				workflowContext.put("motivation","PUBLISHED");
 				WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("pending"), workflowContext);
 				]]>
 				</script>
@@ -324,7 +325,9 @@
 				<script>
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
-          WorkflowStatusManagerUtil.updateStatus(100, workflowContext); 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+           workflowContext.put("ideaStatus","duplicated");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext);
           ]]>
         </script>
 				<script-language>groovy</script-language>
@@ -348,6 +351,12 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
+			<transitions>
+			<transition>
+				<name>manager-eval</name>
+				<target>manager-eval</target>
+			</transition>
+		</transitions>
 	</state>
 	<state>
 		<name>abusive</name>
@@ -356,9 +365,10 @@
 				<name>updateStatus</name>
 				<script>
           <![CDATA[ 
-          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
-          
-          WorkflowStatusManagerUtil.updateStatus(101, workflowContext); 
+         import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+          workflowContext.put("ideaStatus","abusive");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext); 
           ]]>
           
           
@@ -368,5 +378,135 @@
 			</action>
 		</actions>
 	</state>
-
+	
+	
+	<!-- SECOND STEP WF -->
+	
+		<task>
+		<name>manager-eval</name>
+		<actions>
+			<notification>
+				<name>Manager notification</name>
+				<template>You have a new ${entryType} to evaluate</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<notification-type>user-notification</notification-type>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>Review Completion Notification</name>
+				<template>
+				  <![CDATA[
+				   <#switch transitionName>
+				   <#case "duplicated">
+				   Sorry you have copied someone !!!
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "approved">
+				   YEAH Your ${entryType} has been accepted
+				   comment: ${taskComments}
+				   <#break>
+				   <#case "abusive">
+				   Your ${entryType} has been rejected
+				   comment: ${taskComments}
+				   <#break>
+				   <#default>
+					Default template
+				</#switch>
+          ]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<recipients>
+					<user />
+				</recipients>
+				<execution-type>onExit</execution-type>
+			</notification>
+		</actions>
+		<assignments>
+		    <scripted-assignment>
+		        <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.util.GetterUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+              
+              import com.liferay.portal.model.Role;
+              import com.liferay.portal.model.User;
+              import com.liferay.portal.model.UserGroupRole;
+              import com.liferay.portal.service.RoleLocalServiceUtil;
+              import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+              
+              long companyId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+              long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+				      users = new ArrayList<User>();
+				      Role role = RoleLocalServiceUtil.getRole(companyId, "Manager");
+				      List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(groupId, role.getRoleId());
+				
+				      for (UserGroupRole ugr : userGroupRoles) {
+				        users.add(ugr.getUser());
+				      }
+				      if (users.size() > 0) {
+                roles = null;
+                user = users.get(0);		
+				      } else {
+				        roles = new ArrayList<Role>();
+				        roles.add(role);
+				      }
+            ]]>
+          </script>
+        <script-language>groovy</script-language>
+		    </scripted-assignment>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>accepted</name>
+				<target>accepted</target>
+			</transition>
+			<transition>
+				<name>rejected</name>
+				<target>rejected</target>
+			</transition>
+		</transitions>
+	</task>
+	
+	
+	<state>
+		<name>accepted</name>
+		<actions>
+			<action>
+				<name>updateStatus</name>
+				<script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+           workflowContext.put("ideaStatus","complete");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
+          ]]>
+        </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	
+	
+	<state>
+		<name>rejected</name>
+		<actions>
+			<action>
+				<name>updateStatus</name>
+				<script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+          workflowContext.put("ideaStatus","rejected");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
+          ]]>
+        </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+	
 </workflow-definition>

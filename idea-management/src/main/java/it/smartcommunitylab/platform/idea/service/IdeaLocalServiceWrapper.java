@@ -572,12 +572,12 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
 
     @Override
     public it.smartcommunitylab.platform.idea.model.Idea updateStatus(
-        long userId, long ideaId, int status,
+        long userId, long ideaId, int WFStatus, java.lang.String ideaStatus,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
-        return _ideaLocalService.updateStatus(userId, ideaId, status,
-            serviceContext);
+        return _ideaLocalService.updateStatus(userId, ideaId, WFStatus,
+            ideaStatus, serviceContext);
     }
 
     @Override
