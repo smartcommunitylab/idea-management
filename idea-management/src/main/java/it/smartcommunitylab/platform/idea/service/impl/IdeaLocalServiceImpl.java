@@ -198,12 +198,12 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		}
 	}
 
-	public void deleteIdea(long userId, IdeaBean ideaBean,
+	public void deleteIdea(long userId, long ideaId,
 			ServiceContext serviceContext) throws SystemException,
 			PortalException {
 
 		try {
-			Idea idea = ideaPersistence.remove(ideaBean.getId());
+			Idea idea = ideaPersistence.remove(ideaId);
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Idea.class
 					.getClass());
 			indexer.delete(idea);

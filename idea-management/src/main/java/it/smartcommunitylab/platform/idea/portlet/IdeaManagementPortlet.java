@@ -218,8 +218,10 @@ public class IdeaManagementPortlet extends MVCPortlet {
 	public void deleteEntry(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(Idea.class.getName(), req);
+
 		long ideaId = ParamUtil.getLong(req, "entryId");
-		IdeaLocalServiceUtil.deleteIdea(ideaId);
+		IdeaLocalServiceUtil.deleteIdea(serviceContext.getUserId(), ideaId, serviceContext);
 	}
 
 	public void toggleUserParticipation(ActionRequest req, ActionResponse res)

@@ -339,12 +339,11 @@ public class IdeaLocalServiceUtil {
         getService().updateIdea(userId, ideaBean, serviceContext);
     }
 
-    public static void deleteIdea(long userId,
-        it.smartcommunitylab.platform.idea.beans.IdeaBean ideaBean,
+    public static void deleteIdea(long userId, long ideaId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
-        getService().deleteIdea(userId, ideaBean, serviceContext);
+        getService().deleteIdea(userId, ideaId, serviceContext);
     }
 
     public static void changeIdeaState(long ideaId, java.lang.String state,

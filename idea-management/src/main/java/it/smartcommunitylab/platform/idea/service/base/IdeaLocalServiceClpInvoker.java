@@ -250,8 +250,7 @@ public class IdeaLocalServiceClpInvoker {
         _methodName60 = "deleteIdea";
 
         _methodParameterTypes60 = new String[] {
-                "long", "it.smartcommunitylab.platform.idea.beans.IdeaBean",
-                "com.liferay.portal.service.ServiceContext"
+                "long", "long", "com.liferay.portal.service.ServiceContext"
             };
 
         _methodName61 = "changeIdeaState";
@@ -540,7 +539,7 @@ public class IdeaLocalServiceClpInvoker {
         if (_methodName60.equals(name) &&
                 Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
             IdeaLocalServiceUtil.deleteIdea(((Long) arguments[0]).longValue(),
-                (it.smartcommunitylab.platform.idea.beans.IdeaBean) arguments[1],
+                ((Long) arguments[1]).longValue(),
                 (com.liferay.portal.service.ServiceContext) arguments[2]);
 
             return null;
