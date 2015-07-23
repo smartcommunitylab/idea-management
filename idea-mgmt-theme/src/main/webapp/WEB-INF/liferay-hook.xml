@@ -5,5 +5,6 @@
 <hook>
   <language-properties>Language_en_US.properties</language-properties>
   <language-properties>Language_it_IT.properties</language-properties>
+  <custom-jsp-dir>/WEB-INF/src</custom-jsp-dir>
 </hook>  
   

@@ -27,7 +27,7 @@
   visibility: hidden;
 }
 
-#signinmodal form {
+#signinmodal form fieldset {
   width: 50%;
   margin: 0 auto;
 }
@@ -55,14 +55,15 @@
 #signinmodal form .control-group.error .help-inline {
   display: block;
 }
-
-#portlet_58 .button-holder button {
-	display: inline-block !important;
+#signinmodal form .button-holder {
+  display: block;
+  text-align: center;
 }
 
 #signinmodal form .button-holder button, #portlet_58 .button-holder button{
   margin: 0 auto;
-  display: block;
+  display: inline-block !important;
+  color: white;
   text-shadow: none;
   background-image: none;
   background-color: #F44336;
@@ -74,8 +75,11 @@
   padding: 8px 32px;
 }
 
+#portlet_58 .navigation {
+	display: none;
+}
 
-#signinmodal .navigation, #portlet_58 .navigation {
+#signinmodal .navigation {
   text-align: center;
   background-color: transparent;
   border-top:none;
@@ -619,7 +623,7 @@ header#banner {
   border: 1px solid #DDD;
 }
 
-.alert-success {
+.idea .alert-success {
   display: none;
 }
 
