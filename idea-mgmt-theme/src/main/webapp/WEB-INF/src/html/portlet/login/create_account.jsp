@@ -134,12 +134,6 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				</c:if>
 			</aui:input>
 
-			<aui:input name="dataTreatment" type="checkbox" value="" label="lbl_authorize">
-					<aui:validator name="required" />
-			</aui:input>
-		</aui:col>
-
-		<aui:col width="<%= 50 %>">
 			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
 				<aui:input label="password" name="password1" size="30" type="password" value="" />
 
@@ -175,6 +169,12 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 				<liferay-ui:captcha url="<%= captchaURL %>" />
 			</c:if>
+			
+			<aui:input name="dataTreatment" type="checkbox" value="" label="lbl_authorize">
+          <aui:validator name="required" />
+      </aui:input>
+
+			
 		</aui:col>
 	</aui:fieldset>
 
