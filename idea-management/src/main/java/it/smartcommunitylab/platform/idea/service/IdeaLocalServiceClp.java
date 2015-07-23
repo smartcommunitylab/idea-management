@@ -249,8 +249,7 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
         _methodName25 = "deleteIdea";
 
         _methodParameterTypes25 = new String[] {
-                "long", "it.smartcommunitylab.platform.idea.beans.IdeaBean",
-                "com.liferay.portal.service.ServiceContext"
+                "long", "long", "com.liferay.portal.service.ServiceContext"
             };
 
         _methodName26 = "changeIdeaState";
@@ -1100,8 +1099,7 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
     }
 
     @Override
-    public void deleteIdea(long userId,
-        it.smartcommunitylab.platform.idea.beans.IdeaBean ideaBean,
+    public void deleteIdea(long userId, long ideaId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
@@ -1111,7 +1109,7 @@ public class IdeaLocalServiceClp implements IdeaLocalService {
                 new Object[] {
                     userId,
                     
-                ClpSerializer.translateInput(ideaBean),
+                ideaId,
                     
                 ClpSerializer.translateInput(serviceContext)
                 });

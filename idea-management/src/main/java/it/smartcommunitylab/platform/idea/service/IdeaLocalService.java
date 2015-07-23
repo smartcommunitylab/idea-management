@@ -305,8 +305,7 @@ public interface IdeaLocalService extends BaseLocalService, InvokableLocalServic
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;
 
-    public void deleteIdea(long userId,
-        it.smartcommunitylab.platform.idea.beans.IdeaBean ideaBean,
+    public void deleteIdea(long userId, long ideaId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException;

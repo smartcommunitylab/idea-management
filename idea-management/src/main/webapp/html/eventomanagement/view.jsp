@@ -109,6 +109,9 @@
 		<%
 			}
 		%>
+		<c:if test='<%=eventList.isEmpty() %>'>
+      <span class="empty-events"><liferay-ui:message key="lbl_noeventresults"/></span>
+		</c:if>
 	</ul>
 </div>
 

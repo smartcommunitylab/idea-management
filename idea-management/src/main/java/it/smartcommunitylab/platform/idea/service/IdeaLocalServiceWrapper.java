@@ -351,12 +351,11 @@ public class IdeaLocalServiceWrapper implements IdeaLocalService,
     }
 
     @Override
-    public void deleteIdea(long userId,
-        it.smartcommunitylab.platform.idea.beans.IdeaBean ideaBean,
+    public void deleteIdea(long userId, long ideaId,
         com.liferay.portal.service.ServiceContext serviceContext)
         throws com.liferay.portal.kernel.exception.PortalException,
             com.liferay.portal.kernel.exception.SystemException {
-        _ideaLocalService.deleteIdea(userId, ideaBean, serviceContext);
+        _ideaLocalService.deleteIdea(userId, ideaId, serviceContext);
     }
 
     @Override

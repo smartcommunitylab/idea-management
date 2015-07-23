@@ -14,6 +14,8 @@
 <%@page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
 <%@page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
@@ -38,39 +40,33 @@
 	String categoryName = null;
 	String categoryColor = null;
 	String contextName = null;
+	String contextLabel = null;
+	String contextUrl = null; 
 	
-	if(Validator.isNotNull(categoryId)) {
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
-		categoryName = assetCategory.getTitle(locale);
-		Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-		categoryColor = CC.get(categoryId);
-	} else if (Validator.isNotNull(ideaId)) {
+  Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+  AssetEntry calAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBooking.class.getName(), event.getCalendarBookingId());
+  java.util.List<AssetCategory> calCategories = calAssetEntry.getCategories();
+  if (Validator.isNotNull(ideaId)) {
 		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
 		contextName = idea.getTitle();
 		long groupId = idea.getUserGroupId();
-		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(), idea.getIdeaId());
-		long[] categoryIds = entry.getCategoryIds();
-		categoryId = categoryIds[0];
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
-		categoryName = assetCategory.getTitle(locale);
-		Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-		categoryColor = CC.get(categoryId);
+		contextLabel = LanguageUtil.get(locale, "event_context_idea");
 	} else if (Validator.isNotNull(callId)) {
 		Call call = CallLocalServiceUtil.getCall(callId);
 		contextName = call.getTitle();
-		long groupId = call.getUserGroupId();
-		AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(), call.getCallId());
-		long[] categoryIds = entry.getCategoryIds();
-		categoryId = categoryIds[0];
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
-		categoryName = assetCategory.getTitle(locale);
-		Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-		categoryColor = CC.get(categoryId);
+	  contextLabel = LanguageUtil.get(locale, "event_context_idea");
 	}
 %>
 
 <div class="event-view-container">
-  <div class="event-view-category" style='color: <%=Validator.isNotNull(categoryColor) ? categoryColor : "#DDD" %>;'><%=Validator.isNotNull(categoryName) ? categoryName : ""%></div>
+  <div class="event-view-category">
+    <%  for (AssetCategory ac : calCategories) { 
+    	categoryColor = CC.get(""+ac.getCategoryId());
+    	categoryName = ac.getTitle(locale);
+    %>
+    <span style='color: <%=categoryColor%>;'><%=categoryName %></span>
+    <% } %>
+  </div>
   <c:if test='<%=Validator.isNotNull(contextName)%>'>
   	<div class="event-view-context"><%=contextName%></div>
   </c:if>

@@ -87,10 +87,10 @@
 					</@>
 					-->
 					<#assign UGRS = staticUtil["com.liferay.portal.service.UserGroupRoleLocalServiceUtil"] />
-					 
+                    <#assign label = languageUtil.get(locale,"control-panel-my") />
 					<@aui["nav-item"] href="${profileURL.toString()}" id="userAvatar" label="${userprofile}" dropdown=false />
 					<#if UGRS.hasUserGroupRole(themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),"Moderator") || UGRS.hasUserGroupRole(themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),"Manager")>
-					<@aui["nav-item"] href="${myAccountURL}" id="userAccount" label="Il mio account" useDialog=true title="Il mio account" />
+					<@aui["nav-item"] href="${myAccountURL}" id="userAccount" label="${label}" useDialog=true title="${label}" />
 					</#if>
 					<#-- useDialog="<%= PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>"-->
 					
