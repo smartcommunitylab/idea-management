@@ -14,7 +14,8 @@
 <%@page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
 <%@page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+<%@page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
@@ -36,6 +37,7 @@
 	DateFormat dfTime =DateFormat.getTimeInstance(DateFormat.SHORT, locale);
 	String startDate = dfDate.format(new Date(event.getStartTime()));
 	String startTime = dfTime.format(new Date(event.getStartTime()));
+	String location = event.getLocation();
 	
 	String categoryName = null;
 	String categoryColor = null;
@@ -74,6 +76,7 @@
     <span class="event-view-title"><%=event.getTitle(locale)%></span>
     <span class="event-viewd-date"><%=startDate%></span>    
   </div>
+  <div class="event-view-location"><liferay-ui:message key="evento_form_location" />: <%=Validator.isNotNull(location) ? location : "" %></div>
   <div class="event-view-time"><liferay-ui:message key="evento_form_time" />: <%=startTime%></div>
   <div class="event-view-description"><%=event.getDescription(locale)%></div>
   <div>

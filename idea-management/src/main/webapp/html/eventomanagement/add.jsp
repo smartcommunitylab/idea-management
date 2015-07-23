@@ -59,6 +59,10 @@
 		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  
 		  </aui:field-wrapper>
 			
+		  <aui:field-wrapper>
+		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_location") %>' name="location" type="textarea" label=""></aui:input>  
+		  </aui:field-wrapper>
+		  
         <%
         GregorianCalendar cal = new GregorianCalendar(locale);
         int initDay = cal.get(Calendar.DAY_OF_MONTH);

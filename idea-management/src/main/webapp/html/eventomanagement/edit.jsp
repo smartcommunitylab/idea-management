@@ -39,6 +39,7 @@
 			CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
 			String title = event.getTitle(locale);
 			String description = event.getDescription(locale);
+			String location = event.getLocation();
 		%>
 		<portlet:actionURL name="updateEvent" var="updateEventURL" />
 		<portlet:renderURL var="redirectURL">
@@ -56,6 +57,11 @@
 		    type="textarea" label="" value="<%=description%>"></aui:input>  
 		  </aui:field-wrapper>
 			
+		  <aui:field-wrapper>
+		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_location") %>' name="location" 
+		    type="textarea" label="" value="<%=Validator.isNotNull(location) ? location : \"\" %>"></aui:input>  
+		  </aui:field-wrapper>
+		  
         <%
         GregorianCalendar startCal = new GregorianCalendar(locale);
         startCal.setTimeInMillis(event.getStartTime());
