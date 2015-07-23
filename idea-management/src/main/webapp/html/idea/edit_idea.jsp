@@ -147,7 +147,7 @@ AUI().use('aui-form-validator',
 	    },
       <portlet:namespace/>shortDesc: {
           required: true,
-          maxLength: 50
+          maxLength: 140
       }
 	 };
 	 new A.FormValidator(

@@ -103,7 +103,7 @@
 <div class="call-tags">
     <c:if test="<%=tagSet.size() > 0 %>">
     <div class="row-fluid info-meta">
-      <i class="icon-tags icon-white"></i>
+      <i class="ftn-user_tag"></i>
       <span class="info-meta-label"><liferay-ui:message key="lbl_tags"/></span>
         <% for (String tag: tagSet) {%>
         <span class="badge"><%=tag %></span>

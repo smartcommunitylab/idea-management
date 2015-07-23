@@ -61,7 +61,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 <aui:form cssClass="idea-form" action="<%=editEntryURL%>" name="call">
 <aui:model-context bean="<%= entry %>" model="<%= Call.class %>" />
 	
-	<aui:fieldset cssClass="simple-field">
+	<aui:fieldset label="lbl_title" cssClass="simple-field">
 		<aui:input name="title" label="" placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' ></aui:input>
 	</aui:fieldset>
 
@@ -133,13 +133,14 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
   </aui:field-wrapper>
 
   <liferay-ui:asset-tags-error />
+  <aui:field-wrapper label="lbl_tags">
 	<liferay-ui:asset-tags-selector className="<%=Call.class.getName()%>"
 		classPK="<%= callId%>">
 	</liferay-ui:asset-tags-selector>
+  </aui:field-wrapper>
 
 
-
-  <aui:fieldset label="">
+  <aui:fieldset label="related-assets">
   <%
   request.setAttribute("liferay-ui:input-asset-links:className",Call.class.getName());
   request.setAttribute("liferay-ui:input-asset-links:assetEntryId",String.valueOf(assetEntry == null ? 0 : assetEntry.getEntryId()));

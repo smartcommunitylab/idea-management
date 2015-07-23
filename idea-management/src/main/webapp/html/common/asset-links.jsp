@@ -194,7 +194,7 @@ function rem(id) {
       <button type="button" class="btn addidea-button edit-assetlinks-button">
       <liferay-ui:icon
         cssClass="asset-selector"
-        iconCssClass="icon icon-folder-open"
+        iconCssClass="icon ftn-attachment"
         data="<%= data %>"
         message=""
         id="<%= FriendlyURLNormalizerUtil.normalize(type) %>"

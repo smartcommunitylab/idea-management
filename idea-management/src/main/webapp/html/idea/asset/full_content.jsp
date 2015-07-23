@@ -126,7 +126,7 @@
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
     <c:if test="<%=parentTagSet.size() > 0 %>">
     <div class="row-fluid info-meta">
-      <i class="icon-tags icon-white"></i>
+      <i class="ftn-tag"></i>
       <span class="info-meta-label"><liferay-ui:message key="lbl_tags"/></span>
         <% for (String tag: parentTagSet) {%>
         <span class="badge"><%=tag %></span>
@@ -135,7 +135,7 @@
     </c:if>
     <c:if test="<%=ownTagSet.size() > 0 %>">
     <div class="row-fluid info-meta">
-      <i class="icon-user icon-white"></i>
+      <i class="ftn-user_tag"></i>
       <span class="info-meta-label"><liferay-ui:message key="lbl_usertags"/></span>
         <% for (String tag: ownTagSet) {%>
         <span class="badge"><%=tag %></span>
