@@ -57,6 +57,7 @@ To change the theme for already created users:
 - enable google/facebook login
 - configure mail server
 - configure workflow definitions
+- in control panel / configuration /users set 'Last Name Requered' true
 
 ### Data Structures
 
