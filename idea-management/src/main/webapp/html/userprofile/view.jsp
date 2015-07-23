@@ -37,18 +37,18 @@
 						<div class="span6">
 							<div class="entry">
 								<h6 class="field">Nome</h6>
-								<p class="value"><%=selUser.getFirstName()%></p>
+								<p class="value"><%=userBean.getFirstName()%></p>
 							</div>
 							<div class="entry">
 								<h6 class="field">Cognome</h6>
-								<p class="value"><%=selUser.getLastName()%></p>
+								<p class="value"><%=userBean.getLastName()%></p>
 							</div>
 							<div class="entry">
 								<h6 class="field">Email</h6>
-								<p class="value"><%=selUser.getEmailAddress()%></p>
+								<p class="value"><%=userBean.getEmailAddress()%></p>
 							</div>
 							<div class="entry">
-								<h6 class="field">Genere</h6>
+								<h6 class="field">Sesso</h6>
 								<p class="value">
 									<c:choose>
 										<c:when test="<%=selUser.getMale()%>">
@@ -67,45 +67,23 @@
 						<div class="span6">
 							<div class="entry">
 								<h6 class="field">Professione</h6>
-								<p class="value"><%=selUser.getJobTitle()%></p>
+								<p class="value"><%=userBean.getOccupation()%></p>
 							</div>
 							<h4 class="field">Residenza</h4>
 							<div class="entry">
 								<h6 class="field">Via e numero</h6>
-								<p class="value">
-									<c:choose>
-										<c:when test="!selUser.getAddresses().isEmpty()">
-											<c:if test="selUser.getAddresses().get(0).getStreet1() != ''">
-												<%=selUser.getAddresses().get(0)
-											.getStreet1()%>
-											</c:if>
-											<c:if test="selUser.getAddresses().get(0).getStreet2() != ''">
-												<br />
-												<%=selUser.getAddresses().get(0)
-											.getStreet2()%>
-											</c:if>
-											<c:if test="selUser.getAddresses().get(0).getStreet3() != ''">
-												<br />
-												<%=selUser.getAddresses().get(0)
-											.getStreet3()%>
-											</c:if>
-										</c:when>
-										<c:otherwise>
-											...
-										</c:otherwise>
-									</c:choose>
+								<%=GetterUtil.getString(userBean
+										.getAddress()%>
 								</p>
 								<h6 class="field">Citt&agrave;</h6>
 								<p class="value">
-									<c:choose>
-										<c:when test="!selUser.getAddresses().isEmpty()">
-											<%=selUser.getAddresses().get(0)
-										.getCity()%>
-										</c:when>
-										<c:otherwise>
-											...
-										</c:otherwise>
-									</c:choose>
+								<%=GetterUtil.getString(userBean
+										.getCity())%>
+								</p>
+								<h6 class="field">codice postale</h6>
+								<p class="value">
+								<%=GetterUtil.getString(userBean
+										.getPostcode())%>
 								</p>
 							</div>
 						</div>
