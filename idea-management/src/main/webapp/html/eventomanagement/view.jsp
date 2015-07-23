@@ -133,8 +133,9 @@
 // 									this.set('y', this.get('y') + 50);
 // 								}
 // 							},
-							width: 820,
-							height: 500,
+							width: 550,
+							height: 350,
+							cssClass:'event-ui-dialog',
 							constrain2view: true,
 	            modal: true
 						},

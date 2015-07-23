@@ -281,6 +281,8 @@ public class EventoManagementPortlet extends MVCPortlet {
 			Map<Locale, String> descriptionMap = new HashMap<>();
 			descriptionMap.put(locale, description);
 			
+			String location = ParamUtil.getString(request, "location");
+			
 //			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			int startYear = ParamUtil.getInteger(request, "sdyear");
 			int startMonth = ParamUtil.getInteger(request, "sdmonth");
@@ -330,6 +332,9 @@ public class EventoManagementPortlet extends MVCPortlet {
 				event.setDescriptionMap(descriptionMap);
 				event.setStartTime(calendarStart.getTimeInMillis());
 				event.setEndTime(calendarEnd.getTimeInMillis());
+				if(Validator.isNotNull(location)) {
+					event.setLocation(location);
+				}
 				CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
 //				System.out.println("update event:" + eventId);
 			}
@@ -368,6 +373,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		
 		String title = ParamUtil.getString(request, "title");
 		String description = ParamUtil.getString(request, "description");
+		String location = ParamUtil.getString(request, "location");
 		
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		int startYear = ParamUtil.getInteger(request, "sdyear");
@@ -430,6 +436,9 @@ public class EventoManagementPortlet extends MVCPortlet {
 				CalendarBooking event = CalendarBookingLocalServiceUtil.addCalendarBooking(userId, calendar.getCalendarId(), 
 						new long[] {}, 0L, titleMap, descriptionMap, null, calendarStart.getTimeInMillis(), calendarEnd.getTimeInMillis(), 
 						false, null, 0L, null, 0L, null, serviceContext);
+				if(Validator.isNotNull(location)) {
+					event.setLocation(location);
+				}
 				event.setStatus(WorkflowConstants.STATUS_APPROVED);
 				CalendarBookingLocalServiceUtil.updateCalendarBooking(event);
 				

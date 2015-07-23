@@ -44,6 +44,6 @@ if (!strutsAction.startsWith("/login/facebook_connect") && FacebookConnectUtil.i
 
   String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + facebookAuthURL.toString() + "', 'facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
   %>
-  <aui:button type="button" value="facebook" onClick="<%=taglibOpenFacebookConnectLoginWindow %>"/>
+  <a class="btn signin-icon-btn" href="<%=taglibOpenFacebookConnectLoginWindow %>"><i class="icon-facebook"></i></a>
 
 </c:if>

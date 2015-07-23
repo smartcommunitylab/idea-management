@@ -39,6 +39,7 @@
 			CalendarBooking event = CalendarBookingLocalServiceUtil.getCalendarBooking(eventId);
 			String title = event.getTitle(locale);
 			String description = event.getDescription(locale);
+			String location = event.getLocation();
 		%>
 		<portlet:actionURL name="updateEvent" var="updateEventURL" />
 		<portlet:renderURL var="redirectURL">
@@ -56,6 +57,11 @@
 		    type="textarea" label="" value="<%=description%>"></aui:input>  
 		  </aui:field-wrapper>
 			
+		  <aui:field-wrapper>
+		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_location") %>' name="location" 
+		    type="textarea" label="" value="<%=Validator.isNotNull(location) ? location : \"\" %>"></aui:input>  
+		  </aui:field-wrapper>
+		  
         <%
         GregorianCalendar startCal = new GregorianCalendar(locale);
         startCal.setTimeInMillis(event.getStartTime());
@@ -140,10 +146,56 @@ AUI().use('aui-base','liferay-form','aui-form-validator',
 					validatorName:'required'
 				},				
 				{
-					body:'',
-					custom: false,
+					body:function (val, fieldNode, ruleValue) {
+						//alert(val + "-" + fieldNode + "-" + ruleValue);
+						var startDateString = document.getElementsByName('<portlet:namespace/>startDate')[0].value;
+						var startTimeString = document.getElementsByName('<portlet:namespace/>startTime')[0].value;
+						var endDateString = document.getElementsByName('<portlet:namespace/>endDate')[0].value;
+						var endTimeString = document.getElementsByName('<portlet:namespace/>endTime')[0].value;
+						var startDate;
+						var endDate;
+						if((startTimeString.indexOf("AM") > -1) || (startTimeString.indexOf("PM") > -1) ||
+								(endTimeString.indexOf("AM") > -1) || (endTimeString.indexOf("PM") > -1)) {
+							//alert("usa:" + startDateString + "-" + startTimeString + "-" + endDateString + "-" + endTimeString);
+							
+							var dateNumbers = startDateString.match(/\d+/g);
+							var timeNumbers = startTimeString.match(/\d+/g);
+							if(startTimeString.indexOf("PM") > -1) {
+								timeNumbers[0] = parseInt(timeNumbers[0]) + 12; 
+							}
+							//alert("numbers:" + dateNumbers + "-" + timeNumbers);
+							startDate = new Date(dateNumbers[2], dateNumbers[0]-1, dateNumbers[1], timeNumbers[0], timeNumbers[1], 00);
+							
+							dateNumbers = endDateString.match(/\d+/g);
+							timeNumbers = endTimeString.match(/\d+/g);
+							if(endTimeString.indexOf("PM") > -1) {
+								timeNumbers[0] = parseInt(timeNumbers[0]) + 12;
+							}
+							//alert("numbers:" + dateNumbers + "-" + timeNumbers);
+							endDate = new Date(dateNumbers[2], dateNumbers[0]-1, dateNumbers[1], timeNumbers[0], timeNumbers[1], 00);
+						} else {
+							//alert("ita:" + startDateString + "-" + startTimeString + "-" + endDateString + "-" + endTimeString);
+							
+							var dateNumbers = startDateString.match(/\d+/g);
+							var timeNumbers = startTimeString.match(/\d+/g);
+							startDate = new Date(dateNumbers[2], dateNumbers[1]-1, dateNumbers[0], timeNumbers[0], timeNumbers[1], 00);
+							
+							dateNumbers = endDateString.match(/\d+/g);
+							timeNumbers = endTimeString.match(/\d+/g);
+							endDate = new Date(dateNumbers[2], dateNumbers[1]-1, dateNumbers[0], timeNumbers[0], timeNumbers[1], 00);
+						}
+						//alert(startDate + " - " + endDate);
+						//alert(startDate.getTime() + " - " + endDate.getTime());
+						if(startDate.getTime() >= endDate.getTime()) {
+			      	//alert("Start date cannot be greater than end date");
+			        return false;
+						}						
+            return true;
+					},
+					custom: true,
+					errorMessage: '<liferay-ui:message key="evento_form_check_date_error"/>',
 					fieldName: '<portlet:namespace/>endTime',
-					validatorName:'required'
+					validatorName:'customTimeValidator'
 				}				
 			]
 		});
