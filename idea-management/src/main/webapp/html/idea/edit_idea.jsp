@@ -73,11 +73,11 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 
 <aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>" name="idea">
 <aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
-	<aui:fieldset cssClass="simple-field">
+	<aui:fieldset label="lbl_title" cssClass="simple-field">
 		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' first="true" label="" name="title"></aui:input>
 	</aui:fieldset>
 
-  <aui:field-wrapper>
+  <aui:field-wrapper label="lbl_shortDesc" >
     <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_shortDesc") %>' name="shortDesc" type="textarea" label=""></aui:input>  
   </aui:field-wrapper>
   
@@ -104,7 +104,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
     </aui:select>
   </aui:field-wrapper>
 
-  <aui:field-wrapper>
+  <aui:field-wrapper label="lbl_deadlineConstraints">
     <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints") %>' name="deadlineConstraints" type="textarea" label=""></aui:input>  
   </aui:field-wrapper>
 
@@ -116,11 +116,12 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
   </aui:field-wrapper>
 
 	<liferay-ui:asset-tags-error />
+  <aui:field-wrapper label="lbl_tags">
 	<liferay-ui:asset-tags-selector  curTags='<%=tagNames %>' className="<%=Idea.class.getName()%>"
 		classPK="<%=ideaId%>">
 	</liferay-ui:asset-tags-selector>
-
-  <aui:fieldset label="">
+  </aui:field-wrapper>
+  <aui:fieldset label="related-assets">
   <%
   request.setAttribute("liferay-ui:input-asset-links:className",Idea.class.getName());
   request.setAttribute("liferay-ui:input-asset-links:assetEntryId",String.valueOf(assetEntry == null ? 0 : assetEntry.getEntryId()));

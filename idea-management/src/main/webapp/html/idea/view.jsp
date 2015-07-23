@@ -95,10 +95,13 @@ boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupI
   params.put("callId", callId);
   params.put("mvcPath", "/html/idea/add_idea.jsp");
   String addIdea = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
-
+  if (!addEnabled) addIdea = "javascript:document.getElementById('"+renderResponse.getNamespace()+"addButtonDisableMsg').style.display = 'block';";
 	%>
-	<aui:button disabled="<%=!addEnabled %>" cssClass="addidea-button" name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
+	<aui:button cssClass='<%=addEnabled ? "addidea-button" : "addidea-button-disabled"%>' name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
 </aui:button-row>
+<div id="<portlet:namespace/>addButtonDisableMsg" class="row-fluid add-button-disabled-msg" style="display:none;">
+  <span><liferay-ui:message key="msg_access_to_add"/></span>
+</div>
 </c:if>
 <script type="text/javascript">
     function <portlet:namespace/>doSearch() {

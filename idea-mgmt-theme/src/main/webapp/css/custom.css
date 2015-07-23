@@ -832,7 +832,7 @@ header#banner {
 	padding-bottom: 5px;
 }
 
-.addidea-button:disabled,.formbutton-cancel,.tagselector .btn {
+.addidea-button-disabled {
 	font-size: 18px !important;
 	text-transform: uppercase !important;
 	padding: 8px 24px !important;
@@ -845,6 +845,21 @@ header#banner {
 	border-radius: 3px !important;
 	box-shadow: 0px 0px 4px 2px #888888 !important;
 	text-shadow: 0 !important;
+}
+
+.formbutton-cancel,.tagselector .btn {
+  font-size: 18px !important;
+  text-transform: uppercase !important;
+  padding: 8px 24px !important;
+  color: black !important;
+  background-color: #EDEDED !important;
+  background-image: linear-gradient(to bottom, #EDEDED, #EDEDED) !important;
+  border: 0 !important;
+  -webkit-border-radius: 3px !important;
+  -moz-border-radius: 3px !important;
+  border-radius: 3px !important;
+  box-shadow: 0px 0px 4px 2px #888888 !important;
+  text-shadow: 0 !important;
 }
 
 .addidea-button,.formbutton-primary,.tagselector .btn {
@@ -1497,4 +1512,13 @@ header#banner {
 
 .empty-events {
 	padding-left: 10px;
+}
+
+.fieldset-legend {
+	font-size: 12px !important;
+}
+
+.add-button-disabled-msg {
+	  text-align: center !important;
+    margin-bottom: 10px !important;
 }
