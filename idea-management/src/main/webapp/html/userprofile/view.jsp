@@ -73,7 +73,7 @@
 							<div class="entry">
 								<h6 class="field">Via e numero</h6>
 								<%=GetterUtil.getString(userBean
-										.getAddress()%>
+										.getAddress()) %>
 								</p>
 								<h6 class="field">Citt&agrave;</h6>
 								<p class="value">
