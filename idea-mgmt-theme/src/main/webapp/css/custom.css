@@ -227,7 +227,7 @@ header#banner {
 }
 
 #navmenu li a span img {
-	margin-right: 10px;
+	margin-right: 40px;
 }
 
 #navmenu li:hover a span, #navmenu li.selected a span {
