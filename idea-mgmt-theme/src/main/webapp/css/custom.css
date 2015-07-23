@@ -150,9 +150,11 @@ header#banner {
 	padding: 0;
 	border: 0;
 	/* Fallback for web browsers that doesn't support RGBa */
-	background: rgb(255, 255, 255);
+	/* background: rgb(255, 255, 255); */
 	/* RGBa with 0.6 opacity */
-	background: rgba(255, 255, 255, 0.7);
+	/* background: rgba(255, 255, 255, 0.7); */
+	background-image: url(../images/background_nav.png);
+	background-size: cover;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
@@ -224,6 +226,10 @@ header#banner {
 	border-bottom: 5px solid transparent;
 }
 
+#navmenu li a span img {
+	margin-right: 40px;
+}
+
 #navmenu li:hover a span, #navmenu li.selected a span {
 	color: #E83D5F;
 }
@@ -251,11 +257,11 @@ header#banner {
 #navmenu li ul.child-menu {
 	/* visibility: hidden; */
 	margin: 0;
-	-webkit-transition: all 0.5s ease-in-out 0.5s;
-	-moz-transition: all 0.5s ease-in-out 0.5s;
-	-ms-transition: all 0.5s ease-in-out 0.5s;
-	-o-transition: all 0.5s ease-in-out 0.5s;
-	transition: all 0.5s ease-in-out 0.5s;
+	-webkit-transition: all 0.3s ease-in-out 0.3s;
+	-moz-transition: all 0.3s ease-in-out 0.3s;
+	-ms-transition: all 0.3s ease-in-out 0.3s;
+	-o-transition: all 0.3s ease-in-out 0.3s;
+	transition: all 0.3s ease-in-out 0.3s;
 	height: 0px;
 	opacity: 0;
 }
@@ -292,10 +298,10 @@ header#banner {
 }
 
 #search #searchform {
-	-webkit-transition: all 0.5s ease-in-out;
-	-moz-transition: all 0.5s ease-in-out;
-	-o-transition: all 0.5s ease-in-out;
-	transition: all 0.5s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	width: 0px;
 	/*  height: 0px; */
 	opacity: 0;
@@ -1099,12 +1105,16 @@ header#banner {
 	text-align: right;
 }
 
-.idea-form input,#_58_fm input {
+.idea-form input,#_58_fm input, #_20_fm input {
 	border-left-color: white !important;
 	border-top-color: white !important;
 	border-right-color: white !important;
 	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
+}
+
+#_20_fm .folder-wrapper {
+	display: none;
 }
 
 .idea-form textarea {
