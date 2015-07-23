@@ -249,12 +249,26 @@ header#banner {
 }
 
 #navmenu li ul.child-menu {
-	visibility: hidden;
+	/* visibility: hidden; */
 	margin: 0;
+	-webkit-transition: all 0.5s ease-in-out 0.5s;
+	-moz-transition: all 0.5s ease-in-out 0.5s;
+	-ms-transition: all 0.5s ease-in-out 0.5s;
+	-o-transition: all 0.5s ease-in-out 0.5s;
+	transition: all 0.5s ease-in-out 0.5s;
+	height: 0px;
+	opacity: 0;
 }
 
 #navmenu li:hover ul.child-menu {
-	visibility: visible;
+	/* visibility: visible; */
+	-webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    transition-delay: 0s;
+	height: 120px;
+	opacity: 1;
 }
 
 #navmenu li ul.child-menu li {
