@@ -36,6 +36,8 @@ terms.of.use.journal.article.group.id=[web_content_group_id]
 layout.static.portlets.all=cookiesnotification_WAR_cookiesnotificationportlet
 cookies.accepted.journalarticle.id=[web_content_id]
 cookies.accepted.journalarticle.groupid=[web_content_group_id]
+# disable password reminder question
+users.reminder.queries.enabled=false
 ```
 To change the theme for already created users:
   - Set the first 2 lines to false
