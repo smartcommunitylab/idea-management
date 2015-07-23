@@ -27,5 +27,5 @@ boolean googleAuthEnabled = PrefsPropsUtil.getBoolean(company.getCompanyId(), "g
 %>
 
 <c:if test="<%= googleAuthEnabled %>">
-  <aui:button type="button" value="google" onClick="<%=taglibOpenGoogleLoginWindow %>"/>
+  <a class="btn signin-icon-btn" href="<%=taglibOpenGoogleLoginWindow %>"><i class="icon-google-plus"></i></a>
 </c:if>

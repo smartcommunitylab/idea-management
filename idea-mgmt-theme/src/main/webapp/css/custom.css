@@ -60,7 +60,15 @@
   text-align: center;
 }
 
-#signinmodal form .button-holder button, #portlet_58 .button-holder button{
+.signin-icon-btn i {
+	font-weight: bold;
+}
+
+#signinmodal form .button-holder .btn, 
+#portlet_58 .button-holder .btn,
+#portlet_terms-of-use .button-holder .btn,
+#portlet_new-password .button-holder .btn,
+ {
   margin: 0 auto;
   display: inline-block !important;
   color: white;
@@ -75,6 +83,10 @@
   padding: 8px 32px;
 }
 
+#portlet_58 form .button-holder {
+/*   float: right;	 */
+}
+
 #portlet_58 .navigation {
 	display: none;
 }
@@ -85,13 +97,15 @@
   border-top:none;
 }
 
-#signinmodal .navigation ul li a, #portlet_58 .navigation ul li a {
+#signinmodal .navigation ul li a {
   margin: 0 auto;
   display: block;
   text-shadow: none;
   background-image: none;
-  background-color: #F44336;
-  border: 0;
+  background-color: #5EB3A3;
+  border-width: 1px;
+  border-color: #777;
+  border-style: solid;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
