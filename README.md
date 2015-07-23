@@ -60,6 +60,7 @@ To change the theme for already created users:
 - configure mail server
 - configure workflow definitions
 - in control panel / configuration /users set 'Last Name Requered' true
+- in 'site / content management / Documents and Media' delete unnecessary data types (contracts, etc.)
 
 ### Data Structures
 
