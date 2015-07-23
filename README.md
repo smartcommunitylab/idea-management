@@ -38,11 +38,21 @@ cookies.accepted.journalarticle.id=[web_content_id]
 cookies.accepted.journalarticle.groupid=[web_content_group_id]
 ```
 To change the theme for already created users:
-  - Set the first 2 lines to false
+  - Set 
+  
+  ```
+  layout.user.public.layouts.enabled=false
+  layout.user.public.layouts.auto.create=false
+  ```
   - restart the server
   - logout or login and logout
   - login again
-  - set the first 2 lines to true
+  - set
+  
+   ```
+  layout.user.public.layouts.enabled=true
+  layout.user.public.layouts.auto.create=true
+  ```
   - restart the server
   - logout
   - login
