@@ -150,9 +150,11 @@ header#banner {
 	padding: 0;
 	border: 0;
 	/* Fallback for web browsers that doesn't support RGBa */
-	background: rgb(255, 255, 255);
+	/* background: rgb(255, 255, 255); */
 	/* RGBa with 0.6 opacity */
-	background: rgba(255, 255, 255, 0.7);
+	/* background: rgba(255, 255, 255, 0.7); */
+	background-image: url(../images/background_nav.png);
+	background-size: cover;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
