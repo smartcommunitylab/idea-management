@@ -139,7 +139,7 @@
 									<#assign nav_child_attr_selected = "" />
 									<#assign nav_child_css_class = "" />
 		
-									<#if nav_item.isSelected()>
+									<#if nav_child.isSelected()>
 										<#assign nav_child_attr_selected = "aria-selected='true'" />
 										<#assign nav_child_css_class = "selected" />
 									</#if>
