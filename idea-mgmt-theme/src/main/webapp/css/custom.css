@@ -1365,6 +1365,10 @@ header#banner {
 	display: flex;
 }
 
+.event-container {
+	margin-right: 5em;
+}
+
 .event-container .event-container-list {
 	min-height: 200px;
 	height: 200px;
