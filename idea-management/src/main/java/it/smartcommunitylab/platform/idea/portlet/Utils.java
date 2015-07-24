@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -156,9 +157,12 @@ public class Utils {
 		return true;
 	}
 	
-	public static String getBaseURL(HttpServletRequest request) {
+	public static String getBaseURL(HttpServletRequest request) throws PortalException, SystemException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		String baseUrl = themeDisplay.getLayout().getRegularURL(request);
 //		String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
-		String baseUrl = ""+request.getAttribute("FRIENDLY_URL");
+//		String baseUrl = ""+request.getAttribute("FRIENDLY_URL");
+//		String baseUrl = "https://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
 		return baseUrl;
 	}
 	
