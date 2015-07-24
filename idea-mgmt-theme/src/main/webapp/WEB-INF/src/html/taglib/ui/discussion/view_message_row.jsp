@@ -42,7 +42,7 @@ String randomNamespace = renderResponse.getNamespace();
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-						<div class='lfr-discussion <%= cssClass %>' style='padding-left: <%= depth * 50 %>px;'>
+						<div class='lfr-discussion <%= cssClass %> <%= depth == 0 ? "" : "child-discussion-row" %>'>
 							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
 								<a name="<%= renderResponse.getNamespace() %>message_<%= message.getMessageId() %>"></a>
 
@@ -96,7 +96,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											/>
 										</c:if>
 
-										<c:if test="<%= depth < 2 && !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
+										<c:if test="<%= !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
 											<ul class="lfr-discussion-actions">
 												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 													<li class="lfr-discussion-reply-to">
