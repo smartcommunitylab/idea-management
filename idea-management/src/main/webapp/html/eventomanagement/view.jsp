@@ -134,7 +134,7 @@
 // 								}
 // 							},
 							width: 550,
-							height: 350,
+							height: 550,
 							cssClass:'event-ui-dialog',
 							constrain2view: true,
 	            modal: true

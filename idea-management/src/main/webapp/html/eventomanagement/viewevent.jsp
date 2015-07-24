@@ -33,10 +33,14 @@
 	long categoryId = ParamUtil.getLong(request, "categoryId");
 	long callId = ParamUtil.getLong(request, "callId");
 	long ideaId = ParamUtil.getLong(request, "ideaId");
-	java.text.SimpleDateFormat dfDate = new SimpleDateFormat("dd MMMM yyyy", locale);
-	DateFormat dfTime =DateFormat.getTimeInstance(DateFormat.SHORT, locale);
-	String startDate = dfDate.format(new Date(event.getStartTime()));
-	String startTime = dfTime.format(new Date(event.getStartTime()));
+	java.text.SimpleDateFormat dfDateStart = new SimpleDateFormat("dd MMMM yyyy", locale);
+	java.text.SimpleDateFormat dfDateEnd = new SimpleDateFormat("dd MMMM yyyy", locale);
+	DateFormat dfTimeStart = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+	DateFormat dfTimeEnd = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+	String startDate = dfDateStart.format(new Date(event.getStartTime()));
+	String startTime = dfTimeStart.format(new Date(event.getStartTime()));
+	String endDate = dfDateStart.format(new Date(event.getEndTime()));
+	String endTime = dfTimeStart.format(new Date(event.getEndTime()));
 	String location = event.getLocation();
 	
 	String categoryName = null;
@@ -52,15 +56,16 @@
 		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
 		contextName = idea.getTitle();
 		long groupId = idea.getUserGroupId();
-		contextLabel = LanguageUtil.get(locale, "event_context_idea");
+		contextLabel = LanguageUtil.get(locale, "evento_context_idea");
 	} else if (Validator.isNotNull(callId)) {
 		Call call = CallLocalServiceUtil.getCall(callId);
 		contextName = call.getTitle();
-	  contextLabel = LanguageUtil.get(locale, "event_context_idea");
+	  contextLabel = LanguageUtil.get(locale, "evento_context_call");
 	}
+  String mainCategoryColor = CC.get(""+calCategories.get(0).getCategoryId());
 %>
 
-<div class="event-view-container">
+<div class="event-view-container" style='border-left-color: <%=mainCategoryColor%>;'>
   <div class="event-view-category">
     <%  for (AssetCategory ac : calCategories) { 
     	categoryColor = CC.get(""+ac.getCategoryId());
@@ -74,11 +79,11 @@
   </c:if>
   <div class="event-view-header">
     <span class="event-view-title"><%=event.getTitle(locale)%></span>
-    <span class="event-viewd-date"><%=startDate%></span>    
   </div>
-  <div class="event-view-location"><liferay-ui:message key="evento_form_location" />: <%=Validator.isNotNull(location) ? location : "" %></div>
-  <div class="event-view-time"><liferay-ui:message key="evento_form_time" />: <%=startTime%></div>
-  <div class="event-view-description"><%=event.getDescription(locale)%></div>
+  <div class="event-view-location"><liferay-ui:message key="evento_view_location" />: <%=Validator.isNotNull(location) ? location : "" %></div>
+  <div class="event-view-date"><liferay-ui:message key="evento_view_from" />: <%=startDate%> <%=startTime%> </div>    
+  <div class="event-view-date"><liferay-ui:message key="evento_view_to" />: <%=endDate%> <%=endTime%> </div>
+  <div class="event-view-description"><liferay-ui:message key="evento_view_desc" />: <%=event.getDescription(locale)%></div>
   <div>
   <aui:button-row  cssClass="formbutton-row">
     <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="Close"></aui:button>
