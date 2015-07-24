@@ -1590,6 +1590,10 @@ header#banner {
 	text-decoration: none;
 }
 
+#footer #footer-navigation {
+	margin-bottom: 0;
+}
+
 #footer #footer-navigation .navbar-inner {
 	padding: 0;
 	border: 0;
