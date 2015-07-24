@@ -62,7 +62,7 @@
 		contextName = call.getTitle();
 	  contextLabel = LanguageUtil.get(locale, "evento_context_call");
 	}
-  String mainCategoryColor = CC.get(""+calCategories.get(0).getCategoryId());
+  String mainCategoryColor = (calCategories != null && calCategories.size() > 0) ? CC.get(""+calCategories.get(0).getCategoryId()) : "";
 %>
 
 <div class="event-view-container" style='border-left-color: <%=mainCategoryColor%>;'>

@@ -49,17 +49,17 @@
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcPath" value="/html/eventomanagement/add.jsp" />
 		</portlet:renderURL>
-		<aui:form cssClass="idea-form" id="addEvent" name="addEvent"
+		<aui:form cssClass="idea-form event-view-container" id="addEvent" name="addEvent"
 			action="<%=addEventURL%>" method="post">
-			<aui:fieldset cssClass="simple-field">
+			<aui:fieldset cssClass="simple-field" label="evento_form_title">
         <aui:input placeholder='<%=LanguageUtil.get(locale, "evento_form_title") %>' label="" name="title"></aui:input>
       </aui:fieldset>
 
-		  <aui:field-wrapper>
+		  <aui:field-wrapper label="evento_form_desc">
 		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  
 		  </aui:field-wrapper>
 			
-		  <aui:field-wrapper>
+		  <aui:field-wrapper label="evento_form_location">
 		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_location") %>' name="location" type="textarea" label=""></aui:input>  
 		  </aui:field-wrapper>
 		  
