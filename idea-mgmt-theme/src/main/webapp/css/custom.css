@@ -631,7 +631,7 @@ header#banner {
 	padding-bottom: 50px;
 }
 
-.liferay-rating-vote .rating-label {
+.idea-discussion-rating .taglib-ratings .liferay-rating-vote .rating-label {
 	display: none;
 	/*   position: absolute; */
 	/*   top: 30px; */
@@ -677,19 +677,27 @@ header#banner {
 	color: #E83D5F !important;
 }
 
+.taglib-discussion .lfr-discussion-form-container .lfr-discussion-form {
+  background: none !important;	
+}
+
 .taglib-discussion .subscribe-link,.taglib-discussion .form-inline {
 	display: none;
 }
 
 .lfr-discussion-posted-on {
-	display: none;
+/* 	display: none; */
+}
+
+.child-discussion-row {
+	padding-left: 50px !important;
 }
 
 .discussion-container {
-	margin-top: 20px !important;
-	border-top-color: #DDD;
-	border-top-width: 1px;
-	border-top-style: solid;
+	margin-top: 0px !important;
+/* 	border-top-color: #DDD; */
+/* 	border-top-width: 1px; */
+/* 	border-top-style: solid; */
 }
 
 .discussion-container-disabled .add-comment,.discussion-container-disabled .lfr-discussion-actions {
@@ -709,6 +717,21 @@ header#banner {
 	font-size: 10px !important;
 }
 
+.taglib-discussion .add-comment {
+	margin-bottom: 10px;
+}
+
+.taglib-discussion .add-comment-link {
+	text-transform: uppercase;
+}
+
+.taglib-discussion .add-comment-link::before {
+	font-family: fontawesome-alloy;
+  content: "\f0e6";
+  font-size: 20px;
+  padding-right: 5px;
+}
+
 .taglib-discussion .avatar {
 	width: 50px;
 	height: 50px;
@@ -716,6 +739,10 @@ header#banner {
 	-moz-border-radius: 26px;
 	border-radius: 26px;
 /* 	border: 1px solid #DDD; */
+}
+
+.taglib-discussion .lfr-discussion {
+	border-bottom: 0px !important;
 }
 
 .idea .alert-success {
@@ -1154,6 +1181,11 @@ header#banner {
 .formbutton-row {
 	float: right;
 	padding: 5px;
+}
+
+.add-comment-button-row {
+  float: left;
+  padding: 5px;
 }
 
 .formbutton-row button {
