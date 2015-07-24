@@ -53,7 +53,7 @@
 						</#if>
 						<#-- useDialog="<%= PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>"-->
 						
-						<@aui["nav-item"] href="${profileURL.toString()}" id="userNotifications" iconCssClass="icon-bell" />
+						<!-- @aui["nav-item"] href="${profileURL.toString()}" id="userNotifications" iconCssClass="icon-bell" /> -->
 						
 						<#if themeDisplay.isShowSignOutIcon()>
 							<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="icon-off" />
@@ -76,10 +76,10 @@
 						-->
 					</#if>
 				</ul>
-				<ul id="search">
+				<#-- <ul id="search">
 					<@aui["nav-item"] href="#" id="searchtoggle" iconCssClass="icon-search" />
 					
-					<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> -->
+					<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> ->
 					<li id="searchform">
 						<@liferay_ui["search"] />
 					</li>
@@ -96,7 +96,7 @@
 							}
 						};
 					</script>
-				</ul>
+				</ul> -->
 			</div>
 		</div>
 		<div class="navbar-row">
@@ -118,7 +118,7 @@
 				</#function>
 					
 				<#list nav_items as nav_item>
-					<#if nav_item.getLayout().getExpandoBridge().getAttribute(footer) == false>
+					<#if (nav_item.getLayout().getExpandoBridge().hasAttribute(footer) && nav_item.getLayout().getExpandoBridge().getAttribute(footer) == false)>
 						<#assign nav_item_attr_has_popup = "" />
 						<#assign nav_item_attr_selected = "" />
 						<#assign nav_item_css_class = "" />

@@ -12,7 +12,7 @@
 			</div>
 			<ul id="footer-navmenu" aria-label="<@liferay.language key="site-pages" />" role="menubar" class="nav">					
 				<#list nav_items as nav_item>
-					<#if nav_item.getLayout().getExpandoBridge().getAttribute(footer)>
+					<#if (nav_item.getLayout().getExpandoBridge().hasAttribute(footer) && nav_item.getLayout().getExpandoBridge().getAttribute(footer) == true)>
 						<#assign nav_item_attr_has_popup = "" />
 						<#assign nav_item_attr_selected = "" />
 						<#assign nav_item_css_class = "" />
