@@ -275,6 +275,7 @@ header#banner {
 
 #navmenu li:hover ul.child-menu {
 	/* visibility: visible; */
+	margin-top: -10px;
 	-webkit-transition-delay: 0s;
     -moz-transition-delay: 0s;
     -ms-transition-delay: 0s;
