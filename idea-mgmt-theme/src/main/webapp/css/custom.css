@@ -202,7 +202,7 @@ header#banner {
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
-	border: 1px solid #DDD;
+/* 	border: 1px solid #DDD; */
 }
 
 #navmenu {
@@ -576,7 +576,7 @@ header#banner {
 	-webkit-border-radius: 40px;
 	-moz-border-radius: 40px;
 	border-radius: 40px;
-	border: 1px solid #DDD;
+/* 	border: 1px solid #DDD; */
 }
 
 #participants .taglib-user-display span {
@@ -715,7 +715,7 @@ header#banner {
 	-webkit-border-radius: 26px;
 	-moz-border-radius: 26px;
 	border-radius: 26px;
-	border: 1px solid #DDD;
+/* 	border: 1px solid #DDD; */
 }
 
 .idea .alert-success {
@@ -1463,7 +1463,7 @@ header#banner {
 	-webkit-border-radius: 50px;
 	-moz-border-radius: 50px;
 	border-radius: 50px;
-	border: 1px solid #DDD;
+/* 	border: 1px solid #DDD; */
 }
 
 .userprofile .entry {
