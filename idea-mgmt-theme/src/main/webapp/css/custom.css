@@ -229,6 +229,8 @@ header#banner {
 	color: black;
 	padding-bottom: 5px;
 	border-bottom: 5px solid transparent;
+	height: 65px;
+	line-height: 65px;
 }
 
 #navmenu li a span img {
