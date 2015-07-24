@@ -71,9 +71,13 @@ ${theme.include(body_top_include)}
 	</div>
 
 	<footer id="footer" role="contentinfo">
-		<p class="powered-by">
+		<!-- <p class="powered-by">
 			<@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
-		</p>
+		</p> -->
+		<div class="partners"></div>
+		<#if has_navigation || is_signed_in>
+			<#include "${full_templates_path}/footer-navigation.ftl" />
+		</#if>
 	</footer>
 </div>
 
