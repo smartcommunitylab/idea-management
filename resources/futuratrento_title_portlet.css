@@ -1,0 +1,33 @@
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ {	
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-container {
+	padding: 70px 0;
+	text-transform: uppercase;
+	text-align: center;
+	background-image: url(../images/background_nav.png);
+	background-size: cover;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-over {
+	margin-top: 0;
+	color: white;
+	font-weight: bold;
+	text-align: right;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title {
+	font-size: 60px;
+	white-space: nowrap;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-sub {
+	margin-top: 0;
+	text-align: left;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .desc {
+	background: #E83D5F;
+	padding: 30px 0;
+	color: white;
+}
