@@ -118,7 +118,7 @@
 				</#function>
 					
 				<#list nav_items as nav_item>
-					<#if nav_item.getLayout().getExpandoBridge().getAttribute(footer) == false>
+					<#if nav_item.getLayout().getExpandoBridge().hasAttribute(footer) && nav_item.getLayout().getExpandoBridge().getAttribute(footer, false) == false>
 						<#assign nav_item_attr_has_popup = "" />
 						<#assign nav_item_attr_selected = "" />
 						<#assign nav_item_css_class = "" />
