@@ -38,6 +38,9 @@ cookies.accepted.journalarticle.id=[web_content_id]
 cookies.accepted.journalarticle.groupid=[web_content_group_id]
 # disable password reminder question
 users.reminder.queries.enabled=false
+# to change default user image (can be found in theme/WEB-INF/classes). put the image in the main classpath: ROOT/WEB-INF/classes
+image.default.user.female.portrait=placeholder_user.png
+image.default.user.male.portrait=placeholder_user.png
 ```
 To change the theme for already created users:
   - Set the first 2 lines to false
