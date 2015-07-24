@@ -45,19 +45,19 @@
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcPath" value="/html/eventomanagement/edit.jsp" />
 		</portlet:renderURL>
-		<aui:form cssClass="idea-form" id="updateEvent" name="updateEvent"
+		<aui:form cssClass="idea-form event-view-container" id="updateEvent" name="updateEvent"
 			action="<%=updateEventURL%>" method="post">
-			<aui:fieldset cssClass="simple-field">
+			<aui:fieldset cssClass="simple-field" label="evento_form_title">
         <aui:input placeholder='<%=LanguageUtil.get(locale, "evento_form_title") %>' label="" name="title" 
         value="<%=title%>"></aui:input>
       </aui:fieldset>
 
-		  <aui:field-wrapper>
+		  <aui:field-wrapper label="evento_form_desc">
 		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" 
 		    type="textarea" label="" value="<%=description%>"></aui:input>  
 		  </aui:field-wrapper>
 			
-		  <aui:field-wrapper>
+		  <aui:field-wrapper label="evento_form_location">
 		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_location") %>' name="location" 
 		    type="textarea" label="" value="<%=Validator.isNotNull(location) ? location : \"\" %>"></aui:input>  
 		  </aui:field-wrapper>
