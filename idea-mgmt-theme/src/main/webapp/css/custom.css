@@ -157,7 +157,11 @@ header#banner {
 	/* background: rgba(255, 255, 255, 0.7); */
 	background-image: url(../images/background_nav.png);
 	background-size: cover;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
 	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
 	box-shadow: none;
 }
 
@@ -1129,8 +1133,9 @@ header#banner {
 	border-left-color: white !important;
 	border-top-color: white !important;
 	border-right-color: white !important;
-	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
 }
 
 #_20_fm .folder-wrapper {
@@ -1142,8 +1147,9 @@ header#banner {
 	border-left-color: white !important;
 	border-top-color: white !important;
 	border-right-color: white !important;
-	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
 	height: 20px !important;
 }
 
@@ -1527,4 +1533,57 @@ header#banner {
 
 .asset-selector {
 	font-size: 20px;
+}
+
+#footer {
+	border-top: 10px solid #E83D5F;
+	margin-top: 60px;
+}
+
+#footer .partners {
+	height: 167px;
+	background-image: url(../images/loghi_footer_completi.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#footer .powered-by {
+	display: inline-block;
+	height: 60px;
+	line-height: 60px;
+	margin-left: 20px;
+}
+
+#footer .powered-by a, #footer .powered-by a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+#footer #footer-navigation .navbar-inner {
+	padding: 0;
+	border: 0;
+	/* Fallback for web browsers that doesn't support RGBa */
+	/* background: rgb(255, 255, 255); */
+	/* RGBa with 0.6 opacity */
+	/* background: rgba(255, 255, 255, 0.7); */
+	background: #E83D5F;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+#footer-navmenu {
+	float: right;
+}
+
+#footer-navmenu li a span {
+	/* padding-bottom: 5px;
+	border-bottom: 5px solid transparent; */
+	line-height: 40px;
+	color: white;
+	text-shadow: none;
+	text-transform: uppercase;
 }
