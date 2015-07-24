@@ -62,7 +62,7 @@
   <div class="span8 call-title">
     <div class="call-maintitle">
     <%=call.getTitle() %>
-    <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
+    <c:if test='<%= Utils.callEditEnabled(call, renderRequest) %>'>
       <portlet:renderURL var="editCall" windowState="maximized">
         <portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp" />
         <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />

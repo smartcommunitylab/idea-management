@@ -50,7 +50,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
   String addCallUrl = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
   %>
 
-<c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
+<c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && Utils.callAddEnabled(renderRequest) %>'>
 
 <aui:button-row  cssClass="idea-button-row" >
 	<aui:button cssClass="addidea-button"  href="<%=addCallUrl.toString() %>" value='<%= LanguageUtil.get(locale, "btn_add_call") %>'></aui:button>
@@ -91,7 +91,7 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
                   <% } %>
                 </div>
                 <div class="span6">
-                  <c:if test='<%= CallModelPermission.contains(permissionChecker, scopeGroupId, "ADD_CALL") %>'>
+                  <c:if test='<%= Utils.callDeleteEnabled(call, renderRequest) %>'>
                     <portlet:actionURL var="deleteURL" name="deleteEntry">
                       <portlet:param name="entryId" value="<%=String.valueOf(call.getCallId()) %>" />
                     </portlet:actionURL>

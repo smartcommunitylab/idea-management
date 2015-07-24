@@ -16,6 +16,7 @@
 
 package it.smartcommunitylab.platform.idea.portlet;
 
+import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
@@ -126,6 +127,26 @@ public class Utils {
 		}
 	}
 	
+	public static boolean callAddEnabled(PortletRequest req) {
+		//themeDisplay.getUser().getUserUuid().equals(idea.getUserUuid())
+		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			boolean hasRole = themeDisplay.getPermissionChecker().isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId());
+			return hasRole;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public static boolean callEditEnabled(Call call, PortletRequest req) {
+		return callAddEnabled(req);
+	}
+	
+	public static boolean callDeleteEnabled(Call call, PortletRequest req) {
+		return callAddEnabled(req);
+	}
+	
 	public static boolean discussionEnabled(Idea idea, PortletRequest req) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)req.getAttribute(WebKeys.THEME_DISPLAY);
 		if (!themeDisplay.isSignedIn()) return false;
@@ -136,7 +157,8 @@ public class Utils {
 	}
 	
 	public static String getBaseURL(HttpServletRequest request) {
-		String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
+//		String baseUrl = HttpUtil.getProtocol((String)request.getAttribute("CURRENT_COMPLETE_URL"))+"://"+HttpUtil.getDomain((String)request.getAttribute("CURRENT_COMPLETE_URL"))+request.getAttribute("FRIENDLY_URL");
+		String baseUrl = ""+request.getAttribute("FRIENDLY_URL");
 		return baseUrl;
 	}
 	
