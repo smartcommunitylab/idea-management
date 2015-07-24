@@ -186,7 +186,7 @@
         <div class="span6"> <liferay-ui:message key="lbl_participate"/> </div>
       </div>
 		  <div class="row-fluid">
-		    <div class="span6 text-center">
+		    <div class="span6 text-center idea-discussion-rating">
 				  <liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>" />
         </div>
 	      <div class="span3 text-center">
