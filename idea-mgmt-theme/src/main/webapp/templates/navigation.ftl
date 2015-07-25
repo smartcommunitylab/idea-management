@@ -7,19 +7,25 @@
 	<div class="navbar-inner">
 		<div class="navbar-row right">
 			<div id="user-menu">
+			  <div style="display:none;"> 
+        <#assign locPortletId = "userprofile_WAR_ideamanagement" />
+        <#assign PortletPreferencesFactoryUtil = staticUtil["com.liferay.portlet.PortletPreferencesFactoryUtil"] />
+        ${theme.runtime(locPortletId, "hidden=true", "")} 
+        </div>
 				<ul>
+
 					<#if !is_signed_in>
 						<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
 						<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" anchorCssClass="use-dialog" title="Accedi" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="Accedi" />
 					<#else>
 						<#assign id = themeDisplay.getPortletDisplay().getId() />
 						<#assign plid = themeDisplay.getPlid() />
-						<#assign profileURL = portletURLFactory.create(request, "49", plid, "ACTION_PHASE") />
-						${profileURL.setParameter("struts_action", "/my_sites/view")}
+						<#assign profileURL = portletURLFactory.create(request, "userprofile_WAR_ideamanagement", plid, "ACTION_PHASE") />
+						<#--${profileURL.setParameter("struts_action", "/my_sites/view")} -->
 						${profileURL.setParameter("groupId", "" + themeDisplay.getUser().getGroupId())}
-						${profileURL.setParameter("privateLayout", "false")}
+						<#--${profileURL.setParameter("privateLayout", "false")}-->
 						${profileURL.setPortletMode("VIEW")}
-						${profileURL.setWindowState("NORMAL")}
+						${profileURL.setWindowState("MAXIMIZED")}
 						
 						<#assign myAccountURL = themeDisplay.getURLMyAccount().toString() + "?controlPanelCategory=my"/>
 						<#-- <#assign myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY); -->

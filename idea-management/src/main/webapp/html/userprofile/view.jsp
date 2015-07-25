@@ -11,14 +11,19 @@
 
 
 <%
-	User selUser = null;
-	Group group = GroupLocalServiceUtil.getGroup(themeDisplay
-			.getScopeGroupId());
-	long selUserId = group.getCreatorUserId();
-	selUser = UserLocalServiceUtil.getUser(selUserId);
-	long addressId = selUser.getAddresses()!= null && !selUser.getAddresses().isEmpty() ? selUser.getAddresses().get(0).getAddressId() : -1;
-	UserBean userBean = new UserBean(selUser);
-	long contactId = selUser.getContactId();
+  boolean minimized = ParamUtil.getBoolean(renderRequest, "hidden");
+%>
+<c:if test='<%=!minimized %>'>
+<%
+long passedGroupId = ParamUtil.getLong(renderRequest, "groupId");
+if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
+User selUser = null;
+Group group = GroupLocalServiceUtil.getGroup(passedGroupId);
+long selUserId = group.getCreatorUserId();
+selUser = UserLocalServiceUtil.getUser(selUserId);
+long addressId = selUser.getAddresses()!= null && !selUser.getAddresses().isEmpty() ? selUser.getAddresses().get(0).getAddressId() : -1;
+UserBean userBean = new UserBean(selUser);
+long contactId = selUser.getContactId();
 %>
 <div class="userprofile">
 	<c:if test="<%=selUser != null%>">
@@ -206,3 +211,4 @@
 		</c:choose>
 	</c:if>
 </div>
+</c:if>
