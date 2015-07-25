@@ -42,9 +42,12 @@
         String tagNames = "";
         
         if(!categoryId.isEmpty()) {
-        	List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{Long.valueOf(categoryId)}, scopeGroupId);
-        	for(AssetTag t : categoryTags) {
-        		tagNames+= (tagNames.isEmpty() ? "" : ",") + t.getName();
+        	long categoryIdLong = Long.valueOf(categoryId);
+        	if (categoryIdLong > 0) {
+                List<AssetTag> categoryTags = IdeaLocalServiceUtil.getCategoryTags(new long[]{Long.valueOf(categoryId)}, scopeGroupId);
+                for(AssetTag t : categoryTags) {
+                  tagNames+= (tagNames.isEmpty() ? "" : ",") + t.getName();
+                }
         	}
         }
 

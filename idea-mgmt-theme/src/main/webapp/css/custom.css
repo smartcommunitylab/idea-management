@@ -1572,6 +1572,13 @@ header#banner {
 	float: right;
 }
 
+.event-view-date {
+  margin-bottom: 8px;
+}
+.event-view-location {
+  margin-bottom: 16px;
+}
+
 .event-view-time {
 	text-transform: uppercase;
 }

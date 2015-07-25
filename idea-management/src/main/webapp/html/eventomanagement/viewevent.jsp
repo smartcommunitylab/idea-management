@@ -80,7 +80,9 @@
   <div class="event-view-header">
     <span class="event-view-title"><%=event.getTitle(locale)%></span>
   </div>
-  <div class="event-view-location"><liferay-ui:message key="evento_view_location" />: <%=Validator.isNotNull(location) ? location : "" %></div>
+  <c:if test='<%= Validator.isNotNull(location) %>'>
+    <div class="event-view-location"><liferay-ui:message key="evento_view_location" />: <%=location %></div>
+  </c:if>
   <div class="event-view-date"><liferay-ui:message key="evento_view_from" />: <%=startDate%> <%=startTime%> </div>    
   <div class="event-view-date"><liferay-ui:message key="evento_view_to" />: <%=endDate%> <%=endTime%> </div>
   <div class="event-view-description"><liferay-ui:message key="evento_view_desc" />: <%=event.getDescription(locale)%></div>
