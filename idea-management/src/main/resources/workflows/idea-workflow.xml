@@ -127,7 +127,7 @@
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
+				<!-- <notification-type>user-notification</notification-type> -->
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
@@ -240,7 +240,6 @@
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
@@ -411,7 +410,6 @@
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
