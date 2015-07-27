@@ -166,6 +166,9 @@
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
 		</supports>
+    <supported-locale>en</supported-locale>
+    <supported-locale>it</supported-locale>
+    <resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
 			<title>User Profile</title>
 			<short-title>User Profile</short-title>

@@ -49,29 +49,29 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
           <div class="row-fluid">
             <div class="span6">
               <div class="entry">
-                <h6 class="field">Nome</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_firstName"/></h6>
                 <p class="value"><%=userBean.getFirstName()%></p>
               </div>
               <div class="entry">
-                <h6 class="field">Cognome</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_lastName"/></h6>
                 <p class="value"><%=userBean.getLastName()%></p>
               </div>
               <div class="entry">
-                <h6 class="field">Email</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_email"/></h6>
                 <p class="value"><%=userBean.getEmailAddress()%></p>
               </div>
               <div class="entry">
-                <h6 class="field">Sesso</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_sex"/></h6>
                 <p class="value">
                   <c:choose>
                     <c:when test="<%=selUser.getMale()%>">
-                  Maschio
+                  <liferay-ui:message key="lbl_sex_male"/>
                 </c:when>
                     <c:when test="<%=selUser.getFemale()%>">
-                  Femmina
+                  <liferay-ui:message key="lbl_sex_female"/>
                 </c:when>
                     <c:otherwise>
-                  Non specificato
+                  <liferay-ui:message key="lbl_sex_undefined"/>
                 </c:otherwise>
                   </c:choose>
                 </p>
@@ -79,19 +79,20 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
             </div>
             <div class="span6">
               <div class="entry">
-                <h6 class="field">Professione</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_occupation"/></h6>
                 <p class="value"><%=userBean.getOccupation()%></p>
               </div>
-              <h4 class="field">Residenza</h4>
+              <h4 class="field"><liferay-ui:message key="lbl_residence"/></h4>
               <div class="entry">
-                <h6 class="field">Via e numero</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_street"/></h6>
+                <p class="value">
                 <%=GetterUtil.getString(userBean.getAddress())%>
                 </p>
-                <h6 class="field">Citt&agrave;</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_city"/></h6>
                 <p class="value">
                   <%=GetterUtil.getString(userBean.getCity())%>
                 </p>
-                <h6 class="field">codice postale</h6>
+                <h6 class="field"><liferay-ui:message key="lbl_zip"/></h6>
                 <p class="value">
                   <%=GetterUtil.getString(userBean.getPostcode())%>
                 </p>
@@ -188,7 +189,7 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
                                   .render();
                               login_popup.show();
                               login_popup.titleNode
-                                  .html("Cambia immagine");
+                                  .html('<liferay-ui:message key="lbl_change_image"/>');
                                                             login_popup.on('close', function() {
                   console.log("Modal closed")})
 
@@ -207,9 +208,9 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
                   .toString()%>" />
                 </div>
                 <div class="col-md-6 pull-right">
-                  <div>la tua immagine profilo</div>
+                  <div><liferay-ui:message key="lbl_image"/></div>
                   <div style="margin-top: 1em;">
-                    <aui:button cssClass="formbutton-primary" value='Aggiorna'
+                    <aui:button cssClass="formbutton-primary" value='lbl_update'
                       type="button" id="portrait-update" name="portrait-update"></aui:button>
                   </div>
                 </div>
@@ -218,60 +219,73 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
             <div class="row-fluid">
               <div class="span6">
                 <div class="entry">
-                  <h6 class="field">Nome</h6>
-                  <aui:fieldset cssClass="simple-field">
-                    <aui:input type="text" first="true" label="" name="firstName"></aui:input>
-                  </aui:fieldset>
+                  <aui:field-wrapper required="true"  cssClass="simple-field" label="lbl_firstName">
+                    <aui:input required="true"  type="text" first="true" label="" name="firstName"></aui:input>
+                  </aui:field-wrapper>
                 </div>
                 <div class="entry">
-                  <h6 class="field">Cognome</h6>
-                  <aui:fieldset cssClass="simple-field">
-                    <aui:input type="text" first="true" label="" name="lastName"></aui:input>
-                  </aui:fieldset>
+                  <aui:field-wrapper required="true"   cssClass="simple-field" label="lbl_lastName">
+                    <aui:input required="true"  type="text" first="true" label="" name="lastName"></aui:input>
+                  </aui:field-wrapper>
                 </div>
                 <div class="entry">
-                  <h6 class="field">Email</h6>
-                  <aui:fieldset cssClass="simple-field">
-                    <aui:input type="text" first="true" label=""
+                  <aui:field-wrapper required="true" cssClass="simple-field"  label="lbl_email">
+                    <aui:input required="true" type="text" first="true" label=""
                       name="emailAddress"></aui:input>
-                  </aui:fieldset>
+                  </aui:field-wrapper>
                 </div>
                 <div class="entry">
-                  <h6 class="field">Sesso</h6>
-                  <aui:input
-                    checked="<%=userBean.getGender().equals(
-                    UserBean.Gender.M)%>"
-                    type="radio" label="male" name="gender" value="M"
-                    inlineField="true">
-                  </aui:input>
-                  <aui:input
-                    checked="<%=userBean.getGender().equals(
-                    UserBean.Gender.F)%>"
-                    type="radio" label="female" name="gender" value="F"
-                    inlineField="true">
-                  </aui:input>
+                    <aui:field-wrapper label="lbl_sex">
+	                    <aui:input
+	                    checked="<%=userBean.getGender().equals(
+	                    UserBean.Gender.M)%>"
+	                    type="radio" label="male" name="gender" value="M"
+	                    inlineField="true">
+		                  </aui:input>
+		                  <aui:input
+	                    checked="<%=userBean.getGender().equals(
+	                    UserBean.Gender.F)%>"
+	                    type="radio" label="female" name="gender" value="F"
+	                    inlineField="true">
+	                  </aui:input>
+                    </aui:field-wrapper>   
                 </div>
               </div>
               <div class="span6">
                 <div class="entry">
-                  <h6 class="field">Professione</h6>
-                  <aui:fieldset cssClass="simple-field">
+                  <aui:fieldset cssClass="simple-field" label="lbl_occupation">
                     <aui:input type="text" first="true" label="" name="occupation"></aui:input>
                   </aui:fieldset>
                 </div>
-                <h4 class="field">Residenza</h4>
+                <h4 class="field"><liferay-ui:message key="lbl_residence"/></h4>
                 <div class="entry">
-                  <h6 class="field">Via e numero</h6>
-                  <aui:fieldset cssClass="simple-field">
-                    <aui:input type="text" first="true" label="" name="address"></aui:input>
+                  <aui:fieldset cssClass="simple-field" label="lbl_street">
+                    <aui:input id="address" type="text" first="true" label="" name="address">
+                    <aui:validator  name="custom"  errorMessage="city_required" >
+                      function (val, fieldNode, ruleValue) {
+                       if (val) {
+                         return !!document.getElementById('<portlet:namespace/>city').value;
+                       }
+                       return true;
+                      }
+                      </aui:validator>
+                    </aui:input>
                   </aui:fieldset>
-                  <h6 class="field">Citt&agrave;</h6>
-                  <aui:fieldset cssClass="simple-field">
-                    <aui:input type="text" first="true" label="" name="city"></aui:input>
+                  <aui:fieldset cssClass="simple-field" label="lbl_city">
+                    <aui:input id="city" type="text" first="true" label="" name="city">
+                    <aui:validator  name="custom"  errorMessage="address_required" >
+											function (val, fieldNode, ruleValue) {
+											 if (val) {
+											   return !!document.getElementById('<portlet:namespace/>address').value;
+											 }
+											 return true;
+											}
+											</aui:validator>
+                    </aui:input>
                   </aui:fieldset>
-                  <h6 class="field">Codice postale</h6>
-                  <aui:fieldset cssClass="simple-field">
-                    <aui:input type="text" first="true" label="" name="postcode"></aui:input>
+                  <aui:fieldset cssClass="simple-field" label="lbl_zip">
+                    <aui:input type="text" first="true" label="" name="postcode">
+                    </aui:input>
                   </aui:fieldset>
                   <aui:fieldset>
                     <aui:input type="hidden" name="userId"
@@ -290,7 +304,7 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
             </div>
             <div class="row-fluid">
               <aui:button-row cssClass="formbutton-row">
-                <aui:button cssClass="formbutton-primary" value='Salva'
+                <aui:button cssClass="formbutton-primary" value='lbl_save'
                   type="submit"></aui:button>
               </aui:button-row>
             </div>

@@ -8,6 +8,7 @@ import javax.portlet.ActionResponse;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
@@ -40,22 +41,28 @@ public class UserProfilePortlet extends MVCPortlet {
 				Gender.M.toString()));
 		ContactLocalServiceUtil.updateContact(c);
 
-		if (addressId > 0) {
-			Address addr = AddressLocalServiceUtil.getAddress(addressId);
-			addr.setStreet1(ParamUtil.getString(req, "address"));
-			addr.setCity(ParamUtil.getString(req, "city"));
-			addr.setZip(ParamUtil.getString(req, "postcode"));
-			AddressLocalServiceUtil.updateAddress(addr);
-		} else {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-					User.class.getName(), req);
+		String city = ParamUtil.getString(req, "city");
+		String street = ParamUtil.getString(req, "address");
+		
+		if (city != null && !city.trim().isEmpty() && 
+			street != null && !street.trim().isEmpty()) {
+			if (addressId > 0) {
+				Address addr = AddressLocalServiceUtil.getAddress(addressId);
+				addr.setStreet1(street);
+				addr.setCity(city);
+				addr.setZip(ParamUtil.getString(req, "postcode"));
+				AddressLocalServiceUtil.updateAddress(addr);
+			} else {
+				ServiceContext serviceContext = ServiceContextFactory.getInstance(
+						User.class.getName(), req);
 
-			Address addr = AddressLocalServiceUtil.addAddress(
-					userId,Contact.class.getName(),user.getContactId(),
-					ParamUtil.getString(req, "address"), null, null,
-					ParamUtil.getString(req, "city"),ParamUtil.getString(req, "postcode"),
-					0,0,11000, true, true, serviceContext);
-			
+				Address addr = AddressLocalServiceUtil.addAddress(
+						userId,Contact.class.getName(),user.getContactId(),
+						ParamUtil.getString(req, "address"), null, null,
+						ParamUtil.getString(req, "city"),ParamUtil.getString(req, "postcode"),
+						0,0,11000, true, true, serviceContext);
+				
+			}
 		}
 
 	}
