@@ -114,7 +114,10 @@
 			<notification>
 				<name>Moderator notification</name>
 				<description>Nuova idea da valutare</description>
-				<template>Nuova idea da valutare</template>
+				<template>Nuova idea da valutare
+				
+				Il team di FuturaTrento
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -124,7 +127,10 @@
 				<name>Review Completion Notification</name>
 				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
-				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo]]>
+				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo
+				  
+				  Il team di FuturaTrento
+				  ]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -209,7 +215,10 @@
 		<notification>
 				<name>Moderator notification</name>
 				<description>Nuova idea da valutare</description>
-				<template>Nuova idea da valutare</template>
+				<template>Nuova idea da valutare
+				
+				Il team di FuturaTrento
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -219,7 +228,10 @@
 				<name>Review Completion Notification</name>
 				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
-				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo]]>
+				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo
+				  
+				  Il team di FuturaTrento
+				  ]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -358,7 +370,10 @@
 			<notification>
 				<name>Manager notification</name>
 				<description>Nuova idea da esaminare</description>
-				<template>Nuova idea da esaminare</template>
+				<template>Nuova idea da esaminare
+				
+				Il team di FuturaTrento
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -379,6 +394,8 @@
 				   <#default>
 					Default template
 				</#switch>
+				
+				Il team di FuturaTrento
           ]]>
 				</template>
 				<template-language>freemarker</template-language>
