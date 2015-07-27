@@ -379,20 +379,15 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
+				<description>La tua idea per FuturaTrento va avanti</description>
 				<template>
 				  <![CDATA[
 				   <#switch transitionName>
-				   <#case "duplicated">
-				   Sorry you have copied someone !!!
-				   comment: ${taskComments}
+				   <#case "accepted">
+				   La tua idea è piaciuta ed è stata presa in esame dal Comune, presto saprai come andrà a finire.
 				   <#break>
-				   <#case "approved">
-				   YEAH Your ${entryType} has been accepted
-				   comment: ${taskComments}
-				   <#break>
-				   <#case "abusive">
-				   Your ${entryType} has been rejected
-				   comment: ${taskComments}
+				   <#case "rejected">
+				   La tua idea è stata rifiutata.
 				   <#break>
 				   <#default>
 					Default template
