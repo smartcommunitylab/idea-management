@@ -7,7 +7,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.util.portlet.PortletProps;
 
 public class WorkflowUtil {
-	public static ServiceContext addWorkflowVars(ServiceContext ctx) {
+	public static ServiceContext addWorkflowVars(ServiceContext ctx,
+			String ideaTitle) {
 		HashMap<String, Object> workflowContext = new HashMap<String, Object>();
 
 		workflowContext.put(
@@ -16,6 +17,7 @@ public class WorkflowUtil {
 		workflowContext.put(WorkflowConstants.CONTEXT_NOTIFICATION_SENDER_NAME,
 				PortletProps.get("noreply.displayname"));
 
+		workflowContext.put("ideaTitle", ideaTitle);
 		ctx.setAttribute("workflowContext", workflowContext);
 
 		return ctx;
