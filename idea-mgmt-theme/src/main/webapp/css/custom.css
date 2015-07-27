@@ -408,6 +408,7 @@ header#banner {
 	background-repeat: no-repeat;
 	background-size: cover;
 	padding: 100px;
+	margin-bottom: 50px;
 }
 
 .ambito {
@@ -496,6 +497,11 @@ header#banner {
 .idea-view-title {
 	font-size: 20px;
 	text-transform: uppercase;
+	margin-bottom: 15px;
+}
+
+.idea-view-data {
+	margin-bottom: 15px;
 }
 
 .idea-creator {
@@ -1449,11 +1455,12 @@ header#banner {
 }
 
 .tagcloud-wrapper {
-	min-width: 300px;
+	min-width: 200px;
 	background-color: #4EB9A4;
 	cursor: pointer;
-	line-height: 30px;
+	line-height: 28px;
 	font-size: 25px;
+	white-space: nowrap;
 }
 
 .tagcloud-right:after {
@@ -1524,7 +1531,7 @@ header#banner {
 	text-align: center;
 	font-size: 20px;
 	font-weight: bolder;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 }
 
 .userprofile .avatar {
@@ -1631,7 +1638,7 @@ header#banner {
 }
 
 #footer .partners {
-	height: 167px;
+	height: 110px;
 	background-image: url(../images/loghi_footer_completi.png);
 	background-repeat: no-repeat;
 	background-position: center center;

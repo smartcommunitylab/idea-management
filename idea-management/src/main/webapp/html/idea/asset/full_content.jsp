@@ -103,7 +103,7 @@
   </div>  
 </div>
  --%>
-<div class="row-fluid">
+<div class="row-fluid idea-view-data">
   <div class="span6">
     <% for (AssetCategory ac : categories) {
       String categoryColor = CC.get(""+ac.getCategoryId());
@@ -161,21 +161,21 @@
           </div>
           <div>
             <span><%=stat.getTotalEntries() %></span>
-            <i class="icon-user"></i>
+            <i class="ftn-sum_users"></i>
           </div>
         </div>
         <div class="span3 text-center"> 
           <liferay-ui:message key="lbl_followercount"/> 
           <div class="participation-details">
             <span><%=subs.size() %></span>
-            <i class="icon-user"></i>
+            <i class="ftn-sum_users"></i>
           </div>
         </div>
         <div class="span3 text-center"> 
           <liferay-ui:message key="lbl_participationcount"/> 
           <div class="participation-details">
             <span><%=users.size() %></span>
-            <i class="icon-user"></i>
+            <i class="ftn-sum_users"></i>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@
           <div><span><liferay-ui:message key="lbl_following"/></span></div>
           <div class="participation-details">
 	          <span><%=subs.size() %></span>
-	          <i class="icon-user"></i>
+	          <i class="ftn-sum_users"></i>
           </div>
 	      </div>
         <div class="span3 text-center">
@@ -212,7 +212,7 @@
           <div><span><liferay-ui:message key="lbl_participating"/></span></div>
           <div class="participation-details">
             <span><%=users.size() %></span>
-            <i class="icon-user"></i>
+            <i class="ftn-sum_users"></i>
           </div>
         </div>
       </div>
