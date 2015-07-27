@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'ftn';
-	src:url('fonts/ftn.eot?-mjda11');
-	src:url('fonts/ftn.eot?#iefix-mjda11') format('embedded-opentype'),
-		url('fonts/ftn.ttf?-mjda11') format('truetype'),
-		url('fonts/ftn.woff?-mjda11') format('woff'),
-		url('fonts/ftn.svg?-mjda11#ftn') format('svg');
+	src:url('fonts/ftn.eot?77x9q3');
+	src:url('fonts/ftn.eot?#iefix77x9q3') format('embedded-opentype'),
+		url('fonts/ftn.ttf?77x9q3') format('truetype'),
+		url('fonts/ftn.woff?77x9q3') format('woff'),
+		url('fonts/ftn.svg?77x9q3#ftn') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -23,6 +23,9 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.ftn-sum_users:before {
+	content: "\e608";
+}
 .ftn-log-in:before {
 	content: "\e600";
 }

@@ -62,7 +62,7 @@
 						<!-- @aui["nav-item"] href="${profileURL.toString()}" id="userNotifications" iconCssClass="icon-bell" /> -->
 						
 						<#if themeDisplay.isShowSignOutIcon()>
-							<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="icon-off" />
+							<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="ftn-log-out" />
 						</#if>
 						
 						<#--
