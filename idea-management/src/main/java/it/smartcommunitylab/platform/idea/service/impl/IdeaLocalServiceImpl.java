@@ -135,7 +135,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				idea.getLongDesc(), idea.getShortDesc(), null, null, 0, 0,
 				null, false);
 
-		CalendarUtils.createCalendar(group.getGroupId(), userId, group.getName(), serviceContext, assetEntry.getClassTypeId(), assetEntry.getClassPK(), assetEntry.getClassUuid());
+		CalendarUtils.createCalendar(group.getGroupId(), userId,
+				group.getName(), serviceContext, assetEntry.getClassTypeId(),
+				assetEntry.getClassPK(), assetEntry.getClassUuid());
 
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
 				serviceContext.getAssetLinkEntryIds(),
@@ -145,7 +147,8 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 		indexer.reindex(idea);
 
-		serviceContext = WorkflowUtil.addWorkflowVars(serviceContext);
+		serviceContext = WorkflowUtil.addWorkflowVars(serviceContext,
+				idea.getTitle());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(idea.getCompanyId(),
 				idea.getGroupId(), idea.getUserId(), Idea.class.getName(),

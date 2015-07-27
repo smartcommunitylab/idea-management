@@ -110,13 +110,17 @@
 		<actions>
 			<notification>
 				<name>Moderator notification</name>
-				<template>User ${userName} has submitted a new ${entryType}</template>
+				<description>commento da leggere</description>
+				<template>Nuovo commento da leggere
+				
+				il team di FuturaTrento
+				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
 				<execution-type>onAssignment</execution-type>
 			</notification>
-			<notification>
+		<!-- 	<notification>
 				<name>Review Completion Notification</name>
 				<template>
 				  <![CDATA[
@@ -140,7 +144,7 @@
 					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>
-			</notification>
+			</notification> -->
 		</actions>
 		<assignments>
 			<scripted-assignment>
@@ -191,8 +195,8 @@
 
 	<task>
 		<name>staged-evaluation</name>
-		<actions>
-			<notification>
+		<!--<actions>
+			 <notification>
 				<name>User notification</name>
 				<template>Your idea need approvation by moderator. You will inform about your comment review</template>
 				<template-language>freemarker</template-language>
@@ -235,8 +239,8 @@
 					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>
-			</notification>
-		</actions>
+			</notification> 
+		</actions> -->
 		<assignments>
 			<scripted-assignment>
 		        <script>
