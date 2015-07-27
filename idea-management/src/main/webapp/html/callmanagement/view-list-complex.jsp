@@ -19,11 +19,21 @@
 <%@ include file="/html/common-init.jsp" %>
 
 <%
+String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_CALLLISTTYPE_OPEN));
 int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", ""+Constants.PAGINATION_CALL_ELEMENTS_IN_PAGE));
 boolean viewAll = ParamUtil.getBoolean(request, "viewAll", false);
-int begin = 0, end = viewAll ? -1 : begin+delta;
 
-List<Call> list = (List<Call>)request.getAttribute("callList");
+int begin = 0, end = viewAll ? -1 : begin+delta;
+List<Call> list = null;
+if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
+  list =  CallLocalServiceUtil.getOpenCalls(begin, end);
+} else if (listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION)) {
+    list =  CallLocalServiceUtil.getInDiscussionCalls(begin, end);
+} else if (listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED)){
+    list =  CallLocalServiceUtil.getClosedCalls(begin, end);
+} else {
+    list =  CallLocalServiceUtil.getCalls(begin, end);
+}
 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   
 String baseUrl = Utils.getBaseURL(request);

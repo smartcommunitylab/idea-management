@@ -359,9 +359,14 @@ header#banner {
 	display: none;
 }
 
+.idea-slider .idea-slider-arrow:hover {
+  color: #E83D5F !important;
+}
+
 .idea-slider .idea-slider-arrow {
 	font-size: 2em;
 	text-decoration: none;
+	color: black;
 	line-height: 120px;
 }
 

@@ -167,7 +167,7 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
 </aui:form>
 </c:if>
 
-<c:if test='<%=hideList_view %>'>
+<c:if test='<%=!hideList_view %>'>
 	<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>'>
 	<jsp:include page="view-list-simple.jsp"/>
 	</c:if>

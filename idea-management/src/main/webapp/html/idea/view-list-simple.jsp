@@ -66,9 +66,6 @@
                 <i class="icon-arrow-left idea-slider-arrow"></i>
             </a>
         </c:if>
-        <c:if test="<%= currentPage == 1%>">
-            <i class="icon-arrow-left idea-slider-arrow"></i>
-        </c:if>
     </span>
 
     <% for(Idea idea : results) {%>
@@ -145,9 +142,6 @@
             <a href="<%=HtmlUtil.escape(nextURL)%>">
                 <i class="icon-arrow-right idea-slider-arrow"></i>
             </a>
-        </c:if>
-        <c:if test="<%=(results.size() < delta) %>">
-            <i class="icon-arrow-right idea-slider-arrow"></i>
         </c:if>
     </span>
 </div>   

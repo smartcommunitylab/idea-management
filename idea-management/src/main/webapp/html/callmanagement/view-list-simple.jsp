@@ -11,6 +11,7 @@
 <%@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
 
+<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
@@ -18,21 +19,34 @@
 <%@ include file="/html/common-init.jsp" %>
 
 <%
-List<Call> list = (List<Call>)request.getAttribute("callList");
+String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_CALLLISTTYPE_OPEN));
+int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", ""+Constants.PAGINATION_CALL_ELEMENTS_IN_PAGE));
+
+int currentPage = ParamUtil.getInteger(renderRequest,"cur");
+if (currentPage == 0) currentPage = 1;
+    
+int begin = (currentPage - 1) * delta;
+int end = begin + delta;
+List<Call> list = null;
+if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
+  list =  CallLocalServiceUtil.getOpenCalls(begin, end);
+} else if (listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION)) {
+    list =  CallLocalServiceUtil.getInDiscussionCalls(begin, end);
+} else if (listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED)){
+    list =  CallLocalServiceUtil.getClosedCalls(begin, end);
+} else {
+    list =  CallLocalServiceUtil.getCalls(begin, end);
+}
+
+int offset = delta - list.size();
+String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
+
 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   
 String baseUrl = Utils.getBaseURL(request);
 Map<String,Object> params = new HashMap<String,Object>();
-params.put("mvcPath", "/html/callmanagement/add_call.jsp");
+params.put("mvcPath", "/html/callmanagement/view.jsp");
 
-Integer currentPage = (Integer)request.getAttribute("_currentPage");
-Integer delta = (Integer)request.getAttribute("_delta");
-if (currentPage == null) currentPage = 1;
-if (delta == null) delta = list.size()+1;
-    
-int offset = delta - list.size();
-String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
-	
 NumberFormat numberFormat = NumberFormat.getInstance();
 numberFormat.setMaximumFractionDigits(1);
 numberFormat.setMinimumFractionDigits(0);
@@ -48,9 +62,6 @@ numberFormat.setMinimumFractionDigits(0);
             <a href="<%= HtmlUtil.escape(prevURL) %>">
                 <i class="icon-arrow-left idea-slider-arrow"></i>
             </a>
-        </c:if>
-        <c:if test="<%= currentPage == 1%>">
-            <i class="icon-arrow-left idea-slider-arrow"></i>
         </c:if>
     </span>
 
@@ -110,9 +121,6 @@ numberFormat.setMinimumFractionDigits(0);
             <a href="<%=HtmlUtil.escape(nextURL)%>">
                 <i class="icon-arrow-right idea-slider-arrow"></i>
             </a>
-        </c:if>
-        <c:if test="<%=(list.size() < delta) %>">
-            <i class="icon-arrow-right idea-slider-arrow"></i>
         </c:if>
     </span>
 </div>   
