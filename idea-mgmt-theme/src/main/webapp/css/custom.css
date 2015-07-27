@@ -72,7 +72,10 @@
 	font-weight: bold !important;
 }
 
-#signinmodal form .button-holder .btn,#portlet_58 .button-holder .btn,#portlet_terms-of-use .button-holder .btn,#portlet_new-password .button-holder .btn
+#signinmodal form .button-holder .btn,
+#portlet_58 .button-holder .btn,
+#portlet_terms-of-use .button-holder .btn,
+#portlet_new-password .button-holder .btn
 	{
 	margin: 0 auto;
 	display: inline-block !important;
@@ -907,7 +910,7 @@ header#banner {
 	text-shadow: 0 !important;
 }
 
-.formbutton-cancel {
+.formbutton-cancel, #p_p_id_2_ .button-holder .btn-cancel {
   font-size: 18px !important;
   text-transform: uppercase !important;
   padding: 8px 24px !important;
@@ -922,7 +925,7 @@ header#banner {
   text-shadow: 0 !important;
 }
 
-.addidea-button,.formbutton-primary,.tagselector .btn {
+.addidea-button,.formbutton-primary,.tagselector .btn, #p_p_id_2_ .button-holder .btn-primary {
 	font-size: 18px !important;
 	text-transform: uppercase !important;
 	padding: 8px 24px !important;
@@ -1689,3 +1692,12 @@ header#banner {
 	text-transform: uppercase;
 }
 
+#p_p_id_2_ .button-holder {
+	display: inline !important;
+}
+
+#p_p_id_2_ .button-holder .btn {
+  width: initial;	
+  margin-top: 0px !important;
+  display: inline !important;
+}
