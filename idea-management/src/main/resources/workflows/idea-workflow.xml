@@ -121,25 +121,9 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
+				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
-				  <![CDATA[
-				   <#switch transitionName>
-				   <#case "duplicated">
-				   Sorry you have copied someone !!!
-				   comment: ${taskComments}
-				   <#break>
-				   <#case "approved">
-				   YEAH Your ${entryType} has been accepted
-				   comment: ${taskComments}
-				   <#break>
-				   <#case "abusive">
-				   Your ${entryType} has been rejected
-				   comment: ${taskComments}
-				   <#break>
-				   <#default>
-					Default template
-				</#switch>
-          ]]>
+				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
