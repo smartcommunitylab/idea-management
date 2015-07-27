@@ -19,6 +19,7 @@
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
 boolean hideFilters_view = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
+boolean hideList_view = GetterUtil.getBoolean(portletPreferences.getValue("hideList", StringPool.FALSE));
 boolean pagination_view = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", StringPool.TRUE));
 Long categoryId = (Long) request.getAttribute("categoryId");
 if (categoryId == null) categoryId = ParamUtil.getLong(renderRequest, "categoryId");
@@ -166,11 +167,12 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
 </aui:form>
 </c:if>
 
-<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>'>
-<jsp:include page="view-list-simple.jsp"/>
+<c:if test='<%=hideList_view %>'>
+	<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>'>
+	<jsp:include page="view-list-simple.jsp"/>
+	</c:if>
+	<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_COMPLEX) %>'>
+	<jsp:include page="view-list-complex.jsp"/>
+	</c:if>
 </c:if>
-<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_COMPLEX) %>'>
-<jsp:include page="view-list-complex.jsp"/>
-</c:if>
-
 </c:if>

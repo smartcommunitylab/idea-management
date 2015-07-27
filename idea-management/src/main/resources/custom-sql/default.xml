@@ -33,4 +33,11 @@
      <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCallAndTags">
     	<![CDATA[select i.* FROM AssetEntries_AssetTags et INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK WHERE (i.callId=?) AND et.tagId IN (?) AND a.visible=1 ORDER BY i.createDate DESC ]]>
     </sql>
+    
+<!-- 
+    FIND TAGS      
+    <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findAllTagsByCategory">
+      <![CDATA[select DISTINCT at.* FROM AssetTag at INNER JOIN AssetEntries_AssetTags et on at.tagId = et.tagId INNER JOIN AssetEntry a ON et.entryId=a.entryId INNER JOIN AssetEntries_AssetCategories ec ON ec.entryId = et.entryId INNER JOIN IM_Idea i ON i.ideaId=a.classPK WHERE (ec.categoryId=?) AND a.visible=1 ORDER BY at.createDate DESC ]]>
+    </sql>
+ -->   
 </custom-sql>

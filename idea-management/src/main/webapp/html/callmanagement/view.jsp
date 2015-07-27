@@ -22,6 +22,7 @@
 String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_CALLLISTTYPE_OPEN));
 int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", ""+Constants.PAGINATION_CALL_ELEMENTS_IN_PAGE));
 boolean viewAll = ParamUtil.getBoolean(request, "viewAll", false);
+String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_VIEWTYPE_COMPLEX));
 
 int begin = 0, end = viewAll ? -1 : begin+delta;
 List<Call> list = null;
@@ -29,26 +30,19 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 	list =  CallLocalServiceUtil.getOpenCalls(begin, end);
 } else if (listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION)) {
 	  list =  CallLocalServiceUtil.getInDiscussionCalls(begin, end);
-} else {
+} else if (listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED)){
     list =  CallLocalServiceUtil.getClosedCalls(begin, end);
+} else {
+	  list =  CallLocalServiceUtil.getCalls(begin, end);
 }
-  java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-  
-  String baseUrl = Utils.getBaseURL(request);
-%>
+java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
 
-<%-- <portlet:renderURL var="addCallUrl" windowState="maximized"> --%>
-<%-- 	<portlet:param name="mvcPath" value="/html/callmanagement/edit_call.jsp"/> --%>
-<%-- </portlet:renderURL> --%>
-  <%
-//   PortletURL portletURL = renderResponse.createRenderURL();
-//   portletURL.setParameter("mvcPath", "/html/callmanagement/edit_call.jsp");
-//   portletURL.setWindowState(WindowState.MAXIMIZED);
-//   String addCallUrl = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
-	  Map<String,Object> params = new HashMap<String,Object>();
-	  params.put("mvcPath", "/html/callmanagement/add_call.jsp");
-  String addCallUrl = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
-  %>
+String baseUrl = Utils.getBaseURL(request);
+request.setAttribute("callList", list);
+Map<String,Object> params = new HashMap<String,Object>();
+params.put("mvcPath", "/html/callmanagement/add_call.jsp");
+String addCallUrl = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
+%>
 
 <c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && Utils.callAddEnabled(renderRequest) %>'>
 
@@ -62,77 +56,12 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 <c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) %>'><liferay-ui:message key="lbl_calls_title_open"/></c:if>
 <c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION) %>'><liferay-ui:message key="lbl_calls_title_indiscussion"/></c:if>
 <c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED) %>'><liferay-ui:message key="lbl_calls_title_closed"/></c:if>
+<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_RECENT) %>'><liferay-ui:message key="lbl_calls_title_recent"/></c:if>
 </div>
-<div class="calls">
-<% for(Call call : list) {%>
-        <portlet:renderURL var="viewCall">
-          <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
-          <portlet:param name="mvcPath" value="/html/callmanagement/asset/full_content.jsp" />
-        </portlet:renderURL>
-        <% 
-        long classPK = call.getCallId();
-        AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(),classPK);
-        List<AssetCategory> categories = Utils.getOrderedCategories(call.getCategoryIds(), curEntry);   
-        String primaryColor = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()): ""; 
 
-//         categories.size() > 0 ? categories.get(0).getTitle(locale): "";
-        int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
-        %>
-  <div class="row-fluid">
-    <div class="call">
-          <div onClick="javascript:window.location = '<%=viewCall.toString()%>';" class="call-card" style="border-left-color: <%=primaryColor %>;">
-              <div class="call-card-header">
-                <div class="span6">
-                  <% for (AssetCategory ac : categories) { 
-                	  String color = CC.get(""+ac.getCategoryId()); 
-                	  String catTitle = ac.getTitle(locale);
-                	%>  
-                  <span class="call-card-cat" style="color: <%=color %>;"><%=catTitle %></span>
-                  <% } %>
-                </div>
-                <div class="span6">
-                  <c:if test='<%= Utils.callDeleteEnabled(call, renderRequest) %>'>
-                    <portlet:actionURL var="deleteURL" name="deleteEntry">
-                      <portlet:param name="entryId" value="<%=String.valueOf(call.getCallId()) %>" />
-                    </portlet:actionURL>
-                    <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
-                  </c:if>
-                  <span class="call-card-date">
-                  <c:if test='<%=call.getDeadline() != null %>'>
-                  <liferay-ui:message key="lbl_call_card_deadline" arguments="<%=dateFormatter.format(call.getDeadline()) %>"/>
-                  </c:if>
-                  </span>
-	              </div>
-              </div>
-              <h4><%=call.getTitle() %></h4>
-              <div class="call-card-abstract"><%=call.getDescription() %></div>
-              <div class="call-card-footer">
-                <div class="span12"><span class="call-card-ideas"><%=countIdeaByCall %></span></div>
-              </div>
-          </div>
-    </div>
-  </div>
-<% } %>
-  
-  <c:if test='<%=list.size() > 0 && !viewAll %>'>
-  <div class="row-fluid call-paging">
-    <div class="span12">
-      <% 
-      params.put("mvcPath", "/html/callmanagement/view.jsp");
-      params.put("viewAll", "true"); 
-      String showAllURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
-//       portletURL = renderResponse.createRenderURL();
-//       portletURL.setParameter("viewAll", "true"); 
-//       String showAllURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
-      %>
-      <a href="<%=showAllURL%>"><liferay-ui:message key="lbl_showAll"/></a>
-    </div>
-  </div>
-  </c:if>
-  
-  <c:if test='<%=list.size() ==0 %>'>
-  <div class="row-fluid">
-  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
-  </div>
-  </c:if>
-</div>
+<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>'>
+<jsp:include page="view-list-simple.jsp"/>
+</c:if>
+<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_COMPLEX) %>'>
+<jsp:include page="view-list-complex.jsp"/>
+</c:if>

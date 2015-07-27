@@ -8,6 +8,7 @@ String listType_cfg = GetterUtil.getString(portletPreferences.getValue("listType
 boolean hidePortlet_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
 boolean hideAddIdea_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
 boolean hideFilters_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
+boolean hideList_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideList", StringPool.FALSE));
 boolean activatePagination_cfg = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", StringPool.TRUE));
 Integer elementInPage_cfg = GetterUtil.getInteger(portletPreferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
 %>
@@ -39,6 +40,8 @@ function <portlet:namespace />disableText() {
     <aui:input name="preferences--hideAddIdea--" type="checkbox" label="lbl_hideIdeaButton" value="<%= hideAddIdea_cfg %>" />
     
     <aui:input name="preferences--hideFilters--" type="checkbox" label="lbl_hideFilters" value="<%= hideFilters_cfg %>" />
+
+    <aui:input name="preferences--hideList--" type="checkbox" label="lbl_hideList" value="<%= hideList_cfg %>" />
     
     <aui:input name="preferences--activatePagination--" type="checkbox" label="lbl_activatePagination" value="<%= activatePagination_cfg %>" onChange='<%= renderResponse.getNamespace()+"disableText();" %>'/>
 

@@ -115,7 +115,7 @@
   </div>
   <div class="span6 text-right">
       <span class="share-on-label"><liferay-ui:message key="lbl_share"/></span>
-      <a class="share-on-link share-on-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=<%=htmlTitle %>&url=<%=canonicalURL%>"></a>
+      <a class="share-on-link share-on-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=<%=htmlTitle %>&url=<%=canonicalURL%>&hashtags=FuturaTrento"></a>
       <a class="share-on-link share-on-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%=canonicalURL%>"></a>
       <a class="share-on-link share-on-googleplus" target="_blank" href="https://plus.google.com/share?url=<%=canonicalURL%>"></a>
   </div>  
