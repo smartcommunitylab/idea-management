@@ -114,9 +114,16 @@
 			<notification>
 				<name>Moderator notification</name>
 				<description>Nuova idea da valutare</description>
-				<template>Nuova idea da valutare
-				
+				<template>
+				<![CDATA[
+				<html><body>
+
+				Nuova idea da valutare
+				<br/><br/>
 				Il team di FuturaTrento
+				
+				</body></html>
+				]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -127,9 +134,20 @@
 				<name>Review Completion Notification</name>
 				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
-				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo
+				  <![CDATA[
+				  <html><body>
 				  
+				  Ciao ${userName},<br/><br/>
+				  
+				  la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
+				  <br/><br/>
+				  
+				  Se qualcosa non ti è chiaro, contattalo
+				  
+				  <br/><br/>
 				  Il team di FuturaTrento
+				  
+				  </body></html>
 				  ]]>
 				</template>
 				<template-language>freemarker</template-language>
@@ -141,8 +159,8 @@
 			</notification>
 		</actions>
 		<assignments>
-		    <scripted-assignment>
-		        <script>
+			<scripted-assignment>
+				<script>
           <![CDATA[
               import com.liferay.portal.kernel.util.GetterUtil;
               import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -171,14 +189,14 @@
 				      }
             ]]>
           </script>
-        <script-language>groovy</script-language>
-		    </scripted-assignment>
-<!-- 			<roles> -->
-<!-- 				<role> -->
-<!-- 					<role-type>site</role-type> -->
-<!-- 					<name>Moderator</name> -->
-<!-- 				</role> -->
-<!-- 			</roles> -->
+				<script-language>groovy</script-language>
+			</scripted-assignment>
+			<!-- <roles> -->
+			<!-- <role> -->
+			<!-- <role-type>site</role-type> -->
+			<!-- <name>Moderator</name> -->
+			<!-- </role> -->
+			<!-- </roles> -->
 		</assignments>
 		<transitions>
 			<transition>
@@ -201,23 +219,24 @@
 	<task>
 		<name>staged-evaluation</name>
 		<actions>
-			<!-- <notification>
-				<name>User notification</name>
-				<template>Your idea need approvation by moderator. You will inform about your idea review</template>
-				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<recipients>
-					<user></user>
-				</recipients>
-				<execution-type>onEntry</execution-type>
-			</notification> -->
-		<notification>
+			<!-- <notification> <name>User notification</name> <template>Your idea 
+				need approvation by moderator. You will inform about your idea review</template> 
+				<template-language>freemarker</template-language> <notification-type>email</notification-type> 
+				<notification-type>user-notification</notification-type> <recipients> <user></user> 
+				</recipients> <execution-type>onEntry</execution-type> </notification> -->
+			<notification>
 				<name>Moderator notification</name>
 				<description>Nuova idea da valutare</description>
-				<template>Nuova idea da valutare
-				
+				<template>
+				<![CDATA[
+				<html><body>
+
+				Nuova idea da valutare
+				<br/><br/>
 				Il team di FuturaTrento
+				
+				</body></html>
+				]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -228,9 +247,20 @@
 				<name>Review Completion Notification</name>
 				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
-				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo
+				  <![CDATA[
+				  <html><body>
 				  
+				  Ciao ${userName},<br/><br/>
+				  
+				  la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
+				  <br/><br/>
+				  
+				  Se qualcosa non ti è chiaro, contattalo
+				  
+				  <br/><br/>
 				  Il team di FuturaTrento
+				  
+				  </body></html>
 				  ]]>
 				</template>
 				<template-language>freemarker</template-language>
@@ -242,8 +272,8 @@
 			</notification>
 		</actions>
 		<assignments>
-        <scripted-assignment>
-            <script>
+			<scripted-assignment>
+				<script>
           <![CDATA[
               import com.liferay.portal.kernel.util.GetterUtil;
               import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -272,14 +302,14 @@
               }
             ]]>
           </script>
-        <script-language>groovy</script-language>
-        </scripted-assignment>
-<!-- 			<roles> -->
-<!-- 				<role> -->
-<!-- 					<role-type>site</role-type> -->
-<!-- 					<name>Moderator</name> -->
-<!-- 				</role> -->
-<!-- 			</roles> -->
+				<script-language>groovy</script-language>
+			</scripted-assignment>
+			<!-- <roles> -->
+			<!-- <role> -->
+			<!-- <role-type>site</role-type> -->
+			<!-- <name>Moderator</name> -->
+			<!-- </role> -->
+			<!-- </roles> -->
 		</assignments>
 		<transitions>
 			<transition>
@@ -333,7 +363,7 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
-			<transitions>
+		<transitions>
 			<transition>
 				<name>manager-eval</name>
 				<target>manager-eval</target>
@@ -360,19 +390,24 @@
 			</action>
 		</actions>
 	</state>
-	
-	
+
+
 	<!-- SECOND STEP WF -->
-	
-		<task>
+
+	<task>
 		<name>manager-eval</name>
 		<actions>
 			<notification>
 				<name>Manager notification</name>
 				<description>Nuova idea da esaminare</description>
-				<template>Nuova idea da esaminare
-				
-				Il team di FuturaTrento
+				<template>
+				 <![CDATA[
+				<html><body>
+					Nuova idea da esaminare
+				<br/><br/>
+					Il team di FuturaTrento				
+				</body></html>
+          ]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
@@ -384,6 +419,7 @@
 				<description>La tua idea per FuturaTrento va avanti</description>
 				<template>
 				  <![CDATA[
+				  <html><body>
 				   <#switch transitionName>
 				   <#case "accepted">
 				   La tua idea è piaciuta ed è stata presa in esame dal Comune, presto saprai come andrà a finire.
@@ -394,8 +430,9 @@
 				   <#default>
 					Default template
 				</#switch>
-				
+				<br/><br/>
 				Il team di FuturaTrento
+				</body></html>
           ]]>
 				</template>
 				<template-language>freemarker</template-language>
@@ -407,8 +444,8 @@
 			</notification>
 		</actions>
 		<assignments>
-		    <scripted-assignment>
-		        <script>
+			<scripted-assignment>
+				<script>
           <![CDATA[
               import com.liferay.portal.kernel.util.GetterUtil;
               import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -437,8 +474,8 @@
 				      }
             ]]>
           </script>
-        <script-language>groovy</script-language>
-		    </scripted-assignment>
+				<script-language>groovy</script-language>
+			</scripted-assignment>
 		</assignments>
 		<transitions>
 			<transition>
@@ -451,8 +488,8 @@
 			</transition>
 		</transitions>
 	</task>
-	
-	
+
+
 	<state>
 		<name>accepted</name>
 		<actions>
@@ -471,8 +508,8 @@
 			</action>
 		</actions>
 	</state>
-	
-	
+
+
 	<state>
 		<name>rejected</name>
 		<actions>
@@ -491,5 +528,5 @@
 			</action>
 		</actions>
 	</state>
-	
+
 </workflow-definition>
