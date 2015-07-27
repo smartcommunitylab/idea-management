@@ -354,10 +354,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		long[] categoryIds = null;
 		
 		//set groupId and categoryIds
-		if(categoryId > 0) {
-			groupId = themeDisplay.getScopeGroupId();
-			categoryIds = new long[] {categoryId};
-		} else if(ideaId > 0) {
+		if(ideaId > 0) {
 			Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
 			groupId = idea.getUserGroupId();
 			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(), idea.getIdeaId());
@@ -367,6 +364,9 @@ public class EventoManagementPortlet extends MVCPortlet {
 			groupId = call.getUserGroupId();
 			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(), call.getCallId());
 			categoryIds = entry.getCategoryIds();
+		} else if(categoryId > 0) {
+			groupId = themeDisplay.getScopeGroupId();
+			categoryIds = new long[] {categoryId};
 		} else {
 			groupId = themeDisplay.getScopeGroupId();
 		}

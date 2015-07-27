@@ -1,3 +1,7 @@
+<%@page import="com.liferay.portal.model.UserConstants"%>
+<%@page import="javax.portlet.WindowState"%>
+<%@page import="javax.portlet.PortletMode"%>
+<%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
 <%@page import="com.liferay.portal.model.Address"%>
 <%@page
 	import="it.smartcommunitylab.platform.userprofile.beans.UserBean"%>
@@ -11,19 +15,24 @@
 
 
 <%
+
   boolean minimized = ParamUtil.getBoolean(renderRequest, "hidden");
 %>
 <c:if test='<%=!minimized %>'>
 <%
 long passedGroupId = ParamUtil.getLong(renderRequest, "groupId");
 if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
-User selUser = null;
-Group group = GroupLocalServiceUtil.getGroup(passedGroupId);
-long selUserId = group.getCreatorUserId();
-selUser = UserLocalServiceUtil.getUser(selUserId);
-long addressId = selUser.getAddresses()!= null && !selUser.getAddresses().isEmpty() ? selUser.getAddresses().get(0).getAddressId() : -1;
-UserBean userBean = new UserBean(selUser);
-long contactId = selUser.getContactId();
+
+	User selUser = null;
+	Group group = GroupLocalServiceUtil.getGroup(themeDisplay
+	.getScopeGroupId());
+	long selUserId = group.getCreatorUserId();
+	selUser = UserLocalServiceUtil.getUser(selUserId);
+	long addressId = selUser.getAddresses() != null
+	&& !selUser.getAddresses().isEmpty() ? selUser
+	.getAddresses().get(0).getAddressId() : -1;
+	UserBean userBean = new UserBean(selUser);
+	long contactId = selUser.getContactId();
 %>
 <div class="userprofile">
 	<c:if test="<%=selUser != null%>">
@@ -77,18 +86,15 @@ long contactId = selUser.getContactId();
 							<h4 class="field">Residenza</h4>
 							<div class="entry">
 								<h6 class="field">Via e numero</h6>
-								<%=GetterUtil.getString(userBean
-										.getAddress()) %>
+								<%=GetterUtil.getString(userBean.getAddress())%>
 								</p>
 								<h6 class="field">Citt&agrave;</h6>
 								<p class="value">
-								<%=GetterUtil.getString(userBean
-										.getCity())%>
+									<%=GetterUtil.getString(userBean.getCity())%>
 								</p>
 								<h6 class="field">codice postale</h6>
 								<p class="value">
-								<%=GetterUtil.getString(userBean
-										.getPostcode())%>
+									<%=GetterUtil.getString(userBean.getPostcode())%>
 								</p>
 							</div>
 						</div>
@@ -100,14 +106,120 @@ long contactId = selUser.getContactId();
 
 				<aui:model-context bean="<%=userBean%>" model="<%=UserBean.class%>" />
 
+
+				<liferay-portlet:renderURL var="redirectURL"
+					doAsGroupId="<%=selUser.getGroupId()%>"
+					portletMode="<%=PortletMode.VIEW.toString()%>"
+					windowState="<%=WindowState.MAXIMIZED.toString()%>" portletName="2">
+					<liferay-portlet:param name="p_u_i_d"
+						value="<%=String.valueOf(selUserId)%>" />
+					<liferay-portlet:param name="controlPanelCategory" value="my" />
+					
+				</liferay-portlet:renderURL>
+
+				<%
+					redirectURL = redirectURL.substring(redirectURL.indexOf("?"));
+				redirectURL = "http://localhost:8080/group/control_panel/manage" + redirectURL;
+				%>
+
+				<liferay-portlet:renderURL var="editAvatarURL"
+					doAsGroupId="<%=selUser.getGroupId()%>"
+					portletMode="<%=PortletMode.VIEW.toString()%>"
+					windowState='<%="pop_up"%>' portletName="2">
+					<liferay-portlet:param name="p_u_i_d"
+						value="<%=String.valueOf(selUserId)%>" />
+					<liferay-portlet:param name="controlPanelCategory" value="my" />
+					<liferay-portlet:param name="portrait_id"
+						value="<%=String.valueOf(0)%>" />
+					<liferay-portlet:param name="struts_action"
+						value="/my_account/edit_user_portrait" />
+					<liferay-portlet:param name="redirect" value="<%=themeDisplay.getURLCurrent()%>" />
+				</liferay-portlet:renderURL>
+
+				<%
+					editAvatarURL = editAvatarURL.substring(editAvatarURL.indexOf("?"));
+				editAvatarURL = "http://localhost:8080/group/control_panel/manage" + editAvatarURL;
+				%>
+
+
+					<aui:script>
+					AUI()
+							.use(
+									'aui-base',
+									'liferay-util-window',
+									'aui-io-plugin-deprecated',
+									function(A) {
+
+										A
+												.one(
+														'#<portlet:namespace/>portrait-update')
+												.on(
+														'click',
+														function(event) {
+															var login_popup = Liferay.Util.Window
+																	.getWindow(
+																			{
+																				dialog : {
+																					centered : true,
+																					constrain2view : true,
+																					modal : true,
+																					resizable : false,
+																					width : 600,
+																				}
+																			})
+																	.plug(
+																			A.Plugin.DialogIframe,
+																			{
+																				autoLoad : true,
+																				iframeCssClass : 'dialog-iframe',
+																				uri : '<%=editAvatarURL%>'
+																			})
+																	.render();
+															login_popup.show();
+															login_popup.titleNode
+																	.html("Cambia immagine");
+                                                            login_popup.on('close', function() {
+                  console.log("Modal closed")})
+
+														});
+									});
+				</aui:script>
+		
+<%--
+				
+	<liferay-portlet:renderURL var="editUserPortraitURL"
+					windowState="<%=LiferayWindowState.POP_UP.toString()%>" portletName="2">
+					<portlet:param name="jspPage"
+						value="/users_admin/edit_user_portrait.jsp"></portlet:param>
+					<portlet:param name="redirect"
+						value="<%=themeDisplay.getURLCurrent()%>"></portlet:param>
+					<portlet:param name="screenName"
+						value="<%=String.valueOf(selUser
+										.getScreenName())%>"></portlet:param>
+					<portlet:param name="portrait_id"
+						value="<%=String.valueOf(selUser
+										.getPortraitId())%>"></portlet:param>
+				</liferay-portlet:renderURL>
+
+--%>
+
 				<div class="container">
 					<aui:form cssClass="idea-form" method="POST"
 						action="<%=editProfileURL.toString()%>" name="profile">
 						<div class="row-fluid">
 							<div class="avatar span6 offset3">
-								<img
-									src="<%=selUser.getPortraitURL(themeDisplay)
+								<div class="col-md-6">
+									<img
+										src="<%=selUser.getPortraitURL(themeDisplay)
 									.toString()%>" />
+								</div>
+								<div class="col-md-6 pull-right">
+									<div>la tua immagine profilo</div>
+									<div style="margin-top: 1em;">
+										<aui:button cssClass="formbutton-primary" value='Aggiorna'
+											type="button" id="portrait-update" name="portrait-update"></aui:button>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="row-fluid">
@@ -176,7 +288,7 @@ long contactId = selUser.getContactId();
 										<aui:input type="hidden" name="addressId"
 											value="<%=addressId%>"></aui:input>
 									</aui:fieldset>
-										<aui:fieldset>
+									<aui:fieldset>
 										<aui:input type="hidden" name="contactId"
 											value="<%=contactId%>"></aui:input>
 									</aui:fieldset>
