@@ -1,12 +1,19 @@
-#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ {	
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ {
+
 }
 
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-container {
 	padding: 70px 0;
 	text-transform: uppercase;
-	text-align: center;
+	text-align: left;
 	background-image: url(/idea-mgmt-theme/images/background_nav.png);
 	background-size: cover;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-container div {
+	margin: 0 auto;
+	display: inline-block;
+	padding: 0;
 }
 
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-over {
