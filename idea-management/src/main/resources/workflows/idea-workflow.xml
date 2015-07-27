@@ -372,7 +372,8 @@
 		<actions>
 			<notification>
 				<name>Manager notification</name>
-				<template>You have a new ${entryType} to evaluate</template>
+				<description>Nuova idea da esaminare</description>
+				<template>Nuova idea da esaminare</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
