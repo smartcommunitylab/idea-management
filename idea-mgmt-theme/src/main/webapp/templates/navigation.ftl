@@ -59,7 +59,7 @@
 						</#if>
 						<#-- useDialog="<%= PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>"-->
 						
-						<!-- @aui["nav-item"] href="${profileURL.toString()}" id="userNotifications" iconCssClass="icon-bell" /> -->
+						<!-- @aui["nav-item"] href="${profileURL.toString()}" id="userNotifications" iconCssClass="ftn-notification" /> -->
 						
 						<#if themeDisplay.isShowSignOutIcon()>
 							<@aui["nav-item"] href="${themeDisplay.getURLSignOut()}" id="userLogout" iconCssClass="ftn-log-out" />

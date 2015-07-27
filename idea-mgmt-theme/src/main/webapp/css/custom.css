@@ -203,9 +203,9 @@ header#banner {
 	padding: 10px 20px !important;
 }
 
-#user-menu ul li a i[class*="icon-"] {
-	vertical-align: middle;
-	font-size: 40px;
+#user-menu ul li a i[class^="icon-"], #user-menu ul li a i[class^="ftn-"] {
+	vertical-align: middle !important;
+	font-size: 40px !important;
 }
 
 #user-menu ul li .user-avatar-image {
