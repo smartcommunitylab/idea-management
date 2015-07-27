@@ -195,7 +195,7 @@
 	<task>
 		<name>staged-evaluation</name>
 		<actions>
-			<notification>
+			<!-- <notification>
 				<name>User notification</name>
 				<template>Your idea need approvation by moderator. You will inform about your idea review</template>
 				<template-language>freemarker</template-language>
@@ -205,10 +205,11 @@
 					<user></user>
 				</recipients>
 				<execution-type>onEntry</execution-type>
-			</notification>
-			<notification>
+			</notification> -->
+		<notification>
 				<name>Moderator notification</name>
-				<template>User ${userName} has submitted a new ${entryType}</template>
+				<description>Nuova idea da valutare</description>
+				<template>Nuova idea da valutare</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
@@ -216,25 +217,9 @@
 			</notification>
 			<notification>
 				<name>Review Completion Notification</name>
+				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
-				  <![CDATA[
-				   <#switch transitionName>
-				   <#case "duplicated">
-				   Sorry you have copied someone !!!
-				   comment: ${taskComments}
-				   <#break>
-				   <#case "approved">
-				   YEAH Your ${entryType} has been accepted
-				   comment: ${taskComments}
-				   <#break>
-				   <#case "abusive">
-				   Your ${entryType} has been rejected
-				   comment: ${taskComments}
-				   <#break>
-				   <#default>
-					Default template
-				</#switch>
-          ]]>
+				  <![CDATA[Ciao ${userName}, la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore. Se qualcosa non ti è chiaro, contattalo]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
