@@ -13,6 +13,8 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.ContactLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
@@ -21,39 +23,39 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
  */
 public class UserProfilePortlet extends MVCPortlet {
 
-	public void editProfile(ActionRequest req, ActionResponse resp) {
+	public void editProfile(ActionRequest req, ActionResponse resp) throws PortalException, SystemException {
 		long userId = ParamUtil.getLong(req, "userId");
 		long addressId = ParamUtil.getLong(req, "addressId");
 		long contactId = ParamUtil.getLong(req, "contactId");
 		User user;
-		try {
-			user = UserLocalServiceUtil.getUser(userId);
-			user.setFirstName(ParamUtil.getString(req, "firstName"));
-			user.setLastName(ParamUtil.getString(req, "lastName"));
-			user.setEmailAddress(ParamUtil.getString(req, "emailAddress"));
-			user.setJobTitle(ParamUtil.getString(req, "occupation"));
-			UserLocalServiceUtil.updateUser(user);
-		} catch (PortalException | SystemException e) {
+		user = UserLocalServiceUtil.getUser(userId);
+		user.setFirstName(ParamUtil.getString(req, "firstName"));
+		user.setLastName(ParamUtil.getString(req, "lastName"));
+		user.setEmailAddress(ParamUtil.getString(req, "emailAddress"));
+		user.setJobTitle(ParamUtil.getString(req, "occupation"));
+		UserLocalServiceUtil.updateUser(user);
 
-		}
-
-		try {
-			Contact c = ContactLocalServiceUtil.getContact(contactId);
-			c.setMale(ParamUtil.getString(req, "gender").equals(
-					Gender.M.toString()));
-			ContactLocalServiceUtil.updateContact(c);
-		} catch (PortalException | SystemException e1) {
-		}
+		Contact c = ContactLocalServiceUtil.getContact(contactId);
+		c.setMale(ParamUtil.getString(req, "gender").equals(
+				Gender.M.toString()));
+		ContactLocalServiceUtil.updateContact(c);
 
 		if (addressId > 0) {
-			try {
-				Address addr = AddressLocalServiceUtil.getAddress(addressId);
-				addr.setStreet1(ParamUtil.getString(req, "address"));
-				addr.setCity(ParamUtil.getString(req, "city"));
-				addr.setZip(ParamUtil.getString(req, "postcode"));
-				AddressLocalServiceUtil.updateAddress(addr);
-			} catch (PortalException | SystemException e) {
-			}
+			Address addr = AddressLocalServiceUtil.getAddress(addressId);
+			addr.setStreet1(ParamUtil.getString(req, "address"));
+			addr.setCity(ParamUtil.getString(req, "city"));
+			addr.setZip(ParamUtil.getString(req, "postcode"));
+			AddressLocalServiceUtil.updateAddress(addr);
+		} else {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+					User.class.getName(), req);
+
+			Address addr = AddressLocalServiceUtil.addAddress(
+					userId,Contact.class.getName(),user.getContactId(),
+					ParamUtil.getString(req, "address"), null, null,
+					ParamUtil.getString(req, "city"),ParamUtil.getString(req, "postcode"),
+					0,0,11000, true, true, serviceContext);
+			
 		}
 
 	}
