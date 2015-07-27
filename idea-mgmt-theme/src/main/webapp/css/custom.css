@@ -204,8 +204,8 @@ header#banner {
 }
 
 #user-menu ul li a i[class^="icon-"], #user-menu ul li a i[class^="ftn-"] {
-	vertical-align: middle !important;
-	font-size: 40px !important;
+	vertical-align: middle;
+	font-size: 40px;
 }
 
 #user-menu ul li .user-avatar-image {
@@ -373,6 +373,7 @@ header#banner {
 .idea-slider {
 	text-decoration: none !important;
 	color: black !important;
+	margin-bottom: 50px;
 }
 
 .idea-slider .thumbnail {
@@ -506,7 +507,7 @@ header#banner {
 	font-weight: bolder;
 	text-align: center;
 	text-transform: uppercase;
-	padding-bottom: 10px;
+	padding-bottom: 30px;
 }
 
 .accordion-group {
@@ -882,6 +883,7 @@ header#banner {
 	text-align: center;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	margin-bottom: 50px;
 }
 
 .addidea-button-disabled {
