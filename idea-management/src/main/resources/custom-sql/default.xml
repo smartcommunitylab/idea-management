@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <custom-sql>
+
+<!-- FIND ALL APPROVED -->
+<sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findAllApproved">
+    	<![CDATA[select i.* from AssetEntry a INNER JOIN IM_Idea i on i.ideaId=a.classPK  WHERE a.visible=1 ORDER BY i.createDate DESC]]>
+    </sql>
+
 <!-- FIND BY CATEGORY -->
    <sql id="it.smartcommunitylab.platform.idea.service.persistence.IdeaFinder.findByCat">
     	<![CDATA[select i.*from AssetEntries_AssetCategories ec INNER JOIN AssetEntry a on ec.entryId= a.entryId INNER JOIN IM_Idea i on i.ideaId=a.classPK  WHERE (ec.categoryId=?) AND a.visible=1 ORDER BY i.createDate DESC]]>

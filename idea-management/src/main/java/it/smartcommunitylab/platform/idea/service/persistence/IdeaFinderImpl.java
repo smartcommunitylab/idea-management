@@ -19,6 +19,15 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 		IdeaFinder {
 
+	public List<Idea> findAllApproved() {
+		return findAllApproved(-1, -1);
+	}
+
+	public List<Idea> findAllApproved(int begin, int end) {
+		List<Object> params = new ArrayList<Object>();
+		return execQuery(FIND_ALL_APPROVED, params, begin, end);
+	}
+
 	public List<Idea> findByCat(Long categoryId) {
 		return findByCat(categoryId, -1, -1);
 	}
@@ -98,8 +107,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 		return findByTags(tagIds, -1, -1);
 	}
 
-	public List<Idea> findByTags(long[] tagIds, int begin,
-			int end) {
+	public List<Idea> findByTags(long[] tagIds, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(tagIds);
 		return execQuery(FIND_BY_TAGS, params, begin, end);
@@ -109,8 +117,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 		return findByTagsAndRating(tagIds, -1, -1);
 	}
 
-	public List<Idea> findByTagsAndRating(long[] tagIds, int begin,
-			int end) {
+	public List<Idea> findByTagsAndRating(long[] tagIds, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(tagIds);
 		return execQuery(FIND_BY_TAGS_AND_RATING, params, begin, end);
@@ -166,6 +173,9 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 		return Collections.emptyList();
 	}
+
+	public static final String FIND_ALL_APPROVED = IdeaFinder.class.getName()
+			+ ".findAllApproved";
 
 	public static final String FIND_BY_CAT = IdeaFinder.class.getName()
 			+ ".findByCat";

@@ -370,9 +370,9 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 	public List<Idea> getIdeas(int begin, int end) throws SystemException {
 		if (begin <= 0 && end <= 0) {
-			return ideaPersistence.findAll();
+			return IdeaFinderUtil.findAllApproved();
 		} else {
-			return ideaPersistence.findAll(begin, end);
+			return IdeaFinderUtil.findAllApproved(begin, end);
 		}
 	}
 

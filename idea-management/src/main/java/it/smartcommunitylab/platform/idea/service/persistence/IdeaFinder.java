@@ -1,6 +1,11 @@
 package it.smartcommunitylab.platform.idea.service.persistence;
 
 public interface IdeaFinder {
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findAllApproved();
+
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findAllApproved(
+        int begin, int end);
+
     public java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCat(
         java.lang.Long categoryId);
 

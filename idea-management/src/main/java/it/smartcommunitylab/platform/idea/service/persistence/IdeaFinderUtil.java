@@ -7,6 +7,15 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 public class IdeaFinderUtil {
     private static IdeaFinder _finder;
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findAllApproved() {
+        return getFinder().findAllApproved();
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findAllApproved(
+        int begin, int end) {
+        return getFinder().findAllApproved(begin, end);
+    }
+
     public static java.util.List<it.smartcommunitylab.platform.idea.model.Idea> findByCat(
         java.lang.Long categoryId) {
         return getFinder().findByCat(categoryId);
