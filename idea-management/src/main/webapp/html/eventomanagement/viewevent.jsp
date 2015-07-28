@@ -88,7 +88,7 @@
   <div class="event-view-description"><liferay-ui:message key="evento_view_desc" />: <%=event.getDescription(locale)%></div>
   <div>
   <aui:button-row  cssClass="formbutton-row">
-    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="Close"></aui:button>
+    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="lbl_close"></aui:button>
     <%-- <aui:button cssClass="formbutton-primary" type="button" value="Vedi idea"></aui:button> --%>
   </aui:button-row>
   </div>
