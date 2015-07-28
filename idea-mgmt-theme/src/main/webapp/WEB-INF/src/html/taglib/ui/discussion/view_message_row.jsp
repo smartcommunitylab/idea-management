@@ -41,6 +41,7 @@ MBMessage rootMessage = (MBMessage)request.getAttribute("rootMessage");
 String randomNamespace = renderResponse.getNamespace();
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+<c:if test='<%=!message.isDenied() %>'>
 
 						<div class='lfr-discussion <%= cssClass %> <%= depth == 0 ? "" : "child-discussion-row" %>'>
 							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
@@ -174,7 +175,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								<%= LanguageUtil.format(pageContext, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate())) %>
 							</div>
 						</div>
-
+</c:if>
 <%
 List messages = treeWalker.getMessages();
 int[] range = treeWalker.getChildrenRange(message);
