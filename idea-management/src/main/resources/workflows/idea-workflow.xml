@@ -117,7 +117,7 @@
 				<template>
 				<![CDATA[
 				<html><body>
-
+	 		
 				Nuova idea da valutare
 				<br/><br/>
 				Il team di FuturaTrento
@@ -136,10 +136,12 @@
 				<template>
 				  <![CDATA[
 				  <html><body>
-				  
+				
+				  <#assign context = serviceContext.getAttribute("context")>
+				 
 				  Ciao ${userName},<br/><br/>
 				  
-				  la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
+				  la tua idea ${context.ideaTitle} è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
 				  <br/><br/>
 				  
 				  Se qualcosa non ti è chiaro, contattalo
@@ -249,9 +251,11 @@
 				  <![CDATA[
 				  <html><body>
 				  
+				  <#assign context = serviceContext.getAttribute("context")>
+				   
 				  Ciao ${userName},<br/><br/>
 				  
-				  la tua idea è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
+				  la tua idea ${context.ideaTitle} è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
 				  <br/><br/>
 				  
 				  Se qualcosa non ti è chiaro, contattalo
@@ -418,12 +422,14 @@
 				<template>
 				  <![CDATA[
 				  <html><body>
+				   <#assign context = serviceContext.getAttribute("context")>
+				   
 				   <#switch transitionName>
 				   <#case "accepted">
-				   La tua idea è piaciuta ed è stata presa in esame dal Comune, presto saprai come andrà a finire.
+				   La tua idea ${context.ideaTitle} è piaciuta ed è stata presa in esame dal Comune, presto saprai come andrà a finire.
 				   <#break>
 				   <#case "rejected">
-				   La tua idea è stata rifiutata.
+				   La tua idea ${context.ideaTitle} è stata rifiutata.
 				   <#break>
 				   <#default>
 					Default template
