@@ -75,9 +75,9 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 </portlet:actionURL>
 
 <div class="idea-warning">
-	ATTENZIONE!<br/>
-	In questa versione beta la piattaforma non permette la modifiche delle idee a posteriori.<br/>
-	Consigliamo quindi di compilare completamente la form di creazione dell'idea.
+	<liferay-ui:message key="idea_warning_1" />
+	<liferay-ui:message key="idea_warning_2" />
+	<liferay-ui:message key="idea_warning_3" />
 </div>
 
 <aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>" name="idea">
