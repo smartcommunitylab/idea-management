@@ -68,15 +68,17 @@ To change the theme for already created users:
 ####2. Portal Configuration
 - default language
 - default user associations
-  * create Site Manager role
-  * create Site Moderator role
-  * create Manager user, set Manager role
+  * create Site Manager site role
+  * create Site Moderator site role
+  * create Blacklisted regular role
+  * create Manager user, set Manager role, Site Content Reviewer
   * create Moderator user, set Moderator role
 - enable google/facebook login
 - configure mail server
 - configure workflow definitions
-- in control panel / configuration /users set 'Last Name Requered' true
+- in control panel / configuration /users set 'Last Name Required' true
 - in 'site / content management / Documents and Media' delete unnecessary data types (contracts, etc.)
+- configure the mail message templates
 
 ### Data Structures
 
