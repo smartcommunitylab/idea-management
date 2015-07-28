@@ -158,4 +158,11 @@
 		},
 		['aui-dialog','aui-dialog-iframe']
 	);
-	</aui:script>
+	
+  Liferay.provide(window, 'changeContextPortlet', 
+  	function(url) {
+    	this.document.location.href = url;
+    },
+    ['aui-dialog','aui-dialog-iframe']
+  );	
+</aui:script>
