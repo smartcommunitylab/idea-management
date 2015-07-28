@@ -17,7 +17,11 @@ public class WorkflowUtil {
 		workflowContext.put(WorkflowConstants.CONTEXT_NOTIFICATION_SENDER_NAME,
 				PortletProps.get("noreply.displayname"));
 
-		workflowContext.put("ideaTitle", ideaTitle);
+		HashMap<String, Object> context = new HashMap<String, Object>();
+		context.put("ideaTitle", ideaTitle);
+
+		ctx.setAttribute("context", context);
+
 		ctx.setAttribute("workflowContext", workflowContext);
 
 		return ctx;
