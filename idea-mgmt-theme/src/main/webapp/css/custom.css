@@ -272,7 +272,7 @@ header#banner {
 	font-weight: normal;
 }
 
-#navmenu li a ~ ul.child-menu {
+#navmenu li ul.child-menu {
 	/* visibility: hidden; */
 	margin: 0;
 	-webkit-transition: all 0.3s ease-in-out 0.3s;
@@ -284,7 +284,7 @@ header#banner {
 	opacity: 0;
 }
 
-#navmenu li a:hover ~ ul.child-menu {
+#navmenu li:hover ul.child-menu {
 	/* visibility: visible; */
 	-webkit-transition-delay: 0s;
     -moz-transition-delay: 0s;
