@@ -19,6 +19,7 @@ public class WorkflowUtil {
 
 		HashMap<String, Object> context = new HashMap<String, Object>();
 		context.put("ideaTitle", ideaTitle);
+		context.put("moderatorEmail", PortletProps.get("moderator.email"));
 
 		ctx.setAttribute("context", context);
 

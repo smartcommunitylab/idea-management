@@ -144,7 +144,7 @@
 				  la tua idea ${context.ideaTitle} è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
 				  <br/><br/>
 				  
-				  Se qualcosa non ti è chiaro, contattalo
+				  Se qualcosa non ti è chiaro, <a href="mailto:${context.moderatorEmail}">contattalo</a>
 				  
 				  <br/><br/>
 				  Il team di FuturaTrento
@@ -249,16 +249,16 @@
 				<description>Aggiornamento stato per la tua idea su FuturaTrento</description>
 				<template>
 				  <![CDATA[
-				  <html><body>
-				  
+				 <html><body>
+				
 				  <#assign context = serviceContext.getAttribute("context")>
-				   
+				 
 				  Ciao ${userName},<br/><br/>
 				  
 				  la tua idea ${context.ideaTitle} è stata <#switch transitionName><#case "duplicated">bloccata<#break><#case "approved">approvata<#break><#case "abusive">rifiutata<#break><#default>Default template</#switch> dal moderatore.
 				  <br/><br/>
 				  
-				  Se qualcosa non ti è chiaro, contattalo
+				  Se qualcosa non ti è chiaro, <a href="mailto:${context.moderatorEmail}">contattalo</a>
 				  
 				  <br/><br/>
 				  Il team di FuturaTrento
