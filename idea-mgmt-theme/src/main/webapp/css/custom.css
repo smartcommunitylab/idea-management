@@ -1198,6 +1198,14 @@ header#banner {
 	text-align: right;
 }
 
+.idea-warning {
+	background-color: #E83D5F;
+    color: white;
+    margin: 20px -10px;
+    padding: 0.5em 1em;
+    text-align: center;
+}
+
 .idea-form input,#_58_fm input, #_20_fm input {
 	border-left-color: white !important;
 	border-top-color: white !important;
@@ -1638,7 +1646,6 @@ header#banner {
 .beta {
 	color: white;
 	background-color: #4eb9a4;
-	font-weight: bold;
 	padding: 10px 20px;
 	margin-top: 50px;
 }

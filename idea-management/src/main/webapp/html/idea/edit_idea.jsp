@@ -74,6 +74,12 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
   <portlet:param name="redirect" value='<%=Utils.generateRenderURL(baseUrl, redirect.toString()) %>'></portlet:param>
 </portlet:actionURL>
 
+<div class="idea-warning">
+	ATTENZIONE!<br/>
+	In questa versione beta la piattaforma non permette la modifiche delle idee a posteriori.<br/>
+	Consigliamo quindi di compilare completamente la form di creazione dell'idea.
+</div>
+
 <aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>" name="idea">
 <aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
 	<aui:fieldset label="lbl_title" cssClass="simple-field">
