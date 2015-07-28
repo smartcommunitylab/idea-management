@@ -1201,7 +1201,7 @@ header#banner {
 .idea-warning {
 	background-color: #E83D5F;
     color: white;
-    margin: 20px -10px;
+    margin: 2em -5em;
     padding: 0.5em 1em;
     text-align: center;
 }
