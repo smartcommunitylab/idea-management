@@ -16,7 +16,7 @@
 
 					<#if !is_signed_in>
 						<#assign anchorData = {"redirect", portalUtil.isLoginRedirectRequired(request)} />
-						<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" anchorCssClass="use-dialog" title="Accedi" href="${themeDisplay.getURLSignIn()}" iconCssClass="icon-user" label="Accedi" />
+						<@aui["nav-item"] anchorData=anchorData cssClass="sign-in" anchorCssClass="use-dialog" title="Accedi" href="${themeDisplay.getURLSignIn()}" iconCssClass="ftn-log-in" label="Accedi" />
 					<#else>
 						<#assign id = themeDisplay.getPortletDisplay().getId() />
 						<#assign plid = themeDisplay.getPlid() />
