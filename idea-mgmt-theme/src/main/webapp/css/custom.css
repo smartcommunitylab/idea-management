@@ -268,11 +268,11 @@ header#banner {
 	padding: 10px 80px 0 0;
 }
 
-#navmenu li.right a span {
+#navmenu li a span {
 	font-weight: normal;
 }
 
-#navmenu li ul.child-menu {
+#navmenu li a ~ ul.child-menu {
 	/* visibility: hidden; */
 	margin: 0;
 	-webkit-transition: all 0.3s ease-in-out 0.3s;
@@ -284,7 +284,7 @@ header#banner {
 	opacity: 0;
 }
 
-#navmenu li:hover ul.child-menu {
+#navmenu li a:hover ~ ul.child-menu {
 	/* visibility: visible; */
 	-webkit-transition-delay: 0s;
     -moz-transition-delay: 0s;
