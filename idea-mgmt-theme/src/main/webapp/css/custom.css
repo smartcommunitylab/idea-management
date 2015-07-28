@@ -1635,9 +1635,21 @@ header#banner {
 	font-size: 20px;
 }
 
+.beta {
+	color: white;
+	background-color: #4eb9a4;
+	font-weight: bold;
+	padding: 10px 20px;
+	margin-top: 50px;
+}
+
+.beta .star {
+	font-size: 30px;
+}
+
 #footer {
 	border-top: 10px solid #E83D5F;
-	margin-top: 60px;
+	margin-top: 10px;
 }
 
 #footer .partners {

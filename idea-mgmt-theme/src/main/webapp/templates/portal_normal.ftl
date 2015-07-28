@@ -70,6 +70,8 @@ ${theme.include(body_top_include)}
 		</#if>
 	</div>
 
+	<div class="beta"><span class="star">*</span> VERSIONE BETA: prodotto sperimentale condiviso con i cittadini, in evoluzione funzionale e di contenuto.</div>
+	
 	<footer id="footer" role="contentinfo">
 		<!-- <p class="powered-by">
 			<@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
