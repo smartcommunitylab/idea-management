@@ -98,7 +98,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		renderRequest.setAttribute("prevDate", prevDate);
 		
 		//title data
-		SimpleDateFormat sdfTitleDate = new SimpleDateFormat("MMMM yy", locale);
+		SimpleDateFormat sdfTitleDate = new SimpleDateFormat("MMMM yyyy", locale);
 		String titleData = sdfTitleDate.format(queryDate);
 		renderRequest.setAttribute("titleData", titleData);
 		
