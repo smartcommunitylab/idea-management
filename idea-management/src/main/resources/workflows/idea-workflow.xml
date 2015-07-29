@@ -118,7 +118,10 @@
 				<![CDATA[
 				<html><body>
 	 		
-				Nuova idea da valutare
+	 			<#assign context = serviceContext.getAttribute("context")>
+	 			
+				Nuova <a href="${context.ideaURL}">idea</a> da valutare
+				
 				<br/><br/>
 				Il team di FuturaTrento
 				
@@ -232,8 +235,11 @@
 				<template>
 				<![CDATA[
 				<html><body>
-
-				Nuova idea da valutare
+	 		
+	 			<#assign context = serviceContext.getAttribute("context")>
+	 			
+				Nuova <a href="${context.ideaURL}">idea</a> da valutare
+				
 				<br/><br/>
 				Il team di FuturaTrento
 				
@@ -406,7 +412,9 @@
 				<template>
 				 <![CDATA[
 				<html><body>
-					Nuova idea da esaminare
+					<#assign context = serviceContext.getAttribute("context")>
+	 			
+				Nuova <a href="${context.ideaURL}">idea</a> da esaminare
 				<br/><br/>
 					Il team di FuturaTrento				
 				</body></html>

@@ -87,7 +87,6 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		Date now = new Date();
 
 		// validate(name);
-
 		long pkId = counterLocalService.increment();
 
 		Idea idea = ideaPersistence.create(pkId);
@@ -147,8 +146,7 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 
 		indexer.reindex(idea);
 
-		serviceContext = WorkflowUtil.addWorkflowVars(serviceContext,
-				idea.getTitle());
+		serviceContext = WorkflowUtil.addWorkflowVars(serviceContext, idea);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(idea.getCompanyId(),
 				idea.getGroupId(), idea.getUserId(), Idea.class.getName(),
