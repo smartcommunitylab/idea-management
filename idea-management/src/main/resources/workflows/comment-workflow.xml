@@ -111,40 +111,19 @@
 			<notification>
 				<name>Moderator notification</name>
 				<description>commento da leggere</description>
-				<template>Nuovo commento da leggere
-				
-				il team di FuturaTrento
-				</template>
-				<template-language>freemarker</template-language>
-				<notification-type>email</notification-type>
-				<notification-type>user-notification</notification-type>
-				<execution-type>onAssignment</execution-type>
-			</notification>
-		<!-- 	<notification>
-				<name>Review Completion Notification</name>
 				<template>
-				  <![CDATA[
-				   <#switch transitionName>
-				   <#case "approved">
-				   YEAH Your ${entryType} has been accepted
-				   comment: ${taskComments}
-				   <#break>
-				   <#case "rejected">
-				   Your ${entryType} has been rejected
-				   comment: ${taskComments}
-				   <#break>
-				   <#default>
-					Default template
-				</#switch>
+					 <![CDATA[
+				<html><body>
+						Nuovo commento da leggere
+				<br/><br/>
+					Il team di FuturaTrento				
+				</body></html>
           ]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<recipients>
-					<user />
-				</recipients>
-				<execution-type>onExit</execution-type>
-			</notification> -->
+				<execution-type>onAssignment</execution-type>
+			</notification>
 		</actions>
 		<assignments>
 			<scripted-assignment>
@@ -195,6 +174,24 @@
 
 	<task>
 		<name>staged-evaluation</name>
+		<actions>
+			<notification>
+				<name>Moderator notification</name>
+				<description>commento da leggere</description>
+				<template>
+					 <![CDATA[
+				<html><body>
+						Nuovo commento da leggere
+				<br/><br/>
+					Il team di FuturaTrento				
+				</body></html>
+          ]]>
+				</template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+		</actions>
 		<!--<actions>
 			 <notification>
 				<name>User notification</name>
