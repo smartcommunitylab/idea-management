@@ -109,20 +109,21 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				if (callId != null && callId > 0) {
 					tags = IdeaLocalServiceUtil.getCallTags(callId);
 				} else if (categoryId != null && categoryId > 0) {
-						tags = IdeaLocalServiceUtil.getCategoryTags(
-								new long[] { categoryId },
-								PortalUtil.getScopeGroupId(req));
+					tags = IdeaLocalServiceUtil.getCategoryTags(
+							new long[] { categoryId },
+							PortalUtil.getScopeGroupId(req));
 				}
-				
+
 				String[] passed = ParamUtil.getParameterValues(req, "tag");
 				if (passed != null && passed.length > 0) {
-					ServiceContext serviceContext = ServiceContextFactory.getInstance(
-							Idea.class.getName(), req);
-					tagIds = AssetTagLocalServiceUtil.getTagIds(serviceContext.getScopeGroupId(), passed);
+					ServiceContext serviceContext = ServiceContextFactory
+							.getInstance(Idea.class.getName(), req);
+					tagIds = AssetTagLocalServiceUtil.getTagIds(
+							serviceContext.getScopeGroupId(), passed);
 				} else {
 					for (AssetTag tag : tags) {
-						long tagSel = ParamUtil.getLong(req,
-								"filterByTags" + tag.getTagId() + "Checkbox");
+						long tagSel = ParamUtil.getLong(req, "filterByTags"
+								+ tag.getTagId() + "Checkbox");
 						if (tagSel > 0) {
 							tagIds = ArrayUtil.append(tagIds, tag.getTagId());
 						}
@@ -196,7 +197,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
-		String deadlineConstraints = ParamUtil.getString(req, "deadlineConstraints");
+		String deadlineConstraints = ParamUtil.getString(req,
+				"deadlineConstraints");
 		int discussionLimit = ParamUtil.getInteger(req, "discussionLimit");
 		IdeaBean ideaBean = new IdeaBean();
 		ideaBean.setTitle(name);
@@ -211,17 +213,21 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		ideaBean.setDeadlineConstraints(deadlineConstraints);
 		Idea idea = IdeaLocalServiceUtil.addIdea(serviceContext.getUserId(),
 				ideaBean, serviceContext);
-		SubscriptionLocalServiceUtil.addSubscription(serviceContext.getUserId(), idea.getGroupId(), Idea.class.getName(), idea.getIdeaId());
+		SubscriptionLocalServiceUtil.addSubscription(
+				serviceContext.getUserId(), idea.getGroupId(),
+				Idea.class.getName(), idea.getIdeaId());
 		req.setAttribute("idea", idea);
 	}
 
 	public void deleteEntry(ActionRequest req, ActionResponse res)
 			throws PortalException, SystemException {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(Idea.class.getName(), req);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Idea.class.getName(), req);
 
 		long ideaId = ParamUtil.getLong(req, "entryId");
-		IdeaLocalServiceUtil.deleteIdea(serviceContext.getUserId(), ideaId, serviceContext);
+		IdeaLocalServiceUtil.deleteIdea(serviceContext.getUserId(), ideaId,
+				serviceContext);
 	}
 
 	public void toggleUserParticipation(ActionRequest req, ActionResponse res)
@@ -242,7 +248,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		String name = ParamUtil.getString(req, "title");
 		String shortDesc = ParamUtil.getString(req, "shortDesc");
 		String longDesc = ParamUtil.getString(req, "longDesc");
-		String deadlineConstraints = ParamUtil.getString(req, "deadlineConstraints");
+		String deadlineConstraints = ParamUtil.getString(req,
+				"deadlineConstraints");
 		int discussionLimit = ParamUtil.getInteger(req, "discussionLimit");
 
 		IdeaBean ideaBean = new IdeaBean();
@@ -256,23 +263,26 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			ideaBean.setDiscussionLimit(Constants.DEFAULT_DISCUSSION_LIMIT);
 		}
 		ideaBean.setDeadlineConstraints(deadlineConstraints);
-		
+
 		IdeaLocalServiceUtil.updateIdea(serviceContext.getUserId(), ideaBean,
 				serviceContext);
 	}
-	
+
 	public void followIdea(ActionRequest req, ActionResponse res)
-			throws PortalException, SystemException, IOException 
-	{
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(Idea.class.getName(), req);
+			throws PortalException, SystemException, IOException {
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Idea.class.getName(), req);
 		Long ideaId = ParamUtil.getLong(req, "ideaId");
 		Idea idea = IdeaLocalServiceUtil.fetchIdea(ideaId);
 		boolean subscribed = ParamUtil.getBoolean(req, "subscribed");
 		// subscribe idea
 		if (!subscribed) {
-			SubscriptionLocalServiceUtil.addSubscription(serviceContext.getUserId(), idea.getGroupId(), Idea.class.getName(), ideaId);
+			SubscriptionLocalServiceUtil.addSubscription(
+					serviceContext.getUserId(), idea.getGroupId(),
+					Idea.class.getName(), ideaId);
 		} else {
-			SubscriptionLocalServiceUtil.deleteSubscription(serviceContext.getUserId(), Idea.class.getName(), ideaId);
+			SubscriptionLocalServiceUtil.deleteSubscription(
+					serviceContext.getUserId(), Idea.class.getName(), ideaId);
 		}
 	}
 
