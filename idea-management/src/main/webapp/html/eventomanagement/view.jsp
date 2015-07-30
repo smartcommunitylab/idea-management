@@ -58,7 +58,7 @@
 				<portlet:param name="callId" value="<%= callId %>" />
 				<portlet:param name="ideaId" value="<%= ideaId %>" />
 			</portlet:renderURL>
-	    <a class="event-container-button event-container-button-add" id="add-event-link"
+	    <a class="event-container-button event-container-button-add" id="add-event-link" title="<liferay-ui:message key="evento_add_tooltip"/>"
 	      onClick="javascript:window.showPopup('<%=addEventURL.toString()%>','<liferay-ui:message key="evento_title_add_eventi"/>')"><span>+</span></a>
     </c:if>
     <a class="event-container-button event-container-button-prev" href='<%= viewPrevURL %>'><span>&lt;</span></a>
