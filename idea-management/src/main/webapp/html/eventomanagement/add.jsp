@@ -123,11 +123,17 @@ AUI().use('aui-base','liferay-form','aui-form-validator',
 		      validatorName:'required'
 				},
 				{
-			  	body:'',
-			    custom: false,
-			    fieldName: '<portlet:namespace/>description',
-				  validatorName:'required'
-				},
+				  	body:function (val, fieldNode, ruleValue) {
+				  		var desc = window['<portlet:namespace />description'].getHTML();
+				  		//filter html tags to check empty input
+				  		desc = desc.replace(/[(<p>(&nbsp;)*<\/p>)*|(&nbsp;)*]/gm,'');
+				  		return desc.trim().length > 0;
+				  	},
+				    custom: true,
+				    errorMessage : '<liferay-ui:message key="field_required"/>',
+				    fieldName: '<portlet:namespace/>description',
+					validatorName:'customDescriptionValidator'
+					},
 				{
 					body:'',
 				  custom: false,
