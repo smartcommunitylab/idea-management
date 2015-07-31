@@ -56,7 +56,14 @@
       </aui:fieldset>
 
 		  <aui:field-wrapper label="evento_form_desc">
-		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  
+		   <%--  <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  --%>
+		    <aui:input name="hdescription" type="hidden"></aui:input>
+		<liferay-ui:input-editor name="description" 
+			toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="100" />
+		<script type="text/javascript">
+        function <portlet:namespace />initEditor2() { return '' }
+        function <portlet:namespace />onChange2() { document.getElementById('<portlet:namespace />hdescription').value = window['<portlet:namespace />description'].getHTML(); }
+    </script>
 		  </aui:field-wrapper>
 			
 		  <aui:field-wrapper label="evento_form_location">
