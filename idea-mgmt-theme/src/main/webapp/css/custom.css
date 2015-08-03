@@ -1635,8 +1635,13 @@ header#banner {
 }
 
 .add-button-disabled-msg {
-	  text-align: center !important;
-    margin-bottom: 10px !important;
+    color: red;
+    font-weight: bold;
+}
+
+.idea-button-row .add-button-disabled-msg {
+	margin-top: 10px;
+	text-align: center;
 }
 
 .asset-selector {
