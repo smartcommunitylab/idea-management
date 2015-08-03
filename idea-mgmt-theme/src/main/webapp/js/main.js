@@ -10,3 +10,10 @@ AUI().ready('liferay-hudcrumbs', 'liferay-navigation-interaction',
 				signIn.plug(Liferay.SignInModal);
 			}
 		});
+
+AUI().ready('aui-tooltip', function(Y) {
+	new Y.TooltipDelegate({
+		trigger : '.idea-button-tooltip-avail',
+		position: 'top'
+	});
+});

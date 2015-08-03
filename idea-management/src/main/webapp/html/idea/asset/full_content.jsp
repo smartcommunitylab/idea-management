@@ -195,7 +195,7 @@
 		        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
             <portlet:param name="subscribed" value="<%=String.valueOf(subscribed) %>" />
 		      </portlet:actionURL>
-  	      <div><a class='idea-button idea-button-follow-<%= subscribed ? "disabled" : "enabled" %>' href="<%=followIdea.toString() %>"></a></div>
+  	      <div><a title="<liferay-ui:message key="lbl_tooltip_follow"/>" class='idea-button idea-button-tooltip-avail idea-button-follow-<%= subscribed ? "disabled" : "enabled" %>' href="<%=followIdea.toString() %>"></a></div>
           <div><span><liferay-ui:message key="lbl_following"/></span></div>
           <div class="participation-details">
 	          <span><%=subs.size() %></span>
@@ -208,7 +208,7 @@
             <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
             <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
           </portlet:actionURL>
-          <div><a class='idea-button idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
+          <div><a title="<liferay-ui:message key="lbl_tooltip_participate"/>" class='idea-button idea-button-tooltip-avail idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
           <div><span><liferay-ui:message key="lbl_participating"/></span></div>
           <div class="participation-details">
             <span><%=users.size() %></span>

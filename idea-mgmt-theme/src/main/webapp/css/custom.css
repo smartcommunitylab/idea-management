@@ -10,6 +10,10 @@
 	font-weight: normal;
 }
 
+.tooltip-content {
+	font-size: larger;
+}
+
 #content {
 	padding: 0 !important;
 }
