@@ -1,5 +1,41 @@
+<%@page import="com.liferay.portal.kernel.json.JSONFactoryUtil"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.liferay.calendar.model.CalendarBooking"%>
+<%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
 
+<portlet:defineObjects />
+<liferay-theme:defineObjects />
+
+<%
+	List<CalendarBooking> eventList = (List<CalendarBooking>) request.getAttribute("eventList");
+
+	StringBuffer stringBuf = new StringBuffer();
+	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	stringBuf.append("[");
+	for(CalendarBooking event : eventList) {
+		stringBuf.append("{");
+		stringBuf.append(String.format("title:\"%s\",",event.getTitle(locale)));
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(event.getStartTime());
+		stringBuf.append(String.format("start:'%s',", dateFormatter.format(cal.getTime())));
+		cal = Calendar.getInstance();
+		cal.setTimeInMillis(event.getEndTime());
+		stringBuf.append(String.format("end:'%s'", dateFormatter.format(cal.getTime())));
+		stringBuf.append("},");
+	}
+	stringBuf.append("]");
+	
+	String events = stringBuf.toString();
+%>
+
+
+
+
+
+<p><%=events%></p>
 <div id="calendar"></div>
 
 <script type="text/javascript">
@@ -27,62 +63,7 @@ $(document).ready(function() {
         $(this).css('border-color', 'red');
 
         },
-		events: [
-			{
-				title: 'All Day Event',
-				start: '2015-02-01'
-			},
-			{
-				title: 'Long Event',
-				start: '2015-02-07',
-				end: '2015-02-10'
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: '2015-02-09T16:00:00'
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: '2015-02-16T16:00:00'
-			},
-			{
-				title: 'Conference',
-				start: '2015-02-11',
-				end: '2015-02-13'
-			},
-			{
-				title: 'Meeting',
-				start: '2015-02-12T10:30:00',
-				end: '2015-02-12T12:30:00'
-			},
-			{
-				title: 'Lunch',
-				start: '2015-02-12T12:00:00'
-			},
-			{
-				title: 'Meeting',
-				start: '2015-02-12T14:30:00'
-			},
-			{
-				title: 'Happy Hour',
-				start: '2015-02-12T17:30:00'
-			},
-			{
-				title: 'Dinner',
-				start: '2015-02-12T20:00:00'
-			},
-			{
-				title: 'Birthday Party',
-				start: '2015-02-13T07:00:00'
-			},
-			{
-				title: 'Click for Google',
-				url: 'http://google.com/',
-				start: '2015-02-28'
-			}
-		]
+		events: <%=events%>
 	});
 
 });
