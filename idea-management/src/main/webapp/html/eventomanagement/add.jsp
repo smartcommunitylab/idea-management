@@ -56,7 +56,14 @@
       </aui:fieldset>
 
 		  <aui:field-wrapper label="evento_form_desc">
-		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  
+		   <%--  <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  --%>
+		    <aui:input name="hdescription" type="hidden"></aui:input>
+		<liferay-ui:input-editor name="description" 
+			toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="100" />
+		<script type="text/javascript">
+        function <portlet:namespace />initEditor2() { return '' }
+        function <portlet:namespace />onChange2() { document.getElementById('<portlet:namespace />hdescription').value = window['<portlet:namespace />description'].getHTML(); }
+    </script>
 		  </aui:field-wrapper>
 			
 		  <aui:field-wrapper label="evento_form_location">
@@ -116,11 +123,17 @@ AUI().use('aui-base','liferay-form','aui-form-validator',
 		      validatorName:'required'
 				},
 				{
-			  	body:'',
-			    custom: false,
-			    fieldName: '<portlet:namespace/>description',
-				  validatorName:'required'
-				},
+				  	body:function (val, fieldNode, ruleValue) {
+				  		var desc = window['<portlet:namespace />description'].getHTML();
+				  		//filter html tags to check empty input
+				  		desc = desc.replace(/[(<p>(&nbsp;)*<\/p>)*|(&nbsp;)*]/gm,'');
+				  		return desc.trim().length > 0;
+				  	},
+				    custom: true,
+				    errorMessage : '<liferay-ui:message key="field_required"/>',
+				    fieldName: '<portlet:namespace/>description',
+					validatorName:'customDescriptionValidator'
+					},
 				{
 					body:'',
 				  custom: false,
