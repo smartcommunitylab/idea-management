@@ -10,6 +10,13 @@
 	<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
 	${theme.include(top_head_include)}
+
+	<link href="${css_folder}/vendor/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="${javascript_folder}/vendor/jquery.min.js"></script>
+	<script type="text/javascript" src="${javascript_folder}/vendor/moment.min.js"></script>
+	<script type="text/javascript" src="${javascript_folder}/vendor/fullcalendar.min.js"></script>
+	
 </head>
 
 <body class="${css_class}">
@@ -85,5 +92,6 @@ ${theme.include(body_top_include)}
 
 ${theme.include(body_bottom_include)}
 ${theme.include(bottom_include)}
+
 </body>
 </html>
