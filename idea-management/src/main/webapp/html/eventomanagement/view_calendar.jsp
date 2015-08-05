@@ -74,6 +74,8 @@ $(document).ready(function() {
 			right: ''
 		},
 		defaultDate: '<%= activeDate%>',
+		lang: 'it',
+        timeFormat: 'H:mm',
 		editable: false,
 		eventLimit: true, // allow "more" link when too many events
         firstDay:1,
