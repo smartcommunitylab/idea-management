@@ -1,3 +1,7 @@
+<%@page import="com.liferay.util.portlet.PortletProps"%>
+<%@page import="java.util.List"%>
+<%@page import="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil"%>
+<%@page import="com.liferay.portal.kernel.dao.orm.DynamicQuery"%>
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil"%>
@@ -43,11 +47,11 @@
 	String endTime = dfTimeStart.format(new Date(event.getEndTime()));
 	String location = event.getLocation();
 	
+  //category
 	String categoryName = null;
 	String categoryColor = null;
 	String contextName = null;
 	String contextLabel = null;
-	String contextUrl = null; 
 	
   Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   AssetEntry calAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBooking.class.getName(), event.getCalendarBookingId());
@@ -55,14 +59,42 @@
   if (Validator.isNotNull(ideaId)) {
 		Idea idea = IdeaLocalServiceUtil.getIdea(ideaId);
 		contextName = idea.getTitle();
-		long groupId = idea.getUserGroupId();
 		contextLabel = LanguageUtil.get(locale, "evento_context_idea");
+		//redirectUrl = portalUrl + "/web" + siteUrl + layoutUrl + "/-/idea/" + ideaId + "/view";
 	} else if (Validator.isNotNull(callId)) {
 		Call call = CallLocalServiceUtil.getCall(callId);
 		contextName = call.getTitle();
 	  contextLabel = LanguageUtil.get(locale, "evento_context_call");
+	  //redirectUrl = portalUrl + "/web" + siteUrl + layoutUrl + "/-/call/" + callId + "/view";
 	}
   String mainCategoryColor = (calCategories != null && calCategories.size() > 0) ? CC.get(""+calCategories.get(0).getCategoryId()) : "";
+  
+  //redirect url
+  String portalUrl = themeDisplay.getPortalURL();
+  String layoutUrl = layout.getFriendlyURL();
+  String siteUrl = layout.getGroup().getFriendlyURL();
+	String redirectUrl = null;
+	
+	long userGroupId = event.getGroupId();
+	DynamicQuery dynamicQueryIdea = IdeaLocalServiceUtil.dynamicQuery();
+	dynamicQueryIdea.add(RestrictionsFactoryUtil.eq("userGroupId", userGroupId));
+	List<Idea> ideaList = (List<Idea>) IdeaLocalServiceUtil.dynamicQuery(dynamicQueryIdea);
+	if((ideaList != null) && (ideaList.size() > 0)) {
+		String redirectPage = PortletProps.get("datail.page");
+		String redirectPlid = PortletProps.get("datail.plid");
+		redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/idea/" + redirectPlid + "/" 
+			+ ideaList.get(0).getIdeaId() + "/view";
+	} else {
+		DynamicQuery dynamicQueryCall = CallLocalServiceUtil.dynamicQuery();
+		dynamicQueryCall.add(RestrictionsFactoryUtil.eq("userGroupId", userGroupId));
+		List<Call> callList = (List<Call>) CallLocalServiceUtil.dynamicQuery(dynamicQueryCall);
+		if((callList != null) && (callList.size() > 0)) {
+			String redirectPage = PortletProps.get("call.page");
+			String redirectPlid = PortletProps.get("call.plid");
+			redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/call/" + redirectPlid + "/" 
+				+ callList.get(0).getCallId() + "/view";
+		}
+	}
 %>
 
 <div class="event-view-container" style='border-left-color: <%=mainCategoryColor%>;'>
@@ -90,6 +122,20 @@
   <aui:button-row  cssClass="formbutton-row">
     <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="lbl_close"></aui:button>
     <%-- <aui:button cssClass="formbutton-primary" type="button" value="Vedi idea"></aui:button> --%>
+    <c:if test="<%= Validator.isNotNull(redirectUrl)%>">
+    	<aui:button cssClass="formbutton-primary" onClick="javascript:window.redirectPortlet();" 
+    	 value='<%=LanguageUtil.get(locale, "evento_context_show") %>'></aui:button>
+    </c:if>
   </aui:button-row>
   </div>
 </div>
+
+<aui:script>
+Liferay.provide(window, 'redirectPortlet', 
+	function() {
+		var url = '<%= redirectUrl %>';
+		Liferay.Util.getOpener().changeContextPortlet(url);
+	},
+	['aui-dialog','aui-dialog-iframe']
+);
+</aui:script>

@@ -82,7 +82,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		nextDateCalendar.set(Calendar.DAY_OF_MONTH, 1);
 		nextDateCalendar.add(Calendar.MONTH, 1);
 		String nextDate = sdfQueryDate.format(nextDateCalendar.getTime());
-		System.out.println("nextDate:" + nextDate);
+		//System.out.println("nextDate:" + nextDate);
 		renderRequest.setAttribute("nextDate", nextDate);
 		//previous date
 		Calendar prevDateCalendar = GregorianCalendar.getInstance();
@@ -94,7 +94,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		prevDateCalendar.set(Calendar.DAY_OF_MONTH, 1);
 		prevDateCalendar.add(Calendar.MONTH, -1);
 		String prevDate = sdfQueryDate.format(prevDateCalendar.getTime());
-		System.out.println("prevDate:" + prevDate);
+		//System.out.println("prevDate:" + prevDate);
 		renderRequest.setAttribute("prevDate", prevDate);
 		
 		//title data
@@ -166,7 +166,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
 //		dynamicQuery.setLimit(0, 5);
 		eventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
-		System.out.println("event count:" + eventList.size());
+		//System.out.println("event count:" + eventList.size());
 		return eventList;
 	}
 
@@ -181,7 +181,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
 //		dynamicQuery.setLimit(0, 5);
 		eventList = (List<CalendarBooking>)CalendarBookingLocalServiceUtil.dynamicQuery(dynamicQuery);
-		System.out.println("event count:" + eventList.size());
+		//System.out.println("event count:" + eventList.size());
 		return eventList;
 	}
 
@@ -210,7 +210,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 				break;
 			}
 		}
-		System.out.println("event count:" + eventList.size());
+		//System.out.println("event count:" + eventList.size());
 		return eventList;
 	}
 	

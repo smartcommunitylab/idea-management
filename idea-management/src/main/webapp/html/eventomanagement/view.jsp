@@ -179,12 +179,17 @@
 		var curPortlet = '#p_p_id<portlet:namespace/>';
 		Liferay.Portlet.refresh(curPortlet);
 	}, [ 'aui-dialog', 'aui-dialog-iframe' ]);
+	
+	Liferay.provide(window, 'changeContextPortlet', 
+		  	function(url) {
+		    	this.document.location.href = url;
+		    },
+		    ['aui-dialog','aui-dialog-iframe']
+		  );	
 </aui:script>
 	
-
-
-
 
 <%
 	}
 %>
+
