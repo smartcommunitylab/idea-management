@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
@@ -11,17 +12,32 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@page import="java.util.List"%>
+<%@ page import="javax.portlet.WindowState" %>
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <portlet:defineObjects />
 <liferay-theme:defineObjects />
 
 <%
 	List<CalendarBooking> eventList = (List<CalendarBooking>) request.getAttribute("eventList");
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd",locale);
+    
+    String activeDate = ParamUtil.getString(renderRequest, "date", dateFormatter.format(new Date()));
 
-	String baseUrl = Utils.getBaseURL(request);  
+	String baseUrl = Utils.getBaseURL(request); 
+    Map<String,Object> params = new HashMap<String,Object>();
+    params.put("date", (String) request.getAttribute("prevDate"));
+	String prevURL = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED); 
+    
+    params.put("date", (String) request.getAttribute("nextDate"));
+    String nextURL = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
+    
+    params.put("date", dateFormatter.format(new Date()));
+    String todayURL = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
+    
 
 	StringBuffer stringBuf = new StringBuffer();
-	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	stringBuf.append("[");
 	for(CalendarBooking event : eventList) {
 		stringBuf.append("{");
@@ -33,7 +49,7 @@
 		cal.setTimeInMillis(event.getEndTime());
 		stringBuf.append(String.format("end:'%s',", dateFormatter.format(cal.getTime())));
 		
-		Map<String,Object> params = new HashMap<String,Object>();
+		params = new HashMap<String,Object>();
 		params.put("eventId", String.valueOf(event.getCalendarBookingId()));
 		params.put("mvcPath", "/html/eventomanagement/viewevent.jsp");
 		String detailURL = Utils.generateRenderURL(renderResponse, baseUrl, params, LiferayWindowState.POP_UP);
@@ -46,11 +62,6 @@
 	String events = stringBuf.toString();
 %>
 
-
-
-
-
-<p><%=events%></p>
 <div id="calendar"></div>
 
 <script type="text/javascript">
@@ -60,9 +71,9 @@ $(document).ready(function() {
 		header: {
 			left: 'prev,next today',
 			center: 'title',
-			//right: 'month,basicWeek,basicDay'
+			right: ''
 		},
-		defaultDate: new Date(),
+		defaultDate: '<%= activeDate%>',
 		editable: false,
 		eventLimit: true, // allow "more" link when too many events
         firstDay:1,
@@ -71,6 +82,25 @@ $(document).ready(function() {
         },
 		events: <%=events%>
 	});
+    
+    // hook to override behaviour of month selector buttons
+    $('.fc-prev-button').unbind('click');
+    $('.fc-next-button').unbind('click');
+    $('.fc-today-button').unbind('click');
+    
+	$('.fc-prev-button').click(function(e) {
+        e.preventDefault();
+        window.location = '<%= prevURL %>';
+    });
+    $('.fc-next-button').click(function(e) {
+        e.preventDefault();
+        window.location.href = '<%= nextURL %>';
+    });
+    
+    $('.fc-today-button').click(function(e) {
+        e.preventDefault();
+        window.location.href = '<%= todayURL %>';
+    });
 
 });
 </script>
