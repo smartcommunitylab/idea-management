@@ -16,6 +16,7 @@
 	<script type="text/javascript" src="${javascript_folder}/vendor/jquery.min.js"></script>
 	<script type="text/javascript" src="${javascript_folder}/vendor/moment.min.js"></script>
 	<script type="text/javascript" src="${javascript_folder}/vendor/fullcalendar.min.js"></script>
+	<script type="text/javascript" src="${javascript_folder}/vendor/lang-all.js"></script>
 	
 </head>
 
