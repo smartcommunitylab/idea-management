@@ -18,6 +18,7 @@
 <portlet:defineObjects />
 <liferay-theme:defineObjects />
 
+<%@include file="/html/eventomanagement/common_event_scripts.jsp" %>
 <%
 	List<CalendarBooking> eventList = (List<CalendarBooking>) request.getAttribute("eventList");
     SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd",locale);
@@ -106,6 +107,3 @@ $(document).ready(function() {
 
 });
 </script>
-
-<jsp:include page="common_event_scripts.jsp"></jsp:include>
-

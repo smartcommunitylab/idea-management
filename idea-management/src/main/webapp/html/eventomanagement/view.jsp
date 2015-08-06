@@ -22,6 +22,8 @@
 <portlet:defineObjects />
 <liferay-theme:defineObjects />
 
+<%@include file="/html/eventomanagement/common_event_scripts.jsp" %>
+
 <%-- <jsp:useBean id="searchEvents" class="com.liferay.portal.kernel.dao.search.SearchContainer" scope="request"/>
 <jsp:useBean id="searchResources" class="com.liferay.portal.kernel.dao.search.SearchContainer" scope="request"/>
  --%>
@@ -147,7 +149,7 @@
 	</ul>
 </div>
 
-<jsp:include page="common_event_scripts.jsp"></jsp:include>
+
 <%
 	}
 %>
