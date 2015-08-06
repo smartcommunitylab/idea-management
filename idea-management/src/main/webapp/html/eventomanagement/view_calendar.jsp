@@ -1,8 +1,4 @@
 <%@page import="java.util.Date"%>
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet"%>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
-
 <%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
@@ -15,13 +11,12 @@
 <%@ page import="javax.portlet.WindowState" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
-<portlet:defineObjects />
-<liferay-theme:defineObjects />
+<%@ include file="/html/common-init.jsp" %>
 
 <%@include file="/html/eventomanagement/common_event_scripts.jsp" %>
 <%
 	List<CalendarBooking> eventList = (List<CalendarBooking>) request.getAttribute("eventList");
-    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd",locale);
+    dateFormatter = new SimpleDateFormat("yyyy-MM-dd",locale);
     
     String activeDate = ParamUtil.getString(renderRequest, "date", dateFormatter.format(new Date()));
 

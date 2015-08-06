@@ -1,5 +1,3 @@
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui"%>
-
 <aui:script>
 	Liferay.provide(window, 'showPopup', function(url, title) {
 		var instance = this;
