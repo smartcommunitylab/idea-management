@@ -80,7 +80,7 @@
 	dynamicQueryIdea.add(RestrictionsFactoryUtil.eq("userGroupId", userGroupId));
 	List<Idea> ideaList = (List<Idea>) IdeaLocalServiceUtil.dynamicQuery(dynamicQueryIdea);
 	if((ideaList != null) && (ideaList.size() > 0)) {
-		String redirectPage = PortletProps.get("datail.page");
+		String redirectPage = PortletProps.get("detail.page");
 		redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/idea/-/" 
 			+ ideaList.get(0).getIdeaId() + "/view";
 	} else {
