@@ -10,6 +10,9 @@ public class Constants {
 	public static final int PAGINATION_ELEMENTS_IN_PAGE = 5;
 	public static final int PAGINATION_CALL_ELEMENTS_IN_PAGE = 5;
 
+	public static final String PREF_CAL_VIEWTYPE_LIST = "list";
+	public static final String PREF_CAL_VIEWTYPE_CALENDAR = "calendar";
+
 	public static final String PREF_VIEWTYPE_SIMPLE = "simple";
 	public static final String PREF_VIEWTYPE_COMPLEX = "complex";
 

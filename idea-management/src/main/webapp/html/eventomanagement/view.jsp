@@ -1,3 +1,4 @@
+<%@page import="it.smartcommunitylab.platform.idea.portlet.Constants"%>
 <%@page import="com.liferay.portal.kernel.util.GetterUtil"%>
 <%@page import="com.liferay.portal.kernel.language.LanguageUtil"%>
 <%@page import="com.liferay.portal.kernel.portlet.LiferayWindowState"%>
@@ -41,11 +42,11 @@
 	String formTitle = LanguageUtil.get(locale, "evento_title_add_eventi");
 	java.text.SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", locale);
 	
-	String viewType = GetterUtil.getString(portletPreferences.getValue("type", "list"));
+	String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_CAL_VIEWTYPE_LIST));
 %>
 
 <%
-	if(viewType.equals("calendar")){
+	if(viewType.equals(Constants.PREF_CAL_VIEWTYPE_CALENDAR)){
 %>
 
 	<jsp:include page="view_calendar.jsp"/>
