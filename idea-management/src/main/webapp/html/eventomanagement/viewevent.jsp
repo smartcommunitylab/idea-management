@@ -81,8 +81,7 @@
 	List<Idea> ideaList = (List<Idea>) IdeaLocalServiceUtil.dynamicQuery(dynamicQueryIdea);
 	if((ideaList != null) && (ideaList.size() > 0)) {
 		String redirectPage = PortletProps.get("datail.page");
-		String redirectPlid = PortletProps.get("datail.plid");
-		redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/idea/" + redirectPlid + "/" 
+		redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/idea/-/" 
 			+ ideaList.get(0).getIdeaId() + "/view";
 	} else {
 		DynamicQuery dynamicQueryCall = CallLocalServiceUtil.dynamicQuery();
@@ -90,8 +89,7 @@
 		List<Call> callList = (List<Call>) CallLocalServiceUtil.dynamicQuery(dynamicQueryCall);
 		if((callList != null) && (callList.size() > 0)) {
 			String redirectPage = PortletProps.get("call.page");
-			String redirectPlid = PortletProps.get("call.plid");
-			redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/call/" + redirectPlid + "/" 
+			redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/call/-/" 
 				+ callList.get(0).getCallId() + "/view";
 		}
 	}
