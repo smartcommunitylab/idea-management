@@ -8,7 +8,7 @@
 	<category name="category.journal">
 		<portlet id="call-management"></portlet>
 	</category>	
-	<category name="category.sample">
+	<category name="category.cms">
 		<portlet id="evento-management"></portlet>
 	</category>
 	<category name="category.community">
