@@ -114,14 +114,25 @@ public class CallAssetRenderer extends BaseAssetRenderer {
 			LiferayPortletResponse liferayPortletResponse) throws Exception {
 		return null;
 	}
-	
+
 	@Override
-	public PortletURL getURLView(LiferayPortletResponse liferayPortletResponse, WindowState windowState) throws Exception {
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(Constants.CALL_PORTLET_ID, PortletRequest.RENDER_PHASE);
-				 portletURL.setParameter("mvcPath", "/html/callmanagement/asset/full_content.jsp");
-				 portletURL.setWindowState(windowState);
-				 portletURL.setParameter("callId", String.valueOf(call.getCallId()));
-				 return portletURL;	
+	public PortletURL getURLView(LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState) throws Exception {
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+				Constants.CALL_PORTLET_ID, PortletRequest.RENDER_PHASE);
+		portletURL.setParameter("mvcPath",
+				"/html/callmanagement/asset/full_content.jsp");
+		portletURL.setWindowState(windowState);
+		portletURL.setParameter("callId", String.valueOf(call.getCallId()));
+		return portletURL;
+	}
+
+	@Override
+	public String getURLViewInContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect) throws Exception {
+		return "call/-/call/-/" + call.getCallId() + "/view";
 	}
 
 	@Override
