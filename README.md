@@ -79,6 +79,8 @@ To change the theme for already created users:
 - in control panel / configuration /users set 'Last Name Required' true
 - in 'site / content management / Documents and Media' delete unnecessary data types (contracts, etc.)
 - configure the mail message templates
+- deploy portal-customization ext plugin
+- restart the server
 
 ### Data Structures
 
