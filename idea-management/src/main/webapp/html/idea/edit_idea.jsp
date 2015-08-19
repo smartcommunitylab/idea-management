@@ -86,9 +86,9 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' first="true" label="" name="title"></aui:input>
 	</aui:fieldset>
 
-  <aui:field-wrapper label="lbl_shortDesc" >
+  <!-- <aui:field-wrapper label="lbl_shortDesc" >
     <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_shortDesc") %>' name="shortDesc" type="textarea" label=""></aui:input>  
-  </aui:field-wrapper>
+  </aui:field-wrapper> -->
   
 	<aui:field-wrapper label="lbl_longDesc">
     <aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
@@ -153,11 +153,7 @@ AUI().use('aui-form-validator',
 	    },
 	    <portlet:namespace/>title: {
 	        required: true
-	    },
-      <portlet:namespace/>shortDesc: {
-          required: true,
-          maxLength: 140
-      }
+	    }
 	 };
 	 new A.FormValidator(
 		      {

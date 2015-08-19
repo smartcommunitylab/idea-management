@@ -56,10 +56,10 @@ if (passedGroupId == 0) passedGroupId = themeDisplay.getScopeGroupId();
                 <h6 class="field"><liferay-ui:message key="lbl_lastName"/></h6>
                 <p class="value"><%=userBean.getLastName()%></p>
               </div>
-              <div class="entry">
+              <!-- <div class="entry">
                 <h6 class="field"><liferay-ui:message key="lbl_email"/></h6>
                 <p class="value"><%=userBean.getEmailAddress()%></p>
-              </div>
+              </div> -->
               <div class="entry">
                 <h6 class="field"><liferay-ui:message key="lbl_sex"/></h6>
                 <p class="value">
