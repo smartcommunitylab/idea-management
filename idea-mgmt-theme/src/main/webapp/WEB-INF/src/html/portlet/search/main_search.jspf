@@ -1,0 +1,229 @@
+<%--
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+
+SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+mainSearchSearchContainer.setEmptyResultsMessage(LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchContext.getKeywords()) + "</strong>"));
+
+searchContext.setAttribute("paginationType", "more");
+searchContext.setEnd(mainSearchSearchContainer.getEnd());
+
+QueryConfig queryConfig = new QueryConfig();
+
+queryConfig.setCollatedSpellCheckResultEnabled(collatedSpellCheckResultEnabled);
+queryConfig.setCollatedSpellCheckResultScoresThreshold(collatedSpellCheckResultDisplayThreshold);
+queryConfig.setHighlightEnabled(true);
+queryConfig.setQueryIndexingEnabled(queryIndexingEnabled);
+queryConfig.setQueryIndexingThreshold(queryIndexingThreshold);
+queryConfig.setQuerySuggestionEnabled(querySuggestionsEnabled);
+queryConfig.setQuerySuggestionScoresThreshold(querySuggestionsDisplayThreshold);
+queryConfig.setQuerySuggestionsMax(querySuggestionsMax);
+
+searchContext.setQueryConfig(queryConfig);
+
+searchContext.setStart(mainSearchSearchContainer.getStart());
+
+Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
+
+assetEntriesFacet.setStatic(true);
+
+searchContext.addFacet(assetEntriesFacet);
+
+Facet scopeFacet = new ScopeFacet(searchContext);
+
+scopeFacet.setStatic(true);
+
+searchContext.addFacet(scopeFacet);
+
+List<FacetConfiguration> facetConfigurations = FacetConfigurationUtil.load(searchConfiguration);
+
+for (FacetConfiguration facetConfiguration : facetConfigurations) {
+	Facet facet = FacetFactoryUtil.create(searchContext, facetConfiguration);
+
+	searchContext.addFacet(facet);
+}
+
+Indexer indexer = FacetedSearcher.getInstance();
+
+Hits hits = indexer.search(searchContext);
+
+String[] queryTerms = hits.getQueryTerms();
+
+request.setAttribute("search.jsp-queryTerms", queryTerms);
+
+boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTypeFacet || displayAssetTagsFacet || displayAssetCategoriesFacet || displayFolderFacet || displayUserFacet || displayModifiedRangeFacet;
+%>
+
+
+
+<aui:row cssClass='<%= "search-layout" + (showMenu ? " menu-column" : StringPool.BLANK) %>'>
+
+
+	<aui:col cssClass="result" first="<%= !showMenu %>" span="10">
+	
+
+<%
+for(com.liferay.portal.kernel.search.Document document : hits.toList()) {
+
+        
+String className = document.get(Field.ENTRY_CLASS_NAME);
+
+String entryTitle = null;
+String entrySummary = null;
+String downloadURL = null;
+String returnToFullPageURL = (String)request.getAttribute("search.jsp-returnToFullPageURL");
+PortletURL viewFullContentURL = null;
+String viewURL = null;
+
+AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+AssetRenderer assetRenderer = null;
+
+boolean inheritRedirect = false;
+
+if (assetRendererFactory != null) {
+	long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+	long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
+
+	if (resourcePrimKey > 0) {
+		classPK = resourcePrimKey;
+	}
+
+	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
+
+	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+
+	downloadURL = assetRenderer.getURLDownload(themeDisplay);
+
+	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, PortletKeys.ASSET_PUBLISHER, document);
+
+	viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
+
+	if (Validator.isNotNull(returnToFullPageURL)) {
+		viewFullContentURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+	}
+
+	viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+	viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+
+	if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+		if ((assetRenderer.getGroupId() > 0) && (assetRenderer.getGroupId() != scopeGroupId)) {
+			viewFullContentURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+		}
+
+		viewFullContentURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+	}
+
+	if (viewInContext || !assetEntry.isVisible()) {
+		inheritRedirect = true;
+
+		String viewFullContentURLString = viewFullContentURL.toString();
+
+		viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+
+		viewURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, viewFullContentURLString);
+
+		viewURL = AssetUtil.checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDisplay);
+	}
+	else {
+		viewURL = viewFullContentURL.toString();
+	}
+}
+else {
+	String portletId = document.get(Field.PORTLET_ID);
+
+	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, portletId, document);
+
+	if (Validator.isNotNull(returnToFullPageURL)) {
+		viewFullContentURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+	}
+
+	viewURL = viewFullContentURL.toString();
+}
+
+indexer = IndexerRegistryUtil.getIndexer(className);
+
+Summary summary = null;
+
+if (indexer != null) {
+	String snippet = document.get(Field.SNIPPET);
+
+	summary = indexer.getSummary(document, locale, snippet, viewFullContentURL);
+
+	entryTitle = summary.getTitle();
+	entrySummary = summary.getContent();
+}
+else if (assetRenderer != null) {
+	entryTitle = assetRenderer.getTitle(locale);
+	entrySummary = assetRenderer.getSearchSummary(locale);
+}
+
+if ((assetRendererFactory == null) && viewInContext) {
+	viewURL = viewFullContentURL.toString();
+}
+
+viewURL = _checkViewURL(themeDisplay, viewURL, currentURL, inheritRedirect);
+
+queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
+
+portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
+
+%>
+<% if(! className.equals("com.liferay.calendar.model.CalendarBooking") || ! className.equals("com.liferay.portal.model.User")) {%>
+<div class="asset-entry" style="margin-top: 2em;">
+    
+    <span class="asset-entry-type">
+		<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className) %>
+		
+	</span>
+
+	<span class="element-start">
+		<a href="<%= viewURL %>">
+			<c:if test="<%= assetRenderer != null %>">
+				<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
+			</c:if>
+
+			<%= HtmlUtil.escape(entryTitle) %>
+		</a>
+
+		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
+			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle)) %>' url="<%= downloadURL %>" />
+		</c:if>
+	</span>
+
+	<%
+	String[] assetCategoryIds = document.getValues(Field.ASSET_CATEGORY_IDS);
+	String[] assetTagNames = document.getValues(Field.ASSET_TAG_NAMES);
+	%>
+
+	<c:if test="<%= Validator.isNotNull(entrySummary) || Validator.isNotNull(assetCategoryIds[0]) || Validator.isNotNull(assetTagNames[0]) %>">
+		<div class="asset-entry-content">
+			<c:if test="<%= Validator.isNotNull(entrySummary) %>">
+				<span class="element-description">
+					<%= StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
+				</span>
+			</c:if>
+		</div>
+	</c:if>
+</div>    
+<% } %>
+ <% } %>
+</aui:col>
+</aui:row>

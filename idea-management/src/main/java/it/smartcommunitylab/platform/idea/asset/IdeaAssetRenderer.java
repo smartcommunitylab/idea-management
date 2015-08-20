@@ -117,14 +117,23 @@ public class IdeaAssetRenderer extends BaseAssetRenderer {
 		return null;
 	}
 
-	
 	@Override
-	public PortletURL getURLView(LiferayPortletResponse liferayPortletResponse, WindowState windowState) throws Exception {
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(Constants.IDEA_PORTLET_ID, PortletRequest.RENDER_PHASE);
-				 portletURL.setParameter("mvcPath", "/html/idea/asset/full_content.jsp");
-//				 portletURL.setWindowState(WindowState.MAXIMIZED);
-				 portletURL.setParameter("ideaId", String.valueOf(idea.getIdeaId()));
-				 return portletURL;	
+	public PortletURL getURLView(LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState) throws Exception {
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+				Constants.IDEA_PORTLET_ID, PortletRequest.RENDER_PHASE);
+		portletURL.setParameter("mvcPath", "/html/idea/asset/full_content.jsp");
+		// portletURL.setWindowState(WindowState.MAXIMIZED);
+		portletURL.setParameter("ideaId", String.valueOf(idea.getIdeaId()));
+		return portletURL;
+	}
+
+	@Override
+	public String getURLViewInContext(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			String noSuchEntryRedirect) throws Exception {
+		return "detail/-/idea/-/" + idea.getIdeaId() + "/view";
 	}
 
 	@Override

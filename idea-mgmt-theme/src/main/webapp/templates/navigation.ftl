@@ -82,10 +82,9 @@
 						-->
 					</#if>
 				</ul>
-				<#-- <ul id="search">
+				<ul id="search">
 					<@aui["nav-item"] href="#" id="searchtoggle" iconCssClass="icon-search" />
 					
-					<#-- <@liferay_ui["toggle"] defaultShowContent=false id="searchform" /> ->
 					<li id="searchform">
 						<@liferay_ui["search"] />
 					</li>
@@ -102,7 +101,7 @@
 							}
 						};
 					</script>
-				</ul> -->
+				</ul>
 			</div>
 		</div>
 		<div class="navbar-row">

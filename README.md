@@ -44,6 +44,8 @@ image.default.user.male.portrait=placeholder_user.png
 # custom discussion notification email: see resources folder
 discussion.email.body=smartcommunitylab/discussion_email_body.tmpl
 discussion.email.subject=smartcommunitylab/discussion_email_subject.tmpl
+# search portlet
+search.facet.configuration=it/smartcommunitylab/platform/idea/search/facet_configuration.json
 ```
 To change the theme for already created users:
   - Set 
