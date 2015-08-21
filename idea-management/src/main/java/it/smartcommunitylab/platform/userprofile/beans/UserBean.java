@@ -2,6 +2,8 @@ package it.smartcommunitylab.platform.userprofile.beans;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 
 public class UserBean {
@@ -18,6 +20,7 @@ public class UserBean {
 	private String occupation;
 	private Gender gender;
 	private String emailAddress;
+	private String rangeAge;
 
 	public UserBean(User user) {
 		if (user != null) {
@@ -25,6 +28,9 @@ public class UserBean {
 			lastName = user.getLastName();
 			occupation = user.getJobTitle();
 			emailAddress = user.getEmailAddress();
+			rangeAge = GetterUtil.get(
+					user.getExpandoBridge().getAttribute("rangeAge"),
+					StringPool.BLANK);
 			try {
 				gender = user.getMale() ? Gender.M : Gender.F;
 			} catch (PortalException | SystemException e) {
@@ -105,6 +111,14 @@ public class UserBean {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+
+	public String getRangeAge() {
+		return rangeAge;
+	}
+
+	public void setRangeAge(String rangeAge) {
+		this.rangeAge = rangeAge;
 	}
 
 }
