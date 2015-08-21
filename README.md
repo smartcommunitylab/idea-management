@@ -75,6 +75,9 @@ To change the theme for already created users:
   * create Blacklisted regular role
   * create Manager user, set Manager role, Site Content Reviewer
   * create Moderator user, set Moderator role
+- create custom attribute for User model
+  * create attribute *rangeAge*, type TEXT, hide FALSE, visible on update TRUE, secret TRUE
+  * add permssion to *rangeAge* field : User can EDIT and VIEW
 - enable google/facebook login
 - configure mail server
 - configure workflow definitions
