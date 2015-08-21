@@ -76,6 +76,8 @@
 		String redirectPage = PortletProps.get("detail.page");
 		redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/idea/-/" 
 			+ ideaList.get(0).getIdeaId() + "/view";
+        contextLabel = LanguageUtil.get(locale, "evento_context_idea");
+        contextName = ideaList.get(0).getTitle();
 	} else {
 		DynamicQuery dynamicQueryCall = CallLocalServiceUtil.dynamicQuery();
 		dynamicQueryCall.add(RestrictionsFactoryUtil.eq("userGroupId", userGroupId));
@@ -84,6 +86,8 @@
 			String redirectPage = PortletProps.get("call.page");
 			redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/call/-/" 
 				+ callList.get(0).getCallId() + "/view";
+            contextLabel = LanguageUtil.get(locale, "evento_context_call");
+            contextName = callList.get(0).getTitle();
 		}
 	}
 %>
@@ -115,7 +119,7 @@
     <%-- <aui:button cssClass="formbutton-primary" type="button" value="Vedi idea"></aui:button> --%>
     <c:if test="<%= Validator.isNotNull(redirectUrl)%>">
     	<aui:button cssClass="formbutton-primary" onClick="javascript:window.redirectPortlet();" 
-    	 value='<%=LanguageUtil.get(locale, "evento_context_show") %>'></aui:button>
+    	 value='<%= contextLabel %>'></aui:button>
     </c:if>
   </aui:button-row>
   </div>
