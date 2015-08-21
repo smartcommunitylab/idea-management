@@ -99,6 +99,7 @@ To change the theme for already created users:
 - bind to structure `Idea category`
 - language Freemarker
 - copy content of idea-cat-struct.ftl in source of template
+- go to page section and bind `Idea category` to page *category*
 
 ### Site Layout
 
@@ -122,7 +123,7 @@ Apply Idea-mgmt-theme to the site.
   * Idea management portlet (visualization: simple, hide add button: true, type: popular, hide filters: true, pagination: 5, open links in 'detail' page)
 - **category** (invisible, parent AMBITI, 1 column)
   * Nested portlet (2 columns (70/30))
-    * LEFT: Asset Publisher (asset type: Web Content Article, subtype: Idea category, template: resources/idea-cat-struct.ftl)
+    * LEFT: Asset Publisher (asset type: Web Content Article, subtype: Idea category, template: resources/idea-cat-struct.ftl, flag Asset publisher as DEFAULT for the page)
     * RIGHT: event management portlet (visualization: list)
   * idea management portlet (visualization: extended, hide add button: false, type: recent, hide filters: false, pagination: 10, open links in 'detail' page)
 - **SFIDE** (visible, 1 column)
