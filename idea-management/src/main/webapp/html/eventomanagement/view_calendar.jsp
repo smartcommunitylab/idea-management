@@ -67,7 +67,7 @@ $(document).ready(function() {
 		header: {
 			left: 'prev,next today',
 			center: 'title',
-			right: ''
+			right: 'month,basicWeek,basicDay'
 		},
 		defaultDate: '<%= activeDate%>',
 		lang: 'it',
