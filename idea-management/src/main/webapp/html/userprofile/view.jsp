@@ -274,13 +274,13 @@
 											<aui:input
 												checked="<%=userBean.getGender().equals(
 												UserBean.Gender.M)%>"
-												type="radio" label="male" name="gender" value="M"
+												type="radio" label="lbl_sex_male" name="gender" value="M"
 												inlineField="true">
 											</aui:input>
 											<aui:input
 												checked="<%=userBean.getGender().equals(
 												UserBean.Gender.F)%>"
-												type="radio" label="female" name="gender" value="F"
+												type="radio" label="lbl_sex_female" name="gender" value="F"
 												inlineField="true">
 											</aui:input>
 										</aui:field-wrapper>
