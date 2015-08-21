@@ -45,7 +45,7 @@ image.default.user.male.portrait=placeholder_user.png
 discussion.email.body=smartcommunitylab/discussion_email_body.tmpl
 discussion.email.subject=smartcommunitylab/discussion_email_subject.tmpl
 # search portlet
-search.facet.configuration=it/smartcommunitylab/platform/idea/search/facet_configuration.json
+search.facet.configuration=smartcommunitylab/idea-management-facet_configuration.json
 ```
 To change the theme for already created users:
   - Set 
@@ -84,6 +84,7 @@ To change the theme for already created users:
 - in control panel / configuration /users set 'Last Name Required' true
 - in 'site / content management / Documents and Media' delete unnecessary data types (contracts, etc.)
 - configure the mail message templates
+- copy file idea-management/src/main/resources/it/smartcommunitylab/platform/idea/portlet/search/idea-management-facet_configuration.json in ROOT/WEB-INF/classes/smartcommunitylab/idea-management-facet_configuration.json
 - deploy portal-customization ext plugin
 - restart the server
 
