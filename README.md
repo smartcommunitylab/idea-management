@@ -108,12 +108,12 @@ Apply Idea-mgmt-theme to the site.
   * Nested portlet (1 - 2 columns (70/30))
     * TOP: Web content (for introduction)
     * LEFT: tag cloud (asset type: Idea, display template: resources/tag-cloud.ftl, open links in 'tags' page)
-    * RIGHT: event management portlet
+    * RIGHT: event management portlet (visualization: list)
   * Idea management portlet (visualization: simple, hide add button: true, type: recent, hide filters: true, pagination: 5, open links in 'detail' page)
   * Idea management portlet (visualization: simple, hide add button: true, type: popular, hide filters: true, pagination: 5, open links in 'detail' page)
 - **detail** (invisible, 2 columns (70/30))
   * LEFT: idea management portlet
-  * RIGHT: event management portlet
+  * RIGHT: event management portlet (visualization: list)
 - **tags** (invisible, parent HOME, 1 column)
   * idea management portlet (visualization: extended, hide add button: false, type: recent, hide filters: false, pagination: 10, open links in 'detail' page)
 - **AMBITI** (visible, 1 column)
@@ -123,17 +123,19 @@ Apply Idea-mgmt-theme to the site.
 - **category** (invisible, parent AMBITI, 1 column)
   * Nested portlet (2 columns (70/30))
     * LEFT: Asset Publisher (asset type: Web Content Article, subtype: Idea category, template: resources/idea-cat-struct.ftl)
-    * RIGHT: event management portlet
+    * RIGHT: event management portlet (visualization: list)
   * idea management portlet (visualization: extended, hide add button: false, type: recent, hide filters: false, pagination: 10, open links in 'detail' page)
 - **SFIDE** (visible, 1 column)
   * Call management portlet (type: open, open links in 'call' page)
   * Call management portlet (type: in discussion, open links in 'call' page)
   * Call management portlet (type: closed, open links in 'call' page)
-- **call** (invisible, 1 )  
+- **call** (invisible, 1 column)  
   * Nested portlet (2 columns (70/30))
     * LEFT: call management portley
     * RIGHT: event management portlet
   * idea management portlet (visualization: extended, hide add button: false, type: recent, hide filters: false, pagination: 10, open links in 'detail' page)
+- **CALENDARIO** (visible, 1 column)
+  * event management portlet (visualization: calendar)
 
   
 
