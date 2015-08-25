@@ -219,21 +219,7 @@ public class EventoManagementPortlet extends MVCPortlet {
 				e.printStackTrace();
 			}
 		}
-		// getSearchIteratorData(renderRequest, renderResponse, eventList);
 
-		// events as list of map attribute
-		// SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", locale);
-		// List<Map<String, String>> eventMapList = new ArrayList<Map<String,
-		// String>>();
-		// for(CalendarBooking event : eventList) {
-		// Map<String, String> eventMap = new HashMap<String, String>();
-		// eventMap.put("title", event.getTitle(locale));
-		// eventMap.put("description", event.getDescription(locale));
-		// eventMap.put("startDate", sdf.format(new
-		// Date(event.getStartTime())));
-		// eventMapList.add(eventMap);
-		// }
-		// renderRequest.setAttribute("eventList", eventMapList);
 		renderRequest.setAttribute("eventList", eventList);
 		super.doView(renderRequest, renderResponse);
 	}
@@ -263,25 +249,10 @@ public class EventoManagementPortlet extends MVCPortlet {
 		return eventList;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<CalendarBooking> getEventsByDate(Date queryDate)
 			throws SystemException {
-		List<CalendarBooking> eventList;
-		DynamicQuery dynamicQuery = CalendarBookingLocalServiceUtil
-				.dynamicQuery();
-		Criterion criterionStatus = RestrictionsFactoryUtil.eq("status",
-				WorkflowConstants.STATUS_APPROVED);
 		Long[] range = getTimeInterval(queryDate);
-		Criterion criterionTime = RestrictionsFactoryUtil.between("startTime",
-				range[0], range[1]);
-		dynamicQuery.add(RestrictionsFactoryUtil.and(criterionTime,
-				criterionStatus));
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("startTime"));
-		// dynamicQuery.setLimit(0, 5);
-		eventList = (List<CalendarBooking>) CalendarBookingLocalServiceUtil
-				.dynamicQuery(dynamicQuery);
-		// System.out.println("event count:" + eventList.size());
-		return eventList;
+		return getEventsByDateRange(range[0], range[1]);
 	}
 
 	@SuppressWarnings("unchecked")
