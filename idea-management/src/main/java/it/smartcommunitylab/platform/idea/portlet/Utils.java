@@ -27,10 +27,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
@@ -217,12 +217,12 @@ public class Utils {
 		return url;
 	}
 
-	public static String generateRenderURL(RenderResponse res, String base,
+	public static String generateRenderURL(MimeResponse res, String base,
 			Map<String, Object> params) throws WindowStateException {
 		return generateRenderURL(res, base, params, null);
 	}
 
-	public static String generateRenderURL(RenderResponse res, String base,
+	public static String generateRenderURL(MimeResponse res, String base,
 			Map<String, Object> params, WindowState ws)
 			throws WindowStateException {
 		PortletURL url = res.createRenderURL();

@@ -14,49 +14,15 @@
 <%@ include file="/html/common-init.jsp" %>
 
 <%@include file="/html/eventomanagement/common_event_scripts.jsp" %>
+
 <%
-	List<CalendarBooking> eventList = (List<CalendarBooking>) request.getAttribute("eventList");
-    dateFormatter = new SimpleDateFormat("yyyy-MM-dd",locale);
-    
-    String activeDate = ParamUtil.getString(renderRequest, "date", dateFormatter.format(new Date()));
-
-	String baseUrl = Utils.getBaseURL(request); 
-    Map<String,Object> params = new HashMap<String,Object>();
-    params.put("date", (String) request.getAttribute("prevDate"));
-	String prevURL = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED); 
-    
-    params.put("date", (String) request.getAttribute("nextDate"));
-    String nextURL = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
-    
-    params.put("date", dateFormatter.format(new Date()));
-    String todayURL = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
-    
-
-	StringBuffer stringBuf = new StringBuffer();
-	dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-	stringBuf.append("[");
-	for(CalendarBooking event : eventList) {
-		stringBuf.append("{");
-		stringBuf.append(String.format("title:\"%s\",",event.getTitle(locale)));
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(event.getStartTime());
-		stringBuf.append(String.format("start:'%s',", dateFormatter.format(cal.getTime())));
-		cal = Calendar.getInstance();
-		cal.setTimeInMillis(event.getEndTime());
-		stringBuf.append(String.format("end:'%s',", dateFormatter.format(cal.getTime())));
-		
-		params = new HashMap<String,Object>();
-		params.put("eventId", String.valueOf(event.getCalendarBookingId()));
-		params.put("mvcPath", "/html/eventomanagement/viewevent.jsp");
-		String detailURL = Utils.generateRenderURL(renderResponse, baseUrl, params, LiferayWindowState.POP_UP);
-		
-		stringBuf.append(String.format("detailURL:'%s'", detailURL));
-		stringBuf.append("},");
-	}
-	stringBuf.append("]");
-	
-	String events = stringBuf.toString();
+dateFormatter = new SimpleDateFormat("yyyy-MM-dd",locale);
+String activeDate = ParamUtil.getString(renderRequest, "date", dateFormatter.format(new Date()));
 %>
+
+
+<portlet:resourceURL var="calendarAjaxUrl">
+</portlet:resourceURL>
 
 <div id="calendar"></div>
 
@@ -78,27 +44,10 @@ $(document).ready(function() {
         eventClick: function(calEvent, jsEvent, view) {
             javascript:window.showPopup(calEvent.detailURL,'<liferay-ui:message key="evento_title_view_eventi"/>')
         },
-		events: <%=events%>
+		events: '<%= calendarAjaxUrl %>',
+		startParam: '<portlet:namespace/>start',
+		endParam: '<portlet:namespace/>end'
 	});
     
-    // hook to override behaviour of month selector buttons
-    $('.fc-prev-button').unbind('click');
-    $('.fc-next-button').unbind('click');
-    $('.fc-today-button').unbind('click');
-    
-	$('.fc-prev-button').click(function(e) {
-        e.preventDefault();
-        window.location = '<%= prevURL %>';
-    });
-    $('.fc-next-button').click(function(e) {
-        e.preventDefault();
-        window.location.href = '<%= nextURL %>';
-    });
-    
-    $('.fc-today-button').click(function(e) {
-        e.preventDefault();
-        window.location.href = '<%= todayURL %>';
-    });
-
 });
 </script>
