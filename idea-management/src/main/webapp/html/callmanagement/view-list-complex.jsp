@@ -106,7 +106,15 @@ params.put("mvcPath", "/html/callmanagement/add_call.jsp");
   
   <c:if test='<%=list.size() ==0 %>'>
   <div class="row-fluid">
-  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
+  	<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) %>'>
+  		<span class="empty-results"><liferay-ui:message key="lbl_call_no_open_result"/></span>
+  	</c:if>
+		<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION) %>'>
+			<span class="empty-results"><liferay-ui:message key="lbl_call_no_indiscussion_result"/></span>
+		</c:if>
+		<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED) %>'>
+			<span class="empty-results"><liferay-ui:message key="lbl_call_no_closed_result"/></span>
+		</c:if>
   </div>
   </c:if>
 </div>
