@@ -8,7 +8,7 @@
 		<div class="navbar-row">
 			<#-- <@liferay.language key="powered-by" /> -->
 			<div class="powered-by">
-				<a href="http://www.smartcommunitylab.it" rel="external">&copy; Smart Community Lab - Fondazione Bruno Kessler</a>
+				<a href="http://www.smartcommunitylab.it" rel="external">&copy; 2015 Smart Community Lab - Fondazione Bruno Kessler</a>
 			</div>
 			<ul id="footer-navmenu" aria-label="<@liferay.language key="site-pages" />" role="menubar" class="nav">					
 				<#list nav_items as nav_item>
