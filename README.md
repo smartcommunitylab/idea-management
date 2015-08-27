@@ -81,7 +81,9 @@ To change the theme for already created users:
 - enable google/facebook login
 - configure mail server
 - configure workflow definitions
-- in control panel / configuration /users set 'Last Name Required' true
+- in control panel / configuration /users 
+  * set 'Last Name Required' true
+  * set 'Enable Birthday' false
 - in 'site / content management / Documents and Media' delete unnecessary data types (contracts, etc.)
 - configure the mail message templates
 - copy file idea-management/src/main/resources/it/smartcommunitylab/platform/idea/portlet/search/idea-management-facet_configuration.json in ROOT/WEB-INF/classes/smartcommunitylab/idea-management-facet_configuration.json
