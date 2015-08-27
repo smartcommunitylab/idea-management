@@ -63,7 +63,8 @@
                 <h6 class="field"><liferay-ui:message key="lbl_email"/></h6>
                 <p class="value"><%=userBean.getEmailAddress()%></p>
               </div> -->
-								<div class="entry">
+ 
+								<!--  div class="entry">
 									<h6 class="field">
 										<liferay-ui:message key="lbl_sex" />
 									</h6>
@@ -88,8 +89,9 @@
 									<p class="value">
 										<%=userBean.getRangeAge()%>
 									</p>
-								</div>
+								</div -->
 							</div>
+<!-- 							
 							<div class="span6">
 								<div class="entry">
 									<h6 class="field">
@@ -121,6 +123,7 @@
 									</p>
 								</div>
 							</div>
+-->							
 				</c:when>
 				<c:otherwise>
 					<!-- FORM -->
@@ -289,11 +292,9 @@
 										<aui:field-wrapper cssClass="simple-field"
 											label="lbl_rangeAge" required="true">
 											<aui:select name="rangeAge" showEmptyOption="true" label="">
-												<aui:option value="<16" label="<16"></aui:option>
-												<aui:option value="16-35" label="16-35"></aui:option>
-												<aui:option value="36-55" label="36-55"></aui:option>
-												<aui:option value="56-75" label="56-75"></aui:option>
-												<aui:option value=">75" label=">75"></aui:option>
+											  <% for (String ageRangeItem : UserBean.AGE_RANGES) { %>
+												<aui:option value="<%=ageRangeItem %>" label="<%=ageRangeItem %>"></aui:option>
+												<% } %>
 											</aui:select>
 										</aui:field-wrapper>
 									</div>

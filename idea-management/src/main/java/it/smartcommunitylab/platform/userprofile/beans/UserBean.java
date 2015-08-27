@@ -1,13 +1,32 @@
 package it.smartcommunitylab.platform.userprofile.beans;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 
 public class UserBean {
 
+	public static final String[] AGE_RANGES = new String[]{"<16","16-35", "36-55","56-75",">75"};
+	public static final String dob2Age(Date dob) {
+		Calendar now = Calendar.getInstance();
+		Calendar c = Calendar.getInstance();
+		c.setTime(dob);
+		int years = now.get(Calendar.YEAR) - c.get(Calendar.YEAR);
+		if (now.get(Calendar.MONTH) < c.get(Calendar.MONTH) || 
+			now.get(Calendar.MONTH) == c.get(Calendar.MONTH) && now.get(Calendar.DAY_OF_MONTH) < c.get(Calendar.DAY_OF_MONTH)) years--;
+		if (years < 16) return AGE_RANGES[0];
+		if (years < 36) return AGE_RANGES[1];
+		if (years < 56) return AGE_RANGES[2];
+		if (years < 76) return AGE_RANGES[3];
+		return AGE_RANGES[4];
+	}
+	
 	public static enum Gender {
 		M, F
 	};
@@ -35,6 +54,13 @@ public class UserBean {
 				gender = user.getMale() ? Gender.M : Gender.F;
 			} catch (PortalException | SystemException e) {
 				gender = Gender.F;
+			}
+			try {
+				if (Validator.isBlank(rangeAge) && user.getBirthday() != null) {
+					rangeAge = dob2Age(user.getBirthday());
+				}
+			} catch (PortalException | SystemException e1) {
+				
 			}
 
 			try {
