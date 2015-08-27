@@ -71,8 +71,10 @@
 					onClick="javascript:window.showPopup('<%=addEventURL.toString()%>','<liferay-ui:message key="evento_title_add_eventi"/>')"><span>+</span></a>
 			</c:if>
 			<a class="event-container-button event-container-button-prev"
-				href='<%=viewPrevURL%>'><span>&lt;</span></a> <a
-				class="event-container-button event-container-button-next"
+				title="<liferay-ui:message key="evento_prev_tooltip"/>"
+				href='<%=viewPrevURL%>'><span>&lt;</span></a> 
+			<a class="event-container-button event-container-button-next"
+				title="<liferay-ui:message key="evento_next_tooltip"/>"
 				href='<%=viewNextURL%>'><span>&gt;</span></a>
 		</div>
 	</div>
