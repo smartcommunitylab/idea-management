@@ -61,13 +61,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</aui:col>
 
 								<aui:col cssClass="lfr-discussion-body" width="75">
-									<c:if test="<%= (message != null) && !message.isApproved() %>">
+									<!--<c:if test="<%= (message != null) && !message.isApproved() %>">
 										<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 
 										<div>
 											<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= message.getStatus() %>" />
 										</div>
-									</c:if>
+									</c:if>-->
 
 									<div class="lfr-discussion-message">
 
