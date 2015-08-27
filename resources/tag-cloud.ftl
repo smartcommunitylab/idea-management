@@ -2,9 +2,11 @@
 <#if entries?has_content>
     <#assign counter = 0 >
     <#assign portletURL = renderResponse.createRenderURL() >
+    <#assign ATSLS = serviceLocator.findService("com.liferay.portlet.asset.service.AssetTagStatsLocalService") />
 	<#list entries?sort_by("assetCount")?reverse as curTag>
 	    ${portletURL.setParameter("resetCur", "true")}
     	${portletURL.setParameter("tag", curTag.name)}
+    	<#assign stat = ATSLS.getTagStats(curTag.getTagId(),portalUtil.getClassNameId("it.smartcommunitylab.platform.idea.model.Idea")) >
 	    <#if (counter % 2) == 0 >
         <div class="row-fluid tagcloud-row">
 		  <div class="span6 tagcloud-left">
@@ -12,7 +14,7 @@
 		      <span class="tagcloud-dot">.</span>
 		      <div class="tagcloud-node">
 		        <span class="tagcloud-name">${curTag.name}</span>
-		        <span class="tagcloud-count">${curTag.getAssetCount()}</span>
+		        <span class="tagcloud-count">${stat.getAssetCount()}</span>
 		      </div>
 		    </div>
 		  </div>
@@ -20,7 +22,7 @@
 		  <div class="span6 tagcloud-right">
 		    <div class="tagcloud-wrapper" onClick="javascript:window.location='${htmlUtil.escape(portletURL.toString())}';">
 		      <div class="tagcloud-node">
-		        <span class="tagcloud-count">${curTag.getAssetCount()}</span>
+		        <span class="tagcloud-count">${stat.getAssetCount()}</span>
 		        <span class="tagcloud-name">${curTag.name}</span>
 		      </div>
      		  <span class="tagcloud-dot">.</span>
