@@ -120,9 +120,8 @@
       <a class="share-on-link share-on-googleplus" target="_blank" href="https://plus.google.com/share?url=<%=canonicalURL%>"></a>
   </div>  
 </div>
- 
- <liferay-ui:panel-container accordion="true" extended="true">
-	<liferay-ui:panel state="open" collapsible="true" id="info" title='<%= LanguageUtil.get(locale, "lbl_info") %>'>
+
+<div class="idea-info">
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
     <c:if test="<%=parentTagSet.size() > 0 %>">
     <div class="row-fluid info-meta">
@@ -145,8 +144,8 @@
 		<liferay-ui:asset-links
 		  assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
 		  className="<%=Idea.class.getName()%>" classPK="<%=idea.getIdeaId()%>" />
-  </liferay-ui:panel>
-  <liferay-ui:panel state="closed" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
+</div>
+<div class="idea-social">
     <c:if test="<%=!themeDisplay.isSignedIn()%>">
       <div class="row-fluid">
         <span class="span12 idea-creator text-right">
@@ -216,16 +215,19 @@
           </div>
         </div>
       </div>
-      <hr/>
-        <div class="row-fluid">
-          <span class="span12 idea-creator text-right">
-              <liferay-ui:message key="lbl_discussionExpiration" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.discussionDeadline())}%>" />  
-          </span>
-        </div>
     </c:if>
+</div>
+ 
+ <liferay-ui:panel-container accordion="true" extended="true">
+  <liferay-ui:panel state="closed" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
     <%
     boolean discussionEnabled = Utils.discussionEnabled(idea, renderRequest);
     %>
+    <div class="row-fluid">
+    	<span class="span12 idea-creator text-right">
+      	<liferay-ui:message key="lbl_discussionExpiration" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.discussionDeadline())}%>" />  
+      </span>
+    </div>
     <div class='row-fluid discussion-container'>
       <portlet:actionURL name="addComment" var="discussionURL">
         <!-- workaround to invoke liferary class that manage comment/discussion -->
