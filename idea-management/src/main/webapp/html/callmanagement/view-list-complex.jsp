@@ -91,7 +91,7 @@ params.put("mvcPath", "/html/callmanagement/add_call.jsp");
   </div>
 <% } %>
   
-  <c:if test='<%=list.size() > 0 && !viewAll %>'>
+  <c:if test='<%=list.size() >= delta && !viewAll %>'>
   <div class="row-fluid call-paging">
     <div class="span12">
       <% 
