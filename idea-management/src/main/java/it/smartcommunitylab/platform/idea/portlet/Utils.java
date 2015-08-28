@@ -46,8 +46,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -167,6 +172,18 @@ public class Utils {
 		}
 	}
 
+	public static boolean isOfficialEvent(CalendarBooking evt, PortletRequest req) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
+		try {
+			PermissionChecker checker = PermissionCheckerFactoryUtil.create(UserLocalServiceUtil.getUser(evt.getUserId()));
+			return checker.isContentReviewer(themeDisplay.getCompanyId(),
+							themeDisplay.getScopeGroupId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	} 
+	
 	public static boolean callEditEnabled(Call call, PortletRequest req) {
 		return callAddEnabled(req);
 	}

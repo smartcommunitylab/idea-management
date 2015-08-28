@@ -1406,7 +1406,7 @@ header#banner {
 
 .event-container-element {
 	margin-left: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	display: flex;
 }
 
@@ -1427,6 +1427,17 @@ header#banner {
 .event-container-element .element-start {
 	font-size: 16px;
 	color: #4EB9A4;
+	display: inline-block;
+}
+
+.event-container-element .element-start .element-official,
+.event-view-container .event-view-header .event-view-official
+ {
+	  background-color: #4EB9A4;
+    color: white;
+    font-size: 12px;
+    padding: 1px 4px;
+    display: inline;
 }
 
 .event-container-element .element-controls {
@@ -1438,6 +1449,12 @@ header#banner {
 .event-container-element .element-controls a {
 	/* 	color: #E83D5F; */
 	
+}
+
+.event-container-element .element-title {
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: bolder; 
 }
 
 .tagcloud-row .tagcloud-node {
@@ -1588,13 +1605,21 @@ header#banner {
 	margin-bottom: 16px;
 }
 
-.event-view-context {
-	font-size: 16px;
+/* .event-view-context { */
+/* 	font-size: 16px; */
+/* } */
+
+.event-view-context span {
+  text-transform: uppercase;
+}
+
+.event-view-container .event-view-title {
+	font-weight: bolder;
 }
 
 .event-view-container .formbutton-row {
 	position: absolute;
-	bottom: 0px;
+	display: block;
 	right: 30px;
 }
 

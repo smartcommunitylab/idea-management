@@ -48,6 +48,7 @@
 		</portlet:renderURL>
 		<aui:form cssClass="idea-form event-view-container" id="updateEvent"
 			name="updateEvent" action="<%=updateEventURL%>" method="post">
+			<div class="event-view-container-body">
 			<aui:fieldset cssClass="simple-field" label="evento_form_title">
 				<aui:input
 					placeholder='<%=LanguageUtil.get(locale, "evento_form_title")%>'
@@ -122,6 +123,7 @@
 			</div>
 			<aui:input name="eventId" value="<%=eventId%>" type="hidden" />
 			<aui:input name="redirect" value="<%=redirectURL%>" type="hidden" />
+			</div>
 			<aui:button-row cssClass="formbutton-row">
 				<aui:button cssClass="formbutton-cancel" type="cancel"
 					onClick="Liferay.Util.getWindow().hide();"></aui:button>
@@ -279,5 +281,8 @@
 								});
 					});
 
-	
+	window.onload = function() {
+		   document.getElementsByClassName('event-view-container-body')[0].style['min-height'] = (window.innerHeight - 113)+'px';
+		};  
+
 </aui:script>

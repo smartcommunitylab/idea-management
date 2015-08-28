@@ -8,6 +8,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
 
 <%@ include file="/html/common-init.jsp" %>
 <%@include file="/html/eventomanagement/common_event_scripts.jsp" %>
@@ -81,6 +82,7 @@
 	<ul class="event-container-list">
 		<%
 			for (CalendarBooking event : eventList) {
+				  boolean isOfficial = Utils.isOfficialEvent(event, renderRequest);
 		%>
 		<li class="event-container-element"><portlet:renderURL
 				var="viewEventURL"
@@ -96,11 +98,17 @@
 			<div class="span10"
 				onClick="javascript:window.showPopup('<%=viewEventURL.toString()%>','<liferay-ui:message key="evento_title_view_eventi"/>')">
 				<div class="element-start">
-					<%=sdf.format(new java.util.Date(event.getStartTime()))%>
+	        <c:if test='<%=isOfficial %>'>
+  	        <div class="element-official"><liferay-ui:message key="lbl_event_official"/></div>
+	        </c:if>
+					<div><%=sdf.format(new java.util.Date(event.getStartTime()))%></div>
 				</div>
 				<div class="element-title"><%=event.getTitle(locale)%></div>
-				<div class="element-description"><%=event.getDescription(locale)%></div>
-			</div>
+<%-- 				<div class="element-description"><%=event.getDescription(locale)%></div> --%>
+				  <c:if test='<%= Validator.isNotNull(event.getLocation()) %>'>
+				    <div class="element-description"><%=event.getLocation() %></div>
+				  </c:if>
+  			</div>
 			<div class="span2 element-controls">
 				<c:if test='<%=Utils.eventEditEnabled(event, renderRequest)%>'>
 					<portlet:renderURL var="editEventURL"
