@@ -206,7 +206,20 @@
             <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
             <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
           </portlet:actionURL>
-          <div><a title="<liferay-ui:message key="lbl_tooltip_participate"/>" class='idea-button idea-button-tooltip-avail idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
+          <div>
+			<c:choose>
+				<c:when test="<%=isOwner%>">
+					<a title="<liferay-ui:message key="lbl_tooltip_participate_owner"/>"
+						class='idea-button idea-button-tooltip-avail idea-button-participate-<%=participates ? "disabled" : "enabled"%>'
+						href="#"></a>
+				</c:when>
+				<c:otherwise>
+					<a title="<liferay-ui:message key="lbl_tooltip_participate"/>"
+						class='idea-button idea-button-tooltip-avail idea-button-participate-<%=participates ? "disabled" : "enabled"%>'
+						href="<%=toggleURL.toString()%>"></a>
+				</c:otherwise>
+			</c:choose>
+          </div>
           <div><span><liferay-ui:message key="lbl_participating"/></span></div>
           <div class="participation-details">
             <span><%=users.size() %></span>
