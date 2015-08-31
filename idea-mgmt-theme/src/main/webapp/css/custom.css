@@ -1729,3 +1729,7 @@ header#banner {
   margin-top: 0px !important;
   display: inline !important;
 }
+
+.delete-icon {
+	background-image: url('../images/delete.png');
+}
