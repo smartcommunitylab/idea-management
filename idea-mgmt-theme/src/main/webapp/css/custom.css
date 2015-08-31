@@ -522,6 +522,10 @@ header#banner {
     margin-bottom: 30px;
 }
 
+.idea-info div:first-child {
+	padding-bottom: 20px;
+}
+
 .idea-social {
 	padding-bottom: 30px;
 }
