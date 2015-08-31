@@ -148,7 +148,7 @@ Liferay.provide(window, 'redirectPortlet',
 Liferay.provide(window, 'closePopup', 
 	function() {
 		var dialog = Liferay.Util.getWindow('<portlet:namespace/>showEventFormIframe');
-		dialog.destroy(); // You can try toggle/hide whatever You want
+		dialog.destroy();
 	},
 	['aui-dialog','aui-dialog-iframe']
 );

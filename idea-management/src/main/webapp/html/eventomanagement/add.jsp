@@ -34,7 +34,8 @@
 		<aui:script>
 			Liferay.Util.getOpener().refreshPortlet();
 			// Mandatory to close the dialog
-			Liferay.Util.getWindow().hide();
+			var dialog = Liferay.Util.getWindow('<portlet:namespace/>showEventFormIframe');
+			dialog.destroy();
 		</aui:script>
 	</c:when>
 	<c:otherwise>
@@ -99,7 +100,7 @@
 			<aui:input name="redirect" value="<%=redirectURL%>" type="hidden" />
 			</div>
 			<aui:button-row  cssClass="formbutton-row">
-		    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();"></aui:button>
+		    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="javascript:window.closePopup();"></aui:button>
 		    <aui:button cssClass="formbutton-primary" type="submit"></aui:button>
 			</aui:button-row>
 		</aui:form>	
@@ -206,6 +207,13 @@ AUI().use('aui-base','liferay-form','aui-form-validator',
 );
 window.onload = function() {
 	   document.getElementsByClassName('event-view-container-body')[0].style['min-height'] = (window.innerHeight - 113)+'px';
-	};  
-
+	};
+	
+Liferay.provide(window, 'closePopup', 
+		function() {
+			var dialog = Liferay.Util.getWindow('<portlet:namespace/>showEventFormIframe');
+			dialog.destroy();
+		},
+		['aui-dialog','aui-dialog-iframe']
+	);
 </aui:script>
