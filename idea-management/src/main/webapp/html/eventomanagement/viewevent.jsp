@@ -115,7 +115,7 @@
   <div class="event-view-description"><liferay-ui:message key="evento_view_desc" />: <%=event.getDescription(locale)%></div>
   <div>
   <aui:button-row  cssClass="formbutton-row">
-    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="Liferay.Util.getWindow().hide();" value="lbl_close"></aui:button>
+    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="javascript:window.closePopup();" value="lbl_close"></aui:button>
     <%-- <aui:button cssClass="formbutton-primary" type="button" value="Vedi idea"></aui:button> --%>
     <c:if test="<%= Validator.isNotNull(redirectUrl)%>">
     	<aui:button cssClass="formbutton-primary" onClick="javascript:window.redirectPortlet();" 
@@ -130,6 +130,14 @@ Liferay.provide(window, 'redirectPortlet',
 	function() {
 		var url = '<%= redirectUrl %>';
 		Liferay.Util.getOpener().changeContextPortlet(url);
+	},
+	['aui-dialog','aui-dialog-iframe']
+);
+
+Liferay.provide(window, 'closePopup', 
+	function() {
+		var dialog = Liferay.Util.getWindow('<portlet:namespace/>showEventFormIframe');
+		dialog.destroy(); // You can try toggle/hide whatever You want
 	},
 	['aui-dialog','aui-dialog-iframe']
 );

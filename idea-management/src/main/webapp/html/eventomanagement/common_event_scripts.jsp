@@ -17,6 +17,7 @@
 				id : 'showEventFormIframe',
 				uri : url
 			},
+			id:'<portlet:namespace/>showEventFormIframe',
 			title : title,
 			uri : url
 		});
