@@ -35,10 +35,6 @@
   params.put("categoryId", categoryId);
   params.put("callId", callId);
   params.put("mvcPath", "/html/idea/view.jsp");
-
-//   portletURL.setParameter("categoryId", String.valueOf(categoryId));
-//   portletURL.setParameter("callId", String.valueOf(callId));
-//   portletURL.setParameter("mvcPath", "/html/idea/view.jsp");
   
 	int offset = delta - results.size();
 	String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
@@ -50,61 +46,43 @@
 
 	String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 %>
+
 <div class="row-fluid">
 	<span class="idea-slider-title offset1 span10"> <liferay-ui:message
 			key='<%="lbl_listTypeTitle_"+listType%>' />
 	</span>
 </div>
 
-<portlet:resourceURL var="ajaxPrevUrl">
-	<portlet:param name="cur"
-		value="<%=Integer.toString(currentPage - 1)%>" />
-	<portlet:param name="categoryId"
-		value='<%=ParamUtil.getString(renderRequest,"categoryId")%>' />
-	<portlet:param name="callId"
-		value='<%=ParamUtil.getString(renderRequest,"callId")%>' />
-</portlet:resourceURL>
-
-<portlet:resourceURL var="ajaxNextUrl">
-	<portlet:param name="cur"
-		value="<%=Integer.toString(currentPage + 1)%>" />
-	<portlet:param name="categoryId"
-		value='<%=ParamUtil.getString(renderRequest,"categorId")%>' />
-	<portlet:param name="callId"
-		value='<%=ParamUtil.getString(renderRequest,"callId")%>' />
-</portlet:resourceURL>
-
 <div id='result' class="idea-slider row-fluid">
-	<span class="span1 text-right"> <c:if
-			test="<%=currentPage > 1%>">
-			<%
-				//             portletURL.setParameter("cur", StringUtil.valueOf(currentPage - 1)); 
-			//             String prevURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
-			           // params.put("cur", currentPage - 1);
-			            //String prevURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
-			%>
-			<a onclick="paginateIdeas('prev');"> <i
-				class="icon-arrow-left idea-slider-arrow"></i>
-			</a>
-		</c:if>
-	</span>
+
+<aui:script use="liferay-portlet-url">
+	var url = Liferay.PortletURL.createResourceURL();
+	url.setParameter("cur", "1");
+    url.setPortletId('<%= Constants.IDEA_PORTLET_ID %>');
+	url.setParameter("categoryId", <%= Long.toString(categoryId)%>);
+	url.setParameter("callId", <%= Long.toString(callId)%>);
+	paginateIdeas(url.toString());
+</aui:script>
 
 	<aui:script>
-		Liferay.provide(window, 'paginateIdeas', function(direction) {
+		Liferay.provide(window, 'paginateIdeas', function(url) {
 			var instance = this;
 			var A = AUI();
-			var url = '<%= ajaxPrevUrl %>';
-			if (direction === 'next') {
-				url = '<%= ajaxNextUrl %>';
-			}
-            
+            //alert(url);
 			A.io.request(url, {
 				dataType : 'json',
 				on : {
 					success : function() {
 						var data = this.get('responseData');
                         // transform data
-                        $.each(data,function(i,v) {
+                        if( data.currentPage == 1) {
+                        	data.currentPage = 0; // for handlebars templata
+                        }
+                        
+                        var offset = data.elementInPage - data.result.size;
+                        data.offsetClass = (offset > 0) ? "offset" + offset*2 : "";
+                       
+                        $.each(data.result.data,function(i,v) {
                             if(v.creationTs) {
                                 v.formattedCreation = new Date(v.creationTs).toLocaleFormat('%d/%m/%Y');
                             }
@@ -113,7 +91,7 @@
                                 v.stars[i-1] = i <= v.avgRating;
                             }
                         });
-
+                        
 						var nodeResult = A.one('#result');
 						nodeResult.empty();
 						var handlebars = new A.Template(A.Handlebars);
@@ -134,9 +112,14 @@
 
 	
 <script id="idea-templ" type="text/x-handlebars">
-    <span class="span1 text-right">
-    </span>
-    {{#each result}}
+    <span class="span1 text-right"> 
+		{{#if result.currentPage }}
+			<a onclick="paginateIdeas('{{result.prevURL}}');"> <i
+				class="icon-arrow-left idea-slider-arrow"></i>
+			</a>
+		{{/if}}
+	</span>
+    {{#each result.result.data}}
      <span class="span2" id="result">
    <div id="resContainer" onClick="javascript:window.location = {{this.detailURL}};" class="thumbnail" style="border-left-color: '{{this.categoryColor}}';">
 	<div class="idea-cat">
@@ -163,107 +146,12 @@
     </div>
     </span>
     {{/each}}
-</script>
-
-	<%
-		for (Idea idea : results) {
-	%>
-	<portlet:renderURL var="viewIdea">
-		<portlet:param name="mvcPath"
-			value="/html/idea/asset/full_content.jsp" />
-		<portlet:param name="ideaId"
-			value="<%=String.valueOf(idea.getIdeaId())%>" />
-	</portlet:renderURL>
-
-	<%
-		long classPK = idea.getIdeaId();
-			AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(
-					Idea.class.getName(), classPK);
-			List<AssetCategory> categories = Utils.getOrderedCategories(
-					idea.getCategoryIds(), curEntry);
-			RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(
-					Idea.class.getName(), classPK);
-			String color = categories.size() > 0 ? CC.get(""
-					+ categories.get(0).getCategoryId()) : "";
-			String catTitle = categories.size() > 0 ? categories.get(0)
-					.getTitle(locale) : "";
-	%>
-	<span class="span2">
-		<div
-			onClick="javascript:window.location = '<%=viewIdea.toString()%>';"
-			class="thumbnail" style="border-left-color: <%=color%>;">
-			<div class="idea-cat">
-				<%
-					for (int i = 0; i < categories.size(); i++) {
-							color = CC.get("" + categories.get(i).getCategoryId());
-							catTitle = categories.get(i).getTitle(locale);
-				%>
-				<span style="color: <%=color%>;"><%=catTitle%></span>
-				<%
-					}
-				%>
-				<c:if test="<%=Utils.ideaDeleteEnabled(idea, renderRequest)%>">
-					<portlet:actionURL var="deleteURL" name="deleteEntry">
-						<portlet:param name="entryId"
-							value="<%=String.valueOf(idea.getIdeaId())%>" />
-						<portlet:param name="categoryId"
-							value="<%=String.valueOf(categoryId)%>" />
-						<portlet:param name="callId" value="<%=String.valueOf(callId)%>" />
-					</portlet:actionURL>
-					<liferay-ui:icon-delete message="lbl_delete"
-						url="<%=deleteURL.toString()%>" />
-				</c:if>
-			</div>
-			<h4><%=idea.getTitle()%></h4>
-			<div class="thumbnail-bottom">
-				<div class="pull-left">
-					<%
-						out.print(dateFormatter.format(idea.getCreateDate()));
-							String scoreString = numberFormat
-									.format(stat.getAverageScore());
-					%>
-				</div>
-				<div class="idea-rating pull-right">
-					<%
-						for (int i = 1; i <= 5; i++) {
-					%>
-					<i
-						class="<%=(i <= stat.getAverageScore()) ? "icon-star"
-							: "icon-star-empty"%>"></i>
-					<%
-						}
-					%>
-				</div>
-			</div>
-		</div>
-	</span>
-
-
-	<%
-		}
-	%>
-
-	<span class="span1 <%=offsetClass%> text-left"> <c:if
-			test="<%=(results.size() >= delta)%>">
-			<portlet:renderURL var="ne">
-				<portlet:param name="mvcPath" value="/html/idea/view.jsp" />
-				<portlet:param name="categoryId"
-					value="<%=String.valueOf(categoryId)%>" />
-				<portlet:param name="callId" value="<%=String.valueOf(callId)%>" />
-				<portlet:param name="ideaId" value="0" />
-				<portlet:param name="cur"
-					value="<%=StringUtil.valueOf(currentPage + 1)%>" />
-			</portlet:renderURL>
-			<%
-				params.put("cur", currentPage + 1);
-					String nextURL = Utils.generateRenderURL(renderResponse,
-							baseUrl, params);
-					//          portletURL.setParameter("cur", StringUtil.valueOf(currentPage + 1));
-					//             String nextURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
-			%>
-			<a onclick="paginateIdeas('next');"> <i
+	
+	<span class="span1 text-left {{result.offsetClass}}"> 
+			<a onclick="paginateIdeas('{{result.nextURL}}');"> <i
 				class="icon-arrow-right idea-slider-arrow"></i>
 			</a>
-		</c:if>
 	</span>
+</script>
+
 </div>

@@ -2,6 +2,8 @@ package it.smartcommunitylab.platform.idea.portlet;
 
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.beans.IdeaResultItem;
+import it.smartcommunitylab.platform.idea.beans.Pagination;
+import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
@@ -23,6 +25,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import com.google.gson.Gson;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +69,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			ResourceResponse resourceResponse) throws IOException,
 			PortletException {
 
-		int begin = -1, end = -1;
+		int begin = -1, end = -1, currentPage = -1;
 
 		PortletPreferences preferences = resourceRequest.getPreferences();
 		boolean pagination = GetterUtil.getBoolean(preferences.getValue(
@@ -87,8 +90,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				begin = ParamUtil.getInteger(resourceRequest, "begin");
 				end = ParamUtil.getInteger(resourceRequest, "end");
 			} else {
-				int currentPage = ParamUtil.getInteger(resourceRequest, "cur",
-						1);
+				currentPage = ParamUtil.getInteger(resourceRequest, "cur", 1);
 				begin = (currentPage - 1) * delta;
 				end = begin + delta;
 			}
@@ -111,9 +113,31 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				break;
 			}
 
+			Pagination pag = new Pagination();
+			pag.setCurrentPage(currentPage);
+			pag.setElementInPage(delta);
+			// next URL
+			ResourceURL nextURL = resourceResponse.createResourceURL();
+			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
+			nextURL.setParameter("categoryId", Long.toString(categoryId));
+			nextURL.setParameter("callId", Long.toString(callId));
+			pag.setNextURL(nextURL.toString());
+
+			// prev URL
+			ResourceURL prevURL = resourceResponse.createResourceURL();
+			prevURL.setParameter("cur",
+					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
+			prevURL.setParameter("categoryId", Long.toString(categoryId));
+			prevURL.setParameter("callId", Long.toString(callId));
+			pag.setPrevURL(prevURL.toString());
+
+			ResultWrapper rw = new ResultWrapper();
+			rw.setResult(prepareResult(ideas, resourceRequest, resourceResponse));
+			rw.setSize(ideas.size());
+			pag.setResult(rw);
+
 			Gson gson = new Gson();
-			String json = gson.toJson(prepareResult(ideas, resourceRequest,
-					resourceResponse));
+			String json = gson.toJson(pag);
 			System.out.println(json);
 			resourceResponse.setContentType("application/json");
 			resourceResponse.getWriter().write(json);
@@ -155,18 +179,19 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				// set category data
 				String[] catIds = i.getCategoryIds() != null ? i
 						.getCategoryIds().split(",") : new String[0];
-				String color = catColors.get(catIds[0]);
-				ideaRes.setCategoryColor(color);
-				AssetCategory cat = null;
-				try {
-					cat = AssetCategoryServiceUtil.getCategory(Long
-							.valueOf(catIds[0]));
-					ideaRes.setCategory(GetterUtil.get(cat.getName(), ""));
-				} catch (NumberFormatException | PortalException
-						| SystemException e) {
-					e.printStackTrace();
+				if (catIds.length > 0) {
+					String color = catColors.get(catIds[0]);
+					ideaRes.setCategoryColor(color);
+					AssetCategory cat = null;
+					try {
+						cat = AssetCategoryServiceUtil.getCategory(Long
+								.valueOf(catIds[0]));
+						ideaRes.setCategory(GetterUtil.get(cat.getName(), ""));
+					} catch (NumberFormatException | PortalException
+							| SystemException e) {
+						e.printStackTrace();
+					}
 				}
-
 				// view URL
 				try {
 					ideaRes.setDetailURL(Utils.getPageUrl(
@@ -235,14 +260,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				listType = ParamUtil.getString(req, "listType");
 			}
 			req.setAttribute("listType", listType);
-
-			// System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]",
-			// listType, begin, end));
-
-			/*
-			 * Enumeration<String> f = req.getAttributeNames(); while
-			 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
-			 */
 
 			// search by category
 			Long categoryId = ParamUtil.getLong(req, "categoryId");
