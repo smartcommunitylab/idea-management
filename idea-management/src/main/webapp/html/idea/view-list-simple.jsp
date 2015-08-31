@@ -67,7 +67,8 @@
             </a>
         </c:if>
     </span>
-
+    <span class="span10">
+      <div class="row-fluid">
     <% for(Idea idea : results) {%>
         <portlet:renderURL var="viewIdea">
           <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
@@ -82,7 +83,7 @@
         String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "";
         String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         %>
-        <span class="span2">
+        <span class="span3">
                 <div onClick="javascript:window.location = '<%=viewIdea.toString() %>';" class="thumbnail" style="border-left-color: <%=color %>;">
                        <div class="idea-cat">
                       <% for (int i = 0; i < categories.size();i++) {
@@ -123,7 +124,8 @@
         
         
     <% } %>
-
+      </div>
+    </span>
     <span class="span1 <%= offsetClass%> text-left">
         <c:if test="<%=(results.size() >= delta) %>">
         <portlet:renderURL var="ne" >

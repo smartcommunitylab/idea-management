@@ -64,6 +64,8 @@ numberFormat.setMinimumFractionDigits(0);
             </a>
         </c:if>
     </span>
+    <span class="span10">
+      <div class="row-fluid">
 
     <% for(Call call : list) {%>
         <portlet:renderURL var="viewCall">
@@ -79,7 +81,7 @@ numberFormat.setMinimumFractionDigits(0);
 //         categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
         %>
-        <span class="span2">
+        <span class="span3">
                 <div onClick="javascript:window.location = '<%=viewCall.toString() %>';" class="thumbnail" style="border-left-color: <%=color %>;">
                        <div class="idea-cat">
                       <% for (int i = 0; i < categories.size();i++) {
@@ -111,7 +113,8 @@ numberFormat.setMinimumFractionDigits(0);
         
         
     <% } %>
-
+      </div>
+    </span>  
     <span class="span1 <%= offsetClass%> text-left">
         <c:if test="<%=(list.size() >= delta) %>">
             <%
