@@ -152,26 +152,25 @@
             <liferay-ui:message key="lbl_access"/>  
         </span>
       </div>
-      <div class="row-fluid text-center">
-        <div class="span6"> 
-          <liferay-ui:message key="lbl_rating"/>
+      <div class="row-fluid">
+        <div class="span6 text-center idea-discussion-rating"> 
           <div>
-          <liferay-ui:ratings-score score='<%=stat.getAverageScore() %>'></liferay-ui:ratings-score> 
-          </div>
-          <div>
-            <span><%=stat.getTotalEntries() %></span>
-            <i class="ftn-sum_users"></i>
+          	<liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>"/> 
           </div>
         </div>
-        <div class="span3 text-center"> 
-          <liferay-ui:message key="lbl_followercount"/> 
+        <div class="span3 text-center">
+        	<div>
+        		<liferay-ui:message key="lbl_followercount"/>
+        	</div> 
           <div class="participation-details">
             <span><%=subs.size() %></span>
             <i class="ftn-sum_users"></i>
           </div>
         </div>
-        <div class="span3 text-center"> 
-          <liferay-ui:message key="lbl_participationcount"/> 
+        <div class="span3 text-center">
+        	<div>
+        		<liferay-ui:message key="lbl_participationcount"/>
+        	</div> 
           <div class="participation-details">
             <span><%=users.size() %></span>
             <i class="ftn-sum_users"></i>
@@ -207,7 +206,20 @@
             <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
             <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
           </portlet:actionURL>
-          <div><a title="<liferay-ui:message key="lbl_tooltip_participate"/>" class='idea-button idea-button-tooltip-avail idea-button-participate-<%= participates ? "disabled" : "enabled" %>' href="<%=toggleURL.toString() %>"></a></div>
+          <div>
+			<c:choose>
+				<c:when test="<%=isOwner%>">
+					<a title="<liferay-ui:message key="lbl_tooltip_participate_owner"/>"
+						class='idea-button idea-button-tooltip-avail idea-button-participate-<%=participates ? "disabled" : "enabled"%>'
+						href="#"></a>
+				</c:when>
+				<c:otherwise>
+					<a title="<liferay-ui:message key="lbl_tooltip_participate"/>"
+						class='idea-button idea-button-tooltip-avail idea-button-participate-<%=participates ? "disabled" : "enabled"%>'
+						href="<%=toggleURL.toString()%>"></a>
+				</c:otherwise>
+			</c:choose>
+          </div>
           <div><span><liferay-ui:message key="lbl_participating"/></span></div>
           <div class="participation-details">
             <span><%=users.size() %></span>
