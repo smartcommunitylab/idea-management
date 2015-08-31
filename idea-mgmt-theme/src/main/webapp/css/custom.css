@@ -505,14 +505,29 @@ header#banner {
 	font-size: 20px;
 	text-transform: uppercase;
 	margin-bottom: 15px;
+	line-height: 28px;
 }
 
 .idea-view-data {
-	margin-bottom: 15px;
+	margin-bottom: 30px;
+}
+
+.idea-view-data div:first-child {
+	padding-top: 30px;
 }
 
 .idea-creator {
 	font-style: italic;
+}
+
+.idea-info {
+	padding-bottom: 30px;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 30px;
+}
+
+.idea-social {
+	padding-bottom: 30px;
 }
 
 .idea-slider-title {
@@ -1179,6 +1194,7 @@ header#banner {
 
 .call-maintitle {
 	text-transform: uppercase;
+	line-height: 28px;
 	font-size: 24px;
 	margin-bottom: 10px;
 }
