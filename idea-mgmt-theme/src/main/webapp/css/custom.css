@@ -1759,7 +1759,7 @@ header#banner {
 .title-ellipsis {
   overflow: hidden;
   position: relative;
-  height: 40px;
+  max-height: 40px;
 }
 
 .title-ellipsis > *:first-child {
@@ -1776,11 +1776,12 @@ header#banner {
   -moz-box-sizing: content-box;
 
   float: right; 
-  position: relative;
-  top: -40px; 
+  position: absolute;
+  top: 20px; 
   width: 3em; 
   margin-left: -7em;
   padding-right: 10px;
+  right: 0px;
   
   text-align: right;
   
