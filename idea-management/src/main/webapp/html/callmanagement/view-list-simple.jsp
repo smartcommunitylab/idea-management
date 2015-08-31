@@ -95,7 +95,7 @@ numberFormat.setMinimumFractionDigits(0);
 		                    <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
                       </c:if>
                     </div>
-                    <h4><%=call.getTitle() %></h4>
+                    <h4 class="title-ellipsis"><%=call.getTitle() %></h4>
                     <div class="thumbnail-bottom">
 	                    <div class="pull-left">
 			                  <c:if test='<%=call.getDeadline() != null %>'>

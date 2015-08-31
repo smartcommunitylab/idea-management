@@ -100,7 +100,7 @@
                         <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
                       </c:if>
                     </div>
-                    <h4><%=idea.getTitle() %></h4>
+                    <h4 class="title-ellipsis"><%=idea.getTitle() %></h4>
                     <div class="thumbnail-bottom">
 	                    <div class="pull-left">
 	                    <%
