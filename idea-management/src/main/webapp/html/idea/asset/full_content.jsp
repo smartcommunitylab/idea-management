@@ -152,26 +152,25 @@
             <liferay-ui:message key="lbl_access"/>  
         </span>
       </div>
-      <div class="row-fluid text-center">
-        <div class="span6"> 
-          <liferay-ui:message key="lbl_rating"/>
+      <div class="row-fluid">
+        <div class="span6 text-center idea-discussion-rating"> 
           <div>
-          <liferay-ui:ratings-score score='<%=stat.getAverageScore() %>'></liferay-ui:ratings-score> 
-          </div>
-          <div>
-            <span><%=stat.getTotalEntries() %></span>
-            <i class="ftn-sum_users"></i>
+          	<liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>"/> 
           </div>
         </div>
-        <div class="span3 text-center"> 
-          <liferay-ui:message key="lbl_followercount"/> 
+        <div class="span3 text-center">
+        	<div>
+        		<liferay-ui:message key="lbl_followercount"/>
+        	</div> 
           <div class="participation-details">
             <span><%=subs.size() %></span>
             <i class="ftn-sum_users"></i>
           </div>
         </div>
-        <div class="span3 text-center"> 
-          <liferay-ui:message key="lbl_participationcount"/> 
+        <div class="span3 text-center">
+        	<div>
+        		<liferay-ui:message key="lbl_participationcount"/>
+        	</div> 
           <div class="participation-details">
             <span><%=users.size() %></span>
             <i class="ftn-sum_users"></i>

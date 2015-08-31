@@ -694,6 +694,10 @@ header#banner {
 	color: #E83D5F !important;
 }
 
+.taglib-ratings .rating-element {
+	color: #E83D5F !important;
+}
+
 .idea-button {
 	display: inline-block;
 	height: 50px;
