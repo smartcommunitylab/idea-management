@@ -71,13 +71,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 		int begin = -1, end = -1, currentPage = -1;
 
-		PortletPreferences preferences = resourceRequest.getPreferences();
-		boolean pagination = GetterUtil.getBoolean(preferences.getValue(
-				"activatePagination", StringPool.TRUE));
-		int delta = GetterUtil.getInteger(preferences.getValue("elementInPage",
-				String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
-		String listType = preferences.getValue("listType",
-				Constants.PREF_LISTTYPE_RECENT);
+		// cannot load portletpreferences..seems not work with resourceRequest
+
+		String listType = ParamUtil.getString(resourceRequest, "listType");
+		boolean pagination = ParamUtil
+				.getBoolean(resourceRequest, "pagination");
+		int delta = ParamUtil.getInteger(resourceRequest, "delta");
 		Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 		Long callId = ParamUtil.getLong(resourceRequest, "callId");
 
@@ -119,6 +118,9 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			// next URL
 			ResourceURL nextURL = resourceResponse.createResourceURL();
 			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
+			nextURL.setParameter("pagination", Boolean.toString(pagination));
+			nextURL.setParameter("delta", Integer.toString(delta));
+			nextURL.setParameter("listType", listType);
 			nextURL.setParameter("categoryId", Long.toString(categoryId));
 			nextURL.setParameter("callId", Long.toString(callId));
 			pag.setNextURL(nextURL.toString());
@@ -127,6 +129,9 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			ResourceURL prevURL = resourceResponse.createResourceURL();
 			prevURL.setParameter("cur",
 					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
+			prevURL.setParameter("pagination", Boolean.toString(pagination));
+			prevURL.setParameter("delta", Integer.toString(delta));
+			prevURL.setParameter("listType", listType);
 			prevURL.setParameter("categoryId", Long.toString(categoryId));
 			prevURL.setParameter("callId", Long.toString(callId));
 			pag.setPrevURL(prevURL.toString());
