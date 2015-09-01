@@ -53,12 +53,14 @@
 <aui:script use="liferay-portlet-url">
 	var url = Liferay.PortletURL.createResourceURL();
     url.setPortletId('<%= Constants.IDEA_PORTLET_ID %>');
+    url.setResourceId("loadSimple");
 	url.setParameter("cur", "1");
     url.setParameter("listType",'<%= listType %>');
     url.setParameter("pagination",'<%= Boolean.toString(pagination) %>');
     url.setParameter("delta",'<%= Integer.toString(delta) %>');
 	url.setParameter("categoryId", '<%= Long.toString(categoryId) %>');
 	url.setParameter("callId", '<%= Long.toString(callId) %>');
+	
 	<portlet:namespace/>paginateIdeas(url.toString());
 </aui:script>
 
@@ -104,6 +106,26 @@
                     }
                 });
             }, [ 'aui-io', 'aui-node', 'template-base', 'handlebars' ]);
+		
+		
+		Liferay.provide(window, '<portlet:namespace/>deleteEntry', function(url) {
+			var instance = this;
+			var A = AUI();
+            //alert(url);
+			A.io.request(url, {
+				dataType : 'json',
+				on : {
+					success : function() {
+                    }
+                    }
+                });
+            }, [ 'aui-io', 'aui-node' ]);
+		
+		
+		
+		
+		
+		
 	</aui:script>
 
 
@@ -121,7 +143,7 @@
 	<div class="idea-cat">
 				<span style="color: {{this.categoryColor}};">{{this.category}}</span>
 				{{#if this.deleteURL}}
-					<a id="delete-link-{{@index}}" href="{{this.deleteURL}}" onclick="return confirm('<%= confirmMsg %>')" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
+					<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
 				{{/if}}			
 			</div>
                     <h4>{{this.title}}</h4>

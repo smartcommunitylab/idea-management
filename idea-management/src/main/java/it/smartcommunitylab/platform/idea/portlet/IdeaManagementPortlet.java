@@ -69,6 +69,40 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			ResourceResponse resourceResponse) throws IOException,
 			PortletException {
 
+		String resID = resourceRequest.getResourceID();
+
+		switch (resID) {
+		case "loadSimple":
+			loadAjaxViewSimple(resourceRequest, resourceResponse);
+			break;
+
+		case "delete":
+			try {
+				ajaxDeleteEntry(resourceRequest, resourceResponse);
+			} catch (PortalException | SystemException e) {
+				e.printStackTrace();
+			}
+			break;
+		default:
+			break;
+		}
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	private void ajaxDeleteEntry(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws PortalException,
+			SystemException {
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Idea.class.getName(), resourceRequest);
+
+		long ideaId = ParamUtil.getLong(resourceRequest, "entryId");
+		IdeaLocalServiceUtil.deleteIdea(serviceContext.getUserId(), ideaId,
+				serviceContext);
+	}
+
+	private void loadAjaxViewSimple(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws IOException {
 		int begin = -1, end = -1, currentPage = -1;
 
 		// cannot load portletpreferences..seems not work with resourceRequest
@@ -117,6 +151,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			pag.setElementInPage(delta);
 			// next URL
 			ResourceURL nextURL = resourceResponse.createResourceURL();
+			nextURL.setResourceID("loadSimple");
 			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
 			nextURL.setParameter("pagination", Boolean.toString(pagination));
 			nextURL.setParameter("delta", Integer.toString(delta));
@@ -127,6 +162,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 			// prev URL
 			ResourceURL prevURL = resourceResponse.createResourceURL();
+			prevURL.setResourceID("loadSimple");
 			prevURL.setParameter("cur",
 					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
 			prevURL.setParameter("pagination", Boolean.toString(pagination));
@@ -150,7 +186,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		} catch (SystemException e) {
 
 		}
-		super.serveResource(resourceRequest, resourceResponse);
 	}
 
 	private List<IdeaResultItem> prepareResult(List<Idea> ideas,
@@ -220,6 +255,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 					deleteURL.setParameter("callId",
 							String.valueOf(i.getCallId()));
 					ideaRes.setDeleteURL(deleteURL.toString());
+
+					// ResourceURL deleteURL = resp.createResourceURL();
+					// deleteURL.setResourceID("deleteEntry");
+					// deleteURL.setParameter("entryId",
+					// String.valueOf(i.getIdeaId()));
+					// ideaRes.setDeleteURL(deleteURL.toString());
 				}
 				result.add(ideaRes);
 			}
