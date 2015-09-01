@@ -1,10 +1,11 @@
 package it.smartcommunitylab.platform.idea.beans;
 
+import java.util.List;
+
 public class IdeaResultItem {
 	private String title;
 	private long creationTs;
-	private String category;
-	private String categoryColor;
+	private List<CategoryBean> cats;
 	private double avgRating;
 	private String detailURL;
 	private String deleteURL;
@@ -23,22 +24,6 @@ public class IdeaResultItem {
 
 	public void setCreationTs(long creationTs) {
 		this.creationTs = creationTs;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getCategoryColor() {
-		return categoryColor;
-	}
-
-	public void setCategoryColor(String categoryColor) {
-		this.categoryColor = categoryColor;
 	}
 
 	public double getAvgRating() {
@@ -63,5 +48,13 @@ public class IdeaResultItem {
 
 	public void setDeleteURL(String deleteURL) {
 		this.deleteURL = deleteURL;
+	}
+
+	public List<CategoryBean> getCats() {
+		return cats;
+	}
+
+	public void setCats(List<CategoryBean> cats) {
+		this.cats = cats;
 	}
 }

@@ -89,6 +89,8 @@
                             for(var i = 1 ; i <= 5; i++) {
                                 v.stars[i-1] = i <= v.avgRating;
                             }
+                            
+                            v.boxColor = (v.cats[0]) ? v.cats[0].color : "";
                         });
                         //alert(data.result.size);
 						var nodeResult = A.one('#<portlet:namespace/>result');
@@ -139,9 +141,11 @@
 	</span>
     {{#each result.result.data}}
      <span class="span2" id="result">
-   <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = {{this.detailURL}};" class="thumbnail" style="border-left-color: {{this.categoryColor}};">
+   <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="thumbnail" style="border-left-color: {{this.boxColor}};">
 	<div class="idea-cat">
-				<span style="color: {{this.categoryColor}};">{{this.category}}</span>
+				{{#each this.cats}}
+					<span style="color: {{this.color}};">{{this.name}}</span>
+				{{/each}}
 				{{#if this.deleteURL}}
 					<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
 				{{/if}}			

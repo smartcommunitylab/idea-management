@@ -1,5 +1,6 @@
 package it.smartcommunitylab.platform.idea.portlet;
 
+import it.smartcommunitylab.platform.idea.beans.CategoryBean;
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.beans.IdeaResultItem;
 import it.smartcommunitylab.platform.idea.beans.Pagination;
@@ -219,14 +220,18 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				// set category data
 				String[] catIds = i.getCategoryIds() != null ? i
 						.getCategoryIds().split(",") : new String[0];
-				if (catIds.length > 0) {
-					String color = catColors.get(catIds[0]);
-					ideaRes.setCategoryColor(color);
+				ideaRes.setCats(new ArrayList<CategoryBean>());
+				for (String catId : catIds) {
+
+					String color = catColors.get(catId);
+
 					AssetCategory cat = null;
 					try {
 						cat = AssetCategoryServiceUtil.getCategory(Long
-								.valueOf(catIds[0]));
-						ideaRes.setCategory(GetterUtil.get(cat.getName(), ""));
+								.valueOf(catId));
+						CategoryBean cb = new CategoryBean(GetterUtil.get(
+								cat.getName(), ""), color);
+						ideaRes.getCats().add(cb);
 					} catch (NumberFormatException | PortalException
 							| SystemException e) {
 						e.printStackTrace();
