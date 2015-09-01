@@ -511,7 +511,7 @@
           <![CDATA[ 
           import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
           import com.liferay.portal.kernel.workflow.WorkflowConstants; 
-           workflowContext.put("ideaStatus","complete");
+           workflowContext.put("ideaStatus","accepted");
           WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
           ]]>
         </script>
@@ -519,7 +519,13 @@
 				<execution-type>onEntry</execution-type>
 			</action>
 		</actions>
-	</state>
+    <transitions>
+      <transition>
+        <name>manager-signing</name>
+        <target>manager-signing</target>
+      </transition>
+    </transitions>
+  </state>
 
 
 	<state>
@@ -541,4 +547,215 @@
 		</actions>
 	</state>
 
+	 <task>
+    <name>manager-signing</name>
+    <assignments>
+      <scripted-assignment>
+        <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.util.GetterUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+              
+              import com.liferay.portal.model.Role;
+              import com.liferay.portal.model.User;
+              import com.liferay.portal.model.UserGroupRole;
+              import com.liferay.portal.service.RoleLocalServiceUtil;
+              import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+              
+              long companyId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+              long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+              users = new ArrayList<User>();
+              Role role = RoleLocalServiceUtil.getRole(companyId, "Manager");
+              List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(groupId, role.getRoleId());
+        
+              for (UserGroupRole ugr : userGroupRoles) {
+                users.add(ugr.getUser());
+              }
+              if (users.size() > 0) {
+                roles = null;
+                user = users.get(0);    
+              } else {
+                roles = new ArrayList<Role>();
+                roles.add(role);
+              }
+            ]]>
+          </script>
+        <script-language>groovy</script-language>
+      </scripted-assignment>
+    </assignments>
+    <transitions>
+      <transition>
+        <name>signed</name>
+        <target>signed</target>
+      </transition>
+      <transition>
+        <name>rejected</name>
+        <target>rejected</target>
+      </transition>
+    </transitions>
+  </task>
+	 <state>
+    <name>signed</name>
+    <actions>
+      <action>
+        <name>updateStatus</name>
+        <script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+           workflowContext.put("ideaStatus","signed");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
+          ]]>
+        </script>
+        <script-language>groovy</script-language>
+        <execution-type>onEntry</execution-type>
+      </action>
+    </actions>
+    <transitions>
+      <transition>
+        <name>manager-implementing</name>
+        <target>manager-implementing</target>
+      </transition>
+    </transitions>
+  </state>
+
+	 
+   <task>
+    <name>manager-implementing</name>
+    <assignments>
+      <scripted-assignment>
+        <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.util.GetterUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+              
+              import com.liferay.portal.model.Role;
+              import com.liferay.portal.model.User;
+              import com.liferay.portal.model.UserGroupRole;
+              import com.liferay.portal.service.RoleLocalServiceUtil;
+              import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+              
+              long companyId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+              long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+              users = new ArrayList<User>();
+              Role role = RoleLocalServiceUtil.getRole(companyId, "Manager");
+              List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(groupId, role.getRoleId());
+        
+              for (UserGroupRole ugr : userGroupRoles) {
+                users.add(ugr.getUser());
+              }
+              if (users.size() > 0) {
+                roles = null;
+                user = users.get(0);    
+              } else {
+                roles = new ArrayList<Role>();
+                roles.add(role);
+              }
+            ]]>
+          </script>
+        <script-language>groovy</script-language>
+      </scripted-assignment>
+    </assignments>
+    <transitions>
+      <transition>
+        <name>inimplementation</name>
+        <target>inimplementation</target>
+      </transition>
+      <transition>
+        <name>rejected</name>
+        <target>rejected</target>
+      </transition>
+    </transitions>
+  </task>
+   <state>
+    <name>inimplementation</name>
+    <actions>
+      <action>
+        <name>updateStatus</name>
+        <script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+           workflowContext.put("ideaStatus","exec");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
+          ]]>
+        </script>
+        <script-language>groovy</script-language>
+        <execution-type>onEntry</execution-type>
+      </action>
+    </actions>
+    <transitions>
+      <transition>
+        <name>manager-completing</name>
+        <target>manager-completing</target>
+      </transition>
+    </transitions>
+  </state>	
+  
+   
+   <task>
+    <name>manager-completing</name>
+    <assignments>
+      <scripted-assignment>
+        <script>
+          <![CDATA[
+              import com.liferay.portal.kernel.util.GetterUtil;
+              import com.liferay.portal.kernel.workflow.WorkflowConstants;
+              
+              import com.liferay.portal.model.Role;
+              import com.liferay.portal.model.User;
+              import com.liferay.portal.model.UserGroupRole;
+              import com.liferay.portal.service.RoleLocalServiceUtil;
+              import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+              
+              long companyId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+              long groupId = GetterUtil.getLong((String)workflowContext.get(WorkflowConstants.CONTEXT_GROUP_ID));
+              users = new ArrayList<User>();
+              Role role = RoleLocalServiceUtil.getRole(companyId, "Manager");
+              List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupAndRole(groupId, role.getRoleId());
+        
+              for (UserGroupRole ugr : userGroupRoles) {
+                users.add(ugr.getUser());
+              }
+              if (users.size() > 0) {
+                roles = null;
+                user = users.get(0);    
+              } else {
+                roles = new ArrayList<Role>();
+                roles.add(role);
+              }
+            ]]>
+          </script>
+        <script-language>groovy</script-language>
+      </scripted-assignment>
+    </assignments>
+    <transitions>
+      <transition>
+        <name>complete</name>
+        <target>complete</target>
+      </transition>
+      <transition>
+        <name>rejected</name>
+        <target>rejected</target>
+      </transition>
+    </transitions>
+  </task>
+   <state>
+    <name>complete</name>
+    <actions>
+      <action>
+        <name>updateStatus</name>
+        <script>
+          <![CDATA[ 
+          import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil; 
+          import com.liferay.portal.kernel.workflow.WorkflowConstants; 
+           workflowContext.put("ideaStatus","complete");
+          WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext); 
+          ]]>
+        </script>
+        <script-language>groovy</script-language>
+        <execution-type>onEntry</execution-type>
+      </action>
+    </actions>
+  </state>     	 
 </workflow-definition>

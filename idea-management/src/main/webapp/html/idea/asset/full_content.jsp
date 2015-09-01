@@ -77,7 +77,7 @@
 	
   RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),idea.getIdeaId());
 
-  String state = idea.getState();
+  String state = idea.realState();
   if (state == null || state.equals("")) state = Constants.IDEA_STATE_PROPOSED;
 
 %>
