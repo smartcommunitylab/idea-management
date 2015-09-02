@@ -186,7 +186,8 @@ queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
 
 %>
-<% if(! className.equals("com.liferay.calendar.model.CalendarBooking") || ! className.equals("com.liferay.portal.model.User")) {%>
+
+<% if(!className.equals("com.liferay.calendar.model.CalendarBooking") && !className.equals("com.liferay.portal.model.User")) {%>
 <div class="asset-entry" style="margin-top: 2em;">
     
     <span class="asset-entry-type">
@@ -217,7 +218,7 @@ portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
 		<div class="asset-entry-content">
 			<c:if test="<%= Validator.isNotNull(entrySummary) %>">
 				<span class="element-description">
-					<%= StringUtil.highlight(HtmlUtil.escape(entrySummary), queryTerms) %>
+					<%= entrySummary %>
 				</span>
 			</c:if>
 		</div>
