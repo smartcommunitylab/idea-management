@@ -76,7 +76,7 @@
 						var data = this.get('responseData');
                         // transform data
                         data.viewPrevArrow = <%= pagination %> && data.currentPage != 1;
-                        data.viewNextArrow = <%= pagination %>;
+                        data.viewNextArrow = <%= pagination %> && data.result.size >= data.elementInPage;
                         
                         var offset = data.elementInPage - data.result.size;
                         data.offsetClass = (offset > 0) ? "offset" + offset*2 : "";
