@@ -1777,7 +1777,6 @@ header#banner {
   display: inline !important;
 }
 
-
 .title-ellipsis {
   overflow: hidden;
   position: relative;
@@ -1818,5 +1817,10 @@ header#banner {
   background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 65%, white);
   background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 65%, white);
   background: linear-gradient(to right, rgba(255, 255, 255, 0), white 65%, white);  
+}
+
+
+.delete-icon {
+	background-image: url('../images/delete.png');
 }
 

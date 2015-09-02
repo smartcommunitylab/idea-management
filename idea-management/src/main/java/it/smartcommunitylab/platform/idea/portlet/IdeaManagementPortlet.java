@@ -1,21 +1,34 @@
 package it.smartcommunitylab.platform.idea.portlet;
 
+import it.smartcommunitylab.platform.idea.beans.CategoryBean;
 import it.smartcommunitylab.platform.idea.beans.IdeaBean;
+import it.smartcommunitylab.platform.idea.beans.IdeaResultItem;
+import it.smartcommunitylab.platform.idea.beans.Pagination;
+import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
 import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
+import com.google.gson.Gson;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -26,8 +39,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
 /**
@@ -46,6 +63,215 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		} else {
 			super.doView(renderRequest, renderResponse);
 		}
+	}
+
+	@Override
+	public void serveResource(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws IOException,
+			PortletException {
+
+		String resID = resourceRequest.getResourceID();
+
+		switch (resID) {
+		case "loadSimple":
+			loadAjaxViewSimple(resourceRequest, resourceResponse);
+			break;
+
+		case "delete":
+			try {
+				ajaxDeleteEntry(resourceRequest, resourceResponse);
+			} catch (PortalException | SystemException e) {
+				e.printStackTrace();
+			}
+			break;
+		default:
+			break;
+		}
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	private void ajaxDeleteEntry(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws PortalException,
+			SystemException {
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Idea.class.getName(), resourceRequest);
+
+		long ideaId = ParamUtil.getLong(resourceRequest, "entryId");
+		IdeaLocalServiceUtil.deleteIdea(serviceContext.getUserId(), ideaId,
+				serviceContext);
+	}
+
+	private void loadAjaxViewSimple(ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) throws IOException {
+		int begin = -1, end = -1, currentPage = -1;
+
+		// cannot load portletpreferences..seems not work with resourceRequest
+
+		String listType = ParamUtil.getString(resourceRequest, "listType");
+		boolean pagination = ParamUtil
+				.getBoolean(resourceRequest, "pagination");
+		int delta = ParamUtil.getInteger(resourceRequest, "delta");
+		Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
+		Long callId = ParamUtil.getLong(resourceRequest, "callId");
+
+		// FIXME used by filter
+		long[] tagIds = new long[0];
+
+		if (pagination) {
+			if (resourceRequest.getParameter("begin") != null
+					&& resourceRequest.getParameter("end") != null) {
+				begin = ParamUtil.getInteger(resourceRequest, "begin");
+				end = ParamUtil.getInteger(resourceRequest, "end");
+			} else {
+				currentPage = ParamUtil.getInteger(resourceRequest, "cur", 1);
+				begin = (currentPage - 1) * delta;
+				end = begin + delta;
+			}
+		}
+
+		try {
+			List<Idea> ideas = new ArrayList<Idea>();
+			// result already ordered by creation date DESC for default
+			switch (listType) {
+			case Constants.PREF_LISTTYPE_RECENT:
+				ideas = IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(
+						categoryId, callId, tagIds, begin, end);
+				break;
+			case Constants.PREF_LISTTYPE_POPULAR:
+				ideas = IdeaLocalServiceUtil
+						.searchPopularByCallAndCategoryAndTags(categoryId,
+								callId, tagIds, begin, end);
+				break;
+			default:
+				break;
+			}
+
+			Pagination pag = new Pagination();
+			pag.setCurrentPage(currentPage);
+			pag.setElementInPage(delta);
+			// next URL
+			ResourceURL nextURL = resourceResponse.createResourceURL();
+			nextURL.setResourceID("loadSimple");
+			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
+			nextURL.setParameter("pagination", Boolean.toString(pagination));
+			nextURL.setParameter("delta", Integer.toString(delta));
+			nextURL.setParameter("listType", listType);
+			nextURL.setParameter("categoryId", Long.toString(categoryId));
+			nextURL.setParameter("callId", Long.toString(callId));
+			pag.setNextURL(nextURL.toString());
+
+			// prev URL
+			ResourceURL prevURL = resourceResponse.createResourceURL();
+			prevURL.setResourceID("loadSimple");
+			prevURL.setParameter("cur",
+					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
+			prevURL.setParameter("pagination", Boolean.toString(pagination));
+			prevURL.setParameter("delta", Integer.toString(delta));
+			prevURL.setParameter("listType", listType);
+			prevURL.setParameter("categoryId", Long.toString(categoryId));
+			prevURL.setParameter("callId", Long.toString(callId));
+			pag.setPrevURL(prevURL.toString());
+
+			ResultWrapper rw = new ResultWrapper();
+			rw.setResult(prepareResult(ideas, resourceRequest, resourceResponse));
+			rw.setSize(ideas.size());
+			pag.setResult(rw);
+
+			Gson gson = new Gson();
+			String json = gson.toJson(pag);
+			System.out.println(json);
+			resourceResponse.setContentType("application/json");
+			resourceResponse.getWriter().write(json);
+			resourceResponse.getWriter().flush();
+		} catch (SystemException e) {
+
+		}
+	}
+
+	private List<IdeaResultItem> prepareResult(List<Idea> ideas,
+			PortletRequest req, MimeResponse resp) {
+		List<IdeaResultItem> result = null;
+		if (ideas != null) {
+			result = new ArrayList<IdeaResultItem>();
+			Map<String, String> catColors = new HashMap<String, String>();
+			try {
+				catColors = IdeaLocalServiceUtil.getCategoryColors(PortalUtil
+						.getScopeGroupId(req));
+			} catch (PortalException | SystemException e) {
+				e.printStackTrace();
+			}
+			for (Idea i : ideas) {
+				IdeaResultItem ideaRes = new IdeaResultItem();
+				ideaRes.setTitle(i.getTitle());
+				ideaRes.setCreationTs(i.getCreateDate().getTime());
+
+				// set starts avg
+				RatingsStats stat = null;
+				try {
+					stat = RatingsStatsLocalServiceUtil.getStats(
+							Idea.class.getName(), i.getIdeaId());
+				} catch (SystemException e) {
+					e.printStackTrace();
+				}
+				if (stat != null) {
+					ideaRes.setAvgRating(stat.getAverageScore());
+				}
+				// set category data
+				String[] catIds = i.getCategoryIds() != null ? i
+						.getCategoryIds().split(",") : new String[0];
+				ideaRes.setCats(new ArrayList<CategoryBean>());
+				for (String catId : catIds) {
+
+					String color = catColors.get(catId);
+
+					AssetCategory cat = null;
+					try {
+						cat = AssetCategoryServiceUtil.getCategory(Long
+								.valueOf(catId));
+						CategoryBean cb = new CategoryBean(GetterUtil.get(
+								cat.getName(), ""), color);
+						ideaRes.getCats().add(cb);
+					} catch (NumberFormatException | PortalException
+							| SystemException e) {
+						e.printStackTrace();
+					}
+				}
+				// view URL
+				try {
+					ideaRes.setDetailURL(Utils.getPageUrl(
+							PortalUtil.getHttpServletRequest(req), "detail")
+							+ "/-/idea/-/" + i.getIdeaId() + "/view");
+				} catch (SystemException | PortalException e) {
+					e.printStackTrace();
+				}
+
+				// delete URL
+				if (Utils.ideaDeleteEnabled(i, req)) {
+					PortletURL deleteURL = resp.createActionURL();
+					deleteURL.setParameter(ActionRequest.ACTION_NAME,
+							"deleteEntry");
+					deleteURL.setParameter("entryId",
+							String.valueOf(i.getIdeaId()));
+					deleteURL
+							.setParameter("categoryId", String
+									.valueOf(catIds.length > 0 ? catIds[0]
+											: "0"));
+					deleteURL.setParameter("callId",
+							String.valueOf(i.getCallId()));
+					ideaRes.setDeleteURL(deleteURL.toString());
+
+					// ResourceURL deleteURL = resp.createResourceURL();
+					// deleteURL.setResourceID("deleteEntry");
+					// deleteURL.setParameter("entryId",
+					// String.valueOf(i.getIdeaId()));
+					// ideaRes.setDeleteURL(deleteURL.toString());
+				}
+				result.add(ideaRes);
+			}
+		}
+
+		return result;
 	}
 
 	@Override
@@ -85,14 +311,6 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				listType = ParamUtil.getString(req, "listType");
 			}
 			req.setAttribute("listType", listType);
-
-			// System.err.println(String.format("PARAMETERS: [listType = %s, begin = %s, end = %s]",
-			// listType, begin, end));
-
-			/*
-			 * Enumeration<String> f = req.getAttributeNames(); while
-			 * (f.hasMoreElements()) { System.out.println(f.nextElement()); }
-			 */
 
 			// search by category
 			Long categoryId = ParamUtil.getLong(req, "categoryId");
