@@ -152,27 +152,30 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			Pagination pag = new Pagination();
 			pag.setCurrentPage(currentPage);
 			pag.setElementInPage(delta);
+
+			Map<String, String[]> params = new HashMap<String, String[]>();
+			params.put("pagination",
+					new String[] { Boolean.toString(pagination) });
+			params.put("listType", new String[] { listType });
+			params.put("delta", new String[] { Integer.toString(delta) });
+			params.put("categoryId", new String[] { Long.toString(categoryId) });
+			params.put("callId", new String[] { Long.toString(callId) });
+
 			// next URL
 			ResourceURL nextURL = resourceResponse.createResourceURL();
 			nextURL.setResourceID("loadSimple");
-			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
-			nextURL.setParameter("pagination", Boolean.toString(pagination));
-			nextURL.setParameter("delta", Integer.toString(delta));
-			nextURL.setParameter("listType", listType);
-			nextURL.setParameter("categoryId", Long.toString(categoryId));
-			nextURL.setParameter("callId", Long.toString(callId));
+
+			params.put("cur",
+					new String[] { Integer.toString(currentPage + 1) });
+			nextURL.setParameters(params);
 			pag.setNextURL(nextURL.toString());
 
 			// prev URL
 			ResourceURL prevURL = resourceResponse.createResourceURL();
 			prevURL.setResourceID("loadSimple");
-			prevURL.setParameter("cur",
-					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
-			prevURL.setParameter("pagination", Boolean.toString(pagination));
-			prevURL.setParameter("delta", Integer.toString(delta));
-			prevURL.setParameter("listType", listType);
-			prevURL.setParameter("categoryId", Long.toString(categoryId));
-			prevURL.setParameter("callId", Long.toString(callId));
+			params.put("cur", new String[] { Integer
+					.toString(currentPage > 1 ? currentPage - 1 : 1) });
+			prevURL.setParameters(params);
 			pag.setPrevURL(prevURL.toString());
 
 			ResultWrapper rw = new ResultWrapper();
@@ -182,7 +185,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 			Gson gson = new Gson();
 			String json = gson.toJson(pag);
-			System.out.println(json);
+			// System.out.println(json);
 			resourceResponse.setContentType("application/json");
 			resourceResponse.getWriter().write(json);
 			resourceResponse.getWriter().flush();
