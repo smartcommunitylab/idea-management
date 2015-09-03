@@ -238,7 +238,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 						ideaRes.getCats().add(cb);
 					} catch (NumberFormatException | PortalException
 							| SystemException e) {
-						e.printStackTrace();
+//						e.printStackTrace();
 					}
 				}
 				// view URL

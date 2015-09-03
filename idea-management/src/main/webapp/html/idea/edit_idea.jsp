@@ -138,31 +138,51 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
   <%@ include file="/html/common/asset-links.jsp" %>
   </aui:fieldset>
 
-	<aui:button-row cssClass="formbutton-row">
-    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="javascript: window.history.go(-1);"></aui:button>
-    <aui:button cssClass="formbutton-primary" value='<%= LanguageUtil.get(locale, "btn_save_idea") %>' type="submit"></aui:button>
-	</aui:button-row>
+  <aui:button-row cssClass="formbutton-row">
+    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="javascript: confirmLeave = false; window.history.go(-1);"></aui:button>
+    <aui:button cssClass="formbutton-primary" value='<%= LanguageUtil.get(locale, "btn_save_idea") %>' type="button" onClick="javascript: doSubmit();"></aui:button>
+  </aui:button-row>
 </aui:form>
 <aui:script>
 AUI().use('aui-form-validator',
   function(A) {
-	 
-	 var rules = {
-	    <portlet:namespace/>ldesc: {
-	        required: true
-	    },
-	    <portlet:namespace/>title: {
-	        required: true
-	    }
-	 };
-	 new A.FormValidator(
-		      {
-		        boundingBox: '#<portlet:namespace/>idea',
-		        rules: rules,
-		        showAllMessages: true
-		      }
-		    );
-		  }
-		);
+   
+   var rules = {
+      <portlet:namespace/>ldesc: {
+          required: true
+      },
+      <portlet:namespace/>title: {
+          required: true
+      }
+   };
+   new A.FormValidator(
+          {
+            boundingBox: '#<portlet:namespace/>idea',
+            rules: rules,
+            showAllMessages: true
+          }
+        );
+  }
+);
+
+var confirmLeave = true;
+
+function doSubmit() {
+  confirmLeave = false;
+  document.<portlet:namespace />idea.submit();
+};    
+    
+window.onbeforeunload = function(event) {
+      if (!confirmLeave) return null;
+        var message = '<liferay-ui:message key="msg_unsaved_data"/>';
+        if (typeof event == 'undefined') {
+          event = window.event;
+        }
+        if (event) {
+          event.returnValue = message;
+        }
+        return message;
+};    
+
 </aui:script>	 
 

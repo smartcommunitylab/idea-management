@@ -3,7 +3,7 @@ package it.smartcommunitylab.platform.idea.search;
 import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.permission.CallPermission;
 import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
-import it.smartcommunitylab.platform.idea.service.persistence.IdeaActionableDynamicQuery;
+import it.smartcommunitylab.platform.idea.service.persistence.CallActionableDynamicQuery;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -128,7 +128,7 @@ public class CallIndexer extends BaseIndexer {
 
 		final Collection<Document> documents = new ArrayList<Document>();
 
-		ActionableDynamicQuery actionableDynamicQuery = new IdeaActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new CallActionableDynamicQuery() {
 
 			protected void addCriteria(
 					com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
