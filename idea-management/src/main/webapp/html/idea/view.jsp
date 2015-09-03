@@ -79,6 +79,11 @@ if (categoryId > 0) {
 
 boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupId, "ADD_IDEA") ;
 
+String addIdeaLabel = "btn_add_idea";
+if(callId > 0) {
+	addIdeaLabel = "btn_add_idea_in_call";
+}
+
 %>
 
 <c:if test='<%= !hidePortlet_view%>'>
@@ -98,7 +103,7 @@ boolean addEnabled = IdeaModelPermission.contains(permissionChecker, scopeGroupI
   String addIdea = Utils.generateRenderURL(renderResponse, baseUrl, params, WindowState.MAXIMIZED);
   if (!addEnabled) addIdea = "javascript:document.getElementById('"+renderResponse.getNamespace()+"addButtonDisableMsg').style.display = 'block';";
 	%>
-	<aui:button cssClass='<%=addEnabled ? "addidea-button" : "addidea-button-disabled"%>' name="addidea" value='<%= LanguageUtil.get(locale, "btn_add_idea") %>' onClick="<%=addIdea.toString()%>" />
+	<aui:button cssClass='<%=addEnabled ? "addidea-button" : "addidea-button-disabled"%>' name="addidea" value='<%= LanguageUtil.get(locale, addIdeaLabel) %>' onClick="<%=addIdea.toString()%>" />
 	<div id="<portlet:namespace/>addButtonDisableMsg" class="row-fluid add-button-disabled-msg" style="display:none;">
 		<span><liferay-ui:message key="msg_access_to_add"/></span>
 	</div>

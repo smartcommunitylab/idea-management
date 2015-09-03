@@ -90,7 +90,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
     <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_shortDesc") %>' name="shortDesc" type="textarea" label=""></aui:input>  
   </aui:field-wrapper> -->
   
-	<aui:field-wrapper label="lbl_longDesc">
+	<aui:field-wrapper label="lbl_idea_longDesc">
     <aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
 		<liferay-ui:input-editor name="longDesc" 
 			toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="200" />
