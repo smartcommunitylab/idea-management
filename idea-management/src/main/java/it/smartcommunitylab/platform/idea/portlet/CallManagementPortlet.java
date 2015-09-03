@@ -225,7 +225,7 @@ public class CallManagementPortlet extends MVCPortlet {
 
 			Gson gson = new Gson();
 			String json = gson.toJson(pag);
-			System.out.println(json);
+			// System.out.println(json);
 			resourceResponse.setContentType("application/json");
 			resourceResponse.getWriter().write(json);
 			resourceResponse.getWriter().flush();
