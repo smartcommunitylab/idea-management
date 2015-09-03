@@ -1,23 +1,3 @@
-<%@page import="java.text.DateFormat"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.NumberFormat"%>
-<%@ page import="javax.portlet.PortletURL"%>
-<%@ page import="javax.portlet.ActionRequest"%>
-<%@ page import="com.liferay.portal.kernel.util.HttpUtil"%>
-<%@ page import="com.liferay.portal.kernel.util.StringUtil"%>
-<%@ page
-	import="com.liferay.portlet.asset.service.AssetEntryServiceUtil"%>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory"%>
-<%@ page
-	import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil"%>
-<%@ page import="com.liferay.portlet.ratings.model.RatingsStats"%>
-
-<%@ page
-	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
-<%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
-<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
-<%@page import="java.util.Random"%>
-
 <%@ include file="/html/common-init.jsp"%>
 
 <%
