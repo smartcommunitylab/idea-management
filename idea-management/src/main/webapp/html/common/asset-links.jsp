@@ -191,17 +191,16 @@ function rem(id) {
 
   data.put("type", assetRendererFactory.getClassName());
   %>
-      <button type="button" class="btn addidea-button edit-assetlinks-button">
+      <!-- <button type="button" class="btn addidea-button edit-assetlinks-button"> -->
       <liferay-ui:icon
-        cssClass="asset-selector"
+        cssClass="asset-selector btn addidea-button edit-assetlinks-button"
         iconCssClass="icon ftn-attachment"
         data="<%= data %>"
         message=""
         id="<%= FriendlyURLNormalizerUtil.normalize(type) %>"
         url="javascript:;"
       />
-      </button>
-
+      <!-- </button> -->
 </liferay-ui:icon-menu>
 
 
