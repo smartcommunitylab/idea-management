@@ -120,7 +120,7 @@
 			                  {{/if}}
 	                    </div>
 	   		              <div class="pull-right">
-	   		                <span class="call-card-ideas-simple"> {this.ideas}} </span>
+	   		                <span class="call-card-ideas-simple"> {{this.ideas}} </span>
 	   		              </div>
    		            </div>
     </div>
