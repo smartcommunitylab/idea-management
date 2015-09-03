@@ -2,9 +2,8 @@
 
 <%
 
-  Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");
-  Long callId = ParamUtil.getLong(renderRequest,"callId");
-  
+  	Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");
+  	Long callId = ParamUtil.getLong(renderRequest,"callId");
 
 	String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 	boolean pagination = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", "true"));
@@ -95,12 +94,6 @@
                     }
                 });
             }, [ 'aui-io', 'aui-node' ]);
-		
-		
-		
-		
-		
-		
 	</aui:script>
 
 

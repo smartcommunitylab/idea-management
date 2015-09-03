@@ -1,173 +1,165 @@
-<%@page import="it.smartcommunitylab.platform.idea.model.Idea"%>
-<%@page import="com.liferay.portal.kernel.workflow.WorkflowConstants"%>
-<%@page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil"%>
-<%@ page import="javax.portlet.PortletURL" %>
-<%@page import="java.text.NumberFormat"%>
-<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
-<%@ page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
-<%@ page import="com.liferay.portlet.ratings.model.RatingsStats" %>
-<%@ page import="com.liferay.portal.kernel.util.HttpUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
-<%@ page import="javax.portlet.WindowState" %>
-<%@ page import="it.smartcommunitylab.platform.idea.model.Call"%>
-<%@ page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
-<%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
-
 <%@ include file="/html/common-init.jsp" %>
 
 <%
-  List<Idea> results = (List)request.getAttribute("ideas");
-  Integer currentPage = (Integer)request.getAttribute("_currentPage");
-  Integer delta = (Integer)request.getAttribute("_delta");
-  if (currentPage == null) currentPage = 1;
-  if (delta == null) delta = results.size()+1;
-  
-  String baseUrl = (String) request.getAttribute("_baseUrl");
-  PortletURL portletURL = renderResponse.createRenderURL();
-  portletURL.setParameter("mvcPath", "/html/idea/view.jsp");
+	Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");
+  	Long callId = ParamUtil.getLong(renderRequest,"callId");
 
-  int offset = delta - results.size();
-  String offsetClass = (offset > 0) ? "offset" + offset*2 : "";
-  java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
-  
-  NumberFormat numberFormat = NumberFormat.getInstance();
-  numberFormat.setMaximumFractionDigits(1);
-  numberFormat.setMinimumFractionDigits(0);
-
-  Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");//(Long) request.getAttribute("categoryId");
-  Long callId = ParamUtil.getLong(renderRequest,"callId");
-//   portletURL.setParameter("categoryId", String.valueOf(categoryId));
-//   portletURL.setParameter("callId", String.valueOf(callId));
-  Map<String,Object> params = new HashMap<String,Object>();
-  params.put("categoryId", categoryId);
-  params.put("callId", callId);
-  params.put("mvcPath", "/html/idea/view.jsp");
-  
-  String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
-	if (callId > 0 && categoryId == 0) {
-	    Call call = CallLocalServiceUtil.getCall(callId);
-        AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-                Call.class.getName(), call.getCallId());
-          List<AssetCategory> categories = assetEntry.getCategories();
-          AssetCategory category = null;
-          if (categories != null && categories.size() > 0) {
-            category = categories.get(0);
-            categoryId = category.getCategoryId();
-          }
-	}
-	PortletURL redirectURL = renderResponse.createRenderURL();
-	redirectURL.setParameter("ideaId", "0");
-	redirectURL.setWindowState(WindowState.NORMAL);
+	String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
+	boolean pagination = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", "true"));
+	int delta = 0;
+    if(pagination) {
+    	delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", Integer.toString(Constants.PAGINATION_ELEMENTS_IN_PAGE))); 
+    }
+    
+    String confirmMsg =  LanguageUtil.get(locale,"are-you-sure-you-want-to-delete-this");
+    
 %>
 
+<span id="<portlet:namespace/>result">
+</span>
 
-<div class="row-fluid idea-cards">
-  <div class="span12">
-    <%
-    int rowCount = 0;
-    for(Idea idea : results) {
-    %>
-    <%
-      if ((rowCount % 3) == 0) {
-    %>
-    <div class="row-fluid">
-    <%
-      }
-    %>
-        <portlet:renderURL var="viewIdea">
-          <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-          <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
-<%--           <portlet:param name="redirect" value="<%=redirectURL.toString() %>" /> --%>
-        </portlet:renderURL>
-        
-        <% 
-        long classPK = idea.getIdeaId();
-        AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Idea.class.getName(),classPK);
-        List<AssetCategory> categories = Utils.getOrderedCategories(idea.getCategoryIds(), curEntry);   
-        RatingsStats stat = RatingsStatsLocalServiceUtil.getStats(Idea.class.getName(),classPK);
-        String scoreString = numberFormat.format(stat.getAverageScore());
-        String color = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()) : "#DDD";
-        String catTitle = categories.size() > 0 ? categories.get(0).getTitle(locale): "";
 
-        %>
-        <div class="span4">
-                <div onClick="javascript:window.location='<%=viewIdea.toString() %>';" class="idea-card" style="border-color: <%=color %>;">
-                  <div class="idea-card-header">
+<script id="<portlet:namespace/>idea-templ" type="text/x-handlebars">
+	<div class="row-fluid idea-cards" >
+	<div class="span12">
+
+    {{#each result.result.data}}
+	{{#if this.startRow }}
+	<div class="row-fluid">
+	{{/if}}
+     <span class="span4" id="result">
+   <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
+	 <div class="idea-card-header">
                     <div class="span6">
-	                    <c:if test="<%=idea.getCallId() > 0 %>"><span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> </c:if>
+	                    {{#if this.callId}}
+							<span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> 
+						{{/if}}
                     </div>
                     <div class="span6">
-                      <c:if test="<%= Utils.ideaDeleteEnabled(idea, renderRequest) %>">
-	                      <portlet:actionURL var="deleteURL" name="deleteEntry">
-	                        <portlet:param name="entryId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-	                        <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
-	                        <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
-	                      </portlet:actionURL>
-	                      <liferay-ui:icon-delete message="lbl_delete" url="<%=deleteURL.toString()%>"/>
-	                    </c:if>
+                      {{#if this.deleteURL}}
+							<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
+					  {{/if}}	
                       <span class="idea-card-date">
-                        <%=dateFormatter.format(idea.getCreateDate()) %>
+                       	{{this.creationDate}}
                       </span>
                     </div>
-                  </div>
-                  <h4><%=idea.getTitle() %></h4>
-                  <div class="idea-card-abstract">
-                  <%=idea.getShortDesc() %>
-                  </div>  
+                  </div>	
+				  
+				  <h4>{{this.title}}</h4>
                   <div class="idea-card-footer">
                       <div class="span6 idea-rating">
-                            <%
-                            for (int i = 1; i <= 5; i++) {
-                            %>
-                              <i class="<%= (i <= stat.getAverageScore()) ? "icon-star" : "icon-star-empty" %>"></i>
-                            <%
-                            }
-                            %>
+                        {{#each this.stars}}
+                        {{#if this}}
+                            <i class="icon-star"></i>
+                        {{else}}
+                            <i class="icon-star-empty"></i>
+                        {{/if}}
+                    {{/each}}
                       </div>
                       <div class="span6">
-                      <span class="idea-card-comments"><%=String.valueOf(MBMessageLocalServiceUtil.getDiscussionMessagesCount(Idea.class.getName(), idea.getIdeaId(), WorkflowConstants.STATUS_APPROVED)) %></span>
+                      <span class="idea-card-comments">{{this.comments}}</span>
                       </div>
                   </div>
-                </div>
-        </div>
-        
-    <%
-      if ((rowCount++ % 3) == 2) {
-    %>
+	
     </div>
-    <%
-      }
-    %>
-    <% } %>
-		<c:if test="<%= currentPage == 1 && results.size() == 0%>">
+    </span>
+	{{#if  this.endRow}}
+	</div>
+	{{/if}}
+    {{/each}}
+	{{#if this.noResults }}
 		  <div class="row-fluid">
 		  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
 		  </div>
-		</c:if>
-	</div>	
+	{{/if}}
+	</div>
 </div>
 <div class="idea-paging row-fluid">
   <div class="span6">
-    <c:if test="<%=currentPage > 1 %>">
-    <% 
-//     portletURL.setParameter("cur", StringUtil.valueOf(currentPage - 1)); 
-//     String prevURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
-       params.put("cur", currentPage - 1);
-       String prevURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
-    %>
-    <a class="idea-paging-prev" href="<%= HtmlUtil.escape(prevURL) %>"><liferay-ui:message key="prev_page"/></a>
-    </c:if>
+   {{#if result.viewPrevArrow }}
+       <a class="idea-paging-prev" onclick="<portlet:namespace/>paginateIdeas('{{result.prevURL}}');"><liferay-ui:message key="prev_page"/></a>
+	{{/if}}
   </div>
   <div class="span6">
-   <c:if test="<%=(results.size() >= delta) %>">
-       <%
-//        portletURL.setParameter("cur", StringUtil.valueOf(currentPage + 1));
-//        String nextURL = baseUrl + "?" + HttpUtil.getQueryString(portletURL.toString());
-		      params.put("cur", currentPage + 1);
-		      String nextURL = Utils.generateRenderURL(renderResponse, baseUrl, params);
-       %>
-       <a class="idea-paging-next" href="<%=HtmlUtil.escape(nextURL)%>"><liferay-ui:message key="next_page"/></a>
-   </c:if>  
+  	{{#if result.viewNextArrow }}
+       <a class="idea-paging-next" onclick="<portlet:namespace/>paginateIdeas('{{result.nextURL}}');"><liferay-ui:message key="next_page"/></a>
+	{{/if}}
   </div>
 </div>
+	
+</script>
+
+<aui:script use="liferay-portlet-url">
+	var url = Liferay.PortletURL.createResourceURL();
+    url.setPortletId('<%= Constants.IDEA_PORTLET_ID %>');
+    url.setResourceId("loadSimple");
+	url.setParameter("cur", "1");
+    url.setParameter("listType",'<%= listType %>');
+    url.setParameter("pagination",'<%= Boolean.toString(pagination) %>');
+    url.setParameter("delta",'<%= Integer.toString(delta) %>');
+	url.setParameter("categoryId", '<%= Long.toString(categoryId) %>');
+	url.setParameter("callId", '<%= Long.toString(callId) %>');
+	
+	<portlet:namespace/>paginateIdeas(url.toString());
+</aui:script>
+
+	<aui:script>
+		Liferay.provide(window, '<portlet:namespace/>paginateIdeas', function(url) {
+			var instance = this;
+			var A = AUI();
+            //alert(url);
+			A.io.request(url, {
+				dataType : 'json',
+				on : {
+					success : function() {
+						var data = this.get('responseData');
+                        // transform data
+                        data.viewPrevArrow = <%= pagination %> && data.currentPage != 1;
+                        data.viewNextArrow = <%= pagination %> && data.result.size >= data.elementInPage;
+                        
+                        var offset = data.elementInPage - data.result.size;
+                        data.offsetClass = (offset > 0) ? "offset" + offset*2 : "";
+                        data.noResults = data.result.size == 0 && data.currentPage == 1;
+                        $.each(data.result.data,function(i,v) {
+                            
+                            v.stars = [0,0,0,0,0];
+                            for(var i = 1 ; i <= 5; i++) {
+                                v.stars[i-1] = i <= v.avgRating;
+                            }
+                            
+                            v.boxColor = (v.cats[0]) ? v.cats[0].color : "";
+                            
+                            v.startRow = i % 3 == 0;
+                            v.endRow = i % 3 == 2;
+                        });
+                        //alert(data.result.size);
+						var nodeResult = A.one('#<portlet:namespace/>result');
+                        //alert(nodeResult);
+						nodeResult.empty();
+						var handlebars = new A.Template(A.Handlebars);
+						var source = A.one('#<portlet:namespace/>idea-templ').html();
+						var compiled = handlebars.compile(source);
+						var html = compiled({
+							result : data
+						});
+						nodeResult.html(html);
+                        
+                        }
+                    }
+                });
+            }, [ 'aui-io', 'aui-node', 'template-base', 'handlebars' ]);
+		
+		
+		Liferay.provide(window, '<portlet:namespace/>deleteEntry', function(url) {
+			var instance = this;
+			var A = AUI();
+            //alert(url);
+			A.io.request(url, {
+				dataType : 'json',
+				on : {
+					success : function() {
+                    }
+                    }
+                });
+            }, [ 'aui-io', 'aui-node' ]);
+	</aui:script>

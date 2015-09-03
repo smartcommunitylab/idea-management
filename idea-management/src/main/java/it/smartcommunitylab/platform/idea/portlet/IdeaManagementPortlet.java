@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -45,6 +46,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -212,6 +214,15 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",
 						req.getLocale());
 				ideaRes.setCreationDate(formatter.format(i.getCreateDate()));
+				ideaRes.setCallId(i.getCallId());
+				try {
+					ideaRes.setComments(MBMessageLocalServiceUtil
+							.getDiscussionMessagesCount(Idea.class.getName(),
+									i.getIdeaId(),
+									WorkflowConstants.STATUS_APPROVED));
+				} catch (SystemException e1) {
+					e1.printStackTrace();
+				}
 
 				// set starts avg
 				RatingsStats stat = null;
