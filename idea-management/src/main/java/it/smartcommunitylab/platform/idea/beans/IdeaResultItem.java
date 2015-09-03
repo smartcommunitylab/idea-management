@@ -4,7 +4,7 @@ import java.util.List;
 
 public class IdeaResultItem {
 	private String title;
-	private long creationTs;
+	private String creationDate;
 	private List<CategoryBean> cats;
 	private double avgRating;
 	private String detailURL;
@@ -18,12 +18,12 @@ public class IdeaResultItem {
 		this.title = title;
 	}
 
-	public long getCreationTs() {
-		return creationTs;
+	public String getCreationDate() {
+		return creationDate;
 	}
 
-	public void setCreationTs(long creationTs) {
-		this.creationTs = creationTs;
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public double getAvgRating() {

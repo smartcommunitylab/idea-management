@@ -9,6 +9,8 @@ import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -204,7 +206,9 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			for (Idea i : ideas) {
 				IdeaResultItem ideaRes = new IdeaResultItem();
 				ideaRes.setTitle(i.getTitle());
-				ideaRes.setCreationTs(i.getCreateDate().getTime());
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",
+						req.getLocale());
+				ideaRes.setCreationDate(formatter.format(i.getCreateDate()));
 
 				// set starts avg
 				RatingsStats stat = null;

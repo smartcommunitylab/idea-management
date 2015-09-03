@@ -82,9 +82,7 @@
                         data.offsetClass = (offset > 0) ? "offset" + offset*2 : "";
                        
                         $.each(data.result.data,function(i,v) {
-                            if(v.creationTs) {
-                                v.formattedCreation = new Date(v.creationTs).toLocaleFormat('%d/%m/%Y');
-                            }
+                            
                             v.stars = [0,0,0,0,0];
                             for(var i = 1 ; i <= 5; i++) {
                                 v.stars[i-1] = i <= v.avgRating;
@@ -155,7 +153,7 @@
                     <h4 class="title-ellipsis">{{this.title}}</h4>
 	<div class="thumbnail-bottom">
 				<div class="pull-left">
-                {{formattedCreation}}
+                {{this.creationDate}}
 				</div>
 				<div class="idea-rating pull-right">
 					{{#each this.stars}}
