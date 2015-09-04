@@ -1934,7 +1934,8 @@ header#banner {
 }
 
 #portlet_3 a:hover {
-  text-decoration: nonr;
+  text-decoration: none;
+  color: #F3846B;
 }
 
 #portlet_3 .portlet-title-text {

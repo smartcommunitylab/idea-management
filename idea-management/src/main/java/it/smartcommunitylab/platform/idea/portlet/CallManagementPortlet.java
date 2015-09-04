@@ -278,7 +278,7 @@ public class CallManagementPortlet extends MVCPortlet {
 						entryRes.getCats().add(cb);
 					} catch (NumberFormatException | PortalException
 							| SystemException e) {
-						e.printStackTrace();
+//						e.printStackTrace();
 					}
 				}
 				// view URL
