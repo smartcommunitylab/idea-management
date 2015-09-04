@@ -1,13 +1,20 @@
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ {
+}
 
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-content {
+	font-size: larger;
+	padding-bottom: 30px;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .journal-content-article {
+	background-image: url(/idea-mgmt-theme/images/background_nav_white.png);
+	background-position: bottom 100%;
 }
 
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-container {
 	padding: 70px 0;
 	text-transform: uppercase;
-	text-align: left;
-	background-image: url(/idea-mgmt-theme/images/background_nav.png);
-	background-size: cover;
+	text-align: center;
 }
 
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-container div {
@@ -18,7 +25,7 @@
 
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .title-over {
 	margin-top: 0;
-	color: white;
+	color: #8A8C8E;
 	font-weight: bold;
 	text-align: right;
 }
@@ -34,7 +41,11 @@
 }
 
 #p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .desc {
-	background: #E83D5F;
-	padding: 30px 0;
-	color: white;
+	text-align: center;
+	font-weight: bold;
+	padding-bottom: 30px;
+}
+
+#p_p_id_56_INSTANCE_oCEDqD0W5FUX_ .questions {
+	text-align: right;
 }
