@@ -1860,6 +1860,13 @@ header#banner {
 #calendar .fc-state-disabled:hover {
   color: #FFF;
 }
+#calendar .fc-state-disabled {
+	color: #BDBDBD !important;
+  background-color: #EDEDED !important;
+  background-image: linear-gradient(to bottom, #EDEDED, #EDEDED) !important;
+  border: 0 !important;
+}
+
 
 #calendar .fc-prev-button, #calendar .fc-next-button {
 	width: 24px;
@@ -1920,4 +1927,16 @@ header#banner {
 #calendar .fc-event:hover {
   color: #F3846B;
   text-decoration: none;
+}
+#portlet_3 a {
+	color: #E84927;
+	text-decoration: none;
+}
+
+#portlet_3 a:hover {
+  text-decoration: nonr;
+}
+
+#portlet_3 .portlet-title-text {
+	display : none;
 }
