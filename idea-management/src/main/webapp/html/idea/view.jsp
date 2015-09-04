@@ -111,18 +111,7 @@ if(callId > 0) {
 	</div>
 </aui:button-row>
 </c:if>
-<script type="text/javascript">
-    function <portlet:namespace/>doSearch() {
-    	document.<portlet:namespace />filter.submit();
-    }
-    
-    function <portlet:namespace/>fixCheckbox(elem) {
-    	var hideValueName = elem.name.slice(0,-8);
-    	var hideElem = document.getElementById(hideValueName);
-    	var realValue = hideValueName.substring('<portlet:namespace/>filterByTags'.length);
-    	hideElem.value = realValue;
-    }
-</script>
+
 
 <aui:script use="aui-base, aui-node">
     Liferay.provide(window, '<portlet:namespace/>ajaxFilter', function() {
@@ -176,16 +165,6 @@ if(callId > 0) {
 if (request.getAttribute("listType") != null) listType = (String) request.getAttribute("listType");
 %>
 
-<portlet:actionURL
-	name='filter'
-	var="filterURL">
-    <portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
-    <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
-    <!-- reset idea id to clear in navigation -->	
-    <portlet:param name="mvcPath" value="/html/idea/view.jsp" />
-    <portlet:param name="ideaId" value="0" />
-</portlet:actionURL>
-
 <portlet:resourceURL id="loadSimple" var="ajaxFilterURL">
 	<portlet:param name="categoryId" value="<%=String.valueOf(categoryId) %>" />
     <portlet:param name="callId" value="<%=String.valueOf(callId) %>" />
@@ -228,6 +207,7 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
     </c:if>
 </aui:form>
 </c:if>
+
 
 <c:if test='<%=!hideList_view %>'>
 	<c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>'>

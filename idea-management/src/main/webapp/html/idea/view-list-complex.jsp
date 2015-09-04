@@ -90,6 +90,7 @@
 </script>
 
 <aui:script use="liferay-portlet-url">
+
 	var url = Liferay.PortletURL.createResourceURL();
     url.setPortletId('<%= Constants.IDEA_PORTLET_ID %>');
     url.setResourceId("loadSimple");
@@ -101,13 +102,14 @@
 	url.setParameter("callId", '<%= Long.toString(callId) %>');
 	
 	<portlet:namespace/>paginateIdeas(url.toString());
+
 </aui:script>
+
 
 	<aui:script>
 		Liferay.provide(window, '<portlet:namespace/>paginateIdeas', function(url) {
 			var instance = this;
 			var A = AUI();
-            //alert(url);
 			A.io.request(url, {
 				dataType : 'json',
 				on : {
@@ -132,9 +134,7 @@
                             v.startRow = i % 3 == 0;
                             v.endRow = i % 3 == 2;
                         });
-                        //alert(data.result.size);
 						var nodeResult = A.one('#<portlet:namespace/>result');
-                        //alert(nodeResult);
 						nodeResult.empty();
 						var handlebars = new A.Template(A.Handlebars);
 						var source = A.one('#<portlet:namespace/>idea-templ').html();
@@ -153,7 +153,6 @@
 		Liferay.provide(window, '<portlet:namespace/>deleteEntry', function(url) {
 			var instance = this;
 			var A = AUI();
-            //alert(url);
 			A.io.request(url, {
 				dataType : 'json',
 				on : {
