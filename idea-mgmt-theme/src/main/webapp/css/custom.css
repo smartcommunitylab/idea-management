@@ -2015,3 +2015,8 @@ header#banner {
 #portlet_3 .portlet-title-text {
 	display : none;
 }
+
+.portlet-topper h3 {
+	padding-left: 10px;
+	font-size: 14px;
+}
