@@ -198,6 +198,8 @@ header#banner {
 	/* RGBa with 0.6 opacity */
 	/* background: rgba(255, 255, 255, 0.7); */
 	/* background-image: url(../images/background_nav.png); */
+	background-image: none;
+	background-color: #ffffff;
 	background-size: cover;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -255,19 +257,21 @@ header#banner {
 	width: 100%;
 	margin-right: 0;
 	text-transform: uppercase;
+	margin-bottom: 1em;
 }
 
 #navmenu img {
 	/* width: 55%; */
-	height: 92px;
+	max-height: 92px;
 }
 
-#navmenu li {
+#navmenu > li {
 	/* line-height: 40px; */
 	line-height: 92px;
 }
 
 #navmenu li a {
+	display: inline;
 	padding: 10px 40px;
 }
 
@@ -276,7 +280,6 @@ header#banner {
 	text-shadow: none;
 	color: #8A8C8E;
 	padding-bottom: 5px;
-	border-bottom: 5px solid transparent;
 	height: 65px;
 	line-height: 65px;
 }
@@ -289,58 +292,120 @@ header#banner {
 	color: #E84927;
 }
 
-#navmenu li.has-child-menu:hover a span {
-	border-bottom: 5px solid #E84927;
+#navmenu li.has-child-menu {
+	position: relative;
+	border-left: 3px solid transparent;
+}
+
+#navmenu li.has-child-menu:hover {
+	border-left: 3px solid #E84927;
 }
 
 #navmenu li.right {
 	float: right;
 }
 
-#navmenu li.right {
-	float: right;
+#navmenu li.right > a {
+	padding: 10px 80px 0 5px;
 }
 
-#navmenu li.right a {
-	padding: 10px 80px 0 0;
-}
-
-#navmenu li ul.child-menu {
+#navmenu li.has-child-menu ul.child-menu {
 	/* visibility: hidden; */
-	margin: 0;
+	/* margin: 0;
 	-webkit-transition: all 0.3s ease-in-out 0.3s;
 	-moz-transition: all 0.3s ease-in-out 0.3s;
 	-ms-transition: all 0.3s ease-in-out 0.3s;
 	-o-transition: all 0.3s ease-in-out 0.3s;
 	transition: all 0.3s ease-in-out 0.3s;
 	height: 0px;
-	opacity: 0;
+	opacity: 0; */
+	/* display: none; */
+	width: 100%;
+	position: absolute;
+	left: -99999px;
+	border-left: 3px solid transparent;
+	z-index: 2;
+	margin-left: 0;
 }
 
-#navmenu li:hover ul.child-menu {
+#navmenu li.has-child-menu:hover ul.child-menu {
 	/* visibility: visible; */
-	-webkit-transition-delay: 0s;
+	/* -webkit-transition-delay: 0s;
 	-moz-transition-delay: 0s;
 	-ms-transition-delay: 0s;
 	-o-transition-delay: 0s;
 	transition-delay: 0s;
 	height: 120px;
-	opacity: 1;
+	opacity: 1; */
+	/* display: block; */
+	left: -3px;
+	top: 70px;
+	background-color: rgba(255,255,255,0.8);
+	border-left: 3px solid #E84927;
 }
 
-#navmenu li ul.child-menu li {
+#navmenu li.has-child-menu ul.child-menu li {
 	list-style-type: none;
+	line-height: 40px;
 }
 
-#navmenu li ul.child-menu li a {
-	color: black;
+#navmenu li.has-child-menu ul.child-menu li a {
+	color: #8A8C8E;
 	text-transform: capitalize;
 	text-decoration: none;
+	padding: 0 0 0 5px;
+}
+
+#navmenu li.has-child-menu ul.child-menu li:hover a, #navmenu li.has-child-menu ul.child-menu li.selected a {
+	color: #E84927;
+}
+
+.rainbow {
+	margin: 0 auto !important;
+	height: 1.5em;
+}
+
+.rainbow li {
+	display: inline-block;
+	height: 1.5em;
+	width: 14%;
 	padding: 0;
+	border: 0;
+	margin: 0;
 }
 
 #navmenu li ul.child-menu li:hover a,#navmenu li ul.child-menu li.selected a {
 	color: #E84927;
+}
+
+.rainbow .rainbow-red {
+	width: 15%;
+	background-color: #E63312;
+}
+
+.rainbow .rainbow-orange {
+	background-color: #F39200;
+}
+
+.rainbow .rainbow-yellow {
+	background-color: #F7CD00;
+}
+
+.rainbow .rainbow-greenlight {
+	background-color: #B5C800;
+}
+
+.rainbow .rainbow-greendark {
+	background-color: #158E30;
+}
+
+.rainbow .rainbow-bluedark {
+	background-color: #007CBB;
+}
+
+.rainbow .rainbow-bluelight {
+	width: 15%;
+	background-color: #46B8D0;
 }
 
 #search {
@@ -1864,6 +1929,13 @@ header#banner {
 #calendar .fc-state-disabled:hover {
   color: #FFF;
 }
+#calendar .fc-state-disabled {
+	color: #BDBDBD !important;
+  background-color: #EDEDED !important;
+  background-image: linear-gradient(to bottom, #EDEDED, #EDEDED) !important;
+  border: 0 !important;
+}
+
 
 #calendar .fc-prev-button, #calendar .fc-next-button {
 	width: 24px;
@@ -1927,5 +1999,19 @@ header#banner {
 }
 
 .btn {
-	text-shadow: none;	
+	text-shadow: none;
+}	
+
+#portlet_3 a {
+	color: #E84927;
+	text-decoration: none;
+}
+
+#portlet_3 a:hover {
+  text-decoration: none;
+  color: #F3846B;
+}
+
+#portlet_3 .portlet-title-text {
+	display : none;
 }

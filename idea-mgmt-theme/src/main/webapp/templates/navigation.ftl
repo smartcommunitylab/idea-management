@@ -165,6 +165,16 @@
 		</div>
 	</div>
 </nav>
+<ul class="rainbow">
+	<li class="rainbow-red"></span>
+	<li class="rainbow-orange"></span>
+	<li class="rainbow-yellow"></span>
+	<li class="rainbow-greenlight"></span>
+	<li class="rainbow-greendark"></span>
+	<li class="rainbow-bluedark"></span>
+	<li class="rainbow-bluelight"></span>
+</ul>
+
 
 <script>
 	Liferay.Data.NAV_LIST_SELECTOR = '#navmenu';
