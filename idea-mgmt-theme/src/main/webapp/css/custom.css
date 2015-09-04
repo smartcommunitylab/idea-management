@@ -116,7 +116,7 @@
 	color: white;
 	text-shadow: none;
 	background-image: none;
-	background-color: #E83D5F;
+	background-color: #E84927;
 	border: 0;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -340,7 +340,7 @@ header#banner {
 }
 
 #navmenu li ul.child-menu li:hover a,#navmenu li ul.child-menu li.selected a {
-	color: #E83D5F;
+	color: #E84927;
 }
 
 #search {
@@ -395,7 +395,7 @@ header#banner {
 }
 
 .idea-slider .idea-slider-arrow:hover {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .idea-slider .idea-slider-arrow {
@@ -525,7 +525,7 @@ header#banner {
 }
 
 .idea-rating {
-	color: #E83D5F;
+	color: #E84927;
 	padding-right: 9px;
 }
 
@@ -564,6 +564,7 @@ header#banner {
 	text-align: center;
 	text-transform: uppercase;
 	padding-bottom: 30px;
+	color: #E84927;
 }
 
 .accordion-group {
@@ -629,7 +630,7 @@ header#banner {
 }
 
 .asset-links-list a:focus,.asset-links-list a {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .taglib-social-bookmarks {
@@ -716,12 +717,12 @@ header#banner {
 }
 
 .liferay-rating-vote a:focus {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .liferay-rating-vote .rating-element {
 	font-size: 24px;
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .taglib-ratings {
@@ -733,11 +734,11 @@ header#banner {
 }
 
 .liferay-rating-score .rating-element {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .taglib-ratings .rating-element {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .idea-button {
@@ -746,7 +747,7 @@ header#banner {
 	width: 50px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	border: 1px solid #E83D5F;
+	border: 1px solid #E84927;
 	-webkit-border-radius: 3px;
 }
 
@@ -755,7 +756,7 @@ header#banner {
 }
 
 .taglib-discussion a:focus,.taglib-discussion a {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .taglib-discussion .lfr-discussion-form-container .lfr-discussion-form {
@@ -832,7 +833,7 @@ header#banner {
 }
 
 #discussion .rating-element {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .idea-button-participate-enabled {
@@ -842,7 +843,7 @@ header#banner {
 }
 
 .idea-button-participate-disabled {
-	background-color: #E83D5F !important;
+	background-color: #E84927 !important;
 	background-image: url(../images/CiSto_enabled.png) !important;
 	background-size: 100% 100%;
 }
@@ -854,7 +855,7 @@ header#banner {
 }
 
 .idea-button-follow-disabled {
-	background-color: #E83D5F !important;
+	background-color: #E84927 !important;
 	background-image: url(../images/seguo_enabled.png) !important;
 	background-size: 100% 100%;
 }
@@ -981,14 +982,14 @@ header#banner {
 	text-transform: uppercase !important;
 	padding: 8px 24px !important;
 	color: white !important;
-	background-color: #E83D5F !important;
-	background-image: linear-gradient(to bottom, #E83D5F, #E83D5F) !important;
+	background-color: #E84927 !important;
+	background-image: linear-gradient(to bottom, #E84927, #E84927) !important;
 	border: 0 !important;
 	-webkit-border-radius: 3px !important;
 	-moz-border-radius: 3px !important;
 	border-radius: 3px !important;
 	box-shadow: 0px 0px 4px 2px #888888 !important;
-	text-shadow: 0 !important;
+	text-shadow: none !important;
 	margin-top: 0px !important;
 }
 
@@ -1081,7 +1082,7 @@ header#banner {
 }
 
 .idea-card-call-label {
-	background-color: #E83D5F !important;
+	background-color: #E84927 !important;
 	text-transform: uppercase;
 	color: white;
 	padding-left: 4px;
@@ -1090,6 +1091,10 @@ header#banner {
 
 .idea-card-header div {
 	min-height: 20px !important;
+}
+
+.idea-card h4 {
+	font-weight: bold;	
 }
 
 .idea-card-header .taglib-icon {
@@ -1106,7 +1111,7 @@ header#banner {
 }
 
 .idea-paging a:focus,.idea-paging a {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .idea-paging-next {
@@ -1194,7 +1199,7 @@ header#banner {
 }
 
 .call-paging a:focus,.call-paging a {
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .call-card-ideas {
@@ -1254,7 +1259,7 @@ header#banner {
 }
 
 .idea-warning {
-	background-color: #E83D5F;
+	background-color: #E84927;
 	color: white;
 	margin: 2em -5em;
 	padding: 0.5em 1em;
@@ -1370,7 +1375,7 @@ header#banner {
 .idea-form .asset-links-list li {
 	display: inline !important;
 	margin-right: 10px !important;
-	color: #E83D5F !important;
+	color: #E84927 !important;
 }
 
 .idea-form .tagselector-focused,.idea-form .categoriesselector-focused {
@@ -1411,7 +1416,7 @@ header#banner {
 .event-container-button {
 	min-height: 24px;
 	min-width: 24px;
-	background-color: #E83D5F;
+	background-color: #E84927;
 	display: inline-block;
 	vertical-align: text-bottom;
 	margin-left: 5px;
@@ -1449,7 +1454,7 @@ header#banner {
 .event-container-list {
 	min-height: 250px;
 	border-left-width: 2px;
-	border-left-color: #E83D5F;
+	border-left-color: #E84927;
 	border-left-style: solid;
 	list-style-type: none;
 	margin-left: 0px !important;
@@ -1477,12 +1482,12 @@ header#banner {
 
 .event-container-element .element-start {
 	font-size: 16px;
-	color: #4EB9A4;
+	color: #8A8C8E;
 	display: inline-block;
 }
 
 .event-container-element .element-start .element-official,.event-view-container .event-view-header .event-view-official {
-	background-color: #4EB9A4;
+	background-color: #8A8C8E;
 	color: white;
 	font-size: 12px;
 	padding: 1px 4px;
@@ -1496,7 +1501,7 @@ header#banner {
 }
 
 .event-container-element .element-controls a {
-	/* 	color: #E83D5F; */
+	/* 	color: #E84927; */
 	
 }
 
@@ -1680,7 +1685,7 @@ header#banner {
 .event-view-header {
 	border-top-style: solid;
 	border-top-width: 1px;
-	border-top-color: #E83D5F;
+	border-top-color: #E84927;
 	margin-top: 8px;
 	padding-top: 8px;
 	font-size: 16px;
@@ -1728,8 +1733,7 @@ header#banner {
 }
 
 .beta {
-	color: white;
-	background-color: #4eb9a4;
+	color: #8A8C8E;
 	padding: 10px 20px;
 	margin-top: 50px;
 }
@@ -1739,7 +1743,7 @@ header#banner {
 }
 
 #footer {
-	border-top: 10px solid #E83D5F;
+	border-top: 10px solid #E84927;
 	margin-top: 10px;
 }
 
@@ -1773,7 +1777,7 @@ header#banner {
 	/* background: rgb(255, 255, 255); */
 	/* RGBa with 0.6 opacity */
 	/* background: rgba(255, 255, 255, 0.7); */
-	background: #E83D5F;
+	background: #E84927;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
@@ -1920,4 +1924,8 @@ header#banner {
 #calendar .fc-event:hover {
   color: #F3846B;
   text-decoration: none;
+}
+
+.btn {
+	text-shadow: none;	
 }
