@@ -119,9 +119,14 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 		Long callId = ParamUtil.getLong(resourceRequest, "callId");
 
-		// FIXME used by filter
-		long[] tagIds = new long[0];
-
+		String tagIdsParam = ParamUtil.getString(resourceRequest, "tag");
+		List<Long> tagIds = new ArrayList<Long>();
+		if (tagIdsParam.trim().length() > 0) {
+			for (String tid : tagIdsParam.split(",")) {
+				tagIds.add(new Long(tid));
+			}
+		}
+		long[] tagFilter = ArrayUtil.toLongArray(tagIds);
 		if (pagination) {
 			if (resourceRequest.getParameter("begin") != null
 					&& resourceRequest.getParameter("end") != null) {
@@ -140,12 +145,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			switch (listType) {
 			case Constants.PREF_LISTTYPE_RECENT:
 				ideas = IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(
-						categoryId, callId, tagIds, begin, end);
+						categoryId, callId, tagFilter, begin, end);
 				break;
 			case Constants.PREF_LISTTYPE_POPULAR:
 				ideas = IdeaLocalServiceUtil
 						.searchPopularByCallAndCategoryAndTags(categoryId,
-								callId, tagIds, begin, end);
+								callId, tagFilter, begin, end);
 				break;
 			default:
 				break;
@@ -162,6 +167,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			params.put("delta", new String[] { Integer.toString(delta) });
 			params.put("categoryId", new String[] { Long.toString(categoryId) });
 			params.put("callId", new String[] { Long.toString(callId) });
+			params.put("tag", new String[] { tagIdsParam });
 
 			// next URL
 			ResourceURL nextURL = resourceResponse.createResourceURL();
