@@ -31,9 +31,9 @@ $(document).ready(function() {
 
 	$('#calendar').fullCalendar({
 		header: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,basicWeek,basicDay'
+		      left: 'title',
+		      center: '',
+		      right: 'prev, next, today, month,basicWeek,basicDay'
 		},
 		defaultDate: '<%= activeDate%>',
 		lang: 'it',
