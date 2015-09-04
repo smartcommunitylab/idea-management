@@ -46,9 +46,6 @@
                         data.viewPrevArrow = <%= pagination %> && data.currentPage != 1;
                         data.viewNextArrow = <%= pagination %> && data.result.size >= data.elementInPage;
                         
-                        var offset = data.elementInPage - data.result.size;
-                        data.offsetClass = (offset > 0) ? "offset" + offset*2 : "";
-                       
                         $.each(data.result.data,function(i,v) {
                             v.boxColor = (v.cats[0]) ? v.cats[0].color : "";
                         });
@@ -129,7 +126,7 @@
 	</div>
 	</span>
 	
-	<span class="span1 text-left {{result.offsetClass}}"> 
+	<span class="span1 text-left"> 
 		{{#if result.viewNextArrow }}
 			<a onclick="<portlet:namespace/>paginateIdeas('{{result.nextURL}}');"> <i
 				class="icon-arrow-right idea-slider-arrow"></i>
