@@ -1,16 +1,18 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
-<%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
+<%@ page
+	import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
-<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
-<%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
+<%@page
+	import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@ page import="com.liferay.portlet.asset.model.AssetCategory"%>
 <%@ page import="it.smartcommunitylab.platform.idea.portlet.Utils"%>
 
-<%@ include file="/html/common-init.jsp" %>
+<%@ include file="/html/common-init.jsp"%>
 
 <%
-        String baseUrl = Utils.getBaseURL(request);
+	String baseUrl = Utils.getBaseURL(request);
         Idea idea = null;
 
         long ideaId = ParamUtil.getLong(request, "ideaId");
@@ -60,18 +62,24 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 %>
 
 <portlet:renderURL var="redirect" windowState="normal">
-  <c:if test="<%=idea != null %>">
-  <portlet:param name="ideaId" value='<%=String.valueOf(idea.getIdeaId()) %>'></portlet:param>
-  </c:if>
-  <portlet:param name="mvcPath" value='<%=(idea == null ? "/html/idea/view.jsp" : "/html/idea/asset/full_content.jsp")%>' />
+	<c:if test="<%=idea != null%>">
+		<portlet:param name="ideaId"
+			value='<%=String.valueOf(idea.getIdeaId())%>'></portlet:param>
+	</c:if>
+	<portlet:param name="mvcPath"
+		value='<%=(idea == null ? "/html/idea/view.jsp" : "/html/idea/asset/full_content.jsp")%>' />
 </portlet:renderURL>
 
 
-<portlet:actionURL name='<%= idea == null ? "addNewIdea" : "updateIdea"%>' var="addIdeaURL">
-  <c:if test='<%=idea != null %>'>
-  <portlet:param name="ideaId" value='<%= String.valueOf(idea.getIdeaId()) %>'></portlet:param>
-  </c:if>
-  <portlet:param name="redirect" value='<%=Utils.generateRenderURL(baseUrl, redirect.toString()) %>'></portlet:param>
+<portlet:actionURL
+	name='<%=idea == null ? "addNewIdea" : "updateIdea"%>'
+	var="addIdeaURL">
+	<c:if test='<%=idea != null%>'>
+		<portlet:param name="ideaId"
+			value='<%=String.valueOf(idea.getIdeaId())%>'></portlet:param>
+	</c:if>
+	<portlet:param name="redirect"
+		value='<%=Utils.generateRenderURL(baseUrl, redirect.toString())%>'></portlet:param>
 </portlet:actionURL>
 
 <div class="idea-warning">
@@ -80,109 +88,155 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<liferay-ui:message key="idea_warning_3" />
 </div>
 
-<aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>" name="idea">
-<aui:model-context bean="<%= idea %>" model="<%= Idea.class %>" />
+<aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>"
+	name="idea">
+	<aui:model-context bean="<%=idea%>" model="<%=Idea.class%>" />
 	<aui:fieldset label="lbl_title" cssClass="simple-field">
-		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' first="true" label="" name="title"></aui:input>
+		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title")%>'
+			first="true" label="" name="title"></aui:input>
 	</aui:fieldset>
 
-  <!-- <aui:field-wrapper label="lbl_shortDesc" >
-    <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_shortDesc") %>' name="shortDesc" type="textarea" label=""></aui:input>  
+	<!-- <aui:field-wrapper label="lbl_shortDesc" >
+    <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_shortDesc")%>' name="shortDesc" type="textarea" label=""></aui:input>  
   </aui:field-wrapper> -->
-  
+
 	<aui:field-wrapper label="lbl_idea_longDesc">
-    <aui:input name="ldesc" type="hidden" value='<%= idea != null ? idea.getLongDesc() : "" %>'></aui:input>
-		<liferay-ui:input-editor name="longDesc" 
-			toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="200" />
+		<aui:input name="ldesc" type="hidden"
+			value='<%=idea != null ? idea.getLongDesc() : ""%>'></aui:input>
+		<liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article"
+			initMethod="initEditor2" onChangeMethod="onChange2" width="200"/>
 		<script type="text/javascript">
-        function <portlet:namespace />initEditor2() { return document.getElementById('<%=renderResponse.getNamespace()%>ldesc').value; }
-        function <portlet:namespace />onChange2() { document.getElementById('<portlet:namespace />ldesc').value = window['<portlet:namespace />longDesc'].getHTML(); }
-    </script>
-    
+        function <portlet:namespace />initEditor2() { 
+        	return document.getElementById('<%=renderResponse.getNamespace()%>ldesc').value;
+			}
+			function <portlet:namespace />onChange2() {
+				document.getElementById('<portlet:namespace />ldesc').value = window['<portlet:namespace />longDesc'].getHTML();
+			}
+		</script>
+
 	</aui:field-wrapper>
-	
+
 	<aui:input name="ideaId" type="hidden"></aui:input>
-	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>"></aui:input>
-	<aui:input name="callId" type="hidden" value="<%= callId %>"></aui:input>
+	<aui:input name="categoryId" type="hidden" value="<%=categoryId%>"></aui:input>
+	<aui:input name="callId" type="hidden" value="<%=callId%>"></aui:input>
 
-  <aui:field-wrapper  label="lbl_discussionLimit">
-    <aui:select name="discussionLimit" label="">
-    <% for (int i : Constants.DISCUSSION_LIMITS) {%>    
-    <aui:option value="<%=i %>" label="<%= i %>"/>  
-    <% } %>
-    </aui:select>
-  </aui:field-wrapper>
+	<aui:field-wrapper label="lbl_discussionLimit">
+		<aui:select name="discussionLimit" label="">
+			<%
+				for (int i : Constants.DISCUSSION_LIMITS) {
+			%>
+			<aui:option value="<%=i%>" label="<%=i%>" />
+			<%
+				}
+			%>
+		</aui:select>
+	</aui:field-wrapper>
 
-  <aui:field-wrapper label="lbl_deadlineConstraints">
-    <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints") %>' name="deadlineConstraints" type="textarea" label=""></aui:input>  
-  </aui:field-wrapper>
+	<aui:field-wrapper label="lbl_deadlineConstraints">
+		<aui:input
+			placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints")%>'
+			name="deadlineConstraints" type="textarea" label=""></aui:input>
+	</aui:field-wrapper>
 
-  <liferay-ui:asset-categories-error />
-  <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat">
-  <aui:input name="catId" type="hidden"></aui:input>
-  <liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>">
-  </liferay-ui:asset-categories-selector>
-  </aui:field-wrapper>
+	<liferay-ui:asset-categories-error />
+	<aui:field-wrapper cssClass="categoriesselector-wrapper"
+		label="lbl_cat">
+		<aui:input name="catId" type="hidden"></aui:input>
+		<liferay-ui:asset-categories-selector
+			curCategoryIds="<%=curCategoryIds%>">
+		</liferay-ui:asset-categories-selector>
+	</aui:field-wrapper>
 
 	<liferay-ui:asset-tags-error />
-  <aui:field-wrapper label="lbl_tags">
-	<liferay-ui:asset-tags-selector  curTags='<%=tagNames %>' className="<%=Idea.class.getName()%>"
-		classPK="<%=ideaId%>">
-	</liferay-ui:asset-tags-selector>
-  </aui:field-wrapper>
-  <aui:fieldset label="related-assets">
-  <%
-  request.setAttribute("liferay-ui:input-asset-links:className",Idea.class.getName());
-  request.setAttribute("liferay-ui:input-asset-links:assetEntryId",String.valueOf(assetEntry == null ? 0 : assetEntry.getEntryId()));
-  %>
-  <%@ include file="/html/common/asset-links.jsp" %>
-  </aui:fieldset>
+	<aui:field-wrapper label="lbl_tags">
+		<liferay-ui:asset-tags-selector curTags='<%=tagNames%>'
+			className="<%=Idea.class.getName()%>" classPK="<%=ideaId%>">
+		</liferay-ui:asset-tags-selector>
+	</aui:field-wrapper>
+	<aui:fieldset label="related-assets">
+		<%
+			request.setAttribute("liferay-ui:input-asset-links:className",Idea.class.getName());
+		  request.setAttribute("liferay-ui:input-asset-links:assetEntryId",String.valueOf(assetEntry == null ? 0 : assetEntry.getEntryId()));
+		%>
+		<%@ include file="/html/common/asset-links.jsp"%>
+	</aui:fieldset>
 
-  <aui:button-row cssClass="formbutton-row">
-    <aui:button cssClass="formbutton-cancel" type="cancel" onClick="javascript: confirmLeave = false; window.history.go(-1);"></aui:button>
-    <aui:button cssClass="formbutton-primary" value='<%= LanguageUtil.get(locale, "btn_save_idea") %>' type="button" onClick="javascript: doSubmit();"></aui:button>
-  </aui:button-row>
+	<aui:button-row cssClass="formbutton-row">
+		<aui:button cssClass="formbutton-cancel" type="cancel"
+			onClick="javascript: confirmLeave = false; window.history.go(-1);"></aui:button>
+		<aui:button cssClass="formbutton-primary"
+			value='<%=LanguageUtil.get(locale, "btn_save_idea")%>' type="submit">
+		</aui:button>
+	</aui:button-row>
 </aui:form>
+
 <aui:script>
-AUI().use('aui-form-validator',
-  function(A) {
-   
-   var rules = {
-      <portlet:namespace/>ldesc: {
-          required: true
-      },
-      <portlet:namespace/>title: {
-          required: true
-      }
-   };
-   new A.FormValidator(
-          {
-            boundingBox: '#<portlet:namespace/>idea',
-            rules: rules,
-            showAllMessages: true
-          }
-        );
-  }
-);
+	
+	AUI().ready('aui-form-validator', 'aui-overlay-context-panel', function(A) {
+		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-var confirmLeave = true;
+		A.mix(DEFAULTS_FORM_VALIDATOR.RULES, {
+			descRule : function(val, fieldNode, ruleValue) {
+				var desc = document.getElementById('<portlet:namespace />ldesc').value;
+				//filter html tags to check empty input
+				desc = desc.replace(/[(<p>(&nbsp;)*<\/p>)*|(&nbsp;)*]/gm, '');
+				return desc.trim().length > 0;
+			}
+		}, true);
 
-function doSubmit() {
-  confirmLeave = false;
-  document.<portlet:namespace />idea.submit();
-};    
-    
-window.onbeforeunload = function(event) {
-      if (!confirmLeave) return null;
-        var message = '<liferay-ui:message key="msg_unsaved_data"/>';
-        if (typeof event == 'undefined') {
-          event = window.event;
-        }
-        if (event) {
-          event.returnValue = message;
-        }
-        return message;
-};    
+		var validator2 = new A.FormValidator({
+			boundingBox : '#<portlet:namespace/>idea',
+			showAllMessages : true,
+			rules : {
+				<portlet:namespace/>ldesc : {
+					required : true,
+					descRule : true
+				},
+				<portlet:namespace/>title : {
+					required : true
+				}
+			},
+			on : {
+				validateField : function(event) {
+				},
+				validField : function(event) {
+				},
+				errorField : function(event) {
+				},
+				submitError : function(event) {
+					var formEvent = event.validator.formEvent;
+					var errors = event.validator.errors;
+				},
+				submit : function(event) {
+					var formEvent = event.validator.formEvent;
+					doSubmit();
+					return false;
+				}
+			}
+		});
+	});
 
-</aui:script>	 
+	var confirmLeave = true;
+
+	function doSubmit() {
+		confirmLeave = false;
+		document.<portlet:namespace />idea.submit();
+	};
+
+	window.onbeforeunload = function(event) {
+		if (!confirmLeave)
+			return null;
+		var message = '<liferay-ui:message key="msg_unsaved_data"/>';
+		if (typeof event == 'undefined') {
+			event = window.event;
+		}
+		if (event) {
+			event.returnValue = message;
+		}
+		return message;
+	};
+	
+</aui:script>
+	
+
 
