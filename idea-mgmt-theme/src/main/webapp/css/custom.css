@@ -628,7 +628,8 @@ header#banner {
 	font-weight: bolder;
 	text-align: center;
 	text-transform: uppercase;
-	padding-bottom: 30px;
+	margin-bottom: 15px;
+	border-bottom: 2px solid #E84927; 
 	color: #E84927;
 }
 
@@ -1198,7 +1199,8 @@ header#banner {
 	font-size: 20px;
 	font-weight: bolder;
 	text-align: center;
-	padding-bottom: 10px;
+	border-bottom: 2px solid #E84927;
+	margin-bottom: 15px; 
 	color: #E84927;
 }
 

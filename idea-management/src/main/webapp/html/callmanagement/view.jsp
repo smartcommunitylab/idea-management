@@ -33,20 +33,19 @@ String addCallUrl = Utils.generateRenderURL(renderResponse, baseUrl, params, Win
 %>
 
 <c:if test='<%= listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) && Utils.callAddEnabled(renderRequest) %>'>
-
 <aui:button-row  cssClass="idea-button-row" >
 	<aui:button cssClass="addidea-button"  href="<%=addCallUrl.toString() %>" value='<%= LanguageUtil.get(locale, "btn_add_call") %>'></aui:button>
 </aui:button-row>
-
 </c:if>
 
-<div class="calls-title">
-<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) %>'><liferay-ui:message key="lbl_calls_title_open"/></c:if>
-<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION) %>'><liferay-ui:message key="lbl_calls_title_indiscussion"/></c:if>
-<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED) %>'><liferay-ui:message key="lbl_calls_title_closed"/></c:if>
-<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_RECENT) %>'><liferay-ui:message key="lbl_calls_title_recent"/></c:if>
+<div class="row-fluid">
+	<span class="calls-title offset1 span10">
+		<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_OPEN) %>'><liferay-ui:message key="lbl_calls_title_open"/></c:if>
+		<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION) %>'><liferay-ui:message key="lbl_calls_title_indiscussion"/></c:if>
+		<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_CLOSED) %>'><liferay-ui:message key="lbl_calls_title_closed"/></c:if>
+		<c:if test='<%=listType.equals(Constants.PREF_CALLLISTTYPE_RECENT) %>'><liferay-ui:message key="lbl_calls_title_recent"/></c:if>	
+	</span>
 </div>
-
 <c:if test='<%=viewType.equals(Constants.PREF_VIEWTYPE_SIMPLE) %>'>
 <jsp:include page="view-list-simple.jsp"/>
 </c:if>
