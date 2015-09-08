@@ -574,6 +574,7 @@ header#banner {
 .ambito-details .cover {
 	height: 300px;
 	background-size: cover;
+	opacity: 0.8;
 }
 
 .ambito-details .title {
@@ -607,6 +608,12 @@ header#banner {
 
 .idea-creator {
 	font-style: italic;
+}
+
+.idea-creator-warning {
+	color: red;
+	font-weight: bold;
+	margin-bottom: 2em;
 }
 
 .idea-info {
@@ -1200,7 +1207,7 @@ header#banner {
 	font-weight: bolder;
 	text-align: center;
 	border-bottom: 2px solid #E84927;
-	margin-bottom: 15px; 
+	margin-bottom: 15px;
 	color: #E84927;
 }
 
