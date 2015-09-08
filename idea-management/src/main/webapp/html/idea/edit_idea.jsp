@@ -140,7 +140,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 
 	<liferay-ui:asset-categories-error />
 	<aui:field-wrapper cssClass="categoriesselector-wrapper"
-		label="lbl_cat">
+		label="lbl_idea_cat">
 		<aui:input name="catId" type="hidden"></aui:input>
 		<liferay-ui:asset-categories-selector
 			curCategoryIds="<%=curCategoryIds%>">
