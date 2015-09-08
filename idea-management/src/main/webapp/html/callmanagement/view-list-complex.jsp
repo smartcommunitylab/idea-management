@@ -56,7 +56,7 @@ params.put("mvcPath", "/html/callmanagement/add_call.jsp");
         int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
         %>
   <div class="row-fluid">
-    <div class="call">
+    <div class="call span10 offset1">
           <div onClick="javascript:window.location = '<%=viewCall.toString()%>';" class="call-card" style="border-left-color: <%=primaryColor %>;">
               <div class="call-card-header">
                 <div class="span6">
