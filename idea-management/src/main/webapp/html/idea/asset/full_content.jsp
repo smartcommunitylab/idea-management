@@ -148,7 +148,7 @@
 <div class="idea-social">
     <c:if test="<%=!themeDisplay.isSignedIn()%>">
       <div class="row-fluid">
-        <span class="span12 idea-creator text-right">
+        <span class="span12 idea-creator idea-creator-warning text-right">
             <liferay-ui:message key="lbl_access"/>  
         </span>
       </div>
