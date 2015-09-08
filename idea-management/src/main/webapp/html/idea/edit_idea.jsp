@@ -209,8 +209,8 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 				},
 				submit : function(event) {
 					var formEvent = event.validator.formEvent;
-					doSubmit();
-					return false;
+					confirmLeave = false;
+					return true;
 				}
 			}
 		});
@@ -224,16 +224,19 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	};
 
 	window.onbeforeunload = function(event) {
-		if (!confirmLeave)
-			return null;
-		var message = '<liferay-ui:message key="msg_unsaved_data"/>';
-		if (typeof event == 'undefined') {
-			event = window.event;
-		}
-		if (event) {
-			event.returnValue = message;
-		}
-		return message;
+		if (!confirmLeave) {
+			//event.returnValue = null;
+			//return null;
+		} else {
+			var message = '<liferay-ui:message key="msg_unsaved_data"/>';
+			if (typeof event == 'undefined') {
+				event = window.event;
+			}
+			if (event) {
+				event.returnValue = message;
+			}
+			return message;
+		} 
 	};
 	
 </aui:script>
