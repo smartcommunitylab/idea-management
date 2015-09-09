@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
@@ -45,6 +46,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
@@ -117,9 +119,14 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 		Long callId = ParamUtil.getLong(resourceRequest, "callId");
 
-		// FIXME used by filter
-		long[] tagIds = new long[0];
-
+		String tagIdsParam = ParamUtil.getString(resourceRequest, "tag");
+		List<Long> tagIds = new ArrayList<Long>();
+		if (tagIdsParam.trim().length() > 0) {
+			for (String tid : tagIdsParam.split(",")) {
+				tagIds.add(new Long(tid.trim()));
+			}
+		}
+		long[] tagFilter = ArrayUtil.toLongArray(tagIds);
 		if (pagination) {
 			if (resourceRequest.getParameter("begin") != null
 					&& resourceRequest.getParameter("end") != null) {
@@ -138,12 +145,12 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			switch (listType) {
 			case Constants.PREF_LISTTYPE_RECENT:
 				ideas = IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(
-						categoryId, callId, tagIds, begin, end);
+						categoryId, callId, tagFilter, begin, end);
 				break;
 			case Constants.PREF_LISTTYPE_POPULAR:
 				ideas = IdeaLocalServiceUtil
 						.searchPopularByCallAndCategoryAndTags(categoryId,
-								callId, tagIds, begin, end);
+								callId, tagFilter, begin, end);
 				break;
 			default:
 				break;
@@ -152,27 +159,31 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			Pagination pag = new Pagination();
 			pag.setCurrentPage(currentPage);
 			pag.setElementInPage(delta);
+
+			Map<String, String[]> params = new HashMap<String, String[]>();
+			params.put("pagination",
+					new String[] { Boolean.toString(pagination) });
+			params.put("listType", new String[] { listType });
+			params.put("delta", new String[] { Integer.toString(delta) });
+			params.put("categoryId", new String[] { Long.toString(categoryId) });
+			params.put("callId", new String[] { Long.toString(callId) });
+			params.put("tag", new String[] { tagIdsParam });
+
 			// next URL
 			ResourceURL nextURL = resourceResponse.createResourceURL();
 			nextURL.setResourceID("loadSimple");
-			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
-			nextURL.setParameter("pagination", Boolean.toString(pagination));
-			nextURL.setParameter("delta", Integer.toString(delta));
-			nextURL.setParameter("listType", listType);
-			nextURL.setParameter("categoryId", Long.toString(categoryId));
-			nextURL.setParameter("callId", Long.toString(callId));
+
+			params.put("cur",
+					new String[] { Integer.toString(currentPage + 1) });
+			nextURL.setParameters(params);
 			pag.setNextURL(nextURL.toString());
 
 			// prev URL
 			ResourceURL prevURL = resourceResponse.createResourceURL();
 			prevURL.setResourceID("loadSimple");
-			prevURL.setParameter("cur",
-					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
-			prevURL.setParameter("pagination", Boolean.toString(pagination));
-			prevURL.setParameter("delta", Integer.toString(delta));
-			prevURL.setParameter("listType", listType);
-			prevURL.setParameter("categoryId", Long.toString(categoryId));
-			prevURL.setParameter("callId", Long.toString(callId));
+			params.put("cur", new String[] { Integer
+					.toString(currentPage > 1 ? currentPage - 1 : 1) });
+			prevURL.setParameters(params);
 			pag.setPrevURL(prevURL.toString());
 
 			ResultWrapper rw = new ResultWrapper();
@@ -182,7 +193,7 @@ public class IdeaManagementPortlet extends MVCPortlet {
 
 			Gson gson = new Gson();
 			String json = gson.toJson(pag);
-			System.out.println(json);
+			// System.out.println(json);
 			resourceResponse.setContentType("application/json");
 			resourceResponse.getWriter().write(json);
 			resourceResponse.getWriter().flush();
@@ -209,6 +220,15 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy",
 						req.getLocale());
 				ideaRes.setCreationDate(formatter.format(i.getCreateDate()));
+				ideaRes.setCallId(i.getCallId());
+				try {
+					ideaRes.setComments(MBMessageLocalServiceUtil
+							.getDiscussionMessagesCount(Idea.class.getName(),
+									i.getIdeaId(),
+									WorkflowConstants.STATUS_APPROVED));
+				} catch (SystemException e1) {
+					e1.printStackTrace();
+				}
 
 				// set starts avg
 				RatingsStats stat = null;

@@ -9,6 +9,8 @@ public class IdeaResultItem {
 	private double avgRating;
 	private String detailURL;
 	private String deleteURL;
+	private int comments;
+	private long callId;
 
 	public String getTitle() {
 		return title;
@@ -56,5 +58,21 @@ public class IdeaResultItem {
 
 	public void setCats(List<CategoryBean> cats) {
 		this.cats = cats;
+	}
+
+	public int getComments() {
+		return comments;
+	}
+
+	public void setComments(int comments) {
+		this.comments = comments;
+	}
+
+	public long getCallId() {
+		return callId;
+	}
+
+	public void setCallId(long callId) {
+		this.callId = callId;
 	}
 }

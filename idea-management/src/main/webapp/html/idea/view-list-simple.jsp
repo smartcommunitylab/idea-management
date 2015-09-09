@@ -1,10 +1,14 @@
 <%@ include file="/html/common-init.jsp"%>
 
 <%
+		java.util.Set<Long> selectedTagIds = (java.util.Set<Long>)request.getAttribute("selectedTagIds");
+		String selectedTagIdsString = null;
+		if (selectedTagIds != null && ! selectedTagIds.isEmpty()) {
+		  selectedTagIdsString = com.liferay.portal.kernel.util.StringUtil.merge(selectedTagIds, ",");
+		}
 
-  Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");
-  Long callId = ParamUtil.getLong(renderRequest,"callId");
-  
+  	Long categoryId = ParamUtil.getLong(renderRequest,"categoryId");
+  	Long callId = ParamUtil.getLong(renderRequest,"callId");
 
 	String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_LISTTYPE_RECENT));
 	boolean pagination = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", "true"));
@@ -35,7 +39,10 @@
     url.setParameter("delta",'<%= Integer.toString(delta) %>');
 	url.setParameter("categoryId", '<%= Long.toString(categoryId) %>');
 	url.setParameter("callId", '<%= Long.toString(callId) %>');
-	
+	 <% if (selectedTagIdsString != null) {%>
+	    url.setParameter("tag", '<%=selectedTagIdsString  %>');
+	  <% } %>   
+
 	<portlet:namespace/>paginateIdeas(url.toString());
 </aui:script>
 
@@ -92,12 +99,6 @@
                     }
                 });
             }, [ 'aui-io', 'aui-node' ]);
-		
-		
-		
-		
-		
-		
 	</aui:script>
 
 

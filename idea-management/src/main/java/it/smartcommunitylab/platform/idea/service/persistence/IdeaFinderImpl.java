@@ -25,7 +25,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public List<Idea> findAllApproved(int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
-		return execQuery(FIND_ALL_APPROVED, params, begin, end);
+		return execQuery(FIND_ALL_APPROVED, params, null, begin, end);
 	}
 
 	public List<Idea> findByCat(Long categoryId) {
@@ -35,7 +35,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 	public List<Idea> findByCat(Long categoryId, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(categoryId);
-		return execQuery(FIND_BY_CAT, params, begin, end);
+		return execQuery(FIND_BY_CAT, params, null, begin, end);
 	}
 
 	public List<Idea> findByCatAndTags(Long categoryId, long[] tagIds) {
@@ -46,8 +46,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(categoryId);
-		params.add(tagIds);
-		return execQuery(FIND_BY_CAT_TAGS, params, begin, end);
+		return execQuery(FIND_BY_CAT_TAGS, params, Collections.singletonList(tagIds), begin, end);
 	}
 
 	public List<Idea> findByCatAndRatingAndTags(Long categoryId, long[] tagIds) {
@@ -58,8 +57,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(categoryId);
-		params.add(tagIds);
-		return execQuery(FIND_BY_CAT_RATING_TAGS, params, begin, end);
+		return execQuery(FIND_BY_CAT_RATING_TAGS, params, Collections.singletonList(tagIds), begin, end);
 	}
 
 	public List<Idea> findByCatAndRating(Long categoryId) {
@@ -69,7 +67,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 	public List<Idea> findByCatAndRating(Long categoryId, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(categoryId);
-		return execQuery(FIND_BY_CAT_RATING, params, begin, end);
+		return execQuery(FIND_BY_CAT_RATING, params, null, begin, end);
 	}
 
 	public List<Idea> findByRating() {
@@ -78,7 +76,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public List<Idea> findByRating(int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
-		return execQuery(FIND_BY_RATING, params, begin, end);
+		return execQuery(FIND_BY_RATING, params, null, begin, end);
 	}
 
 	public List<Idea> findByCallAndRating(long callId) {
@@ -88,7 +86,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 	public List<Idea> findByCallAndRating(long callId, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(callId);
-		return execQuery(FIND_BY_CALL_RATING, params, begin, end);
+		return execQuery(FIND_BY_CALL_RATING, params, null, begin, end);
 	}
 
 	public List<Idea> findByCallAndTags(long callId, long[] tagIds) {
@@ -99,8 +97,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(callId);
-		params.add(tagIds);
-		return execQuery(FIND_BY_CALL_TAGS, params, begin, end);
+		return execQuery(FIND_BY_CALL_TAGS, params, Collections.singletonList(tagIds), begin, end);
 	}
 
 	public List<Idea> findByTags(long[] tagIds) {
@@ -109,8 +106,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public List<Idea> findByTags(long[] tagIds, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
-		params.add(tagIds);
-		return execQuery(FIND_BY_TAGS, params, begin, end);
+		return execQuery(FIND_BY_TAGS, params, Collections.singletonList(tagIds), begin, end);
 	}
 
 	public List<Idea> findByTagsAndRating(long[] tagIds) {
@@ -119,8 +115,7 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 
 	public List<Idea> findByTagsAndRating(long[] tagIds, int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
-		params.add(tagIds);
-		return execQuery(FIND_BY_TAGS_AND_RATING, params, begin, end);
+		return execQuery(FIND_BY_TAGS_AND_RATING, params, Collections.singletonList(tagIds), begin, end);
 	}
 
 	public List<Idea> findByCallAndRatingAndTags(long callId, long[] tagIds) {
@@ -131,16 +126,20 @@ public class IdeaFinderImpl extends BasePersistenceImpl<Idea> implements
 			int begin, int end) {
 		List<Object> params = new ArrayList<Object>();
 		params.add(callId);
-		params.add(tagIds);
-		return execQuery(FIND_BY_CALL_RATING_TAGS, params, begin, end);
+		return execQuery(FIND_BY_CALL_RATING_TAGS, params, Collections.singletonList(tagIds), begin, end);
 	}
 
-	private List<Idea> execQuery(String queryName, List<Object> params,
+	private List<Idea> execQuery(String queryName, List<Object> params, List<long[]> arrayParams,
 			int begin, int end) {
 		Session session = null;
 		try {
 			session = openSession();
 			String sql = CustomSQLUtil.get(queryName);
+			if (arrayParams != null && !arrayParams.isEmpty()) {
+				for (int i = 0; i < arrayParams.size(); i++) {
+					sql = sql.replace("$$ARRAY"+(i+1)+"$$", StringUtil.merge(arrayParams.get(i)));
+				}
+			}
 
 			SQLQuery q = session.createSQLQuery(sql);
 			q.setCacheable(false);
