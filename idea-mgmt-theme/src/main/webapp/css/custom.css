@@ -2042,3 +2042,9 @@ header#banner {
 .aui a:hover {
   color: #E84927;
 }
+
+.idea-view-callref {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 28px;
+}

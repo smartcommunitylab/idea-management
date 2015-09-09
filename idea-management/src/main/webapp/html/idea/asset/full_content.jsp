@@ -1,3 +1,6 @@
+<%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
+<%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
+<%@page import="com.liferay.util.portlet.PortletProps"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.model.Idea"%>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil"%>
@@ -25,6 +28,21 @@
 		  idea = IdeaLocalServiceUtil.getIdea(ideaId);		
 	}
 	idea = idea.toEscapedModel();
+	
+	long callId = idea.getCallId();
+	String redirectUrl = null;
+	String callTitle = null;
+	if(callId > 0) {
+		Call call = CallLocalServiceUtil.getCall(callId);
+		if(call != null) {
+			callTitle = call.getTitle().toUpperCase();
+		}
+		String portalUrl = themeDisplay.getPortalURL();
+		String siteUrl = layout.getGroup().getFriendlyURL();
+		String redirectPage = PortletProps.get("call.page");
+		redirectUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "/-/call/-/" 
+				+ callId + "/view";
+	}
 	
 	User owner = UserLocalServiceUtil.getUser(idea.getUserId());
 	
@@ -122,6 +140,11 @@
 </div>
 
 <div class="idea-info">
+		<c:if test="<%= callId > 0 %>">
+			<div class="idea-view-callref">
+				<liferay-ui:message key="lbl_idea_callref"/> <a href="<%= redirectUrl %>"><%= callTitle %></a>
+			</div>
+		</c:if>
 	  <div><%=HtmlUtil.unescape(idea.getLongDesc())%></div>
     <c:if test="<%=parentTagSet.size() > 0 %>">
     <div class="row-fluid info-meta">
