@@ -960,12 +960,12 @@ header#banner {
 }
 
 .state-rejected {
-	background-image: url(../images/rifiutata_disabled.png) !important;
+	background-image: url(../images/Rifiutata_disabled.png) !important;
 	background-size: 100% 100%;
 }
 
 .state-rejectedactive {
-	background-image: url(../images/rifiutata_enabled.png) !important;
+	background-image: url(../images/Rifiutata_enabled.png) !important;
 	background-size: 100% 100%;
 }
 
