@@ -574,7 +574,6 @@ header#banner {
 .ambito-details .cover {
 	height: 300px;
 	background-size: cover;
-	opacity: 0.8;
 }
 
 .ambito-details .title {
@@ -2033,4 +2032,13 @@ header#banner {
 
 .aui .help-block, .aui .help-inline {
     color: #E84927;
+}
+
+.aui a {
+	color: #E84927;
+  text-decoration: none;
+}
+
+.aui a:hover {
+  color: #E84927;
 }
