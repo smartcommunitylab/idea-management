@@ -50,13 +50,13 @@
 		<aui:form cssClass="idea-form event-view-container" id="updateEvent"
 			name="updateEvent" action="<%=updateEventURL%>" method="post">
 			<div class="event-view-container-body">
+			
 			<aui:fieldset cssClass="simple-field" label="evento_form_title">
-				<aui:input
-					placeholder='<%=LanguageUtil.get(locale, "evento_form_title")%>'
+				<aui:input placeholder='<%=LanguageUtil.get(locale, "evento_form_title")%>'
 					label="" name="title" value="<%=title%>"></aui:input>
 			</aui:fieldset>
 
-			<aui:field-wrapper label="evento_form_desc">
+			<aui:fieldset cssClass="simple-field" label="evento_form_desc">
 				<%--  <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" 
 		    type="textarea" label="" value="<%=description%>"></aui:input>   --%>
 
@@ -72,14 +72,14 @@
 								.getHTML();
 					}
 				</script>
-			</aui:field-wrapper>
+			</aui:fieldset>
 
-			<aui:field-wrapper label="evento_form_location">
+			<aui:fieldset cssClass="simple-field" label="evento_form_location">
 				<aui:input resizable="true"
 					placeholder='<%=LanguageUtil.get(locale, "evento_form_location")%>'
 					name="location" type="textarea" label=""
 					value="<%=Validator.isNotNull(location) ? location :\"\"%>"></aui:input>
-			</aui:field-wrapper>
+			</aui:fieldset>
 
 			<%
 				GregorianCalendar startCal = new GregorianCalendar(locale);
@@ -102,7 +102,7 @@
 			%>
 			<div class="row-fluid">
 				<div class="span6">
-					<aui:fieldset label="evento_form_startDate">
+					<aui:fieldset cssClass="simple-field" label="evento_form_startDate">
 						<liferay-ui:input-date name="startDate" dayParam="sdday"
 							monthParam="sdmonth" yearParam="sdyear" dayValue="<%=startDay%>"
 							monthValue="<%=startMonth%>" yearValue="<%=startYear%>"></liferay-ui:input-date>
@@ -112,7 +112,7 @@
 					</aui:fieldset>
 				</div>
 				<div class="span6">
-					<aui:fieldset label="evento_form_endDate">
+					<aui:fieldset cssClass="simple-field" label="evento_form_endDate">
 						<liferay-ui:input-date name="endDate" dayParam="edday"
 							monthParam="edmonth" yearParam="edyear" dayValue="<%=endDay%>"
 							monthValue="<%=endMonth%>" yearValue="<%=endYear%>"></liferay-ui:input-date>

@@ -2030,6 +2030,14 @@ header#banner {
     color: #E84927;
 }
 
+.aui .control-group.error .help-inline {
+    color: #E84927;
+}
+
+.aui .control-group.error input {
+	border-color: #ccc;
+}
+
 .aui a {
 	color: #E84927;
   text-decoration: none;

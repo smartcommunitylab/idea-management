@@ -47,24 +47,25 @@
 		<aui:form cssClass="idea-form event-view-container" id="addEvent" name="addEvent"
 			action="<%=addEventURL%>" method="post">
 			<div class="event-view-container-body">
+			
 			<aui:fieldset cssClass="simple-field" label="evento_form_title">
         <aui:input placeholder='<%=LanguageUtil.get(locale, "evento_form_title") %>' label="" name="title"></aui:input>
       </aui:fieldset>
 
-		  <aui:field-wrapper label="evento_form_desc">
+		  <aui:fieldset cssClass="simple-field" label="evento_form_desc">
 		   <%--  <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_desc") %>' name="description" type="textarea" label=""></aui:input>  --%>
 		    <aui:input name="hdescription" type="hidden"></aui:input>
-		<liferay-ui:input-editor name="description" 
-			toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="100" />
-		<script type="text/javascript">
+				<liferay-ui:input-editor name="description" 
+					toolbarSet="liferay-article" initMethod="initEditor2" onChangeMethod="onChange2" width="100" />
+				<script type="text/javascript">
         function <portlet:namespace />initEditor2() { return '' }
         function <portlet:namespace />onChange2() { document.getElementById('<portlet:namespace />hdescription').value = window['<portlet:namespace />description'].getHTML(); }
-    </script>
-		  </aui:field-wrapper>
+    		</script>
+		  </aui:fieldset>
 			
-		  <aui:field-wrapper label="evento_form_location">
+		  <aui:fieldset cssClass="simple-field" label="evento_form_location">
 		    <aui:input resizable="true" placeholder='<%=LanguageUtil.get(locale, "evento_form_location") %>' name="location" type="textarea" label=""></aui:input>  
-		  </aui:field-wrapper>
+		  </aui:fieldset>
 		  
         <%
         GregorianCalendar cal = new GregorianCalendar(locale);
@@ -78,7 +79,7 @@
         %>
       <div class="row-fluid">
         <div class="span6"> 
-					<aui:fieldset label="evento_form_startDate">
+					<aui:fieldset cssClass="simple-field" label="evento_form_startDate">
 						<liferay-ui:input-date name="startDate" dayParam="sdday" monthParam="sdmonth" yearParam="sdyear" 
 							dayValue="<%=initDay%>" monthValue="<%=initMonth%>" yearValue="<%=initYear%>"></liferay-ui:input-date>
 						<liferay-ui:input-time name="startTime" hourParam="sdhour" minuteParam="sdmin" amPmParam="sampm" 
@@ -86,7 +87,7 @@
 					</aui:fieldset>
         </div>
         <div class="span6"> 
-					<aui:fieldset label="evento_form_endDate">		
+					<aui:fieldset cssClass="simple-field" label="evento_form_endDate">		
 						<liferay-ui:input-date name="endDate" dayParam="edday" monthParam="edmonth" yearParam="edyear" 
 							dayValue="<%=initDay%>" monthValue="<%=initMonth%>" yearValue="<%=initYear%>"></liferay-ui:input-date>
 						<liferay-ui:input-time name="endTime" hourParam="edhour" minuteParam="edmin" amPmParam="eampm" 
