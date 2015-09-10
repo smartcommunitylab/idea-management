@@ -1585,114 +1585,110 @@ header#banner {
 	font-weight: bolder;
 }
 
-.tagcloud-row .tagcloud-node {
-	display: inline-block;
+.tagcloud-left span {
+  float: right;
 }
 
-.tagcloud-left .tagcloud-node {
-	float: right;
-}
-
-.tagcloud-row .tagcloud-node {
-	padding: 5px 10px 5px 10px;
-}
-
-.tagcloud-left .span {
-	float: right;
+.tagcloud-right span {
+  float: left;
 }
 
 .tagcloud-left .tagcloud-wrapper {
-	float: right;
-	position: relative;
+  float: right;
 }
 
 .tagcloud-right .tagcloud-wrapper {
-	float: left;
+  float: left;
 }
 
 .tagcloud-row {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .tagcloud-wrapper {
-	min-width: 200px;
-	background-color: #4EB9A4;
-	cursor: pointer;
-	line-height: 28px;
-	font-size: 25px;
-	white-space: nowrap;
+  padding: 10px 10px 10px 10px;
+  display: inline-block;
+  min-width: 150px;
+  max-width: 400px;
+  text-overflow: ellipsis;
+  background-color: #4EB9A4;
+  cursor: pointer;
+  line-height: 28px;
+  font-size: 25px;
+  white-space: nowrap;
 }
 
-.tagcloud-right:after {
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-left-color: #4EB9A4;
-	border-width: 21px;
+/* .tagcloud-right:after {
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-left-color: #4EB9A4;
+  border-width: 21px;
 }
-
-.tagcloud-left .tagcloud-wrapper::before {
-	left: -42px;
-	border: solid transparent;
-	float: left;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: relative;
-	pointer-events: none;
-	border-color: rgba(194, 225, 245, 0);
-	border-right-color: #4EB9A4;
-	border-width: 21px;
-	margin-top: 0px;
+ */
+/* .tagcloud-left .tagcloud-wrapper::before {
+  left: -42px;
+  border: solid transparent;
+  float: left;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: relative;
+  pointer-events: none;
+  border-color: rgba(194, 225, 245, 0);
+  border-right-color: #4EB9A4;
+  border-width: 21px;
+  margin-top: 0px;
 }
-
+ */
 .tagcloud-name {
-	text-transform: uppercase;
-	color: white;
-	vertical-align: bottom;
+  text-transform: uppercase;
+  color: white;
+  vertical-align: bottom;
 }
 
 .tagcloud-count {
-	min-width: 30px;
-	margin-left: 5px;
-	margin-right: 5px;
-	display: inline-block;
-	text-align: center;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	background-color: white;
-	color: #4EB9A4;
-	font-size: 14px;
-	font-weight: bolder;
+  min-width: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+  text-align: center;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background-color: white;
+  color: #4EB9A4;
+  font-size: 14px;
+  font-weight: bolder;
 }
-
+/*
 .tagcloud-dot {
-	color: white;
-	font-weight: bold;
-	font-size: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .tagcloud-left .tagcloud-dot {
-	float: left;
-	position: absolute;
-	left: 0px;
+  float: left;
+  position: absolute;
+  left: 0px;
 }
 
 .tagcloud-right .tagcloud-dot {
-	float: right;
+  float: right;
+}
+*/
+.tag-cloud-header {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 30px;
 }
 
-.tag-cloud-header {
-	text-transform: uppercase;
-	text-align: center;
-	font-size: 20px;
-	font-weight: bolder;
-	margin-bottom: 30px;
-}
 
 .userprofile .avatar {
 	padding-bottom: 30px;
