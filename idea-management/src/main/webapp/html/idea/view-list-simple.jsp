@@ -114,7 +114,13 @@
 	<div class="row-fluid">
     {{#each result.result.data}}
      <span class="span3" id="result">
-   <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="thumbnail" style="border-left-color: {{this.boxColor}};">
+   <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" 
+      {{#if this.callId}}
+      class="thumbnail thumbnail-ideacall" 
+      {{else}}
+      class="thumbnail" 
+      {{/if}}
+style="border-left-color: {{this.boxColor}};">
 	<div class="idea-cat">
 				{{#each this.cats}}
 					<span style="color: {{this.color}};">{{this.name}}</span>

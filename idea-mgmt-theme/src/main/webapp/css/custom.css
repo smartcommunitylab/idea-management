@@ -483,6 +483,12 @@ header#banner {
 	position: relative;
 }
 
+.idea-slider .thumbnail-ideacall {
+	background-position: right top;
+  background-image: url(../images/ribbonSfida.png) !important;
+  background-repeat: no-repeat;
+}
+
 /*
 .idea-slider .idea .thumbnail h4 {
   white-space: nowrap;
