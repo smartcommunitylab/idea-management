@@ -2048,3 +2048,16 @@ header#banner {
     margin-bottom: 15px;
     line-height: 28px;
 }
+
+.state-judgement-title {
+	font-size: 16px;
+	text-transform: uppercase;
+	background: #e84927;
+	color: #ffffff;
+	margin-top: 1em;
+	padding: 5px;
+} 
+
+.state-judgement-body {
+	margin-top: 1em;
+} 

@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.util.Validator"%>
 <%@page import="it.smartcommunitylab.platform.idea.model.Call"%>
 <%@page import="it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil"%>
 <%@page import="com.liferay.util.portlet.PortletProps"%>
@@ -298,12 +299,15 @@
     <div class="idea-state-container span2 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
     <div class="idea-state-container span2 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
     </div>
-    <!--<c:if test='<%=idea.getStateJudgement() != null %>'>
+    <c:if test='<%=Validator.isNotNull(idea.getStateJudgement())%>'>
     <div class="row-fluid">
-      <div class="state-judgement">
+      <div class="state-judgement-title">
+	      <liferay-ui:message key="lbl_state_judgement_title"/>
+      </div>
+      <div class="state-judgement-body">
       <%= idea.getStateJudgement() %>
       </div>
     </div>
-    </c:if>-->
+    </c:if>
   </liferay-ui:panel>
 </liferay-ui:panel-container>
