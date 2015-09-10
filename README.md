@@ -46,6 +46,8 @@ discussion.email.body=smartcommunitylab/discussion_email_body.tmpl
 discussion.email.subject=smartcommunitylab/discussion_email_subject.tmpl
 # search portlet
 search.facet.configuration=smartcommunitylab/idea-management-facet_configuration.json
+# disable default data types
+application.startup.events=com.liferay.portal.events.AppStartupAction,com.liferay.portal.events.ChannelHubAppStartupAction
 ```
 To change the theme for already created users:
   - Set 
