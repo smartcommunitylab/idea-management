@@ -91,6 +91,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 <aui:form cssClass="idea-form" action="<%=addIdeaURL.toString()%>"
 	name="idea">
 	<aui:model-context bean="<%=idea%>" model="<%=Idea.class%>" />
+	
 	<aui:fieldset label="lbl_title" cssClass="simple-field">
 		<aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_title")%>'
 			first="true" label="" name="title"></aui:input>
@@ -100,7 +101,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
     <aui:input placeholder='<%=LanguageUtil.get(locale, "lbl_shortDesc")%>' name="shortDesc" type="textarea" label=""></aui:input>  
   </aui:field-wrapper> -->
 
-	<aui:field-wrapper label="lbl_idea_longDesc">
+	<aui:fieldset label="lbl_idea_longDesc">
 		<aui:input name="ldesc" type="hidden"
 			value='<%=idea != null ? idea.getLongDesc() : ""%>'></aui:input>
 		<liferay-ui:input-editor name="longDesc" toolbarSet="liferay-article"
@@ -114,13 +115,13 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 			}
 		</script>
 
-	</aui:field-wrapper>
+	</aui:fieldset>
 
 	<aui:input name="ideaId" type="hidden"></aui:input>
 	<aui:input name="categoryId" type="hidden" value="<%=categoryId%>"></aui:input>
 	<aui:input name="callId" type="hidden" value="<%=callId%>"></aui:input>
 
-	<aui:field-wrapper label="lbl_discussionLimit">
+	<aui:fieldset label="lbl_discussionLimit">
 		<aui:select name="discussionLimit" label="">
 			<%
 				for (int i : Constants.DISCUSSION_LIMITS) {
@@ -130,29 +131,30 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 				}
 			%>
 		</aui:select>
-	</aui:field-wrapper>
+	</aui:fieldset>
 
-	<aui:field-wrapper label="lbl_deadlineConstraints">
+	<aui:fieldset label="lbl_deadlineConstraints">
 		<aui:input
 			placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints")%>'
 			name="deadlineConstraints" type="textarea" label=""></aui:input>
-	</aui:field-wrapper>
+	</aui:fieldset>
 
 	<liferay-ui:asset-categories-error />
-	<aui:field-wrapper cssClass="categoriesselector-wrapper"
+	<aui:fieldset cssClass="categoriesselector-wrapper"
 		label="lbl_idea_cat">
 		<aui:input name="catId" type="hidden"></aui:input>
 		<liferay-ui:asset-categories-selector
 			curCategoryIds="<%=curCategoryIds%>">
 		</liferay-ui:asset-categories-selector>
-	</aui:field-wrapper>
+	</aui:fieldset>
 
 	<liferay-ui:asset-tags-error />
-	<aui:field-wrapper label="lbl_tags">
+	<aui:fieldset label="lbl_tags">
 		<liferay-ui:asset-tags-selector curTags='<%=tagNames%>'
 			className="<%=Idea.class.getName()%>" classPK="<%=ideaId%>">
 		</liferay-ui:asset-tags-selector>
-	</aui:field-wrapper>
+	</aui:fieldset>
+	
 	<aui:fieldset label="related-assets">
 		<%
 			request.setAttribute("liferay-ui:input-asset-links:className",Idea.class.getName());

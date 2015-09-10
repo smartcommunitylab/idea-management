@@ -65,7 +65,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 		<aui:input name="title" label="" placeholder='<%=LanguageUtil.get(locale, "lbl_title") %>' ></aui:input>
 	</aui:fieldset>
 
-	<aui:field-wrapper label="lbl_longDesc">
+	<aui:fieldset label="lbl_longDesc">
   <aui:input name="hdesc" type="hidden" value='<%= entry != null ? entry.getDescription() : "" %>'></aui:input>
 		<liferay-ui:input-editor name="desc" onChangeMethod="onChange1"
 			toolbarSet="liferay-article" initMethod="initEditor1" width="200" />
@@ -73,7 +73,7 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
         function <portlet:namespace />initEditor1() { return document.getElementById('<portlet:namespace />hdesc').value; }
         function <portlet:namespace />onChange1() { document.getElementById('<portlet:namespace />hdesc').value = window['<portlet:namespace />desc'].getHTML(); }
     </script>
-	</aui:field-wrapper>
+	</aui:fieldset>
 	
 	<div class="row-fluid">
 	  <div class="span4">
@@ -126,18 +126,18 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 
 	<liferay-ui:asset-categories-error />
 
-  <aui:field-wrapper cssClass="categoriesselector-wrapper" label="lbl_cat">
+  <aui:fieldset cssClass="categoriesselector-wrapper" label="lbl_cat">
   <aui:input name="catId" type="hidden"></aui:input>
  <liferay-ui:asset-categories-selector curCategoryIds="<%=curCategoryIds %>">
  </liferay-ui:asset-categories-selector>
-  </aui:field-wrapper>
+  </aui:fieldset>
 
   <liferay-ui:asset-tags-error />
-  <aui:field-wrapper label="lbl_tags">
+  <aui:fieldset label="lbl_tags">
 	<liferay-ui:asset-tags-selector className="<%=Call.class.getName()%>"
 		classPK="<%= callId%>">
 	</liferay-ui:asset-tags-selector>
-  </aui:field-wrapper>
+  </aui:fieldset>
 
 
   <aui:fieldset label="related-assets">
