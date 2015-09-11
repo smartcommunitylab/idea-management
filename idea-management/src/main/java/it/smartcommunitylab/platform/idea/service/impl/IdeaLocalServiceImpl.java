@@ -582,14 +582,17 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 		i.setStatus(WFStatus);
 		i.setStatusByUserId(userId);
 		i.setStatusByUserName(user.getFullName());
-		String comments = (String) serviceContext
-				.getAttribute(WorkflowConstants.CONTEXT_TASK_COMMENTS);
-		// System.out.println("comments: " + comments);
-		if (comments != null) {
-			i.setStateJudgement(comments);
+		// currently, set comments only for accepted/rejected state
+		if (Constants.IDEA_STATE_ACCEPTED.equals(ideaStatus) || 
+			Constants.IDEA_STATE_REJECTED.equals(ideaStatus)) 
+		{
+			String comments = (String) serviceContext
+					.getAttribute(WorkflowConstants.CONTEXT_TASK_COMMENTS);
+			if (comments != null) {
+				i.setStateJudgement(comments);
+			}
 		}
-		// i.setStatusDate(new Date());
-
+		
 		ideaPersistence.update(i);
 
 		return i;
