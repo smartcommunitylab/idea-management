@@ -29,6 +29,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import com.google.gson.Gson;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
@@ -85,27 +86,34 @@ public class EventoManagementPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 
-		StringBuffer stringBuf = new StringBuffer();
+//		StringBuffer stringBuf = new StringBuffer();
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss");
-		stringBuf.append("[");
+//		stringBuf.append("[");
 		int index = 0;
+		List<Map<String,Object>> maps = new ArrayList<Map<String,Object>>();
 		for (CalendarBooking event : eventList) {
-			if (index != 0) {
-				stringBuf.append(",");
-			}
-			stringBuf.append("{");
-			stringBuf.append(String.format("\"id\":\"%s\",", ++index));
-			stringBuf.append(String.format("\"title\":\"%s\",",
-					event.getTitle(locale)));
+			Map<String, Object> map = new HashMap<String,Object>();
+			maps.add(map);
+			map.put("id", ++index);
+			map.put("title", event.getTitle(locale));
+//			if (index != 0) {
+//				stringBuf.append(",");
+//			}
+//			stringBuf.append("{");
+//			stringBuf.append(String.format("\"id\":\"%s\",", ++index));
+//			stringBuf.append(String.format("\"title\":\"%s\",",
+//					event.getTitle(locale)));
 			Calendar cal = Calendar.getInstance();
 			cal.setTimeInMillis(event.getStartTime());
-			stringBuf.append(String.format("\"start\":\"%s\",",
-					dateFormatter.format(cal.getTime())));
+//			stringBuf.append(String.format("\"start\":\"%s\",",
+//					dateFormatter.format(cal.getTime())));
+			map.put("start", dateFormatter.format(cal.getTime()));
 			cal = Calendar.getInstance();
 			cal.setTimeInMillis(event.getEndTime());
-			stringBuf.append(String.format("\"end\":\"%s\",",
-					dateFormatter.format(cal.getTime())));
+//			stringBuf.append(String.format("\"end\":\"%s\",",
+//					dateFormatter.format(cal.getTime())));
+			map.put("end", dateFormatter.format(cal.getTime()));
 
 			Map<String, Object> params = new HashMap<String, Object>();
 			params.put("eventId", String.valueOf(event.getCalendarBookingId()));
@@ -115,19 +123,20 @@ public class EventoManagementPortlet extends MVCPortlet {
 						.getHttpServletRequest(resourceRequest));
 				String detailURL = Utils.generateRenderURL(resourceResponse,
 						baseUrl, params, LiferayWindowState.POP_UP);
-				stringBuf.append(String.format("\"detailURL\":\"%s\"",
-						detailURL));
+//				stringBuf.append(String.format("\"detailURL\":\"%s\"",
+//						detailURL));
+				map.put("detailURL", detailURL);
 			} catch (PortalException | SystemException e) {
 				e.printStackTrace();
 			}
-			stringBuf.append("}");
+//			stringBuf.append("}");
 		}
-		stringBuf.append("]");
+//		stringBuf.append("]");
 
-		String events = stringBuf.toString();
+//		String events = stringBuf.toString();
 
 		PrintWriter writer = resourceResponse.getWriter();
-		writer.write(events);
+		writer.write(new Gson().toJson(maps));
 		writer.flush();
 		super.serveResource(resourceRequest, resourceResponse);
 	}

@@ -116,12 +116,14 @@ public class Utils {
 			if (group != null) {
 				if (group.getCreatorUserId() > 0
 						&& group.getCreatorUserId() == themeDisplay.getUserId()) {
+					System.err.println("OWNER CAN SEE THE EVENT: "+event.getTitle()+": "+themeDisplay.getUserId()+" for "+groupId);
 					return true;
 				}
 				// site content reviewer can modify
 				boolean hasRole = themeDisplay.getPermissionChecker()
 						.isContentReviewer(themeDisplay.getCompanyId(),
 								themeDisplay.getScopeGroupId());
+				System.err.println("USER is content reviewer = "+hasRole+": "+event.getTitle()+": "+themeDisplay.getUserId()+" for "+themeDisplay.getScopeGroupId()+"/"+themeDisplay.getCompanyId());
 				return hasRole;
 			}
 		} catch (Exception e) {
