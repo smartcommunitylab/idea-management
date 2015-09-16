@@ -2122,4 +2122,8 @@ header#banner {
 	.ambiti .ambito .wrapper .link a {
 		font-size: 1.5em;
 	}
+	
+	.ambito-details .cover {
+		display: none;
+	}
 }
