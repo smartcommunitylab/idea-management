@@ -2094,4 +2094,20 @@ header#banner {
 	.tag-cloud-header, .tagcloud-row {
 		display: none;
 	}
+	
+	.idea-slider .thumbnail {
+		margin-bottom: 1em;
+	}
+	
+	.idea-slider .idea-slider-arrow {
+		display: none !important;
+	}
+	
+	.event-container {
+		margin-right: 0;
+	}
+	
+	#footer .powered-by {
+		line-height: normal;
+	}
 }
