@@ -2078,17 +2078,17 @@ header#banner {
 /* media fixes */
 @media (max-width: 767px) {
 	body {
-		padding-right: 0;
-		padding-left: 0;
+		padding-right: 0 !important;
+		padding-left: 0 !important;
 	}
 	
 	.title-container {
-		padding: 20px;
+		padding: 20px !important;
 	}
 	
 	.title-container .title {
-		font-size: inherit;
-		white-space: inherit;
+		font-size: inherit !important;
+		white-space: inherit !important;
 	}
 	
 	.tag-cloud-header, .tagcloud-row {
