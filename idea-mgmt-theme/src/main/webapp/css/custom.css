@@ -1824,10 +1824,13 @@ header#banner {
 }
 
 #footer .partners {
-	height: 110px;
+	height: 90px;
+	background-size: contain;
+    margin: 10px;
 	background-image: url(../images/loghi_footer_completi.png);
 	background-repeat: no-repeat;
 	background-position: center center;
+	background-size: contain;
 }
 
 #footer .powered-by {
@@ -2071,3 +2074,24 @@ header#banner {
 .state-judgement-body {
 	margin-top: 1em;
 } 
+
+/* media fixes */
+@media (max-width: 767px) {
+	body {
+		padding-right: 0;
+		padding-left: 0;
+	}
+	
+	.title-container {
+		padding: 20px;
+	}
+	
+	.title-container .title {
+		font-size: inherit;
+		white-space: inherit;
+	}
+	
+	.tag-cloud-header, .tagcloud-row {
+		display: none;
+	}
+}
