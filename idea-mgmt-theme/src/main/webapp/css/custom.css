@@ -2099,7 +2099,7 @@ header#banner {
 		margin-bottom: 1em;
 	}
 	
-	.idea-slider .idea-slider-arrow {
+	.idea-slider>span.text-right, .idea-slider>span.text-left {
 		display: none !important;
 	}
 	
