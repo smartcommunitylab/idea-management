@@ -2110,4 +2110,16 @@ header#banner {
 	#footer .powered-by {
 		line-height: normal;
 	}
+	
+	.ambiti {
+		padding: 1em 3em;
+	}
+	
+	.ambiti .ambito>.span7 {
+		display: none;
+	}
+	
+	.ambiti .ambito .wrapper .link a {
+		font-size: 1.5em;
+	}
 }
