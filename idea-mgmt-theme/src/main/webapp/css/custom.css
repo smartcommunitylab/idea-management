@@ -2083,12 +2083,12 @@ header#banner {
 	}
 	
 	.title-container {
-		padding: 20px !important;
+		padding: 20px 0 !important;
 	}
 	
 	.title-container .title {
-		font-size: inherit !important;
-		white-space: inherit !important;
+		font-size: 38.5px !important;
+		white-space: normal !important;
 	}
 	
 	.tag-cloud-header, .tagcloud-row {
