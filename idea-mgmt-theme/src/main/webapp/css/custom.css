@@ -2103,7 +2103,7 @@ header#banner {
 		display: none !important;
 	}
 	
-	.event-container {
+	.event-container, .event-container-list {
 		margin-right: 0;
 	}
 	
