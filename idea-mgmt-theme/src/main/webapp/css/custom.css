@@ -186,6 +186,11 @@ header#banner {
 	
 }
 
+#nav-toggle {
+	display: none;
+}
+
+}
 #navigation {
 	margin-bottom: 0;
 }
@@ -265,7 +270,7 @@ header#banner {
 	max-height: 92px;
 }
 
-#navmenu > li {
+#navmenu>li {
 	/* line-height: 40px; */
 	line-height: 92px;
 }
@@ -305,7 +310,7 @@ header#banner {
 	float: right;
 }
 
-#navmenu li.right > a {
+#navmenu li.right>a {
 	padding: 10px 20px 0 5px;
 }
 
@@ -340,7 +345,7 @@ header#banner {
 	/* display: block; */
 	left: -3px;
 	top: 70px;
-	background-color: rgba(255,255,255,0.8);
+	background-color: rgba(255, 255, 255, 0.8);
 	border-left: 3px solid #E84927;
 }
 
@@ -356,7 +361,7 @@ header#banner {
 	padding: 0 0 0 5px;
 }
 
-#navmenu li.has-child-menu ul.child-menu li:hover a, #navmenu li.has-child-menu ul.child-menu li.selected a {
+#navmenu li.has-child-menu ul.child-menu li:hover a,#navmenu li.has-child-menu ul.child-menu li.selected a {
 	color: #E84927;
 }
 
@@ -485,8 +490,8 @@ header#banner {
 
 .idea-slider .thumbnail-ideacall {
 	background-position: right top;
-  background-image: url(../images/ribbonSfida.png) !important;
-  background-repeat: no-repeat;
+	background-image: url(../images/ribbonSfida.png) !important;
+	background-repeat: no-repeat;
 }
 
 /*
@@ -641,7 +646,7 @@ header#banner {
 	text-align: center;
 	text-transform: uppercase;
 	margin-bottom: 15px;
-	border-bottom: 2px solid #E84927; 
+	border-bottom: 2px solid #E84927;
 	color: #E84927;
 }
 
@@ -1172,7 +1177,7 @@ header#banner {
 }
 
 .idea-card h4 {
-	font-weight: bold;	
+	font-weight: bold;
 }
 
 .idea-card-header .taglib-icon {
@@ -1592,36 +1597,36 @@ header#banner {
 }
 
 .tagcloud-left span {
-  float: right;
+	float: right;
 }
 
 .tagcloud-right span {
-  float: left;
+	float: left;
 }
 
 .tagcloud-left .tagcloud-wrapper {
-  float: right;
+	float: right;
 }
 
 .tagcloud-right .tagcloud-wrapper {
-  float: left;
+	float: left;
 }
 
 .tagcloud-row {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .tagcloud-wrapper {
-  padding: 10px 10px 10px 10px;
-  display: inline-block;
-  min-width: 150px;
-  max-width: 400px;
-  text-overflow: ellipsis;
-  background-color: #4EB9A4;
-  cursor: pointer;
-  line-height: 28px;
-  font-size: 25px;
-  white-space: nowrap;
+	padding: 10px 10px 10px 10px;
+	display: inline-block;
+	min-width: 150px;
+	max-width: 400px;
+	text-overflow: ellipsis;
+	background-color: #4EB9A4;
+	cursor: pointer;
+	line-height: 28px;
+	font-size: 25px;
+	white-space: nowrap;
 }
 
 /* .tagcloud-right:after {
@@ -1651,24 +1656,24 @@ header#banner {
 }
  */
 .tagcloud-name {
-  text-transform: uppercase;
-  color: white;
-  vertical-align: bottom;
+	text-transform: uppercase;
+	color: white;
+	vertical-align: bottom;
 }
 
 .tagcloud-count {
-  min-width: 30px;
-  margin-left: 5px;
-  margin-right: 5px;
-  display: inline-block;
-  text-align: center;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  border-radius: 15px;
-  background-color: white;
-  color: #4EB9A4;
-  font-size: 14px;
-  font-weight: bolder;
+	min-width: 30px;
+	margin-left: 5px;
+	margin-right: 5px;
+	display: inline-block;
+	text-align: center;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: white;
+	color: #4EB9A4;
+	font-size: 14px;
+	font-weight: bolder;
 }
 /*
 .tagcloud-dot {
@@ -1688,13 +1693,12 @@ header#banner {
 }
 */
 .tag-cloud-header {
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bolder;
-  margin-bottom: 30px;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bolder;
+	margin-bottom: 30px;
 }
-
 
 .userprofile .avatar {
 	padding-bottom: 30px;
@@ -1826,7 +1830,7 @@ header#banner {
 #footer .partners {
 	height: 90px;
 	background-size: contain;
-    margin: 10px;
+	margin: 10px;
 	background-image: url(../images/loghi_footer_completi.png);
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -1929,92 +1933,96 @@ header#banner {
 }
 
 #calendar .fc-button {
-  border: none;
-  background: none;
-  background-color: #E84927;
-  color: #fff;
-  text-shadow: none;
-  outline: none;
+	border: none;
+	background: none;
+	background-color: #E84927;
+	color: #fff;
+	text-shadow: none;
+	outline: none;
 }
 
 #calendar .fc-button:hover {
 	color: #F3846B;
 }
+
 #calendar .fc-state-disabled:hover {
-  color: #FFF;
+	color: #FFF;
 }
+
 #calendar .fc-state-disabled {
 	color: #BDBDBD !important;
-  background-color: #EDEDED !important;
-  background-image: linear-gradient(to bottom, #EDEDED, #EDEDED) !important;
-  border: 0 !important;
+	background-color: #EDEDED !important;
+	background-image: linear-gradient(to bottom, #EDEDED, #EDEDED) !important;
+	border: 0 !important;
 }
 
-
-#calendar .fc-prev-button, #calendar .fc-next-button {
+#calendar .fc-prev-button,#calendar .fc-next-button {
 	width: 24px;
 	height: 24px;
 	border-radius: 12px;
 	margin-top: 2px;
-} 
+}
 
-#calendar .fc-prev-button span, #calendar .fc-next-button  span {
-  margin: 0 -.2em;
+#calendar .fc-prev-button span,#calendar .fc-next-button  span {
+	margin: 0 -.2em;
 }
 
 .fc-icon-left-single-arrow:after {
-  display: none;
+	display: none;
 }
+
 .fc-icon-right-single-arrow:after {
-  display: none;
+	display: none;
 }
-  
+
 #calendar .fc-prev-button::before {
-  content: "\f053";
-  font-family: fontawesome-alloy;
-  vertical-align: text-top;
-  font-size: 16px;
-  margin-left: -2px;
+	content: "\f053";
+	font-family: fontawesome-alloy;
+	vertical-align: text-top;
+	font-size: 16px;
+	margin-left: -2px;
 }
 
 #calendar .fc-next-button::before {
-  content: "\f054";
-  font-family: fontawesome-alloy;
-  vertical-align: text-top;
-  font-size: 16px;
-  margin-left: -1px;
+	content: "\f054";
+	font-family: fontawesome-alloy;
+	vertical-align: text-top;
+	font-size: 16px;
+	margin-left: -1px;
 }
 
 #calendar .fc-state-active {
-	    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, .05) !important;
+	box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, .05) !important;
 }
 
 #calendar .fc-today {
 	background: none;
 }
+
 #calendar .fc-day.fc-today::before {
-	  content: "";
-    box-shadow: inset 0 0 0 2px #8a8c8e;
-    width: 100%;
-    display: block;
-    height: 100%;
+	content: "";
+	box-shadow: inset 0 0 0 2px #8a8c8e;
+	width: 100%;
+	display: block;
+	height: 100%;
 }
 
 #calendar .fc-event {
 	border: 1px solid #E84927;
-  background-color: #E84927;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
+	background-color: #E84927;
+	color: #fff;
+	text-decoration: none;
+	cursor: pointer;
 }
+
 #calendar .fc-event:hover {
-  color: #F3846B;
-  text-decoration: none;
+	color: #F3846B;
+	text-decoration: none;
 }
 
 .btn {
 	text-shadow: none;
-}	
+}
 
 #portlet_3 a {
 	color: #E84927;
@@ -2022,12 +2030,12 @@ header#banner {
 }
 
 #portlet_3 a:hover {
-  text-decoration: none;
-  color: #F3846B;
+	text-decoration: none;
+	color: #F3846B;
 }
 
 #portlet_3 .portlet-title-text {
-	display : none;
+	display: none;
 }
 
 .portlet-topper h3 {
@@ -2035,12 +2043,12 @@ header#banner {
 	font-size: 14px;
 }
 
-.aui .help-block, .aui .help-inline {
-    color: #E84927;
+.aui .help-block,.aui .help-inline {
+	color: #E84927;
 }
 
 .aui .control-group.error .help-inline {
-    color: #E84927;
+	color: #E84927;
 }
 
 .aui .control-group.error input {
@@ -2049,17 +2057,17 @@ header#banner {
 
 .aui a {
 	color: #E84927;
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .aui a:hover {
-  color: #E84927;
+	color: #E84927;
 }
 
 .idea-view-callref {
-    font-size: 16px;
-    margin-bottom: 15px;
-    line-height: 28px;
+	font-size: 16px;
+	margin-bottom: 15px;
+	line-height: 28px;
 }
 
 .state-judgement-title {
@@ -2069,60 +2077,56 @@ header#banner {
 	color: #ffffff;
 	margin-top: 1em;
 	padding: 5px;
-} 
+}
 
 .state-judgement-body {
 	margin-top: 1em;
-} 
+}
+
+/* nav menu toggle */
+@media (max-width: 979px) {
+	#nav-toggle {
+		display: block;
+	}
+}
 
 /* media fixes */
-@media (max-width: 767px) {
+@media ( max-width : 767px) {
 	body {
 		padding-right: 0 !important;
 		padding-left: 0 !important;
 	}
-	
 	.title-container {
 		padding: 20px 0 !important;
 	}
-	
 	.title-container .title {
 		font-size: 38.5px !important;
 		white-space: normal !important;
 	}
-	
-	.tag-cloud-header, .tagcloud-row {
+	.tag-cloud-header,.tagcloud-row {
 		display: none;
 	}
-	
 	.idea-slider .thumbnail {
 		margin-bottom: 1em;
 	}
-	
-	.idea-slider>span.text-right, .idea-slider>span.text-left {
+	.idea-slider>span.text-right,.idea-slider>span.text-left {
 		display: none !important;
 	}
-	
-	.event-container, .event-container-list {
+	.event-container,.event-container-list {
 		margin-right: 0;
 	}
-	
 	#footer .powered-by {
 		line-height: normal;
 	}
-	
 	.ambiti {
 		padding: 1em 3em;
 	}
-	
 	.ambiti .ambito>.span7 {
 		display: none;
 	}
-	
 	.ambiti .ambito .wrapper .link a {
 		font-size: 1.5em;
 	}
-	
 	.ambito-details .cover {
 		display: none;
 	}

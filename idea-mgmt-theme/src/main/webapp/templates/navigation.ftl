@@ -3,6 +3,10 @@
 <#assign aui = PortalJspTagLibs["/WEB-INF/tld/liferay-aui.tld"] />
 <#assign portlet = PortalJspTagLibs["http://java.sun.com/portlet_2_0"] />
 
+<div id="nav-toggle" class="btn btn-secondary">
+	<i class="icon-reorder"></i>
+</div>
+
 <nav class="${nav_css_class} navbar" id="navigation" role="navigation">
 	<div class="navbar-inner">
 		<div class="navbar-row right">
