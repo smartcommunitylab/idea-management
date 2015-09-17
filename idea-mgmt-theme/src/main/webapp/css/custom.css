@@ -2145,4 +2145,24 @@ header#banner {
 	#signinmodal {
 		width: 95% !important;
 	}
+	
+	#signinmodal .modal-header {
+		padding-bottom: 0;
+	}
+	
+	#signinmodal .modal-body {
+		padding-top: 0;
+	}
+	
+	#signinmodal form fieldset {
+		width: 100%;
+	}
+	
+	#signinmodal form .button-holder .btn {
+		margin-bottom: 0.5em;
+	}
+	
+	#signinmodal form .button-holder .btn:last-child {
+		margin-bottom: 0;
+	}
 }
