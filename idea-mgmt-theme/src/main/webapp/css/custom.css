@@ -2096,38 +2096,53 @@ header#banner {
 		padding-right: 0 !important;
 		padding-left: 0 !important;
 	}
+	
 	.title-container {
 		padding: 20px 0 !important;
 	}
+	
 	.title-container .title {
 		font-size: 38.5px !important;
 		white-space: normal !important;
 	}
+	
 	.tag-cloud-header,.tagcloud-row {
 		display: none;
 	}
+	
 	.idea-slider .thumbnail {
 		margin-bottom: 1em;
 	}
+	
 	.idea-slider>span.text-right,.idea-slider>span.text-left {
 		display: none !important;
 	}
+	
 	.event-container,.event-container-list {
 		margin-right: 0;
 	}
+	
 	#footer .powered-by {
 		line-height: normal;
 	}
+	
 	.ambiti {
 		padding: 1em 3em;
 	}
+	
 	.ambiti .ambito>.span7 {
 		display: none;
 	}
+	
 	.ambiti .ambito .wrapper .link a {
 		font-size: 1.5em;
 	}
+	
 	.ambito-details .cover {
 		display: none;
+	}
+	
+	#signinmodal {
+		width: 95% !important;
 	}
 }
