@@ -1334,6 +1334,7 @@ header#banner {
 .call-cattitle {
 	display: inline-block;
 	font-size: 18px;
+	color: #ffffff;
 	padding: 3px 40px 3px 40px;
 }
 
