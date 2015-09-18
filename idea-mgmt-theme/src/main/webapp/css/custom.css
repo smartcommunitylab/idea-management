@@ -2171,7 +2171,7 @@ header#banner {
 	}
 	
 	table tr td {
-		width: 100%;
+		width: 100% !important;
 	}
 	
 	table tr td img {
