@@ -2087,6 +2087,27 @@ header#banner {
 	margin-top: 1em;
 }
 
+#cookies {
+	background-color: #36B8A3;
+    border: none;
+    border-radius: 0;
+    color: #ffffff;
+    font-size: 1em;
+    margin: 1em;
+    padding: 1em;
+}
+
+#cookies a, #cookies a:hover {
+	color: #e84927;
+}
+
+#cookies button {
+	color: white !important;
+	background-color: #E84927 !important;
+	background-image: linear-gradient(to bottom, #E84927, #E84927) !important;
+	text-shadow: none;
+}
+
 /* nav menu toggle */
 @media (max-width: 979px) {
 	#nav-toggle {
