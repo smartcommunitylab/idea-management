@@ -2088,6 +2088,7 @@ header#banner {
 }
 
 #cookies {
+	font-weight: bold;
 	background-color: #36B8A3;
     border: none;
     border-radius: 0;
