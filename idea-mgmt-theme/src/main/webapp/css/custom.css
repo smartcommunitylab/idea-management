@@ -43,6 +43,10 @@
 	font-weight: normal;
 }
 
+.aui button {
+	font-family: inherit;
+}
+
 .tooltip-content {
 	font-size: larger;
 }
@@ -1031,7 +1035,7 @@ header#banner {
 }
 
 .addidea-button-disabled {
-	font-size: 18px !important;
+	font-size: 20px !important;
 	text-transform: uppercase !important;
 	padding: 8px 24px !important;
 	color: #BDBDBD !important;
@@ -1061,7 +1065,7 @@ header#banner {
 }
 
 .addidea-button,.formbutton-primary,.tagselector .btn,#p_p_id_2_ .button-holder .btn-primary {
-	font-size: 18px !important;
+	font-size: 20px !important;
 	text-transform: uppercase !important;
 	padding: 8px 24px !important;
 	color: white !important;
@@ -2176,5 +2180,9 @@ header#banner {
 	
 	table tr td img {
 		display: none;
+	}
+	
+	#portlet_eventomanagement_WAR_ideamanagement {
+		margin: 0;
 	}
 }
