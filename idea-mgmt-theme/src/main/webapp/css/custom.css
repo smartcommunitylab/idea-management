@@ -2169,4 +2169,12 @@ header#banner {
 	.portlet-borderless-container {
 		margin: 1em !important;
 	}
+	
+	table tr td {
+		width: 100%;
+	}
+	
+	table tr td img {
+		display: none;
+	}
 }
