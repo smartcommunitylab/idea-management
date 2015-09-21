@@ -6,11 +6,11 @@
 	<#list entries?sort_by("assetCount")?reverse as curTag>
 	    ${portletURL.setParameter("resetCur", "true")}
     	${portletURL.setParameter("tag", curTag.name)}
+        <#assign stat = ATSLS.getTagStats(curTag.getTagId(),portalUtil.getClassNameId("it.smartcommunitylab.platform.idea.model.Idea")) >
 	    <#if (counter % 2) == 0 >
         <div class="row-fluid tagcloud-row">
 		  <div class="span6 tagcloud-left">
 		    <div class="tagcloud-wrapper" onClick="javascript:window.location='${htmlUtil.escape(portletURL.toString())}';">
-		        <#assign stat = ATSLS.getTagStats(curTag.getTagId(),portalUtil.getClassNameId("it.smartcommunitylab.platform.idea.model.Idea")) >
 		        <span class="tagcloud-count">${stat.getAssetCount()}</span>
 		        <span class="tagcloud-name">${curTag.name}</span>
 		    </div>
@@ -18,7 +18,7 @@
 		<#else>
 		  <div class="span6 tagcloud-right">
 		    <div class="tagcloud-wrapper" onClick="javascript:window.location='${htmlUtil.escape(portletURL.toString())}';">
-		        <span class="tagcloud-count">${curTag.getAssetCount()}</span>
+		        <span class="tagcloud-count">${stat.getAssetCount()}</span>
 		        <span class="tagcloud-name">${curTag.name}</span>
 		    </div>
 		  </div>
