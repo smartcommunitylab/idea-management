@@ -27,71 +27,68 @@
 
 
 <script id="<portlet:namespace/>idea-templ" type="text/x-handlebars">
-	<div class="row-fluid idea-cards" >
+<div class="row-fluid idea-cards" >
 	<div class="span12">
-
-    {{#each result.result.data}}
-	{{#if this.startRow }}
-	<div class="row-fluid">
-	{{/if}}
-     <span class="span4" id="result">
-   <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
-	 <div class="idea-card-header">
-                    <div class="span6">
-	                    {{#if this.callId}}
-							<span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> 
-						{{/if}}
-                    </div>
-                    <div class="span6">
-                      {{#if this.deleteURL}}
-							<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
-					  {{/if}}	
-                      <span class="idea-card-date">
-                       	{{this.creationDate}}
-                      </span>
-                    </div>
-                  </div>	
-				  
-				  <h4>{{this.title}}</h4>
-                  <div class="idea-card-footer">
-                      <div class="span6 idea-rating">
-                        {{#each this.stars}}
-                        {{#if this}}
-                            <i class="icon-star"></i>
-                        {{else}}
-                            <i class="icon-star-empty"></i>
-                        {{/if}}
-                    {{/each}}
-                      </div>
-                      <div class="span6">
-                      <span class="idea-card-comments">{{this.comments}}</span>
-                      </div>
-                  </div>
-	
-    </div>
-    </span>
-	{{#if  this.endRow}}
-	</div>
-	{{/if}}
-    {{/each}}
+	{{#each result.result.data}}
+		{{#if this.startRow }}
+		<div class="row-fluid">
+		{{/if}}
+  		<span class="span4" id="result">
+   			<div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
+	 				<div class="idea-card-header">
+      			<div class="span6">
+	      			{{#if this.callId}}
+								<span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> 
+							{{/if}}
+        		</div>
+        		<div class="span6">
+        			{{#if this.deleteURL}}
+								<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
+							{{/if}}	
+          		<span class="idea-card-date">
+          			{{this.creationDate}}
+          		</span>
+        		</div>
+      		</div>	
+					<h4>{{this.title}}</h4>
+        	<div class="idea-card-footer">
+        		<div class="span6 idea-rating">
+          	{{#each this.stars}}
+          		{{#if this}}
+            	<i class="icon-star"></i>
+            	{{else}}
+            	<i class="icon-star-empty"></i>
+            	{{/if}}
+          	{{/each}}
+          	</div>
+          	<div class="span6">
+          		<span class="idea-card-comments">{{this.comments}}</span>
+          	</div>
+					</div>
+      	</div>
+    	</span>
+		{{#if  this.endRow}}
+		</div>
+		{{/if}}
+	{{/each}}
 	{{#if this.noResults }}
-		  <div class="row-fluid">
-		  <span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
-		  </div>
+		<div class="row-fluid">
+			<span class="empty-results"><liferay-ui:message key="lbl_noresults"/></span>
+		</div>
 	{{/if}}
 	</div>
-</div>
-<div class="idea-paging row-fluid">
-  <div class="span6">
-   {{#if result.viewPrevArrow }}
-       <a class="idea-paging-prev" onclick="<portlet:namespace/>paginateIdeas('{{result.prevURL}}');"><liferay-ui:message key="prev_page"/></a>
-	{{/if}}
-  </div>
-  <div class="span6">
-  	{{#if result.viewNextArrow }}
-       <a class="idea-paging-next" onclick="<portlet:namespace/>paginateIdeas('{{result.nextURL}}');"><liferay-ui:message key="next_page"/></a>
-	{{/if}}
-  </div>
+	<div class="idea-paging row-fluid">
+  	<div class="span6">
+   		{{#if result.viewPrevArrow }}
+    	<a class="idea-paging-prev" onclick="<portlet:namespace/>paginateIdeas('{{result.prevURL}}');"><liferay-ui:message key="prev_page"/></a>
+			{{/if}}
+  	</div>
+  	<div class="span6">
+  		{{#if result.viewNextArrow }}
+      <a class="idea-paging-next" onclick="<portlet:namespace/>paginateIdeas('{{result.nextURL}}');"><liferay-ui:message key="next_page"/></a>
+			{{/if}}
+  	</div>
+	</div>
 </div>
 	
 </script>
@@ -138,7 +135,8 @@
                         var offset = data.elementInPage - data.result.size;
                         data.offsetClass = (offset > 0) ? "offset" + offset*2 : "";
                         data.noResults = data.result.size == 0 && data.currentPage == 1;
-                        $.each(data.result.data,function(i,v) {
+                        //data.rows = Math.floor(data.result.size / 3);
+                        $.each(data.result.data,function(j,v) {
                             
                             v.stars = [0,0,0,0,0];
                             for(var i = 1 ; i <= 5; i++) {
@@ -147,8 +145,11 @@
                             
                             v.boxColor = (v.cats[0]) ? v.cats[0].color : "";
                             
-                            v.startRow = i % 3 == 0;
-                            v.endRow = i % 3 == 2;
+                            v.startRow = j % 3 == 0;
+                            v.endRow = j % 3 == 2;
+                            if(j == (data.result.size - 1)) {
+                            	v.endRow = true;
+                            }
                         });
 						var nodeResult = A.one('#<portlet:namespace/>result');
 						nodeResult.empty();
