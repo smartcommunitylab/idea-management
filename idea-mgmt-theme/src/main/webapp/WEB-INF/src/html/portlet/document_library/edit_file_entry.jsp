@@ -307,6 +307,15 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 			</aui:validator>
 		</aui:input>
 
+    <c:if test="<%= fileEntry == null %>">
+      <div style="display:none;">
+      <aui:field-wrapper label="permissions">
+        <liferay-ui:input-permissions
+          modelName="<%= DLFileEntryConstants.getClassName() %>"
+        />
+      </aui:field-wrapper>
+      </div>
+    </c:if>
 	
 		<aui:button-row cssClass="formbutton-row ">
       <aui:button cssClass="formbutton-cancel" href="<%= redirect %>" type="cancel" />
