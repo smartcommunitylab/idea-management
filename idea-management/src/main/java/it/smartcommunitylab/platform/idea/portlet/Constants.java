@@ -41,6 +41,6 @@ public class Constants {
 	public static final String IDEA_STATE_BLOCKED_ABUSIVE = "abusive";
 
 	public static final int DEFAULT_DISCUSSION_LIMIT = 30;
-	public static final int[] DISCUSSION_LIMITS = new int[] { 30, 15, 7 };
+	public static final int[] DISCUSSION_LIMITS = new int[] { 7, 15, 30, 60, 90, 120 };
 
 }
