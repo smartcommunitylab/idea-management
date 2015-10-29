@@ -1,0 +1,64 @@
+#set($imageWidth = $maxImageWidth.Data)
+#set($imageHeight = $maxImageHeight.Data)
+#set($imageWidthPx = $imageWidth + "px")
+#set($imageHeightPx = $imageHeight + "px")
+#set($interval = $timeInterval.Data)
+#set($animation = $animationTime.Data)
+#set($activeIndexValue = $activeIndex.Data)
+
+<style type="text/css">
+.aui .carousel {
+	margin-bottom: 0;
+}
+
+.auiCarousel .aui-carousel-item {
+	height: auto;
+	position: relative;
+	display: none;
+}
+
+.auiCarousel .carousel-item img {
+	width: 100%;
+	height: auto;
+}
+
+.auiCarousel .carousel-item-active {
+	display: block;
+}
+
+.carousel menu {
+	display: none;
+}
+</style>
+
+#set($totalCount = 0)
+<div class="auiCarousel">
+	#foreach($imageElement in $image.getSiblings())
+		#if($imageElement.getData() != "")
+			<div class="aui-carousel-item">
+			#if($imageElement.linkUrl.getData() != "")
+				<a href="$imageElement.linkUrl.Data">
+					<img src="$imageElement.Data"/>
+				</a>
+			#else
+				<img src="$imageElement.Data" />
+			#end
+			#set($totalCount = $totalCount + 1)
+			</div>
+		#end
+	#end
+</div>
+
+#if($totalCount > 0)
+<script>
+// Defining Carousel Module"
+YUI().use('aui-carousel', function(Y) {
+	new Y.Carousel({
+		contentBox: '.auiCarousel',
+		activeIndex: $activeIndexValue,
+		intervalTime: $interval,
+		animationTime: $animation
+	}).render();
+});
+</script>
+#end
