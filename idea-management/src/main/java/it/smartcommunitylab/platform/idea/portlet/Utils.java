@@ -46,10 +46,15 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -146,10 +151,19 @@ public class Utils {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		try {
-			boolean hasRole = themeDisplay.getPermissionChecker()
+			boolean hasRoleContentReview = themeDisplay.getPermissionChecker()
 					.isContentReviewer(themeDisplay.getCompanyId(),
 							themeDisplay.getScopeGroupId());
-			return hasRole;
+			boolean hasRoleModerator = false;
+			List<UserGroupRole> groupRoleList = UserGroupRoleLocalServiceUtil.getUserGroupRoles(themeDisplay.getUserId());
+			for(UserGroupRole groupRole : groupRoleList) {
+				Role role = RoleLocalServiceUtil.getRole(groupRole.getRoleId());
+				if(role.getName().equals("Moderator")) {
+					hasRoleModerator = true;
+					break;
+				}
+			}
+			return hasRoleContentReview || hasRoleModerator;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
