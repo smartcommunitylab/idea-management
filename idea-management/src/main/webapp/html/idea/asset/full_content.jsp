@@ -60,6 +60,13 @@
 
   List<AssetCategory> categories = Utils.getOrderedCategories(idea.getCategoryIds(), assetEntry);
   java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
+  String redirectCategoryUrl = null;
+  if(categories.size() > 0) {
+		String portalUrl = themeDisplay.getPortalURL();
+		String siteUrl = layout.getGroup().getFriendlyURL();
+		String redirectPage = PortletProps.get("category.page");
+		redirectCategoryUrl = portalUrl + "/web" + siteUrl + "/" + redirectPage + "?resetCur=true&categoryId=";
+  }
 
 	List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
 			Idea.class.getName(), idea.getIdeaId());
@@ -125,10 +132,11 @@
 <div class="row-fluid idea-view-data">
   <div class="span6">
     <% for (AssetCategory ac : categories) {
+    	String localRedirectCategoryUrl = redirectCategoryUrl + ac.getCategoryId();
       String categoryColor = CC.get(""+ac.getCategoryId());
     %>
     <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
-    <%=ac.getTitle(locale) %>  
+    	<a href="<%= localRedirectCategoryUrl%>"><%=ac.getTitle(locale) %></a>  
     </div>
     <% } %>
   </div>

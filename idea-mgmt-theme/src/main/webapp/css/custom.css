@@ -1338,6 +1338,10 @@ header#banner {
 	padding: 3px 40px 3px 40px;
 }
 
+.aui .call-cattitle a {
+	color:black;
+}
+
 .call-deadline-remains {
 	font-size: 18px;
 	text-align: right;
