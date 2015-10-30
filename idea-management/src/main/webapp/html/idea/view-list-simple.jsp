@@ -61,10 +61,10 @@
                         data.viewNextArrow = <%= pagination %> && data.result.size >= data.elementInPage;
                         
                         $.each(data.result.data,function(i,v) {
-                            
+                            var roundVal = v.avgRating.toFixed();
                             v.stars = [0,0,0,0,0];
-                            for(var i = 1 ; i <= 5; i++) {
-                                v.stars[i-1] = i <= v.avgRating;
+                            for(var j = 0 ; j < roundVal; j++) {
+                                v.stars[j] = 1;
                             }
                             
                             v.boxColor = (v.cats[0]) ? v.cats[0].color : "";
