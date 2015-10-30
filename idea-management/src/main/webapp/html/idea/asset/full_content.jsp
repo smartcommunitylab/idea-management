@@ -136,7 +136,8 @@
       String categoryColor = CC.get(""+ac.getCategoryId());
     %>
     <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
-    	<a href="<%= localRedirectCategoryUrl%>"><%=ac.getTitle(locale) %></a>  
+    	<!--<a href="<%= localRedirectCategoryUrl%>"><%=ac.getTitle(locale) %></a>-->
+    	<%=ac.getTitle(locale) %>  
     </div>
     <% } %>
   </div>
