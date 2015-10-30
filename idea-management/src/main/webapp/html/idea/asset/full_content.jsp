@@ -277,14 +277,30 @@
     </div>    
   </liferay-ui:panel>
   <liferay-ui:panel state="closed" collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
-        <% for (User participant: users) {%>
-        <div class="span2">
-        <liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getScreenName() %>" displayStyle="0"></liferay-ui:user-display>
-        <c:if test="<%=participant.getUserId() == owner.getUserId() %>">
-        <span class="user-role"><liferay-ui:message key="lbl_author"/></span>
+        
+        <% 
+        	int count = 0; 
+        	for (User participant: users) {
+        %>
+        <c:if test="<%= count == 0 %>">
+        <div class="row-fluid">
         </c:if>
+        	<div class="span2">
+        		<liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getScreenName() %>" displayStyle="0"></liferay-ui:user-display>
+        		<c:if test="<%=participant.getUserId() == owner.getUserId() %>">
+        		<span class="user-role"><liferay-ui:message key="lbl_author"/></span>
+        		</c:if>
+        	</div>
+        <c:if test="<%= count == 5 %>">
         </div>
-        <%} %>
+        </c:if>
+        <%
+        		count++;
+        		if(count > 5) {
+	        		count = 0;
+  	      	}
+    	    } 
+        %>
   </liferay-ui:panel>
   <liferay-ui:panel state="closed" collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
     <div class="row-fluid"> 
