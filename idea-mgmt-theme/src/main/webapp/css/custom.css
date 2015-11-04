@@ -333,7 +333,7 @@ header#banner {
 	position: absolute;
 	left: -99999px;
 	border-left: 3px solid transparent;
-	z-index: 2;
+	z-index: 100;
 	margin-left: 0;
 }
 
