@@ -1336,10 +1336,15 @@ header#banner {
 	font-size: 18px;
 	color: #ffffff;
 	padding: 3px 40px 3px 40px;
+	margin-bottom: 3px;
 }
 
 .aui .call-cattitle a {
 	color:white;
+}
+
+.aui .call-cattitle a:hover {
+	color:black;
 }
 
 .call-deadline-remains {
