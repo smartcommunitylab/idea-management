@@ -132,12 +132,16 @@
 <div class="row-fluid idea-view-data">
   <div class="span6">
     <% for (AssetCategory ac : categories) {
-    	String localRedirectCategoryUrl = redirectCategoryUrl + ac.getCategoryId();
+    	//String localRedirectCategoryUrl = redirectCategoryUrl + ac.getCategoryId();
       String categoryColor = CC.get(""+ac.getCategoryId());
     %>
+    <portlet:renderURL var="localRedirectCategoryUrl">
+      <portlet:param name="resetCur" value="true" />
+      <portlet:param name="categoryId" value="<%=String.valueOf(ac.getCategoryId()) %>" />
+    </portlet:renderURL>
     <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
-    	<!--<a href="<%= localRedirectCategoryUrl%>"><%=ac.getTitle(locale) %></a>-->
-    	<%=ac.getTitle(locale) %>  
+    	<a href="<%= localRedirectCategoryUrl %>"><%= ac.getTitle(locale) %></a>
+    	<!-- <%=ac.getTitle(locale) %> -->  
     </div>
     <% } %>
   </div>
@@ -182,7 +186,7 @@
     <c:if test="<%=!themeDisplay.isSignedIn()%>">
       <div class="row-fluid">
         <span class="span12 idea-creator idea-creator-warning text-right">
-            <liferay-ui:message key="lbl_access"/>  
+            <a class="use-dialog" href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="lbl_access"/></a>  
         </span>
       </div>
       <div class="row-fluid">
