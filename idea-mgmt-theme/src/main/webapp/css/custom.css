@@ -412,6 +412,7 @@ header#banner {
     position: absolute;
 	top: 65px;
 	margin-left: -3px;
+	z-index: 9999;
     opacity: 0;
 	-webkit-transition: 0.1s linear opacity;
 	min-width: 100px;
@@ -425,6 +426,7 @@ header#banner {
 #navmenu.nav ul.child-menu.show-menu{
 	position: absolute;
 	top: 65px;
+	z-index: 9999;
 	margin-left: -3px;
     border-left: 3px solid #E84927;
     opacity: 1;
