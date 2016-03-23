@@ -84,7 +84,14 @@ ${theme.include(body_top_include)}
 		<!-- <p class="powered-by">
 			<@liferay.language key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
 		</p> -->
-		<div class="partners"></div>
+		<div class="partners-box center-block">
+    		<div class="partner"> <a href="http://www.comune.trento.it/" target="_blank"><img src="${images_folder}/loghi/1.png"></a> </div>
+    		<div class="partner"> <a href="http://www.anci.it/" target="_blank"><img src="${images_folder}/loghi/2.png"></a> </div>
+    		<div class="partner"> <a href="http://www.agenziagiovani.it/" target="_blank"><img src="${images_folder}/loghi/3.png"></a> </div>
+    		<div class="partner"> <a href="http://www.fondazioneifel.it/" target="_blank"><img src="${images_folder}/loghi/4.png"></a> </div>
+        </div>
+        <div align="center"> Iniziativa co-finanziata dall'Agenzia Nazionale per i Giovani </div> 
+        
 		<#if has_navigation || is_signed_in>
 			<#include "${full_templates_path}/footer-navigation.ftl" />
 		</#if>

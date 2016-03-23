@@ -10,7 +10,7 @@
 <nav class="${nav_css_class} navbar" id="navigation" role="navigation">
 	<div class="navbar-inner">
 		<div class="navbar-row right">
-			<div id="user-menu">
+			<div id="user-menu" role="menu">
 			  <div style="display:none;"> 
         <#assign locPortletId = "userprofile_WAR_ideamanagement" />
         <#assign PortletPreferencesFactoryUtil = staticUtil["com.liferay.portlet.PortletPreferencesFactoryUtil"] />
@@ -86,30 +86,18 @@
 						-->
 					</#if>
 				</ul>
-				<ul id="search">
+				<ul id="searchbar">
 					<@aui["nav-item"] href="#" id="searchtoggle" iconCssClass="icon-search" />
 					
 					<li id="searchform">
-						<@liferay_ui["search"] />
+						<@liferay_ui["search"] id="prova"/>
 					</li>
-					
-					<script>
-						var element = document.getElementById('searchform');
-						document.getElementById('searchtoggle').onclick = function() {
-							if (element.classList.contains('shown')) {
-								element.classList.remove('shown');
-								console.log('shown removed');
-							} else {
-								element.classList.add('shown');
-								console.log('shown added');
-							}
-						};
-					</script>
+	     <!-- mettere script -->
 				</ul>
 			</div>
 		</div>
 		<div class="navbar-row">
-			<ul id="navmenu" aria-label="<@liferay.language key="site-pages" />" role="menubar" class="nav">
+			<ul id="navmenu" role="menubar" class="nav">
 				<#function alignitem item>
 					<#if (item?lower_case == "progetto" || item?lower_case == "piattaforma" || item?lower_case == "contatti")>
 						<#return "right" />
@@ -133,29 +121,29 @@
 						<#assign nav_item_css_class = "" />
 			
 						<#if nav_item.isSelected()>
-							<#assign nav_item_attr_has_popup = "aria-haspopup='true'" />
-							<#assign nav_item_attr_selected = "aria-selected='true'" />
+							<#assign nav_item_attr_has_popup = "" />
+							<#assign nav_item_attr_selected = "" />
 							<#assign nav_item_css_class = "selected" />
 						</#if>					
 			
-						<li ${nav_item_attr_selected} class="${nav_item_css_class} ${alignitem(nav_item.getName())} ${haschildren(nav_item)}" id="layout_${nav_item.getLayoutId()}" role="presentation">
-							<a aria-labelledby="layout_${nav_item.getLayoutId()}" ${nav_item_attr_has_popup} href="${nav_item.getURL()}" ${nav_item.getTarget()} role="menuitem">
+						<li ${nav_item_attr_selected} class="${nav_item_css_class} ${alignitem(nav_item.getName())} ${haschildren(nav_item)}" id="layout_${nav_item.getLayoutId()}">
+							<a aria-labelledby="layout_${nav_item.getLayoutId()}" ${nav_item_attr_has_popup} href="${nav_item.getURL()}" ${nav_item.getTarget()} >
 								<span>${nav_item.icon()} ${nav_item.getName()}</span>
 							</a>
 			
 							<#if nav_item.hasChildren()>
-								<ul class="child-menu" role="menu">
+								<ul class="child-menu">
 									<#list nav_item.getChildren() as nav_child>
 										<#assign nav_child_attr_selected = "" />
 										<#assign nav_child_css_class = "" />
 			
 										<#if nav_child.isSelected()>
-											<#assign nav_child_attr_selected = "aria-selected='true'" />
+											<#assign nav_child_attr_selected = "" />
 											<#assign nav_child_css_class = "selected" />
 										</#if>
 			
-										<li ${nav_child_attr_selected} class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" role="presentation">
-											<a aria-labelledby="layout_${nav_child.getLayoutId()}" href="${nav_child.getURL()}" ${nav_child.getTarget()} role="menuitem">
+										<li ${nav_child_attr_selected} class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" >
+											<a aria-labelledby="layout_${nav_child.getLayoutId()}" href="${nav_child.getURL()}" ${nav_child.getTarget()} >
 												${nav_child.getName()}
 											</a>
 										</li>
