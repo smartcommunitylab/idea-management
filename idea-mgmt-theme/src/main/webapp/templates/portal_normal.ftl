@@ -86,9 +86,8 @@ ${theme.include(body_top_include)}
 		</p> -->
 		<div class="partners-box center-block">
     		<div class="partner"> <a href="http://www.comune.trento.it/" target="_blank"><img src="${images_folder}/loghi/1.png"></a> </div>
-    		<div class="partner"> <a href="http://www.anci.it/" target="_blank"><img src="${images_folder}/loghi/2.png"></a> </div>
-    		<div class="partner"> <a href="http://www.agenziagiovani.it/" target="_blank"><img src="${images_folder}/loghi/3.png"></a> </div>
-    		<div class="partner"> <a href="http://www.fondazioneifel.it/" target="_blank"><img src="${images_folder}/loghi/4.png"></a> </div>
+    		<div class="partner"> <a href="http://www.fbi.eu/" target="_blank"><img src="${images_folder}/loghi/2.png"></a> </div>
+    		<div class="partner"> <a href="http://www.unitn.it//" target="_blank"><img src="${images_folder}/loghi/3.png"></a> </div>
         </div>
         <div align="center"> Iniziativa co-finanziata dall'Agenzia Nazionale per i Giovani </div> 
         

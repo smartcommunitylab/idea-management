@@ -204,15 +204,6 @@
             <i class="ftn-sum_users"></i>
           </div>
         </div>
-        <div class="span3 text-center">
-        	<div>
-        		<liferay-ui:message key="lbl_participationcount"/>
-        	</div> 
-          <div class="participation-details">
-            <span><%=users.size() %></span>
-            <i class="ftn-sum_users"></i>
-          </div>
-        </div>
       </div>
     </c:if>
     <c:if test="<%=themeDisplay.isSignedIn()%>">
@@ -237,32 +228,6 @@
 	          <i class="ftn-sum_users"></i>
           </div>
 	      </div>
-        <div class="span3 text-center">
-          <portlet:actionURL var="toggleURL" name="toggleUserParticipation">
-            <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
-            <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
-            <portlet:param name="userId" value="<%=String.valueOf(user.getUserId()) %>" />
-          </portlet:actionURL>
-          <div>
-			<c:choose>
-				<c:when test="<%=isOwner%>">
-					<a title="<liferay-ui:message key="lbl_tooltip_participate_owner"/>"
-						class='idea-button idea-button-tooltip-avail idea-button-participate-<%=participates ? "disabled" : "enabled"%>'
-						href="#"></a>
-				</c:when>
-				<c:otherwise>
-					<a title="<liferay-ui:message key="lbl_tooltip_participate"/>"
-						class='idea-button idea-button-tooltip-avail idea-button-participate-<%=participates ? "disabled" : "enabled"%>'
-						href="<%=toggleURL.toString()%>"></a>
-				</c:otherwise>
-			</c:choose>
-          </div>
-          <div><span><liferay-ui:message key="lbl_participating"/></span></div>
-          <div class="participation-details">
-            <span><%=users.size() %></span>
-            <i class="ftn-sum_users"></i>
-          </div>
-        </div>
       </div>
     </c:if>
 </div>
@@ -289,54 +254,6 @@
       subject="<%=idea.getTitle()%>" userId="<%=idea.getUserId()%>" />
     </div>    
   </liferay-ui:panel>
-  <liferay-ui:panel state="closed" collapsible="true" id="participants" title='<%= LanguageUtil.get(locale, "lbl_participants") %>'>
-        
-        <% 
-        	int count = 0; 
-        	for (User participant: users) {
-        %>
-        <c:if test="<%= count == 0 %>">
-        <div class="row-fluid">
-        </c:if>
-        	<div class="span2">
-        		<liferay-ui:user-display userId="<%=participant.getUserId() %>" userName="<%=participant.getScreenName() %>" displayStyle="0"></liferay-ui:user-display>
-        		<c:if test="<%=participant.getUserId() == owner.getUserId() %>">
-        		<span class="user-role"><liferay-ui:message key="lbl_author"/></span>
-        		</c:if>
-        	</div>
-        <c:if test="<%= count == 5 %>">
-        </div>
-        </c:if>
-        <%
-        		count++;
-        		if(count > 5) {
-	        		count = 0;
-  	      	}
-    	    } 
-        %>
-  </liferay-ui:panel>
-  <liferay-ui:panel state="closed" collapsible="true" id="state" title='<%= LanguageUtil.get(locale, "lbl_state") %>'>
-    <div class="row-fluid"> 
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-proposed<%=Constants.IDEA_STATE_PROPOSED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_proposed"/></div></div>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-waiting<%=Constants.IDEA_STATE_WAIT_FOR_EVAL.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_waiting"/></div></div>
-    <% if (Constants.IDEA_STATE_REJECTED.equals(state)) {%>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-rejectedactive'></a></div><div><liferay-ui:message key="lbl_state_rejected"/></div></div>
-    <% } else {%>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-accepted<%=Constants.IDEA_STATE_ACCEPTED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_accepted"/></div></div>
-    <% } %>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-signed<%=Constants.IDEA_STATE_SIGNED.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_signed"/></div></div>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-exec<%=Constants.IDEA_STATE_EXEC.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_exec"/></div></div>
-    <div class="idea-state-container span2 text-center"><div><a class='idea-state state-complete<%=Constants.IDEA_STATE_COMPLETE.equals(state) ? "active" : "" %>'></a></div><div><liferay-ui:message key="lbl_state_complete"/></div></div>
-    </div>
-    <c:if test='<%=Validator.isNotNull(idea.getStateJudgement())%>'>
-    <div class="row-fluid">
-      <div class="state-judgement-title">
-	      <liferay-ui:message key="lbl_state_judgement_title"/>
-      </div>
-      <div class="state-judgement-body">
-      <%= idea.getStateJudgement() %>
-      </div>
-    </div>
-    </c:if>
-  </liferay-ui:panel>
+
+
 </liferay-ui:panel-container>
