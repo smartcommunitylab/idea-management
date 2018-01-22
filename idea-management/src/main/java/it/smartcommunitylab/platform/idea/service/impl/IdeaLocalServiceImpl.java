@@ -30,12 +30,15 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -133,11 +136,19 @@ public class IdeaLocalServiceImpl extends IdeaLocalServiceBaseImpl {
 				null, null, null, ContentTypes.TEXT_HTML, idea.getTitle(),
 				idea.getLongDesc(), idea.getShortDesc(), null, null, 0, 0,
 				null, false);
-
+		
 		CalendarUtils.createCalendar(group.getGroupId(), userId,
 				group.getName(), serviceContext, assetEntry.getClassTypeId(),
 				assetEntry.getClassPK(), assetEntry.getClassUuid());
 
+//		if (serviceContext.getAssetLinkEntryIds() != null){
+//			for (Long relatedId : serviceContext.getAssetLinkEntryIds()) {
+//				AssetEntry relatedEntry = assetEntryLocalService.getAssetEntry(relatedId);
+//				if (relatedEntry != null) {
+//				}
+//			}
+//		}
+//		
 		assetLinkLocalService.updateLinks(userId, assetEntry.getEntryId(),
 				serviceContext.getAssetLinkEntryIds(),
 				AssetLinkConstants.TYPE_RELATED);

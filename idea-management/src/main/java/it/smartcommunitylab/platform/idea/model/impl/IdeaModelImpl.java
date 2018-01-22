@@ -63,14 +63,14 @@ public class IdeaModelImpl extends BaseModelImpl<Idea> implements IdeaModel {
             { "callId", Types.BIGINT },
             { "state_", Types.VARCHAR },
             { "stateJudgement", Types.CLOB },
-            { "deadlineConstraints", Types.VARCHAR },
+            { "deadlineConstraints", Types.CLOB },
             { "discussionLimit", Types.INTEGER },
             { "status", Types.INTEGER },
             { "statusByUserId", Types.BIGINT },
             { "statusByUserName", Types.VARCHAR },
             { "categoryIds", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG,callId LONG,state_ VARCHAR(75) null,stateJudgement TEXT null,deadlineConstraints VARCHAR(75) null,discussionLimit INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,categoryIds VARCHAR(75) null)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Idea (uuid_ VARCHAR(75) null,ideaId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,longDesc TEXT null,shortDesc VARCHAR(75) null,userGroupId LONG,callId LONG,state_ VARCHAR(75) null,stateJudgement TEXT null,deadlineConstraints TEXT null,discussionLimit INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,categoryIds VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table IM_Idea";
     public static final String ORDER_BY_JPQL = " ORDER BY idea.createDate DESC, idea.title ASC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Idea.createDate DESC, IM_Idea.title ASC";

@@ -32,7 +32,7 @@ create table IM_Idea (
 	callId LONG,
 	state_ VARCHAR(75) null,
 	stateJudgement TEXT null,
-	deadlineConstraints VARCHAR(75) null,
+	deadlineConstraints TEXT null,
 	discussionLimit INTEGER,
 	status INTEGER,
 	statusByUserId LONG,

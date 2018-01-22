@@ -41,8 +41,8 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="deadlineConstraints" type="String">
-      <hint-collection name="CLOB" />
-		</field>    
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="discussionLimit" type="int" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

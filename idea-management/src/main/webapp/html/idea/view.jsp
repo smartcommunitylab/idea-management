@@ -17,7 +17,7 @@
 
 <%
 boolean hidePortlet_view = GetterUtil.getBoolean(portletPreferences.getValue("hidePortlet", StringPool.FALSE));
-boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE));
+boolean hideAddIdea_view = GetterUtil.getBoolean(portletPreferences.getValue("hideAddIdea", StringPool.FALSE)) || !Utils.callAddEnabled(renderRequest);
 boolean hideFilters_view = GetterUtil.getBoolean(portletPreferences.getValue("hideFilters", StringPool.FALSE));
 boolean hideList_view = GetterUtil.getBoolean(portletPreferences.getValue("hideList", StringPool.FALSE));
 boolean pagination_view = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", StringPool.TRUE));
