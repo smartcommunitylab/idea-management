@@ -362,7 +362,6 @@ header#banner {
 
 #navmenu li.has-child-menu ul.child-menu li a {
 	color: #8A8C8E;
-	text-transform: capitalize;
 	text-decoration: none;
 	padding: 0 0 0 5px;
 }

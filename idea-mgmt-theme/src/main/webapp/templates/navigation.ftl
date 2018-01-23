@@ -99,7 +99,7 @@
 		<div class="navbar-row">
 			<ul id="navmenu" role="menubar" class="nav">
 				<#function alignitem item>
-					<#if (item?lower_case == "progetto" || item?lower_case == "piattaforma" || item?lower_case == "contatti")>
+					<#if (item?lower_case == "obiettivi prg" || item?lower_case == "aiuto" || item?lower_case == "contatti")>
 						<#return "right" />
 					<#else>
 						<#return "" />
