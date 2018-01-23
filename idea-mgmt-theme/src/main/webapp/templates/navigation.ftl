@@ -115,7 +115,7 @@
 				</#function>
         <li class="nav-icon right">
               <a href="http://comune.trento.it" target="_blank" >
-                <span><img style="max-height: 92px;margin-left: 40px; margin-right: 10px;" src="${images_folder}/loghi/logo.jpg"></span>
+                <span><img style="max-height: 92px;" src="${images_folder}/loghi/logo.jpg"></span>
               </a>
         </li>					
 				<#list nav_items as nav_item>
