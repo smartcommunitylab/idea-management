@@ -195,7 +195,7 @@
           	<liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>"/> 
           </div>
         </div>
-        <div class="span3 text-center">
+        <div class="span6 text-center">
         	<div>
         		<liferay-ui:message key="lbl_followercount"/>
         	</div> 
@@ -215,7 +215,7 @@
 		    <div class="span6 text-center idea-discussion-rating">
 				  <liferay-ui:ratings className="<%= Idea.class.getName() %>" classPK="<%= idea.getIdeaId() %>" />
         </div>
-	      <div class="span3 text-center">
+	      <div class="span6 text-center">
 		      <portlet:actionURL var="followIdea" name="followIdea">
             <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
 		        <portlet:param name="ideaId" value="<%=String.valueOf(idea.getIdeaId()) %>" />
@@ -237,11 +237,6 @@
     <%
     boolean discussionEnabled = Utils.discussionEnabled(idea, renderRequest);
     %>
-    <div class="row-fluid">
-    	<span class="span12 idea-creator text-right">
-      	<liferay-ui:message key="lbl_discussionExpiration" arguments="<%=new String[]{DateFormatFactoryUtil.getDate(locale).format(idea.discussionDeadline())}%>" />  
-      </span>
-    </div>
     <div class='row-fluid discussion-container'>
       <portlet:actionURL name="addComment" var="discussionURL">
         <!-- workaround to invoke liferary class that manage comment/discussion -->
