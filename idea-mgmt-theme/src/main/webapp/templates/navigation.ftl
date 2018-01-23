@@ -113,7 +113,11 @@
 						<#return "" />
 					</#if>
 				</#function>
-					
+        <li class="nav-icon right">
+              <a href="http://comune.trento.it" target="_blank" >
+                <span><img style="max-height: 92px;margin-left: 40px; margin-right: 10px;" src="${images_folder}/loghi/logo.jpg"></span>
+              </a>
+        </li>					
 				<#list nav_items as nav_item>
 					<#if nav_item.getLayout().getExpandoBridge().hasAttribute(footer) && nav_item.getLayout().getExpandoBridge().getAttribute(footer, false) == false>
 						<#assign nav_item_attr_has_popup = "" />
@@ -153,11 +157,6 @@
 						</li>
 					</#if>
 				</#list>
-				<li class="nav-icon">
-              <a href="http://comune.trento.it" target="_blank" >
-                <span><img style="max-height: 92px;margin-left: 40px; margin-right: 10px;" src="${images_folder}/loghi/logo.jpg"></span>
-              </a>
-				</li>
 			</ul>
 		</div>
 	</div>
