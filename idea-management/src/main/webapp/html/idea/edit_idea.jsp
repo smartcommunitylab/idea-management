@@ -120,24 +120,8 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
 	<aui:input name="ideaId" type="hidden"></aui:input>
 	<aui:input name="categoryId" type="hidden" value="<%=categoryId%>"></aui:input>
 	<aui:input name="callId" type="hidden" value="<%=callId%>"></aui:input>
+  <aui:input name="discussionLimit" type="hidden" value="10000"></aui:input>
 
-	<aui:fieldset label="lbl_discussionLimit">
-		<aui:select name="discussionLimit" label="">
-			<%
-				for (int i : Constants.DISCUSSION_LIMITS) {
-			%>
-			<aui:option value="<%=i%>" label="<%=i%>" />
-			<%
-				}
-			%>
-		</aui:select>
-	</aui:fieldset>
-
-	<aui:fieldset label="lbl_deadlineConstraints">
-		<aui:input
-			placeholder='<%=LanguageUtil.get(locale, "lbl_deadlineConstraints")%>'
-			name="deadlineConstraints" type="textarea" label=""></aui:input>
-	</aui:fieldset>
 
 	<liferay-ui:asset-categories-error />
 	<aui:fieldset cssClass="categoriesselector-wrapper"

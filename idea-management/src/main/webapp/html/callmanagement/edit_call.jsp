@@ -75,53 +75,6 @@ pageContext.setAttribute("themeDisplay", themeDisplay);
     </script>
 	</aui:fieldset>
 	
-	<div class="row-fluid">
-	  <div class="span4">
-			<aui:fieldset label="lbl_deadline">
-			  <% if (entry != null && entry.getDeadline() != null) {
-  			    GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(entry.getDeadline());
-				    int initDay = cal.get(Calendar.DAY_OF_MONTH);
-				    int initMonth = cal.get(Calendar.MONTH); 
-				    int initYear  = cal.get(Calendar.YEAR);
-			  %>
-				<liferay-ui:input-date name="deadline" dayParam="dday" monthParam="dmonth" yearParam="dyear" dayValue="<%=initDay %>" monthValue="<%=initMonth %>" yearValue="<%=initYear %>"></liferay-ui:input-date>
-				<% } else { %>
-        <liferay-ui:input-date nullable="true" name="deadline" dayParam="dday" monthParam="dmonth" yearParam="dyear"></liferay-ui:input-date>
-				<%  } %>
-			</aui:fieldset>
-    </div>
-    <div class="span4">
-		  <aui:fieldset label="lbl_publicationdeadline">
-        <% if (entry != null && entry.getPublicationDeadline() != null) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(entry.getPublicationDeadline());
-            int initPDay = cal.get(Calendar.DAY_OF_MONTH);
-            int initPMonth = cal.get(Calendar.MONTH); 
-            int initPYear  = cal.get(Calendar.YEAR);
-        %>
-		    <liferay-ui:input-date name="publicationdeadline" dayParam="pdday" monthParam="pdmonth" yearParam="pdyear" dayValue="<%=initPDay %>" monthValue="<%=initPMonth %>" yearValue="<%=initPYear %>"></liferay-ui:input-date>
-        <% } else { %>
-        <liferay-ui:input-date nullable="true" name="publicationdeadline" dayParam="pdday" monthParam="pdmonth" yearParam="pdyear"></liferay-ui:input-date>
-        <%  } %>
-		  </aui:fieldset>
-    </div>
-    <div class="span4">
-		  <aui:fieldset label="lbl_realizationdeadline">
-        <% if (entry != null && entry.getRealizationDeadline() != null) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(entry.getRealizationDeadline());
-            int initEDay = cal.get(Calendar.DAY_OF_MONTH);
-            int initEMonth = cal.get(Calendar.MONTH); 
-            int initEYear  = cal.get(Calendar.YEAR);
-        %>
-        <liferay-ui:input-date name="realizationdeadline" dayParam="edday" monthParam="edmonth" yearParam="edyear" dayValue="<%=initEDay %>" monthValue="<%=initEMonth %>" yearValue="<%=initEYear %>"></liferay-ui:input-date>
-        <% } else { %>
-        <liferay-ui:input-date nullable="true" name="realizationdeadline" dayParam="edday" monthParam="edmonth" yearParam="edyear"></liferay-ui:input-date>
-        <%  } %>
-		  </aui:fieldset>
-		</div>
-	</div>
 	<aui:input name="callId" type="hidden"></aui:input>
 
 	<liferay-ui:asset-categories-error />
