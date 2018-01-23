@@ -153,6 +153,11 @@
 						</li>
 					</#if>
 				</#list>
+				<li class="nav-icon" id="layout_${nav_item.getLayoutId()}">
+              <a href="http://comune.trento.it" target="_blank" >
+                <span><img style="max-height: 92px;margin-left: 40px; margin-right: 10px;" src="${images_folder}/loghi/logo.jpg"></span>
+              </a>
+				</li>
 			</ul>
 		</div>
 	</div>
