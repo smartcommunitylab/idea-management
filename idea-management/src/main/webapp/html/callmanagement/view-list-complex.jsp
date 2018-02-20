@@ -1,6 +1,8 @@
 <%@page import="java.text.DateFormat"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallPermission"%>
 <%@ page import="it.smartcommunitylab.platform.idea.permission.CallModelPermission"%>
+<%@ page import="com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <%@page import="com.liferay.portal.security.permission.ActionKeys"%>
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
@@ -51,6 +53,7 @@ params.put("mvcPath", "/html/callmanagement/add_call.jsp");
         AssetEntry curEntry = AssetEntryLocalServiceUtil.getEntry(Call.class.getName(),classPK);
         List<AssetCategory> categories = Utils.getOrderedCategories(call.getCategoryIds(), curEntry);   
         String primaryColor = categories.size() > 0 ? CC.get(""+categories.get(0).getCategoryId()): ""; 
+        int comments = MBMessageLocalServiceUtil.getDiscussionMessagesCount(Call.class.getName(),classPK, WorkflowConstants.STATUS_ANY);        
 
 //         categories.size() > 0 ? categories.get(0).getTitle(locale): "";
         int countIdeaByCall = IdeaLocalServiceUtil.getIdeasByCall(call.getCallId(), -1, -1).size();
@@ -84,7 +87,10 @@ params.put("mvcPath", "/html/callmanagement/add_call.jsp");
               <h4><%=call.getTitle() %></h4>
               <div class="call-card-abstract"><%=call.getDescription() %></div>
               <div class="call-card-footer">
-                <div class="span12"><span class="call-card-ideas"><%=countIdeaByCall %></span></div>
+                <div class="span12">
+                <span class="idea-card-comments" style="margin-left:20px;font-size:24px;"><%=comments %></span>
+                <span class="call-card-ideas"><%=countIdeaByCall %></span>
+                </div>
               </div>
           </div>
     </div>

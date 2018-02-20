@@ -11,6 +11,7 @@ public class IdeaResultItem {
 	private String deleteURL;
 	private int comments;
 	private long callId;
+	private String callName;
 
 	public String getTitle() {
 		return title;
@@ -74,5 +75,13 @@ public class IdeaResultItem {
 
 	public void setCallId(long callId) {
 		this.callId = callId;
+	}
+
+	public String getCallName() {
+		return callName;
+	}
+
+	public void setCallName(String callName) {
+		this.callName = callName;
 	}
 }

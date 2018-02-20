@@ -9,6 +9,8 @@ public class CallResultItem {
 	private List<CategoryBean> cats;
 	private String detailURL;
 	private String deleteURL;
+	private int comments;
+
 
 	public String getTitle() {
 		return title;
@@ -56,6 +58,14 @@ public class CallResultItem {
 
 	public void setDeleteURL(String deleteURL) {
 		this.deleteURL = deleteURL;
+	}
+
+	public int getComments() {
+		return comments;
+	}
+
+	public void setComments(int comments) {
+		this.comments = comments;
 	}
 
 }

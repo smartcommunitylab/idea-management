@@ -116,7 +116,7 @@
      <span class="span3" id="result">
    <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" 
       {{#if this.callId}}
-      class="thumbnail thumbnail-ideacall" 
+      class="thumbnail" 
       {{else}}
       class="thumbnail" 
       {{/if}}
@@ -125,6 +125,10 @@ style="border-left-color: {{this.boxColor}};">
 				{{#each this.cats}}
 					<span style="color: {{this.color}};">{{this.name}}</span>
 				{{/each}}
+      {{#if this.callId}}
+      <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{this.callName}}</span>
+      {{/if}}
+
 				{{#if this.deleteURL}}
 					<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
 				{{/if}}			

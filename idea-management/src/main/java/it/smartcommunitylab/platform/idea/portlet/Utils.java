@@ -219,6 +219,14 @@ public class Utils {
 		// TODO check states
 		return true;
 	}
+	public static boolean discussionEnabled(Call call, PortletRequest req) {
+		ThemeDisplay themeDisplay = (ThemeDisplay) req
+				.getAttribute(WebKeys.THEME_DISPLAY);
+		if (!themeDisplay.isSignedIn())
+			return false;
+
+		return true;
+	}
 
 	public static String getBaseURL(HttpServletRequest request)
 			throws PortalException, SystemException {

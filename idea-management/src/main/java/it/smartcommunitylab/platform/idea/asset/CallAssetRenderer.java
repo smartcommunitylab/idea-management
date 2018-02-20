@@ -136,6 +136,11 @@ public class CallAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
+	public String getDiscussionPath() {
+		return "edit_entry_discussion";
+	}
+	
+	@Override
 	public String render(RenderRequest renderRequest,
 			RenderResponse renderResponse, String template) throws Exception {
 

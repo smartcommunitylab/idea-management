@@ -7,6 +7,7 @@ public class Constants {
 
 	public static final String IDEA_CATEGORY_TYPE_NAME = "Idea Category";
 
+	public static final int COLUMNS = 3;
 	public static final int PAGINATION_ELEMENTS_IN_PAGE = 5;
 	public static final int PAGINATION_CALL_ELEMENTS_IN_PAGE = 5;
 

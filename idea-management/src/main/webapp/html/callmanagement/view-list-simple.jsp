@@ -112,9 +112,7 @@
                     <h4 class="title-ellipsis">{{this.title}}</h4>
 					  <div class="thumbnail-bottom">
 	                    <div class="pull-left">
-			                  {{#if this.deadline}}
-			                  	<liferay-ui:message key="lbl_call_card_deadline_no_param"/> {{this.deadline}}
-			                  {{/if}}
+                        <span class="idea-card-comments">{{this.comments}}</span>
 	                    </div>
 	   		              <div class="pull-right">
 	   		                <span class="call-card-ideas-simple"> {{this.ideas}} </span>

@@ -20,6 +20,8 @@
     
     String confirmMsg =  LanguageUtil.get(locale,"are-you-sure-you-want-to-delete-this");
     
+    int columns = GetterUtil.getInteger(portletPreferences.getValue("columns", Integer.toString(Constants.COLUMNS)));
+    String colClass = columns == 3 ? "span4" : columns == 6 ? "span2" : columns == 2 ? "span6" : columns == 4 ? "span3": "span12";    
 %>
 
 <span id="<portlet:namespace/>result">
@@ -33,15 +35,15 @@
 		{{#if this.startRow }}
 		<div class="row-fluid">
 		{{/if}}
-  		<span class="span4" id="result">
+  		<span class="<%=colClass %>" id="result">
    			<div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
 	 				<div class="idea-card-header">
-      			<div class="span6">
+      			<div class="span8" style="overflow: hidden; text-overflow: ellipsis; color: #fff">
 	      			{{#if this.callId}}
-								<span class="idea-card-call-label"><liferay-ui:message key="lbl_call"/></span> 
+								<span class="idea-card-call-label" style="white-space: nowrap;">{{this.callName}}</span> 
 							{{/if}}
         		</div>
-        		<div class="span6">
+        		<div class="span4">
         			{{#if this.deleteURL}}
 								<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
 							{{/if}}	
@@ -95,7 +97,8 @@
 
 <aui:script use="liferay-portlet-url">
 	var A = new AUI();
-	var listType = A.one('input[name=<%=renderResponse.getNamespace() %>listType]:checked').val();
+  var ftype = A.one('input[name=<%=renderResponse.getNamespace() %>listType]:checked');
+  var listType = ftype ? ftype.val() : '<%= Constants.PREF_LISTTYPE_POPULAR %>';
 	var tags = A.all('input[id$=Checkbox]:checked');
 	var tagIds = [];
 	tags.each(function(){
@@ -145,8 +148,8 @@
                             
                             v.boxColor = (v.cats[0]) ? v.cats[0].color : "";
                             
-                            v.startRow = j % 3 == 0;
-                            v.endRow = j % 3 == 2;
+                            v.startRow = j % <%=columns %> == 0;
+                            v.endRow = j % <%=columns %> == 2;
                             if(j == (data.result.size - 1)) {
                             	v.endRow = true;
                             }

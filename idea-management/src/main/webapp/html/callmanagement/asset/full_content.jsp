@@ -45,6 +45,8 @@
 
   List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(Call.class.getName(), call.getCallId());
 
+  String currentURL = PortalUtil.getCurrentURL(request);
+
   java.util.Set<String> tagSet = new java.util.HashSet<String>();
   for (AssetTag tag : assetTags) {
     tagSet.add(tag.getName());
@@ -71,10 +73,16 @@
     </c:if>
     </div>
     <% for (AssetCategory ac : categories) {
-    	String categoryColor = CC.get(""+ac.getCategoryId());
+      //String localRedirectCategoryUrl = redirectCategoryUrl + ac.getCategoryId();
+      String categoryColor = CC.get(""+ac.getCategoryId());
     %>
+    <portlet:renderURL var="localRedirectCategoryUrl">
+      <portlet:param name="resetCur" value="true" />
+      <portlet:param name="categoryId" value="<%=String.valueOf(ac.getCategoryId()) %>" />
+    </portlet:renderURL>
     <div class="call-cattitle" style="background-color: <%=categoryColor %>;">
-    <%=ac.getTitle(locale) %>  
+      <a href="<%= localRedirectCategoryUrl %>"><%= ac.getTitle(locale) %></a>
+      <!-- <%=ac.getTitle(locale) %> -->  
     </div>
     <% } %>
   </div>
@@ -116,3 +124,35 @@
       assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
       className="<%=Call.class.getName()%>" classPK="<%=call.getCallId()%>" />
 </div>
+
+<c:if test="<%=!themeDisplay.isSignedIn()%>">
+      <div class="row-fluid">
+        <span class="span12 idea-creator idea-creator-warning text-right">
+            <a class="use-dialog" href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="lbl_access_call"/></a>  
+        </span>
+      </div>
+</c:if>
+
+ <liferay-ui:panel-container accordion="true" extended="true">
+  <liferay-ui:panel state="open" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
+
+ <%
+ boolean discussionEnabled = Utils.discussionEnabled(call, renderRequest);
+%>
+ <div class='row-fluid discussion-container'>
+   <portlet:actionURL name="addComment" var="discussionURL">
+     <!-- workaround to invoke liferary class that manage comment/discussion -->
+     <portlet:param name="struts_action"
+       value="/asset_publisher/edit_entry_discussion" />
+   </portlet:actionURL>
+ <liferay-ui:discussion hideControls="<%=!discussionEnabled %>" className="<%=Call.class.getName()%>" 
+   classPK="<%=call.getCallId()%>" formAction="<%=discussionURL%>"
+   formName="discussionForm" ratingsEnabled="<%=true %>" redirect="<%=currentURL%>"
+   subject="<%=call.getTitle()%>" userId="<%=call.getUserId()%>" />
+ </div>    
+ 
+   </liferay-ui:panel>
+
+
+</liferay-ui:panel-container>
+ 

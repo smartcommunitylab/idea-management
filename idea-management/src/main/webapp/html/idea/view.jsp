@@ -116,7 +116,8 @@ if(callId > 0) {
 <aui:script use="aui-base, aui-node">
     Liferay.provide(window, '<portlet:namespace/>ajaxFilter', function() {
         var A = new AUI();
-        var listType = A.one('input[name=<%=renderResponse.getNamespace() %>listType]:checked').val();
+        var ftype = A.one('input[name=<%=renderResponse.getNamespace() %>listType]:checked');
+        var listType = ftype ? ftype.val() : '<%= Constants.PREF_LISTTYPE_POPULAR %>';
         var tags = A.all('input[id$=Checkbox]:checked');
         var tagIds = [];
         tags.each(function(){
@@ -218,6 +219,12 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
     </c:if>
 </aui:form>
 </c:if>
+<c:if test='<%= !hideFilters_view %>'>
+<aui:form cssClass="" id="filter" name="filter">
+      <input type="hidden" name="<%=renderResponse.getNamespace() %>listType" id="listTypeRecent" value="<%= Constants.PREF_LISTTYPE_RECENT %>"/>
+</aui:form>      
+</c:if>
+
 
 
 <c:if test='<%=!hideList_view %>'>

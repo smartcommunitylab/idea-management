@@ -5,7 +5,9 @@ import it.smartcommunitylab.platform.idea.beans.IdeaBean;
 import it.smartcommunitylab.platform.idea.beans.IdeaResultItem;
 import it.smartcommunitylab.platform.idea.beans.Pagination;
 import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
+import it.smartcommunitylab.platform.idea.model.Call;
 import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 import java.io.IOException;
@@ -123,7 +125,10 @@ public class IdeaManagementPortlet extends MVCPortlet {
 		List<Long> tagIds = new ArrayList<Long>();
 		if (tagIdsParam.trim().length() > 0) {
 			for (String tid : tagIdsParam.split(",")) {
-				tagIds.add(new Long(tid.trim()));
+				try {
+					tagIds.add(new Long(tid.trim()));
+				} catch (NumberFormatException e) {
+				}
 			}
 		}
 		long[] tagFilter = ArrayUtil.toLongArray(tagIds);
@@ -222,11 +227,15 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				ideaRes.setCreationDate(formatter.format(i.getCreateDate()));
 				ideaRes.setCallId(i.getCallId());
 				try {
+					if (i.getCallId() > 0) {
+						Call call = CallLocalServiceUtil.getCall(i.getCallId());
+						ideaRes.setCallName(call.getTitle());					
+					}
 					ideaRes.setComments(MBMessageLocalServiceUtil
 							.getDiscussionMessagesCount(Idea.class.getName(),
 									i.getIdeaId(),
 									WorkflowConstants.STATUS_APPROVED));
-				} catch (SystemException e1) {
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 

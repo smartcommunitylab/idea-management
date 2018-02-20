@@ -233,7 +233,7 @@
 </div>
  
  <liferay-ui:panel-container accordion="true" extended="true">
-  <liferay-ui:panel state="closed" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
+  <liferay-ui:panel state="open" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
     <%
     boolean discussionEnabled = Utils.discussionEnabled(idea, renderRequest);
     %>

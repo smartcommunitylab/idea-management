@@ -1,14 +1,5 @@
 package it.smartcommunitylab.platform.idea.portlet;
 
-import it.smartcommunitylab.platform.idea.beans.CallBean;
-import it.smartcommunitylab.platform.idea.beans.CallResultItem;
-import it.smartcommunitylab.platform.idea.beans.CategoryBean;
-import it.smartcommunitylab.platform.idea.beans.Pagination;
-import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
-import it.smartcommunitylab.platform.idea.model.Call;
-import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
-import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,12 +27,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+
+import it.smartcommunitylab.platform.idea.beans.CallBean;
+import it.smartcommunitylab.platform.idea.beans.CallResultItem;
+import it.smartcommunitylab.platform.idea.beans.CategoryBean;
+import it.smartcommunitylab.platform.idea.beans.Pagination;
+import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
+import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 /**
  * Portlet implementation class CallManagementPortlet
@@ -115,6 +117,19 @@ public class CallManagementPortlet extends MVCPortlet {
 		CallLocalServiceUtil.deleteCall(id, serviceContext);
 
 	}
+	
+	public void addComment(ActionRequest req, ActionResponse res) {
+		Long callId = ParamUtil.getLong(req, "classPK");
+		try {
+			Call call = CallLocalServiceUtil.fetchCall(callId);
+			if (Utils.discussionEnabled(call, req)) {
+				invokeTaglibDiscussion(req, res);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	private Date calculateDeadline(ActionRequest req, String prefix) {
 		String day = ParamUtil.getString(req, prefix + "day");
@@ -260,6 +275,16 @@ public class CallManagementPortlet extends MVCPortlet {
 				} catch (SystemException e1) {
 					e1.printStackTrace();
 				}
+
+				try {
+					entryRes.setComments(MBMessageLocalServiceUtil
+							.getDiscussionMessagesCount(Call.class.getName(),
+									entry.getCallId(),
+									WorkflowConstants.STATUS_ANY));
+				} catch (SystemException e1) {
+					e1.printStackTrace();
+				}
+
 
 				// set category data
 				String[] catIds = entry.getCategoryIds() != null ? entry

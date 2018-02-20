@@ -11,6 +11,7 @@ boolean hideFilters_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hid
 boolean hideList_cfg = GetterUtil.getBoolean(portletPreferences.getValue("hideList", StringPool.FALSE));
 boolean activatePagination_cfg = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", StringPool.TRUE));
 Integer elementInPage_cfg = GetterUtil.getInteger(portletPreferences.getValue("elementInPage",String.valueOf(Constants.PAGINATION_ELEMENTS_IN_PAGE)));
+Integer columns_cfg = GetterUtil.getInteger(portletPreferences.getValue("columns",String.valueOf(Constants.COLUMNS)));
 %>
 
 <script type="text/javascript">
@@ -46,6 +47,8 @@ function <portlet:namespace />disableText() {
     <aui:input name="preferences--activatePagination--" type="checkbox" label="lbl_activatePagination" value="<%= activatePagination_cfg %>" onChange='<%= renderResponse.getNamespace()+"disableText();" %>'/>
 
 	<aui:input disabled="<%=!activatePagination_cfg %>" name="preferences--elementInPage--" type="text"  label="lbl_elementInPage" value="<%= elementInPage_cfg %>" />
+  
+  <aui:input  name="preferences--columns--" type="text"  label="lbl_columns" value="<%= columns_cfg %>" />
     
     <aui:button-row>
        <aui:button type="submit" />
