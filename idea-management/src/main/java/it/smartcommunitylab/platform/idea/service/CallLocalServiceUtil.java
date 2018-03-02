@@ -364,6 +364,17 @@ public class CallLocalServiceUtil {
         getService().deleteCall(callId, serviceContext);
     }
 
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
+        long catId) throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getCallsByCat(catId);
+    }
+
+    public static java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
+        long catId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return getService().getCallsByCat(catId, begin, end);
+    }
+
     public static void clearService() {
         _service = null;
     }

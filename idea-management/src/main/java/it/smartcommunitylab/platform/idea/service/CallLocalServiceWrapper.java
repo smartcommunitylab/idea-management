@@ -380,6 +380,19 @@ public class CallLocalServiceWrapper implements CallLocalService,
         _callLocalService.deleteCall(callId, serviceContext);
     }
 
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
+        long catId) throws com.liferay.portal.kernel.exception.SystemException {
+        return _callLocalService.getCallsByCat(catId);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
+        long catId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        return _callLocalService.getCallsByCat(catId, begin, end);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

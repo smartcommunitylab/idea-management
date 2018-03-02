@@ -38,18 +38,15 @@
   		<span class="<%=colClass %>" id="result">
    			<div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
 	 				<div class="idea-card-header">
-      			<div class="span8" style="overflow: hidden; text-overflow: ellipsis; color: #fff">
+      			<div class="span11" style="overflow: hidden; text-overflow: ellipsis; color: #fff">
 	      			{{#if this.callId}}
 								<span class="idea-card-call-label" style="white-space: nowrap;">{{this.callName}}</span> 
 							{{/if}}
         		</div>
-        		<div class="span4">
+        		<div class="span1">
         			{{#if this.deleteURL}}
 								<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
 							{{/if}}	
-          		<span class="idea-card-date">
-          			{{this.creationDate}}
-          		</span>
         		</div>
       		</div>	
 					<h4>{{this.title}}</h4>

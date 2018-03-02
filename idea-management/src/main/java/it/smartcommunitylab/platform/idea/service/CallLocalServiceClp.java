@@ -64,6 +64,10 @@ public class CallLocalServiceClp implements CallLocalService {
     private String[] _methodParameterTypes27;
     private String _methodName28;
     private String[] _methodParameterTypes28;
+    private String _methodName29;
+    private String[] _methodParameterTypes29;
+    private String _methodName30;
+    private String[] _methodParameterTypes30;
 
     public CallLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -205,6 +209,14 @@ public class CallLocalServiceClp implements CallLocalService {
         _methodParameterTypes28 = new String[] {
                 "long", "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName29 = "getCallsByCat";
+
+        _methodParameterTypes29 = new String[] { "long" };
+
+        _methodName30 = "getCallsByCat";
+
+        _methodParameterTypes30 = new String[] { "long", "int", "int" };
     }
 
     @Override
@@ -1026,5 +1038,58 @@ public class CallLocalServiceClp implements CallLocalService {
                     " is not a valid exception");
             }
         }
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
+        long catId) throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName29,
+                    _methodParameterTypes29, new Object[] { catId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<it.smartcommunitylab.platform.idea.model.Call>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
+        long catId, int begin, int end)
+        throws com.liferay.portal.kernel.exception.SystemException {
+        Object returnObj = null;
+
+        try {
+            returnObj = _invokableLocalService.invokeMethod(_methodName30,
+                    _methodParameterTypes30, new Object[] { catId, begin, end });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
+
+        return (java.util.List<it.smartcommunitylab.platform.idea.model.Call>) ClpSerializer.translateOutput(returnObj);
     }
 }

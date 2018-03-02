@@ -180,6 +180,7 @@ public class CallManagementPortlet extends MVCPortlet {
 		boolean pagination = ParamUtil
 				.getBoolean(resourceRequest, "pagination");
 		int delta = ParamUtil.getInteger(resourceRequest, "delta");
+		Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
 
 		if (pagination) {
 			if (resourceRequest.getParameter("begin") != null
@@ -195,20 +196,26 @@ public class CallManagementPortlet extends MVCPortlet {
 
 		try {
 			List<Call> list = new ArrayList<Call>();
-			// result already ordered by creation date DESC for default
-			switch (listType) {
-			case Constants.PREF_CALLLISTTYPE_OPEN:
-				list = CallLocalServiceUtil.getOpenCalls(begin, end);
-				break;
-			case Constants.PREF_CALLLISTTYPE_INDISCUSSION:
-				list = CallLocalServiceUtil.getInDiscussionCalls(begin, end);
-				break;
-			case Constants.PREF_CALLLISTTYPE_CLOSED:
-				list = CallLocalServiceUtil.getClosedCalls(begin, end);
-				break;
-			default:
-				list = CallLocalServiceUtil.getCalls(begin, end);
-				break;
+			
+			if (categoryId != null && categoryId > 0) {
+//				list = 
+			}
+			else {
+				// result already ordered by creation date DESC for default
+				switch (listType) {
+				case Constants.PREF_CALLLISTTYPE_OPEN:
+					list = CallLocalServiceUtil.getOpenCalls(begin, end);
+					break;
+				case Constants.PREF_CALLLISTTYPE_INDISCUSSION:
+					list = CallLocalServiceUtil.getInDiscussionCalls(begin, end);
+					break;
+				case Constants.PREF_CALLLISTTYPE_CLOSED:
+					list = CallLocalServiceUtil.getClosedCalls(begin, end);
+					break;
+				default:
+					list = CallLocalServiceUtil.getCalls(begin, end);
+					break;
+				}
 			}
 
 			Pagination pag = new Pagination();
@@ -220,6 +227,7 @@ public class CallManagementPortlet extends MVCPortlet {
 			nextURL.setParameter("cur", Integer.toString(currentPage + 1));
 			nextURL.setParameter("pagination", Boolean.toString(pagination));
 			nextURL.setParameter("delta", Integer.toString(delta));
+			nextURL.setParameter("categoryId", Long.toString(categoryId));
 			nextURL.setParameter("listType", listType);
 			pag.setNextURL(nextURL.toString());
 
@@ -229,6 +237,7 @@ public class CallManagementPortlet extends MVCPortlet {
 			prevURL.setParameter("cur",
 					Integer.toString(currentPage > 1 ? currentPage - 1 : 1));
 			prevURL.setParameter("pagination", Boolean.toString(pagination));
+			nextURL.setParameter("categoryId", Long.toString(categoryId));
 			prevURL.setParameter("delta", Integer.toString(delta));
 			prevURL.setParameter("listType", listType);
 			pag.setPrevURL(prevURL.toString());

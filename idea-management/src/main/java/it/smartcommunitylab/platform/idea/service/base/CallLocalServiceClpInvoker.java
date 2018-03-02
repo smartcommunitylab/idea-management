@@ -65,6 +65,10 @@ public class CallLocalServiceClpInvoker {
     private String[] _methodParameterTypes62;
     private String _methodName63;
     private String[] _methodParameterTypes63;
+    private String _methodName64;
+    private String[] _methodParameterTypes64;
+    private String _methodName65;
+    private String[] _methodParameterTypes65;
 
     public CallLocalServiceClpInvoker() {
         _methodName0 = "addCall";
@@ -204,6 +208,14 @@ public class CallLocalServiceClpInvoker {
         _methodParameterTypes63 = new String[] {
                 "long", "com.liferay.portal.service.ServiceContext"
             };
+
+        _methodName64 = "getCallsByCat";
+
+        _methodParameterTypes64 = new String[] { "long" };
+
+        _methodName65 = "getCallsByCat";
+
+        _methodParameterTypes65 = new String[] { "long", "int", "int" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -370,6 +382,18 @@ public class CallLocalServiceClpInvoker {
                 (com.liferay.portal.service.ServiceContext) arguments[1]);
 
             return null;
+        }
+
+        if (_methodName64.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+            return CallLocalServiceUtil.getCallsByCat(((Long) arguments[0]).longValue());
+        }
+
+        if (_methodName65.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+            return CallLocalServiceUtil.getCallsByCat(((Long) arguments[0]).longValue(),
+                ((Integer) arguments[1]).intValue(),
+                ((Integer) arguments[2]).intValue());
         }
 
         throw new UnsupportedOperationException();

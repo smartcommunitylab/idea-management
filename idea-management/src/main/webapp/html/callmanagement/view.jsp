@@ -23,7 +23,6 @@ String listType = GetterUtil.getString(portletPreferences.getValue("listType", C
 int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", ""+Constants.PAGINATION_CALL_ELEMENTS_IN_PAGE));
 String viewType = GetterUtil.getString(portletPreferences.getValue("viewType", Constants.PREF_VIEWTYPE_COMPLEX));
 
-
 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
 
 String baseUrl = Utils.getBaseURL(request);

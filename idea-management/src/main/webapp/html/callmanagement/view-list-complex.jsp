@@ -24,9 +24,12 @@
 String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_CALLLISTTYPE_OPEN));
 int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", ""+Constants.PAGINATION_CALL_ELEMENTS_IN_PAGE));
 boolean viewAll = ParamUtil.getBoolean(request, "viewAll", false);
+Long categoryId = (Long) request.getAttribute("categoryId");
+if (categoryId == null) categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 
 int begin = 0, end = viewAll ? -1 : begin+delta;
 List<Call> list = null;
+if (categoryId == null || categoryId == 0) {
 if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
   list =  CallLocalServiceUtil.getOpenCalls(begin, end);
 } else if (listType.equals(Constants.PREF_CALLLISTTYPE_INDISCUSSION)) {
@@ -35,6 +38,9 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
     list =  CallLocalServiceUtil.getClosedCalls(begin, end);
 } else {
     list =  CallLocalServiceUtil.getCalls(begin, end);
+}
+} else {
+	list =  CallLocalServiceUtil.getCallsByCat(categoryId, begin, end);
 }
 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   

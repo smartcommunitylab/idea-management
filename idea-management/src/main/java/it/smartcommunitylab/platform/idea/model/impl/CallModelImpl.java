@@ -64,7 +64,7 @@ public class CallModelImpl extends BaseModelImpl<Call> implements CallModel {
             { "userGroupId", Types.BIGINT },
             { "categoryIds", Types.VARCHAR }
         };
-    public static final String TABLE_SQL_CREATE = "create table IM_Call (uuid_ VARCHAR(75) null,title TEXT null,callId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,deadline DATE null,publicationDeadline DATE null,realizationDeadline DATE null,userGroupId LONG,categoryIds VARCHAR(75) null)";
+    public static final String TABLE_SQL_CREATE = "create table IM_Call (uuid_ VARCHAR(75) null,title VARCHAR(255) null,callId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,description TEXT null,deadline DATE null,publicationDeadline DATE null,realizationDeadline DATE null,userGroupId LONG,categoryIds VARCHAR(75) null)";
     public static final String TABLE_SQL_DROP = "drop table IM_Call";
     public static final String ORDER_BY_JPQL = " ORDER BY call.createDate DESC";
     public static final String ORDER_BY_SQL = " ORDER BY IM_Call.createDate DESC";

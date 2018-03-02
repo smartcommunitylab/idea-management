@@ -1,11 +1,8 @@
 package it.smartcommunitylab.platform.idea.service.impl;
 
-import it.smartcommunitylab.platform.idea.beans.CallBean;
-import it.smartcommunitylab.platform.idea.model.Call;
-import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
-
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -25,10 +22,12 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+
+import it.smartcommunitylab.platform.idea.beans.CallBean;
+import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
 /**
  * The implementation of the call local service.
@@ -198,5 +197,30 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 			assetLinkLocalService.deleteLinks(assetEntry.getEntryId());
 			assetEntryLocalService.deleteEntry(assetEntry);
 		}
+	}
+
+	public List<Call> getCallsByCat(long catId) throws SystemException {
+		List<Call> list = callPersistence.findAll();
+		List<Call> res = new LinkedList<>();
+		for (Call c: list ){
+			if (c.getCategoryIds() != null) {
+				String[] arr = c.getCategoryIds().split(",");
+				for (String s : arr) {
+					if (Long.parseLong(s) == catId) {
+						res.add(c);
+						break;
+					}
+				}
+			}
+		}
+		return res;
+	}
+
+	public List<Call> getCallsByCat(long catId, int begin, int end) throws SystemException {
+		List<Call> res = getCallsByCat(catId);
+		if (res.size() < begin) {
+			return res.subList(begin, Math.min(end, res.size()));
+		}
+		return Collections.emptyList();
 	}
 }

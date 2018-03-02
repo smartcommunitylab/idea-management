@@ -4,6 +4,8 @@
 	
 
 	String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_CALLLISTTYPE_OPEN));
+	Long categoryId = (Long) request.getAttribute("categoryId");
+	if (categoryId == null) categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 
 	boolean pagination = GetterUtil.getBoolean(portletPreferences.getValue("activatePagination", "true"));
 	int delta = 0;
@@ -28,6 +30,7 @@
     url.setParameter("listType",'<%= listType %>');
     url.setParameter("pagination",'<%= Boolean.toString(pagination) %>');
     url.setParameter("delta",'<%= Integer.toString(delta) %>');
+    url.setParameter("categoryId", '<%= Long.toString(categoryId) %>');
 	
 	<portlet:namespace/>paginateIdeas(url.toString());
 </aui:script>
