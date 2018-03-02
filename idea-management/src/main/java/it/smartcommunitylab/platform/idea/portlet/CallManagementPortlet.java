@@ -198,7 +198,7 @@ public class CallManagementPortlet extends MVCPortlet {
 			List<Call> list = new ArrayList<Call>();
 			
 			if (categoryId != null && categoryId > 0) {
-//				list = 
+				list = CallLocalServiceUtil.getCallsByCat(categoryId, begin, end); 
 			}
 			else {
 				// result already ordered by creation date DESC for default
