@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -27,6 +29,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 
 import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.service.ClpSerializer;
 import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
 /**
@@ -57,6 +60,9 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	 * access the call local service.
 	 */
 
+    private static Log _log = LogFactoryUtil.getLog(CallLocalServiceImpl.class);
+
+	
 	public List<Call> getOpenCalls(int begin, int end) throws SystemException {
 		// TODO consider null values also
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(Call.class)
@@ -202,7 +208,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	public List<Call> getCallsByCat(long catId) throws SystemException {
 		List<Call> list = callPersistence.findAll();
 		List<Call> res = new LinkedList<>();
-		System.err.println(" -- found "+ list.size());
+		_log.error(" -- found "+ list.size());
 		for (Call c: list ){
 			if (c.getCategoryIds() != null) {
 				String[] arr = c.getCategoryIds().split(",");
@@ -214,7 +220,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 				}
 			}
 		}
-		System.err.println(" -- filtered "+ res.size());
+		_log.error(" -- filtered "+ res.size());
 		return res;
 	}
 
