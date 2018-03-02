@@ -126,7 +126,7 @@ style="border-left-color: {{this.boxColor}};">
 					<span style="color: {{this.color}};">{{this.name}}</span>
 				{{/each}}
       {{#if this.callId}}
-      <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{this.callName}}</span>
+      <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{this.callName}}</div>
       {{/if}}
 
 				{{#if this.deleteURL}}
