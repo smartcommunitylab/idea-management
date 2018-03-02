@@ -202,6 +202,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	public List<Call> getCallsByCat(long catId) throws SystemException {
 		List<Call> list = callPersistence.findAll();
 		List<Call> res = new LinkedList<>();
+		System.err.println(" -- found "+ list.size());
 		for (Call c: list ){
 			if (c.getCategoryIds() != null) {
 				String[] arr = c.getCategoryIds().split(",");
@@ -213,6 +214,7 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 				}
 			}
 		}
+		System.err.println(" -- filtered "+ res.size());
 		return res;
 	}
 
