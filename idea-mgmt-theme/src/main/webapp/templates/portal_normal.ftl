@@ -88,7 +88,11 @@ ${theme.include(body_top_include)}
     		<div class="partner"> <a href="http://www.comune.trento.it/" target="_blank"><img src="${images_folder}/loghi/1.png"></a> </div>
     		<div class="partner"> <a href="http://www.fbi.eu/" target="_blank"><img src="${images_folder}/loghi/2.png"></a> </div>
     		<div class="partner"> <a href="http://www.unitn.it/" target="_blank"><img src="${images_folder}/loghi/3.png"></a> </div>
-        </div>        
+        <div class="partner"> <a href="http://www.ordineingegneritn.it/" target="_blank"><img src="${images_folder}/loghi/ingenieri.jpg"></a> </div>
+        <div class="partner"> <a href="http://www.architettitrento.it/" target="_blank"><img src="${images_folder}/loghi/architetti.jpg"></a> </div>
+        <div class="partner"> <a href="http://www.geologitrentinoaltoadige.it/" target="_blank"><img src="${images_folder}/loghi/GEOLOGI.png"></a> </div>
+        <div class="partner"> <a href="http://www.agronomiforestalitn.it/" target="_blank"><img src="${images_folder}/loghi/AGRONOMI.jpg"></a> </div>
+    </div>        
 		<#if has_navigation || is_signed_in>
 			<#include "${full_templates_path}/footer-navigation.ftl" />
 		</#if>

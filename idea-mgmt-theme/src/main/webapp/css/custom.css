@@ -2372,17 +2372,19 @@ header#banner {
 }
 
 .partners-box{
-	width: 400px;
+	  width: 950px;
     padding-top: 5px;
     padding-bottom: 5px;
-    height: 75px;
+    height: 85px;
     margin: 0 auto;
 }
 
 
 .partner {
-	width: 25%;
     float: left;
     text-align: center;
+}
+.partner img {
+	height: 80px;
 }
 
