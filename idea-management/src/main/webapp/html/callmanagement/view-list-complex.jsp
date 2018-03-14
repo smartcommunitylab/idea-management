@@ -23,7 +23,7 @@
 <%
 String listType = GetterUtil.getString(portletPreferences.getValue("listType", Constants.PREF_CALLLISTTYPE_OPEN));
 int delta = GetterUtil.getInteger(portletPreferences.getValue("elementInPage", ""+Constants.PAGINATION_CALL_ELEMENTS_IN_PAGE));
-boolean viewAll = ParamUtil.getBoolean(request, "viewAll", false);
+boolean viewAll = ParamUtil.getBoolean(request, "viewAll", true);
 Long categoryId = (Long) request.getAttribute("categoryId");
 if (categoryId == null) categoryId = ParamUtil.getLong(renderRequest, "categoryId");
 
@@ -42,6 +42,14 @@ if (listType.equals(Constants.PREF_CALLLISTTYPE_OPEN)) {
 } else {
 	list =  CallLocalServiceUtil.getCallsByCat(categoryId, begin, end);
 }
+list = new java.util.ArrayList<Call>(list);
+java.util.Collections.sort(list, new java.util.Comparator<Call>() {
+	@Override
+    public int compare(Call o1, Call o2) {
+      return o1.getTitle().compareTo(o2.getTitle());
+    }	
+});
+
 java.util.Map<String,String> CC = IdeaLocalServiceUtil.getCategoryColors(scopeGroupId);
   
 String baseUrl = Utils.getBaseURL(request);
