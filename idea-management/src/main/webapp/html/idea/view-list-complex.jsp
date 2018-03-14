@@ -38,9 +38,14 @@
   		<span class="<%=colClass %>" id="result">
    			<div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
 	 				<div class="idea-card-header">
-      			<div class="span11" style="overflow: hidden; text-overflow: ellipsis; color: #fff">
+      			<div class="span11" style="margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; color: #fff">
+              <div>
+              {{#each this.cats}}
+                <span style="color: {{this.color}};">{{this.name}}</span>
+              {{/each}}
+              </div>
 	      			{{#if this.callId}}
-								<span class="idea-card-call-label" style="white-space: nowrap;">{{this.callName}}</span> 
+								<span style="color:#000; text-transform:uppercase; white-space: nowrap;">{{this.callName}}</span> 
 							{{/if}}
         		</div>
         		<div class="span1">

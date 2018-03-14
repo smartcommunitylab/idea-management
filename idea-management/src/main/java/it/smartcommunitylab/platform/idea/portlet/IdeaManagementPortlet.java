@@ -1,20 +1,11 @@
 package it.smartcommunitylab.platform.idea.portlet;
 
-import it.smartcommunitylab.platform.idea.beans.CategoryBean;
-import it.smartcommunitylab.platform.idea.beans.IdeaBean;
-import it.smartcommunitylab.platform.idea.beans.IdeaResultItem;
-import it.smartcommunitylab.platform.idea.beans.Pagination;
-import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
-import it.smartcommunitylab.platform.idea.model.Call;
-import it.smartcommunitylab.platform.idea.model.Idea;
-import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
-import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +43,16 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+
+import it.smartcommunitylab.platform.idea.beans.CategoryBean;
+import it.smartcommunitylab.platform.idea.beans.IdeaBean;
+import it.smartcommunitylab.platform.idea.beans.IdeaResultItem;
+import it.smartcommunitylab.platform.idea.beans.Pagination;
+import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
+import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 /**
  * Portlet implementation class IdeaManagementPortlet
@@ -149,13 +150,36 @@ public class IdeaManagementPortlet extends MVCPortlet {
 			// result already ordered by creation date DESC for default
 			switch (listType) {
 			case Constants.PREF_LISTTYPE_RECENT:
+//				ideas = IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(
+//						categoryId, callId, tagFilter, begin, end);
 				ideas = IdeaLocalServiceUtil.searchByCallAndCategoryAndTags(
-						categoryId, callId, tagFilter, begin, end);
+						categoryId, callId, tagFilter, -1, -1);
+				Collections.sort(ideas, new Comparator<Idea> (){
+					@Override
+					public int compare(Idea o1, Idea o2) {
+						return o1.getTitle().compareTo(o2.getTitle());
+					}
+				});
+				if (begin < ideas.size()) {
+					ideas = ideas.subList(begin, Math.min(end, ideas.size()));
+				}
 				break;
 			case Constants.PREF_LISTTYPE_POPULAR:
+//				ideas = IdeaLocalServiceUtil
+//						.searchPopularByCallAndCategoryAndTags(categoryId,
+//								callId, tagFilter, begin, end);
 				ideas = IdeaLocalServiceUtil
-						.searchPopularByCallAndCategoryAndTags(categoryId,
-								callId, tagFilter, begin, end);
+				.searchPopularByCallAndCategoryAndTags(categoryId,
+						callId, tagFilter, -1, -1);
+				Collections.sort(ideas, new Comparator<Idea> (){
+					@Override
+					public int compare(Idea o1, Idea o2) {
+						return o1.getTitle().compareTo(o2.getTitle());
+					}
+				});
+				if (begin < ideas.size()) {
+					ideas = ideas.subList(begin, Math.min(end, ideas.size()));
+				}
 				break;
 			default:
 				break;
