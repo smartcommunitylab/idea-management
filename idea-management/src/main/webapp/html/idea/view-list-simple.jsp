@@ -136,7 +136,7 @@ style="border-left-color: {{this.boxColor}};">
                     <h4 class="title-ellipsis">{{this.title}}</h4>
 	<div class="thumbnail-bottom">
 				<div class="pull-left">
-                {{this.creationDate}}
+              <span class="idea-card-comments">{{this.comments}}</span>
 				</div>
 				<div class="idea-rating pull-right">
 					{{#each this.stars}}
