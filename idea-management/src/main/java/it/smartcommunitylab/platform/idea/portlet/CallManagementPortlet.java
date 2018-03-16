@@ -5,6 +5,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +44,7 @@ import it.smartcommunitylab.platform.idea.beans.CategoryBean;
 import it.smartcommunitylab.platform.idea.beans.Pagination;
 import it.smartcommunitylab.platform.idea.beans.ResultWrapper;
 import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.CallLocalServiceUtil;
 import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
@@ -204,7 +207,19 @@ public class CallManagementPortlet extends MVCPortlet {
 				// result already ordered by creation date DESC for default
 				switch (listType) {
 				case Constants.PREF_CALLLISTTYPE_OPEN:
-					list = CallLocalServiceUtil.getOpenCalls(begin, end);
+					list = CallLocalServiceUtil.getOpenCalls(-1, -1);
+					Collections.sort(list, new Comparator<Call> (){
+						@Override
+						public int compare(Call o1, Call o2) {
+							return o1.getTitle().compareTo(o2.getTitle());
+						}
+					});
+					if (begin < list.size()) {
+						list = list.subList(begin, Math.min(end, list.size()));
+					} else {
+						list = Collections.emptyList();
+					}
+					
 					break;
 				case Constants.PREF_CALLLISTTYPE_INDISCUSSION:
 					list = CallLocalServiceUtil.getInDiscussionCalls(begin, end);

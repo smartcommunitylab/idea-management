@@ -162,6 +162,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				});
 				if (begin < ideas.size()) {
 					ideas = ideas.subList(begin, Math.min(end, ideas.size()));
+				} else {
+					ideas = Collections.emptyList();
 				}
 				break;
 			case Constants.PREF_LISTTYPE_POPULAR:
@@ -179,6 +181,8 @@ public class IdeaManagementPortlet extends MVCPortlet {
 				});
 				if (begin < ideas.size()) {
 					ideas = ideas.subList(begin, Math.min(end, ideas.size()));
+				} else {
+					ideas = Collections.emptyList();
 				}
 				break;
 			default:
