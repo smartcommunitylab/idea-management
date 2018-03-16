@@ -208,6 +208,7 @@ public class CallManagementPortlet extends MVCPortlet {
 				switch (listType) {
 				case Constants.PREF_CALLLISTTYPE_OPEN:
 					list = CallLocalServiceUtil.getOpenCalls(-1, -1);
+					if (list != null) list = new ArrayList<>(list);
 					Collections.sort(list, new Comparator<Call> (){
 						@Override
 						public int compare(Call o1, Call o2) {
