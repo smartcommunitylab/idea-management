@@ -187,7 +187,7 @@ if (request.getAttribute("listType") != null) listType = (String) request.getAtt
 
 <c:if test='<%= !hideFilters_view %>'>
 <aui:form cssClass="filter-panel" id="filter" name="filter">
-    <div class="row-fluid">
+    <div class="row-fluid" style="display: none;">
     <span class="filter-label"><liferay-ui:message key="lbl_filter_by"/></span>
     <div class="control-group control-group-inline form-inline">
       <label class="radio inline" for="listTypeRecent">
