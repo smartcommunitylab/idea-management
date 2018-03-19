@@ -92,6 +92,7 @@ ${theme.include(body_top_include)}
         <div class="partner"> <a href="http://www.architettitrento.it/" target="_blank"><img src="${images_folder}/loghi/architetti.jpg"></a> </div>
         <div class="partner"> <a href="http://www.geologitrentinoaltoadige.it/" target="_blank"><img src="${images_folder}/loghi/GEOLOGI.png"></a> </div>
         <div class="partner"> <a href="http://www.agronomiforestalitn.it/" target="_blank"><img src="${images_folder}/loghi/AGRONOMI.jpg"></a> </div>
+        <div class="partner"> <a href="http://stardustproject.eu/" target="_blank"><img src="${images_folder}/loghi/stardust.jpg"></a> </div>
     </div>        
 		<#if has_navigation || is_signed_in>
 			<#include "${full_templates_path}/footer-navigation.ftl" />

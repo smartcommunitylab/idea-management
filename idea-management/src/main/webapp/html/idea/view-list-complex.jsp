@@ -36,41 +36,43 @@
 		<div class="row-fluid">
 		{{/if}}
   		<span class="<%=colClass %>" id="result">
-   			<div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
-	 				<div class="idea-card-header">
-      			<div class="span11" style="margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; color: #fff">
-              <div>
-              {{#each this.cats}}
-                <span style="color: {{this.color}};">{{this.name}}</span>
-              {{/each}}
+        <div id="<portlet:namespace/>resContainer" onClick="javascript:window.location = '{{this.detailURL}}';" class="idea-card" style="border-color: {{this.boxColor}};">
+        <div class="idea-card-header">
+          <div class="row" style="margin:0;">
+              <div class="span11" style="margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; color: #fff">
+                  {{#each this.cats}}
+                  <span style="color: {{this.color}};">{{this.name}}</span>
+                  {{/each}}
+                </div>
+              <div class="span1">
+                {{#if this.deleteURL}}
+            <a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
+            {{/if}} 
               </div>
-	      			{{#if this.callId}}
-								<span style="color:#000; text-transform:uppercase; white-space: nowrap;">{{this.callName}}</span> 
-							{{/if}}
-        		</div>
-        		<div class="span1">
-        			{{#if this.deleteURL}}
-								<a id="delete-link-{{@index}}" href={{this.deleteURL}} onclick="return confirm('<%= confirmMsg %>');" class="pull-right"><span class="delete-icon" style="height:16px;width:16px;display:inline-block;"></span></a>
-							{{/if}}	
-        		</div>
-      		</div>	
-					<h4>{{this.title}}</h4>
-        	<div class="idea-card-footer">
-        		<div class="span6 idea-rating">
-          	{{#each this.stars}}
-          		{{#if this}}
-            	<i class="icon-star"></i>
-            	{{else}}
-            	<i class="icon-star-empty"></i>
-            	{{/if}}
-          	{{/each}}
-          	</div>
-          	<div class="span6">
-          		<span class="idea-card-comments">{{this.comments}}</span>
-          	</div>
-					</div>
-      	</div>
-    	</span>
+              </div>
+                {{#if this.callId}}
+                <div style="overflow: hidden;text-overflow: ellipsis; ">
+            <span style="color:#000; text-transform:uppercase; white-space: nowrap;">{{this.callName}}</span> 
+              </div>
+          {{/if}}
+            </div>  
+        <h4>{{this.title}}</h4>
+            <div class="idea-card-footer">
+              <div class="span6 idea-rating">
+                  {{#each this.stars}}
+                  {{#if this}}
+                  <i class="icon-star"></i>
+                  {{else}}
+                  <i class="icon-star-empty"></i>
+                  {{/if}}
+                  {{/each}}
+                </div>
+                <div class="span6">
+                  <span class="idea-card-comments">{{this.comments}}</span>
+                </div>
+          </div>
+            </div>
+      </span>
 		{{#if  this.endRow}}
 		</div>
 		{{/if}}
