@@ -358,6 +358,7 @@ header#banner {
 #navmenu li.has-child-menu ul.child-menu li {
 	list-style-type: none;
 	line-height: 40px;
+	white-space: nowrap;
 }
 
 #navmenu li.has-child-menu ul.child-menu li a {
