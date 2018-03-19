@@ -227,8 +227,10 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 	public List<Call> getCallsByCat(long catId, int begin, int end) throws SystemException {
 		_log.error(" -- paging "+ begin +" / "+end);
 		List<Call> res = getCallsByCat(catId);
-		if (res.size() > begin) {
+		if (begin >= 0 && end >= 0 && res.size() > begin) {
 			return res.subList(begin, Math.min(end, res.size()));
+		} else if (begin <= 0 && end <= 0) {
+			return res;
 		}
 		return Collections.emptyList();
 	}
