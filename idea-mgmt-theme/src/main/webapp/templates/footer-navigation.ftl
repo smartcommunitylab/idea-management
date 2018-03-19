@@ -9,10 +9,10 @@
 			<#-- <@liferay.language key="powered-by" /> -->
 			<div class="powered-by">
 				<a href="http://www.smartcommunitylab.it" rel="external">&copy; 2015 Smart Community Lab - Fondazione Bruno Kessler</a>
-				<div class="float-right">
-				<span>Progetto co-finanziato dal programma di ricerca e innovazione dell'Unione Europea Horizon 2020. Accordo di sovvenzione 774094</span>
-				<img src="${images_folder}/loghi/eu.png">
-				</div>
+        <div style="float:right;">
+        <div style="display: inline-block; max-width: 600px; color: #fff; vertical-align: middle; line-height: 1.5">Progetto co-finanziato dal programma di ricerca e innovazione dell'Unione Europea Horizon 2020. Accordo di sovvenzione 774094</div>
+        <img src="${images_folder}/loghi/eu.png" style="height:60px">
+        </div>
 			</div>
 			<ul id="footer-navmenu" aria-label="<@liferay.language key="site-pages" />" role="menubar" class="nav">					
 				<#list nav_items as nav_item>

@@ -219,7 +219,7 @@ header#banner {
 }
 
 .navbar-row {
-	height: 61px;
+	height: 60px;
 }
 
 .navbar-row.right {
@@ -2008,6 +2008,8 @@ header#banner {
 	height: 60px;
 	line-height: 60px;
 	margin-left: 20px;
+	margin-right: 20px;
+	width: calc(100% - 40px);
 }
 
 #footer .powered-by a,#footer .powered-by a:hover {
@@ -2372,7 +2374,7 @@ header#banner {
 }
 
 .partners-box{
-	  width: 950px;
+	  max-width: 1210px;
     padding-top: 5px;
     padding-bottom: 5px;
     height: 85px;
