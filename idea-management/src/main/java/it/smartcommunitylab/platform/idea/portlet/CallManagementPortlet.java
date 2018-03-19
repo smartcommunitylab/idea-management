@@ -201,38 +201,39 @@ public class CallManagementPortlet extends MVCPortlet {
 			List<Call> list = new ArrayList<Call>();
 			
 			if (categoryId != null && categoryId > 0) {
-				list = CallLocalServiceUtil.getCallsByCat(categoryId, begin, end); 
+				list = CallLocalServiceUtil.getCallsByCat(categoryId, -1, -1); 
 			}
 			else {
 				// result already ordered by creation date DESC for default
 				switch (listType) {
 				case Constants.PREF_CALLLISTTYPE_OPEN:
-					list = CallLocalServiceUtil.getOpenCalls(-1, -1);
-					if (list != null) list = new ArrayList<>(list);
-					Collections.sort(list, new Comparator<Call> (){
-						@Override
-						public int compare(Call o1, Call o2) {
-							return o1.getTitle().compareTo(o2.getTitle());
-						}
-					});
-					if (begin < list.size()) {
-						list = list.subList(begin, Math.min(end, list.size()));
-					} else {
-						list = Collections.emptyList();
-					}
-					
+					list = CallLocalServiceUtil.getOpenCalls(-1, -1);					
 					break;
 				case Constants.PREF_CALLLISTTYPE_INDISCUSSION:
-					list = CallLocalServiceUtil.getInDiscussionCalls(begin, end);
+					list = CallLocalServiceUtil.getInDiscussionCalls(-1, -1);
 					break;
 				case Constants.PREF_CALLLISTTYPE_CLOSED:
-					list = CallLocalServiceUtil.getClosedCalls(begin, end);
+					list = CallLocalServiceUtil.getClosedCalls(-1, -1);
 					break;
 				default:
-					list = CallLocalServiceUtil.getCalls(begin, end);
+					list = CallLocalServiceUtil.getCalls(-1, -1);
 					break;
 				}
 			}
+			
+			if (list != null) list = new ArrayList<>(list);
+			Collections.sort(list, new Comparator<Call> (){
+				@Override
+				public int compare(Call o1, Call o2) {
+					return o1.getTitle().compareTo(o2.getTitle());
+				}
+			});
+			if (begin < list.size()) {
+				list = list.subList(begin, Math.min(end, list.size()));
+			} else {
+				list = Collections.emptyList();
+			}
+
 
 			Pagination pag = new Pagination();
 			pag.setCurrentPage(currentPage);
