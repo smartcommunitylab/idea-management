@@ -68,6 +68,8 @@ public class CallLocalServiceClp implements CallLocalService {
     private String[] _methodParameterTypes29;
     private String _methodName30;
     private String[] _methodParameterTypes30;
+    private String _methodName31;
+    private String[] _methodParameterTypes31;
 
     public CallLocalServiceClp(InvokableLocalService invokableLocalService) {
         _invokableLocalService = invokableLocalService;
@@ -217,6 +219,10 @@ public class CallLocalServiceClp implements CallLocalService {
         _methodName30 = "getCallsByCat";
 
         _methodParameterTypes30 = new String[] { "long", "int", "int" };
+
+        _methodName31 = "toggleUserParticipation";
+
+        _methodParameterTypes31 = new String[] { "long", "long" };
     }
 
     @Override
@@ -1091,5 +1097,32 @@ public class CallLocalServiceClp implements CallLocalService {
         }
 
         return (java.util.List<it.smartcommunitylab.platform.idea.model.Call>) ClpSerializer.translateOutput(returnObj);
+    }
+
+    @Override
+    public void toggleUserParticipation(long callId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        try {
+            _invokableLocalService.invokeMethod(_methodName31,
+                _methodParameterTypes31, new Object[] { callId, userId });
+        } catch (Throwable t) {
+            t = ClpSerializer.translateThrowable(t);
+
+            if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+                throw (com.liferay.portal.kernel.exception.PortalException) t;
+            }
+
+            if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+                throw (com.liferay.portal.kernel.exception.SystemException) t;
+            }
+
+            if (t instanceof RuntimeException) {
+                throw (RuntimeException) t;
+            } else {
+                throw new RuntimeException(t.getClass().getName() +
+                    " is not a valid exception");
+            }
+        }
     }
 }

@@ -227,6 +227,10 @@ public class Utils {
 
 		return true;
 	}
+	public static boolean discussionOpen() {
+
+		return !LocalDate.now().isBefore(LocalDate.of(2018, 3, 28));
+	}
 
 	public static String getBaseURL(HttpServletRequest request)
 			throws PortalException, SystemException {

@@ -393,6 +393,13 @@ public class CallLocalServiceWrapper implements CallLocalService,
         return _callLocalService.getCallsByCat(catId, begin, end);
     }
 
+    @Override
+    public void toggleUserParticipation(long callId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        _callLocalService.toggleUserParticipation(callId, userId);
+    }
+
     /**
      * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
      */

@@ -334,4 +334,8 @@ public interface CallLocalService extends BaseLocalService, InvokableLocalServic
     public java.util.List<it.smartcommunitylab.platform.idea.model.Call> getCallsByCat(
         long catId, int begin, int end)
         throws com.liferay.portal.kernel.exception.SystemException;
+
+    public void toggleUserParticipation(long callId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException;
 }

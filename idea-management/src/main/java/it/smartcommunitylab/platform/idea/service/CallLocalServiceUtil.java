@@ -375,6 +375,12 @@ public class CallLocalServiceUtil {
         return getService().getCallsByCat(catId, begin, end);
     }
 
+    public static void toggleUserParticipation(long callId, long userId)
+        throws com.liferay.portal.kernel.exception.PortalException,
+            com.liferay.portal.kernel.exception.SystemException {
+        getService().toggleUserParticipation(callId, userId);
+    }
+
     public static void clearService() {
         _service = null;
     }

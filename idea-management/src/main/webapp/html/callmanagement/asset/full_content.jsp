@@ -130,8 +130,11 @@
       assetEntryId="<%=(assetEntry != null) ? assetEntry.getEntryId() : 0%>"
       className="<%=Call.class.getName()%>" classPK="<%=call.getCallId()%>" />
 </div>
+ <%
+ boolean discussionEnabled = Utils.discussionEnabled(call, renderRequest);
+%>
 
-  <c:if test="<%=!themeDisplay.isSignedIn()%>">
+  <c:if test="<%=!themeDisplay.isSignedIn() && Utils.discussionOpen()%>">
       <div class="row-fluid">
         <span class="span12 idea-creator idea-creator-warning text-right">
             <a class="use-dialog" href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="lbl_access_call"/></a>  
@@ -192,9 +195,6 @@
  <liferay-ui:panel-container accordion="true" extended="true">
   <liferay-ui:panel state="open" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
 
- <%
- boolean discussionEnabled = Utils.discussionEnabled(call, renderRequest);
-%>
  <div class='row-fluid discussion-container'>
    <portlet:actionURL name="addComment" var="discussionURL">
      <!-- workaround to invoke liferary class that manage comment/discussion -->

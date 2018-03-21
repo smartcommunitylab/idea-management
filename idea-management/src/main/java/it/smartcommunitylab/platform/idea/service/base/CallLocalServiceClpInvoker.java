@@ -69,6 +69,8 @@ public class CallLocalServiceClpInvoker {
     private String[] _methodParameterTypes64;
     private String _methodName65;
     private String[] _methodParameterTypes65;
+    private String _methodName66;
+    private String[] _methodParameterTypes66;
 
     public CallLocalServiceClpInvoker() {
         _methodName0 = "addCall";
@@ -216,6 +218,10 @@ public class CallLocalServiceClpInvoker {
         _methodName65 = "getCallsByCat";
 
         _methodParameterTypes65 = new String[] { "long", "int", "int" };
+
+        _methodName66 = "toggleUserParticipation";
+
+        _methodParameterTypes66 = new String[] { "long", "long" };
     }
 
     public Object invokeMethod(String name, String[] parameterTypes,
@@ -394,6 +400,14 @@ public class CallLocalServiceClpInvoker {
             return CallLocalServiceUtil.getCallsByCat(((Long) arguments[0]).longValue(),
                 ((Integer) arguments[1]).intValue(),
                 ((Integer) arguments[2]).intValue());
+        }
+
+        if (_methodName66.equals(name) &&
+                Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+            CallLocalServiceUtil.toggleUserParticipation(((Long) arguments[0]).longValue(),
+                ((Long) arguments[1]).longValue());
+
+            return null;
         }
 
         throw new UnsupportedOperationException();
