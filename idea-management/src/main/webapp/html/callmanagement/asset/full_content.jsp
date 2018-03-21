@@ -131,7 +131,6 @@
       className="<%=Call.class.getName()%>" classPK="<%=call.getCallId()%>" />
 </div>
 
-<%-- 
   <c:if test="<%=!themeDisplay.isSignedIn()%>">
       <div class="row-fluid">
         <span class="span12 idea-creator idea-creator-warning text-right">
@@ -139,8 +138,8 @@
         </span>
       </div>
   </c:if>
- --%>
-<div class="idea-social">
+
+<%-- <div class="idea-social">
     <c:if test="<%=!themeDisplay.isSignedIn()%>">
       <div class="row-fluid">
         <span class="span12 idea-creator idea-creator-warning text-right">
@@ -189,7 +188,7 @@
       </div>
     </c:if>
 </div>
-
+ --%>
  <liferay-ui:panel-container accordion="true" extended="true">
   <liferay-ui:panel state="open" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>
 

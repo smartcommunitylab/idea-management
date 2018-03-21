@@ -16,10 +16,7 @@
 
 package it.smartcommunitylab.platform.idea.portlet;
 
-import it.smartcommunitylab.platform.idea.model.Call;
-import it.smartcommunitylab.platform.idea.model.Idea;
-import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,13 +50,16 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+
+import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.model.Idea;
+import it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil;
 
 /**
  * @author raman
@@ -211,7 +211,7 @@ public class Utils {
 	public static boolean discussionEnabled(Idea idea, PortletRequest req) {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
-		if (!themeDisplay.isSignedIn())
+		if (!themeDisplay.isSignedIn() || LocalDate.now().isBefore(LocalDate.of(2018, 3, 28)))
 			return false;
 		if (idea.discussionExpired())
 			return false;
@@ -222,7 +222,7 @@ public class Utils {
 	public static boolean discussionEnabled(Call call, PortletRequest req) {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
-		if (!themeDisplay.isSignedIn())
+		if (!themeDisplay.isSignedIn() || LocalDate.now().isBefore(LocalDate.of(2018, 3, 28)))
 			return false;
 
 		return true;
