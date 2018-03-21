@@ -21,6 +21,8 @@
 <%@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
 <%@ page import="it.smartcommunitylab.platform.idea.service.IdeaLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.model.Subscription" %>
 
 <%@page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 
@@ -51,6 +53,10 @@
   for (AssetTag tag : assetTags) {
     tagSet.add(tag.getName());
   }
+
+  // followers
+  List<Subscription> subs = SubscriptionLocalServiceUtil.getSubscriptions(themeDisplay.getCompanyId(), Call.class.getName(), call.getCallId());
+  boolean subscribed = SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), Call.class.getName(), call.getCallId());
 
   java.util.Date today = DateUtil.newDate();
   int distance = Integer.MAX_VALUE;
@@ -125,13 +131,64 @@
       className="<%=Call.class.getName()%>" classPK="<%=call.getCallId()%>" />
 </div>
 
-<c:if test="<%=!themeDisplay.isSignedIn()%>">
+<%-- 
+  <c:if test="<%=!themeDisplay.isSignedIn()%>">
       <div class="row-fluid">
         <span class="span12 idea-creator idea-creator-warning text-right">
             <a class="use-dialog" href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="lbl_access_call"/></a>  
         </span>
       </div>
-</c:if>
+  </c:if>
+ --%>
+<div class="idea-social">
+    <c:if test="<%=!themeDisplay.isSignedIn()%>">
+      <div class="row-fluid">
+        <span class="span12 idea-creator idea-creator-warning text-right">
+            <a class="use-dialog" href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="lbl_access_call"/></a>  
+        </span>
+      </div>
+      <div class="row-fluid">
+        <div class="span6 text-center idea-discussion-rating"> 
+          <div>
+            <liferay-ui:ratings className="<%= Call.class.getName() %>" classPK="<%= call.getCallId() %>"/> 
+          </div>
+        </div>
+        <div class="span6 text-center">
+          <div>
+            <liferay-ui:message key="lbl_followercount"/>
+          </div> 
+          <div class="participation-details">
+            <span><%=subs.size() %></span>
+            <i class="ftn-sum_users"></i>
+          </div>
+        </div>
+      </div>
+    </c:if>
+    <c:if test="<%=themeDisplay.isSignedIn()%>">
+      <div class="row-fluid text-center">
+        <div class="span6"> <liferay-ui:message key="lbl_rate"/> </div>
+        <div class="span6"> <liferay-ui:message key="lbl_participate"/> </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span6 text-center idea-discussion-rating">
+          <liferay-ui:ratings className="<%= Call.class.getName() %>" classPK="<%= call.getCallId() %>" />
+        </div>
+        <div class="span6 text-center">
+          <portlet:actionURL var="followIdea" name="followIdea">
+            <portlet:param name="mvcPath" value="/html/idea/asset/full_content.jsp" />
+            <portlet:param name="callId" value="<%=String.valueOf(call.getCallId()) %>" />
+            <portlet:param name="subscribed" value="<%=String.valueOf(subscribed) %>" />
+          </portlet:actionURL>
+          <div><a title="<liferay-ui:message key="lbl_tooltip_follow"/>" class='idea-button idea-button-tooltip-avail idea-button-follow-<%= subscribed ? "disabled" : "enabled" %>' href="<%=followIdea.toString() %>"></a></div>
+          <div><span><liferay-ui:message key="lbl_following"/></span></div>
+          <div class="participation-details">
+            <span><%=subs.size() %></span>
+            <i class="ftn-sum_users"></i>
+          </div>
+        </div>
+      </div>
+    </c:if>
+</div>
 
  <liferay-ui:panel-container accordion="true" extended="true">
   <liferay-ui:panel state="open" collapsible="true" id="discussion" title='<%= LanguageUtil.get(locale, "lbl_discussion") %>'>

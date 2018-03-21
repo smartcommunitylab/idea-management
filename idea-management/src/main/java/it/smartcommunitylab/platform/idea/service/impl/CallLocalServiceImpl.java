@@ -24,11 +24,13 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 
 import it.smartcommunitylab.platform.idea.beans.CallBean;
 import it.smartcommunitylab.platform.idea.model.Call;
+import it.smartcommunitylab.platform.idea.model.Idea;
 import it.smartcommunitylab.platform.idea.service.ClpSerializer;
 import it.smartcommunitylab.platform.idea.service.base.CallLocalServiceBaseImpl;
 
@@ -233,5 +235,24 @@ public class CallLocalServiceImpl extends CallLocalServiceBaseImpl {
 			return res;
 		}
 		return Collections.emptyList();
+	}
+	
+	public void toggleUserParticipation(long callId, long userId)
+			throws SystemException, PortalException {
+		List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(userId);
+		Call call = getCall(callId);
+		if (call.getUserId() == userId)
+			return;
+
+		long groupId = call.getUserGroupId();
+		if (userGroups != null) {
+			for (Group g : userGroups) {
+				if (g.getGroupId() == groupId) {
+					UserLocalServiceUtil.deleteGroupUser(groupId, userId);
+					return;
+				}
+			}
+		}
+		GroupLocalServiceUtil.addUserGroup(userId, groupId);
 	}
 }

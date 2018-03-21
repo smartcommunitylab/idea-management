@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
@@ -133,7 +134,33 @@ public class CallManagementPortlet extends MVCPortlet {
 		}
 	}
 
+//	public void toggleUserParticipation(ActionRequest req, ActionResponse res)
+//			throws PortalException, SystemException {
+//
+//		long ideaId = ParamUtil.getLong(req, "callId");
+//		long userId = ParamUtil.getLong(req, "userId");
+//		CallLocalServiceUtil.toggleUserParticipation(ideaId, userId);
+//	}
 
+	public void followIdea(ActionRequest req, ActionResponse res)
+			throws PortalException, SystemException, IOException {
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				Idea.class.getName(), req);
+		Long callId = ParamUtil.getLong(req, "callId");
+		Call call = CallLocalServiceUtil.fetchCall(callId);
+		boolean subscribed = ParamUtil.getBoolean(req, "subscribed");
+		// subscribe idea
+		if (!subscribed) {
+			SubscriptionLocalServiceUtil.addSubscription(
+					serviceContext.getUserId(), call.getGroupId(),
+					Call.class.getName(), callId);
+		} else {
+			SubscriptionLocalServiceUtil.deleteSubscription(
+					serviceContext.getUserId(), Call.class.getName(), callId);
+		}
+	}
+
+	
 	private Date calculateDeadline(ActionRequest req, String prefix) {
 		String day = ParamUtil.getString(req, prefix + "day");
 		String month = ParamUtil.getString(req, prefix + "month");
