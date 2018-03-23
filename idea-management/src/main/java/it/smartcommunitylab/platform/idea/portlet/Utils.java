@@ -212,7 +212,7 @@ public class Utils {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		if (!themeDisplay.isSignedIn()
-//				|| LocalDate.now().isBefore(LocalDate.of(2018, 3, 28))
+				|| LocalDate.now().isBefore(LocalDate.of(2018, 3, 28))
 			)
 			return false;
 		if (idea.discussionExpired())
@@ -225,15 +225,15 @@ public class Utils {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		if (!themeDisplay.isSignedIn()
-//				|| LocalDate.now().isBefore(LocalDate.of(2018, 3, 28))
+				|| LocalDate.now().isBefore(LocalDate.of(2018, 3, 28))
 			)
 			return false;
 
 		return true;
 	}
 	public static boolean discussionOpen() {
-		return true;
-//		return !LocalDate.now().isBefore(LocalDate.of(2018, 3, 28));
+//		return true;
+		return !LocalDate.now().isBefore(LocalDate.of(2018, 3, 28));
 	}
 
 	public static String getBaseURL(HttpServletRequest request)
