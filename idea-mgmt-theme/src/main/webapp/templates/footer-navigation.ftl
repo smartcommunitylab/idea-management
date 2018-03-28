@@ -10,7 +10,7 @@
 			<div class="powered-by">
 				<a href="http://www.smartcommunitylab.it" rel="external">&copy; 2015 Smart Community Lab - Fondazione Bruno Kessler</a>
         <div style="float:right;">
-        <div style="display: inline-block; max-width: 600px; color: #fff; vertical-align: middle; line-height: 1.5">Progetto co-finanziato dal programma di ricerca e innovazione dell'Unione Europea Horizon 2020. Accordo di sovvenzione 774094</div>
+        <div style="display: inline-block; max-width: 600px; color: #fff; vertical-align: middle; line-height: 1.5">STARDUST è un progetto co-finanziato dal programma di ricerca e innovazione dell'Unione Europea Horizon 2020. Accordo di sovvenzione 774094</div>
         <img src="${images_folder}/loghi/eu.png" style="height:60px">
         </div>
 			</div>

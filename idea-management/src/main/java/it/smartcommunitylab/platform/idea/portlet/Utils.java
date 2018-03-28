@@ -16,7 +16,6 @@
 
 package it.smartcommunitylab.platform.idea.portlet;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -212,10 +211,7 @@ public class Utils {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		if (!themeDisplay.isSignedIn()
-				|| LocalDate.now().isBefore(LocalDate.of(2018, 3, 28))
 			)
-			return false;
-		if (idea.discussionExpired())
 			return false;
 
 		// TODO check states
@@ -225,15 +221,13 @@ public class Utils {
 		ThemeDisplay themeDisplay = (ThemeDisplay) req
 				.getAttribute(WebKeys.THEME_DISPLAY);
 		if (!themeDisplay.isSignedIn()
-				|| LocalDate.now().isBefore(LocalDate.of(2018, 3, 28))
 			)
 			return false;
 
 		return true;
 	}
 	public static boolean discussionOpen() {
-//		return true;
-		return !LocalDate.now().isBefore(LocalDate.of(2018, 3, 28));
+		return true;
 	}
 
 	public static String getBaseURL(HttpServletRequest request)
