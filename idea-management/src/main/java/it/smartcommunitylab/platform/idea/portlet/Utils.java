@@ -208,23 +208,25 @@ public class Utils {
 	}
 
 	public static boolean discussionEnabled(Idea idea, PortletRequest req) {
-		ThemeDisplay themeDisplay = (ThemeDisplay) req
-				.getAttribute(WebKeys.THEME_DISPLAY);
-		if (!themeDisplay.isSignedIn()
-			)
-			return false;
-
-		// TODO check states
-		return true;
+//		ThemeDisplay themeDisplay = (ThemeDisplay) req
+//				.getAttribute(WebKeys.THEME_DISPLAY);
+//		if (!themeDisplay.isSignedIn()
+//			)
+//			return false;
+//
+//		// TODO check states
+//		return true;
+		return false;
 	}
 	public static boolean discussionEnabled(Call call, PortletRequest req) {
-		ThemeDisplay themeDisplay = (ThemeDisplay) req
-				.getAttribute(WebKeys.THEME_DISPLAY);
-		if (!themeDisplay.isSignedIn()
-			)
-			return false;
-
-		return true;
+//		ThemeDisplay themeDisplay = (ThemeDisplay) req
+//				.getAttribute(WebKeys.THEME_DISPLAY);
+//		if (!themeDisplay.isSignedIn()
+//			)
+//			return false;
+//
+//		return true;
+		return false;
 	}
 	public static boolean discussionOpen() {
 		return true;
